@@ -1,0 +1,79 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- NOTE:  Don't change this Title -->
+  <title>Quizme App Inventor</title>
+  <style>
+    body {
+      background-color: white;
+      font-family: sans-serif;
+    }
+    h1 {
+      font-weight: normal;
+      font-size: 140%;
+    }
+  </style>
+
+<script>
+function submitNewToggle() {
+  console.log("SubmitNewToggle");
+  Blockly.hello('submit');
+}
+
+function giveHint() {
+  console.log("giveHint");
+  Blockly.hello('hint');
+}
+
+function showQuiz(quizname) {
+  console.log("showQuiz");
+  Blockly.hello('showquiz', quizname);
+}
+
+</script>
+
+</head>
+<body>
+  <h1>Quizme App Inventor</h1>
+  <table width="100%" height="100%">
+    <tr>
+     <td>
+       <div id="selector_prompt">Choose a quiz type:</div>
+        <select id="quiz_selector" onchange="showQuiz(this.options[this.selectedIndex].value)"> </select>
+        &nbsp;
+        &nbsp;
+        <input hidden="true" id="quiz_answer" width="40" type="text"></input>
+        &nbsp;
+        &nbsp;
+        <button id="hint_button" onclick="giveHint()">Hint</button>
+        &nbsp;
+        &nbsp;
+        <button id="submit_new_toggle" onclick="submitNewToggle()">Submit</button>
+    </td>
+    </tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr>
+     <td>
+       <div id="quiz_question">Here is where the quiz question goes.</div>
+       <div id="hint_html">Here is where the hint goes. </div>
+     </td>
+    </tr>
+    <tr><td class="tabmin">&nbsp;</td></tr>
+    <tr>
+     <td><div contenteditable="true" width="300px" height="100px" id="quiz_result" readonly="readonly">&nbsp; </div></td>
+    </tr>
+    <tr>
+     <td height="99%">
+       <script>
+         // Called once Blockly is fully loaded. Puts Blockly on the top-level Window
+         function blocklyLoaded(blockly) {
+           window.Blockly = blockly;
+         }
+       </script>
+       <iframe style="width: 100%; height: 100%; border: 1px solid #ccc;" src="blockly.html"></iframe>
+     </td>
+    </tr>
+  </table>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- NOTE:  Don't change this Title -->
+  <title>Blockly Frame</title>
+
+  <script>
+    function blocklyLoaded(blockly) {
+      // Called once Blockly is fully loaded.
+      window.Blockly = blockly;
+    }
+  </script>
+
+  <script type="text/javascript" src="closure-library/goog/base.js"></script>
+  
+  <link type="text/css" rel="stylesheet" href="media/blockly.css">
+
+  <!-- blockly-all.js is copied from appinventor/build/blocklyeditor -->
+  <!-- blockly-toolbox.js is a modified version of blockly's core toolbox.js -->
+  <script type="text/javascript" src="./jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" src="./blockly-all.js"></script>
+<!--   <script type="text/javascript" src="./blockly_compressed.js"></script> -->
+  <script type="text/javascript" src="./blockly-toolbox.js"></script>
+<!--   <script type="text/javascript" src="./blockly-lib.js"></script> -->
+
+  <!-- Blockly javascript evaluators, modified for App Inventor -->
+  <script type="text/javascript" src="./javascript.js"></script>
+  <script type="text/javascript" src="./javascript/logic.js"></script>
+  <script type="text/javascript" src="./javascript/control.js"></script>
+  <script type="text/javascript" src="./javascript/procedures.js"></script>
+  <script type="text/javascript" src="./javascript/math.js"></script>
+  <script type="text/javascript" src="./javascript/lists.js"></script>
+  <script type="text/javascript" src="./javascript/text.js"></script>
+  <script type="text/javascript" src="./javascript/variables.js"></script>
+
+  <!-- quizme-initblocklyeditor.js is revised version of Blockly.BlocklyEditor.startup  --> 
+  <script type="text/javascript" src="quizme-initblocklyeditor.js"></script>
+  <script type="text/javascript" src="quizme.js"></script>
+  <script type="text/javascript" src="quizme-helper.js"></script>
+  <script type="text/javascript" src="./quizme-components.js"></script>
+  <script type="text/javascript" src="./component-types.js"></script>
+  <script type="text/javascript" src="./makequiz-helper.js"></script>
+  <script type="text/javascript" src="./quizme-eval.js"></script>
+<!--   <script type="text/javascript" src="./activity-quizme.js"></script> -->
+
+    <style>
+      html, body {
+        background-color: #fff;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      .blocklySvg {
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+
+    <script>
+      function initBlockly() {
+        Blockly.inject(document.body,
+            {path: './', toolbox: document.getElementById('toolbox')});
+
+        // Let the top-level application know that Blockly is ready.
+        // Do any Quizme initializations here.
+        window.parent.blocklyLoaded(Blockly);
+        if (window.parent.document.title == "Quiz Maker Utility")
+          initQuizMaker('./');
+        else 
+          initQuizme(undefined, './');
+      }
+    </script>
+
+</head>
+<body onload="initBlockly()">
+</body>
+</html>
