@@ -43,6 +43,9 @@ makequiz-helper.js -- functions for embedding Quizly into makequiz
 
 makequiz.html -- Base document for the makequiz app.
 
+media -- a directory containing all the media files. This has
+ to be on the blockly path.
+
 quizme-components.js -- Helper functions and XML code for loading
  AppInventor components into the workspace.
 
@@ -58,5 +61,3 @@ quizme-initblocklyeditor.js  -- a slightly revised version of the
 
 quizme.js -- the Blockly.Quizme class.
 
-media -- a directory containing all the media files. This has
- to be on the blockly path.
