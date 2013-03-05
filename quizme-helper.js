@@ -125,11 +125,6 @@ function initQuizme(quiztype, quizmepath) {
     quizselector.innerHTML = selectHtml;
   }
      
-//   if (quizmepath.indexOf("quizme") == -1) {
-//     imgpath = quizmepath + "quizme/media/";
-//    } else {
-//      imgpath = quizmepath + "media/";
-//    }
   Blockly.Quizme.pathname = quizmepath;
   Blockly.Quizme.imgpath = quizmepath + 'quizme/media/';
 
