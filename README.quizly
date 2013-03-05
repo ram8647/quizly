@@ -2,6 +2,8 @@ This directory contains a Blockly-based app that provides
 interactive quizzes for App Inventor. The files included
 in this app are:
 
+activity-quizme.js -- functions for embedding Quizly in CodeBuilder. 
+
 blockly-all.js -- a concatenation of all the App Inventor-based version
  of Blockly. This means that the default Blockly language files, such
  as math.js, are replaced by their App Inventor versions. This file should
@@ -15,6 +17,15 @@ blockly-toolbox.js -- a slightly revised version of the core Blockly
  the Blockly main workspace.  Among other things, this version
  does not load the Blockly version of procedures and variables.
 
+blockly.html -- HTML code for the Blockly iframe. Contains the 
+ initBlockly() function which injects BLockly and calls the
+ window.parent.blocklyLoaded() function to initial parent window.
+
+component-types.js -- JSON definitions of all App Inventor components,
+ e.g., Button, Sounds, etc.
+
+index.html -- Base document for Quizly app, loaded into parent window.
+
 javascript.js -- From Blockly, helper functions for generating
  javascript for blocks.
 
@@ -22,13 +33,24 @@ javascript/ -- Modified from Blockly. Helper functions for generating
  javascript for the AppInventor versions of math, logic, text,
  etc. blocks.
 
+jquery-1.9.1.min.js -- Minimized JQuery library.
+
+language/ -- Directory containing App Inventor versions of math.js,
+ logic.js and other Blockly blocks.
+
+makequiz-helper.js -- functions for embedding Quizly into makequiz
+ app.
+
+makequiz.html -- Base document for the makequiz app.
+
 quizme-components.js -- Helper functions and XML code for loading
  AppInventor components into the workspace.
+
+quizme-eval.js -- Functions for managing quizzes for Coursebuilder.
  
 quizme-helper.js -- functions that support the quiz buttons and
  menus within the browser.  This is where Blockly is injected into
  the browser window. 
-NOTE: The path to blockly is changed from "../../" to "./"
 
 quizme-initblocklyeditor.js  -- a slightly revised version of the
  Blockly.BlocklyEditor.start() function.  This version drops
