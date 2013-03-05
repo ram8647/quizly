@@ -1,0 +1,21 @@
+#summary Description of quizly files and directories
+
+== Description of Quizly Files and Directories  ==
+
+  * *blockly-all.js* A concatenation of all the App Inventor-based version of Blockly's code.  This means that the default Blockly language files, such as math.js, are replaced by their App Inventor versions. This file should be copied from *build/blocklyeditor/blockly-all.js* to be kept up-to-date with App Inventor releases. 
+
+  * *blockly-toolbox.js* A slightly revised version of the core Blockly  _toolbox.js_.  App Inventor uses _drawer.js_ instead of _toolbox.js_, but  _drawer.js_ is partially dependent on GWT.  This vesion of Toolbox  allows the drawers of blocks to be incorporated as a menu within  the Blockly main workspace.  Among other things, this version  does not load the Blockly version of procedures and variables.
+
+  * *javascript.js* Helper functions for generating javascript code for blocks.
+
+  * *javascript/* -- Modified from Blockly. Helper functions for generating  javascript for the AppInventor versions of language blocks, such as math, logic, text,  etc. blocks.
+
+  * *quizme-components.js* -- Helper functions loading  AppInventor components into the workspace.
+ 
+  * *quizme-helper.js* -- Functions that support the quiz buttons and  menus within the browser. Includes the _initQuizme()_ function.
+
+  * *quizme-initblocklyeditor.js*  -- A slightly revised version of the  _Blockly.BlocklyEditor.start()_ function.  This version drops  the creation of Drawer.
+
+  * *quizme.js* -- Creates the Blockly.Quizme class and contains functions to load quizzes from _quizzes.json__.
+
+  * *media/* -- a directory containing all the media files. This has  to be on the blockly path.
