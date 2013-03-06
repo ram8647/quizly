@@ -54,7 +54,19 @@ function initQuizMaker() {
   console.log("RAM initQuizMaker()");
   Blockly.doIt('init', './');
 }
+function displayHelp() {
+  console.log("RAM: help");
+  alert("Help is on the way");
+}
+function reset() {
+  console.log("RAM: reset");
+  var response = confirm("Are you sure? This will reinitialize the app.");
+  if (response == true) { 
+  }
+
+}
 </script>
+  <link href="common.css" rel="stylesheet" type="text/css">
 
   <style>
     body {
@@ -87,33 +99,65 @@ function initQuizMaker() {
 </head>
 <body>
    <fieldset><legend>Quiz Maker Utility</legend>
-     <!--   Name:&nbsp; <input type="Text" id="name"></input>&nbsp;&nbsp; -->
       <input type="hidden" id="name"></input>
-      Name: <input size="" type="Text" id="display_name" value="Simple Problem"> </input>&nbsp;&nbsp;
-     <!-- <tr><td>Problem Type:</td><td>&nbsp;</td><td><input type="Text" id="problem_type" value="math_compare"> </input></td> -->
-       Answer Type: <select id="answer_type" onchange="onAnswerTypeSelected(this)"> 
-                    <option value="xml_blocks">Exact String Match</option>
-                    <option value="eval_expr">Expression Evaluation</option>
-                    <option value="func_def">Function Definition</option>
+      Name: <input title="Plain text name for the quiz" size="" type="Text" id="display_name" value="Simple Problem"> </input>&nbsp;&nbsp;
+       Answer Type: <select title="The type of quiz"  id="answer_type" onchange="onAnswerTypeSelected(this)"> 
+                    <option 
+                      title="The student's answer will be evaluated and the value compared to your solution."
+                      value="eval_expr">Expression Evaluation</option>
+                    <option 
+                      title="The student's answer will be compared character-by-charecter with your solution." 
+                      value="xml_blocks">Exact Block-for-block Match</option>
+                    <option 
+                      title="The student-defined function will be evaluated on test inputs that you provide  and the results compared with your function's results."
+                      value="func_def">Function Definition</option>
                     </select>
      <!-- Some invisible elements that appear based on selection of answer_type -->
-       <select style="visibility:hidden" id="expression_type" onchange="onExpressionTypeSelected(this)"> 
+       <select title="Type of expression to evaluate" style="visibility:hidden" id="expression_type" onchange="onExpressionTypeSelected(this)"> 
                     <option value="relation">Relational: &LT;, =, ...</option>
                     <option value="arithmetic">Arithmetic: +, *, ...</option>
                     <option value="boolean">Boolean: AND, OR, NOT</option>
        </select>
-       
+     <button title="Display instructions" 
+             class="help"
+             id="help_btn" 
+             onclick="displayHelp()"
+             align="right">Help</button>
+     <button title="Reinitialize everything" 
+             class="help"
+             id="reset_btn" 
+             onclick="reset()"
+             align="right">Reset</button>
 
-     <br>Description: <input type="Text" id="description" size="111" value="Describe the quiz problem."> </input>
-     <br>QuestionHTML: <input type="Text" onkeypress="if (event.keyCode == 13) getVariableRanges(this)" id="question_html" size="106" value="Can have HTML and string variables such as $#STR1#$ and numeric variables like -91.9. Press <ENTER> to set."</input>
+     <br>Description: <input title="Type is a brief description of the quiz" 
+                             type="Text" 
+                             id="description" 
+                             size="111" 
+                             value="Describe the quiz problem."> </input>
+     <br>QuestionHTML: <input title="Question presented to student. Can have HTML and variables. Hint <enter> to prompt for variables"  
+                              type="Text" 
+                              onkeypress="if (event.keyCode == 13) getVariableRanges(this)" 
+                              id="question_html" size="106" 
+                              value="Can have HTML and string variables such as $#STR1#$ and numeric variables like -91.9. Press <ENTER> to set."</input>
 
-     <button id="problemspace"  onclick="setupProblemBlocks()">1. Setup Problem</button>
-     <button id="solutionspace" disabled="true" onclick="setupSolutionBlocks()">2. Setup Solution</button>
+     <button title="Setup how the quiz will be presented in the workspace" 
+             id="problemspace"  
+             onclick="setupProblemBlocks()">1. Setup Problem</button>
+     <button title="Setup the blocks for the quiz's solution" 
+             id="solutionspace" 
+             disabled="true" 
+             onclick="setupSolutionBlocks()">2. Setup Solution</button>
 
      <br>Hints: <input type="Text" id="hint_1" size="120" value="Hint #1."> </input>
 
-     <button id="test" disabled="true" onclick="previewTheQuiz()">3. Preview the Quiz&nbsp;&nbsp;</button>
-     <button id="generate" disabled="true" onclick="generateJSON()">4. Generate JSON</button>
+     <button title="Preview whether the quiz is as you want it" 
+             id="test" 
+             disabled="true" 
+             onclick="previewTheQuiz()">3. Preview the Quiz&nbsp;&nbsp;</button>
+     <button title="Display a savable JSON string for the quiz" 
+             id="generate" 
+             disabled="true" 
+             onclick="generateJSON()">4. Generate JSON</button>
 
      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="Text" id="hint_2" size="125" value="Hint #2."> </input>
      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="Text" id="hint_3" size="125" value="Hint #3."> </input>
