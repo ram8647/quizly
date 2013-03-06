@@ -409,6 +409,14 @@ function setupWorkspace(answer_type) {
 }
 
 /**
+ * The onclick function for the 'hint' button
+ */
+function giveTestHint() {
+  var hint = maindocument.getElementById('hint_html');
+  processHint(Blockly.Quizmaker);
+}
+
+/**
  *  The onclick function for the 'generate' button.
  */
 function generateJSON() {
