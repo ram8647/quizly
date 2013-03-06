@@ -656,7 +656,7 @@ Blockly.Quizme.setupFunctionDefinition = function(qname, helperObj) {
 Blockly.Quizme.testFunctionAgainstStandard = function(standard, fn, inputs) {
   console.log("RAM: Testing fn against standard ...");
   if (!fn) {
-    return [false, 'It looks like you forgot to define a function.'];
+    return [false, 'Can\'t find your function. Double check the name (spelling counts).'];
   }
 
   var k = 0;
