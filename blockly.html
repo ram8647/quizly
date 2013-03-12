@@ -4,17 +4,15 @@
   <!-- NOTE:  Don't change this Title -->
   <title>Blockly Frame</title>
 
+  <link type="text/css" rel="stylesheet" href="media/blockly.css">
+
   <script>
     function blocklyLoaded(blockly) {
       // Called once Blockly is fully loaded.
       window.Blockly = blockly;
     }
   </script>
-
   <script type="text/javascript" src="closure-library/goog/base.js"></script>
-  
-  <link type="text/css" rel="stylesheet" href="media/blockly.css">
-
   <!-- blockly-all.js is copied from appinventor/build/blocklyeditor -->
   <!-- blockly-toolbox.js is a modified version of blockly's core toolbox.js -->
   <script type="text/javascript" src="./jquery-1.9.1.min.js"></script>
@@ -49,10 +47,6 @@
         margin: 0;
         padding: 0;
         overflow: hidden;
-      }
-      .blocklySvg {
-        height: 100%;
-        width: 100%;
       }
     </style>
 

@@ -90,12 +90,11 @@ function createBlocklyFrame(domRoot, assessment) {
  */
 function renderQuizmeActivity(quizme, domRoot) {
   console.log("RAM: renderQuizmeActivity");
-  var quizActivity = quizme[0];
+  var quizActivity = quizme;
   var questionType = quizActivity.questionType;
   var quizType = quizActivity.quizType;
 
   var iframe = document.createElement('iframe');
-  //  iframe.setAttribute('src', '/assets/js/quizme/quizme-progex.html');
   iframe.setAttribute('src', '/assets/js/quizme/blockly.html');
   iframe.setAttribute('width', '795');
   iframe.setAttribute('height', '495');

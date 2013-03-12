@@ -1243,7 +1243,9 @@ var componentTypeJson = [{ "name": "AccelerometerSensor",
   "blockProperties": [],
   "events": [],
   "methods": [{ "name": "GetWifiIpAddress", "description": "Returns the IP address of the phone in the form of a String", "params": [], "returnType": "text"},
-    { "name": "isConnected", "description": "Returns TRUE if the phone is on Wifi, FALSE otherwise", "params": [], "returnType": "boolean"}]}
+    { "name": "isConnected", "description": "Returns TRUE if the phone is on Wifi, FALSE otherwise", "params": [], "returnType": "boolean"},
+    { "name": "setHmacSeedReturnCode", "description": "Establish the secret seed for HOTP generation. Return the SHA1 of the provided seed, this will be used to contact the rendezvous server.", "params": [{ "name": "seed", "type": "text"}], "returnType": "text"},
+    { "name": "startHTTPD", "description": "Start the internal AppInvHTTPD to listen for incoming forms. FOR REPL USE ONLY!", "params": []}]}
 ,
 { "name": "Player",
   "version": "4",

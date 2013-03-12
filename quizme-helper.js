@@ -136,24 +136,20 @@ function initQuizme(quiztype, quizmepath) {
   // This would be defined in a file of the form: ./assets/js/assessments-P1.js
   // Or in MobileCSP in a file of the form activity-X.html.
 
-  if (window.document.title == "Blockly Frame") {
-    if (window.parent.document.title.indexOf('QB') == 0) {
-      quiztype = processCbAssessment(window.parent.assessment_quizme);
-    } else {
-      quiztype = processCbAssessment(window.parent.parent.assessment_quizme);
-    }
-  }
-
   // Are we within the CourseBuilder practice Quizme context?
   // This would be defined in a file of the form: ./assets/js/quizme-3.1.js
 
   if (!quiztype) {
     if (window.document.title == "Blockly Frame") {
-	if ( window.parent.document.title.indexOf('QB') == 0) {
-	  quiztype = processCbActivity(window.parent.activity);
-	}  else if (window.parent.parent.document.title.indexOf('CSP') == 0) {
-	  quiztype = processCbActivity(window.parent.parent.activity);
-	}
+      if (window.parent.activity) {
+        quiztype = processCbActivity(window.parent.activity);
+      } else if (window.parent.parent.activity) {
+        quiztype = processCbAcivity(window.parent.parent.activity);
+      } else if (window.parent.assessment) {
+        quiztype = processCbAssessment(window.parent.assessment);
+      } else if (window.parent.parent.assessment) {
+        quiztype = processCbAssessment(window.parent.parent.activity);
+      }
     }
   }
 
@@ -196,7 +192,7 @@ function processCbAssessment(assessment) {
 function processCbActivity(activity) {
   var quiztype;
   if (activity) {
-    quiztype = activity[0].quizType; 
+    quiztype = activity.quizType; 
 
     var selector_prompt = window.parent.document.getElementById('selector_prompt');
     if (selector_prompt)
