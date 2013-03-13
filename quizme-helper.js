@@ -560,7 +560,8 @@ Blockly.Quizme.evaluateUserAnswer = function() {
   }
   var result;
   if (Blockly.Quizme.answerType == "xml_blocks") {
-    result = Blockly.Quizme.evaluateXmlBlocksAnswerType(Blockly.Quizme.solution); 
+    result = Blockly.Quizme.evaluateXmlBlocksAnswerType(Blockly.Quizme.solution, 
+       Blockly.Quizme.VariableMappings); 
   }
   else if (Blockly.Quizme.answerType == "eval_blocks") {
     result = Blockly.Quizme.evaluateEvalBlocksAnswerType(); 
