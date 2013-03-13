@@ -171,20 +171,24 @@ Blockly.Toolbox.buildTree_ = function() {
   // Populate the tree structure.
   for (var name in Blockly.Language) {
     var block = Blockly.Language[name];
-    // Blocks without a category are fragments used by the mutator dialog.
-    if (block.category) {
+    if (block) {
+      // Blocks without a category are fragments used by the mutator dialog.
       console.log("RAM: buildTree_, block= " + name + " category = " + block.category);
-      var cat = "";
-      if (block.category == "Component") {
-	cat = Blockly.Toolbox.PREFIX_ + window.encodeURI(name.substring(0,name.indexOf('_')));
-      } else {
-         cat = Blockly.Toolbox.PREFIX_ + window.encodeURI(block.category);
+      if (block.category) {
+	var cat = "";
+	if (block.category == "Component") {
+	   cat = Blockly.Toolbox.PREFIX_ + window.encodeURI(name.substring(0,name.indexOf('_')));
+	} else {
+	   cat = Blockly.Toolbox.PREFIX_ + window.encodeURI(block.category);
+	}
+	if (cat in tree) {
+	  tree[cat].push(name);
+	} else {
+	  tree[cat] = [name];
+	}
       }
-      if (cat in tree) {
-        tree[cat].push(name);
-      } else {
-        tree[cat] = [name];
-      }
+    } else {
+      console.log("RAM WARNING: buildTree_, no block for name = " + name);
     }
   }
   return tree;

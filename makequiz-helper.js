@@ -474,18 +474,20 @@ function addBuiltIns (typenames) {
     type = typenames[i];
     var types;
     if (type == "math") {
-      types = ["math_add", "math_compare","math_divide","math_division","math_number","math_multiply","math_power",
-	       "math_subtract", "math_single"];
+      types = ["math_add", "math_compare","math_divide","math_division","math_is_a_number", "math_multiply","math_number", 
+                "math_on_list", "math_power",
+	       "math_random_float", "math_random_int", "math_random_set_seed", "math_round", "math_single", "math_subtract"];
     } else if (type == "logic") {
-      types = ["logic_boolean", "logic_compare", "logic_negate", "logic_operation"];
+      types = ["logic_boolean", "logic_compare", "logic_false", "logic_negate", "logic_operation", "logic_or"];
     } else if (type == "variables") {
-      types = ["lexical_variable_get", "lexical_variable_set","global_declaration"];
+      types = ["global_declaration", "lexical_variable_get", "lexical_variable_set", 
+               "local_declaration_expression", "local_declaration_statement", "local_mutatorarg", "local_mutatorcontainer"];
     } else if (type == "procedures") {
       types = ["procedures_callnoreturn", "procedures_callreturn", "procedures_defnoreturn",
         "procedures_defreturn", "procedures_mutatorarg", "procedures_mutatorcontainer", 
         "removeProcedureValues", "getProcedureNames"];
     } else if (type == "controls") {
-      types = ["controls_if", "controls_if_else", "controls_if_else_if", 
+      types = ["controls_if", "controls_if_else", "controls_if_elseif", 
        "controls_if_if", "controls_while", "controls_forEach", "controls_forRange"];
     } else if (type == "lists") {
       types = ["lists_add_items", "lists_add_items_item", "lists_append_list", 
@@ -494,8 +496,8 @@ function addBuiltIns (typenames) {
 	 "lists_select_item"];
     } else if (type == "text") {
 	types = ["text_compare", "text_contains", "text_isEmpty", "text_join",
-	 "text_join_item", "text_length", "text_replace", "text_split",
-	 "text_split_at_spaces", "text_trim"];
+		 "text_join_item", "text_length", "text_replace_all", "text_segment", "text_split",
+		 "text_split_at_spaces", "text_trim", "wrapSentence"];
     }
     for (var k = 0; k < types.length; k++) {
       list.push(types[k]);   

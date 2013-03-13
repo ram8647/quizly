@@ -38023,7 +38023,9 @@ Blockly.Language.controls_if = {
 };
 
 Blockly.Language.controls_if_if = {
-  // If condition.
+  // If_if condition.
+  category: Blockly.LANG_CATEGORY_CONTROLS,
+  helpUrl: Blockly.LANG_CONTROLS_IF_HELPURL,
   init: function() {
     this.setColour(Blockly.CONTROL_CATEGORY_HUE);
     this.appendDummyInput()
@@ -38035,7 +38037,9 @@ Blockly.Language.controls_if_if = {
 };
 
 Blockly.Language.controls_if_elseif = {
-  // Else-If condition.
+  // If_else-If condition.
+  category: Blockly.LANG_CATEGORY_CONTROLS,
+  helpUrl: Blockly.LANG_CONTROLS_IF_HELPURL,
   init: function() {
     this.setColour(Blockly.CONTROL_CATEGORY_HUE);
     this.appendDummyInput()
@@ -38048,7 +38052,9 @@ Blockly.Language.controls_if_elseif = {
 };
 
 Blockly.Language.controls_if_else = {
-  // Else condition.
+  // If_else condition.
+  category: Blockly.LANG_CATEGORY_CONTROLS,
+  helpUrl: Blockly.LANG_CONTROLS_IF_HELPURL,
   init: function() {
     this.setColour(Blockly.CONTROL_CATEGORY_HUE);
     this.appendDummyInput()
@@ -39685,7 +39691,7 @@ Blockly.Language.math_is_a_number = {
   helpUrl : '',
   init : function() {
     this.setColour(Blockly.MATH_CATEGORY_HUE);
-    this.setOutput(true, Number);
+    this.setOutput(true, Boolean);
     this.appendValueInput('NUM').appendTitle('is a number?');
     this.setTooltip(function() {
       return 'Tests if something is a number.';
