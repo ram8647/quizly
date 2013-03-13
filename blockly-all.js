@@ -35950,11 +35950,11 @@ Blockly.Component.add = function(typeJsonString, name, uid) {
   }
 
   Blockly.ComponentInstances.addInstance(name, uid);
-
+  Blockly.ComponentInstances[name].typeName = typeName;
   // Add event blocks
   for (var i = 0, eventType; eventType = typeDescription.events[i]; i++) {
     Blockly.Component.addBlockAndGenerator(name, name + '_' + eventType.name,
-        new Blockly.ComponentBlock.event(eventType, name),
+        new Blockly.ComponentBlock.event(eventType, name, typeName),
         Blockly.Yail.event(name, eventType.name));
     // TODO: consider adding generic event blocks. We don't have them for now (since the original
     // App Inventor didn't have them).
@@ -35964,7 +35964,7 @@ Blockly.Component.add = function(typeJsonString, name, uid) {
   for (var i = 0, methodType; methodType = typeDescription.methods[i]; i++) {
     Blockly.Component.addBlockAndGenerator(name,
         name + '_' + methodType.name,
-        new Blockly.ComponentBlock.method(methodType, name),
+        new Blockly.ComponentBlock.method(methodType, name, typeName),
         (methodType.returnType
             ? Blockly.Yail.methodWithReturn(name, methodType.name)
                 : Blockly.Yail.methodNoReturn(name, methodType.name)));
@@ -36011,14 +36011,14 @@ Blockly.Component.add = function(typeJsonString, name, uid) {
   if (getters.length > 0) {
     Blockly.Component.addBlockAndGenerator(name,
         name + '_getproperty',
-        new Blockly.ComponentBlock.getter(getters, propYailTypes, propTooltips, name),
+        new Blockly.ComponentBlock.getter(getters, propYailTypes, propTooltips, name, typeName),
         Blockly.Yail.getproperty(name));
   };
 
   if (setters.length > 0) {
     Blockly.Component.addBlockAndGenerator(name,
         name + '_setproperty',
-        new Blockly.ComponentBlock.setter(setters, propYailTypes, propTooltips, name),
+        new Blockly.ComponentBlock.setter(setters, propYailTypes, propTooltips, name, typeName),
         Blockly.Yail.setproperty(name));
   };
 
@@ -36041,7 +36041,7 @@ Blockly.Component.add = function(typeJsonString, name, uid) {
 
   Blockly.Component.addBlockAndGenerator(name,
       name + '_component',
-      new Blockly.ComponentBlock.component(name),
+      new Blockly.ComponentBlock.component(name,typeName),
       Blockly.Yail.componentObject(name));
 
   // For debugging purposes
@@ -36103,6 +36103,7 @@ Blockly.Component.rename = function(oldname, newname, uid) {
   Blockly.ComponentInstances[newname] = {}
   Blockly.ComponentInstances[newname].uid = uid;
   Blockly.ComponentInstances[newname].blocks = [];
+  Blockly.ComponentInstances[newname].typeName = Blockly.ComponentInstances[oldname].typeName;
 
   // Construct new names for each of the Component's block types -- e.g., Button1_Click
   var blocks = Blockly.ComponentInstances[oldname].blocks;
@@ -36222,16 +36223,17 @@ Blockly.Component.remove = function(type, name, uid) {
     console.log("Deleting " + elementName + " from Blockly.Yail");
     delete Blockly.Yail[elementName];
 
-    // Delete instances of this type of block from the workspace
-    var allblocks = Blockly.mainWorkspace.getAllBlocks();
-    for (var x = 0, block; block = allblocks[x]; x++) {
-      if (!block.category) {
-        continue;
-      } else if (block.category == 'Component' && block.type == elementName) {
-        block.dispose(true);     // Destroy the block gently
-      }
+  }
+  // Delete instances of this type of block from the workspace
+  var allblocks = Blockly.mainWorkspace.getAllBlocks();
+  for (var x = 0, block; block = allblocks[x]; x++) {
+    if (!block.category) {
+      continue;
+    } else if (block.category == 'Component' && block.instanceName == name) {
+      block.dispose(true);     // Destroy the block gently
     }
   }
+
   // Remove the component instance
   console.log("Deleting " + name + " from Blockly.ComponentInstances");
   delete Blockly.ComponentInstances[name];
@@ -36272,11 +36274,7 @@ Blockly.Component.buildComponentMap = function(warnings, errors, forRepl, compil
       // TODO: eventually deal with variable declarations, once we have them
     } else if (block.category == 'Component') {
       var instanceName = block.instanceName;
-      if (!instanceName) {
-        // Most likely a generic component-related block. There are currently no generic component
-        // blocks that are valid top-level blocks. This could change if we implement generic
-        // event blocks.
-        // TODO: flag this block as invalid at the top level.
+      if(block.blockType != "event") {
         continue;
       }
       if (!map.components[instanceName]) {
@@ -36399,7 +36397,15 @@ Blockly.Component.addGenericBlockAndGenerator = function(typeName, langName, lan
   Blockly.ComponentTypes.addBlockName(typeName, langName);
 }
 
-
+Blockly.Component.getComponentNamesByType = function(componentType) {
+  var componentNameArray = [];
+  for(var componentName in Blockly.ComponentInstances) {
+    if(Blockly.ComponentInstances[componentName].typeName == componentType) {
+      componentNameArray.push([componentName,componentName]);
+    }
+  }
+  return componentNameArray;
+}
 
 
 // Copyright 2012 Massachusetts Institute of Technology. All rights reserved.
@@ -36600,18 +36606,34 @@ Blockly.ComponentBlock.COLOUR_COMPONENT = Blockly.COLOR_CATEGORY_HUE;
  * instance name. eventType is one of the "events" objects in a typeJsonString
  * passed to Blockly.Component.add.
  */
-Blockly.ComponentBlock.event = function(eventType, instanceName) {
+Blockly.ComponentBlock.event = function(eventType, instanceName, typeName) {
   this.category = 'Component',
   this.blockType = 'event',
   this.helpUrl = 'http://foo', // TODO: fix
   this.instanceName = instanceName;
   this.eventType = eventType;
+  this.typeName = typeName;
 
   // Initializes an event BlocklyBlock
   // This is called by the BlocklyBlock constructor where its type field is set to, e.g., 'Button1_Click'
   this.init = function() {
     this.setColour(Blockly.ComponentBlock.COLOUR_EVENT);
-    this.appendDummyInput().appendTitle('when ' + this.instanceName + '.' + this.eventType.name);
+
+    this.componentDropDown = new Blockly.FieldDropdown([["",""]]);
+    this.componentDropDown.block = this;
+    this.componentDropDown.menuGenerator_ = function(){ return Blockly.Component.getComponentNamesByType(this.block.typeName);};
+    this.componentDropDown.changeHandler_ = function(value){
+      if (value !== null && value != "") {
+        this.setValue(value);
+        this.block.instanceName = value;
+      }
+
+    };
+
+    this.appendDummyInput().appendTitle('when ')
+    .appendTitle(this.componentDropDown, "COMPONENT_SELECTOR")
+    .appendTitle('.' + this.eventType.name);
+    this.componentDropDown.setValue(this.instanceName);
     
     if(eventType.params.length != 0){
       var paramInput = this.appendDummyInput();
@@ -36633,8 +36655,9 @@ Blockly.ComponentBlock.event = function(eventType, instanceName) {
     this.rename = function(oldname, newname) {
       if (this.instanceName == oldname) {
         this.instanceName = newname;
-        var title = this.inputList[0].titleRow[0];
-        title.setText('when ' + this.instanceName + '.' + this.eventType.name);  // Revise title
+        //var title = this.inputList[0].titleRow[0];
+        //title.setText('when ' + this.instanceName + '.' + this.eventType.name);  // Revise title
+        this.componentDropDown.setValue(this.instanceName);
         if (this.type.indexOf(oldname) != -1) {
           this.type = this.type.replace(oldname, newname);
         }
@@ -36679,11 +36702,12 @@ Blockly.ComponentBlock.event = function(eventType, instanceName) {
  * Create a method block of the given type for a component with the given instance name. methodType
  * is one of the "methods" objects in a typeJsonString passed to Blockly.Component.add.
  */
-Blockly.ComponentBlock.method = function(methodType, instanceName) {
+Blockly.ComponentBlock.method = function(methodType, instanceName, typeName) {
   this.category = 'Component';
   this.helpUrl = "http://foo";  // TODO: fix
   this.instanceName = instanceName;
   this.methodType = methodType;
+  this.typeName = typeName;
 
   if (methodType.returnType) {
     this.blockType = 'methodwithreturn';
@@ -36707,7 +36731,23 @@ Blockly.ComponentBlock.method = function(methodType, instanceName) {
   // Initializes a method BlocklyBlock
   this.init = function() {
     this.setColour(Blockly.ComponentBlock.COLOUR_METHOD);
-    this.appendDummyInput().appendTitle('call ' + this.instanceName + '.' + this.methodType.name);
+
+    this.componentDropDown = new Blockly.FieldDropdown([["",""]]);
+    this.componentDropDown.block = this;
+    this.componentDropDown.menuGenerator_ = function(){ return Blockly.Component.getComponentNamesByType(this.block.typeName);};
+    this.componentDropDown.changeHandler_ = function(value){
+      if (value !== null && value != "") {
+        this.setValue(value);
+        this.block.instanceName = value;
+      }
+
+    };
+
+    this.appendDummyInput().appendTitle('call ')
+    .appendTitle(this.componentDropDown, "COMPONENT_SELECTOR")
+    .appendTitle('.' + this.methodType.name);
+    this.componentDropDown.setValue(this.instanceName);
+
     Blockly.Language.setTooltip(this, this.methodType.description);
     for (var i = 0, param; param = this.params[i]; i++) {
       var newInput = this.appendValueInput("ARG" + i).appendTitle(param);
@@ -36725,8 +36765,9 @@ Blockly.ComponentBlock.method = function(methodType, instanceName) {
     this.rename = function(oldname, newname) {
       if (this.instanceName == oldname) {
         this.instanceName = newname;
-        var title = this.inputList[0].titleRow[0];
-        title.setText('call ' + this.instanceName + '.' + this.methodType.name);
+        //var title = this.inputList[0].titleRow[0];
+        //title.setText('call ' + this.instanceName + '.' + this.methodType.name);
+        this.componentDropDown.setValue(this.instanceName);
         if (this.type.indexOf(oldname) != -1) {
           this.type = this.type.replace(oldname, newname);
         }
@@ -36802,11 +36843,12 @@ Blockly.ComponentBlock.genericMethod = function(methodType, typeName) {
  * tooltip for the the property
  */
 
-Blockly.ComponentBlock.getter = function(propNames, propYailTypes, propTooltips, instanceName) {
+Blockly.ComponentBlock.getter = function(propNames, propYailTypes, propTooltips, instanceName, typeName) {
   this.category = 'Component';
   this.blockType = 'getter',
   this.helpUrl = "http://foo";  // TODO: fix
   this.instanceName = instanceName;
+  this.typeName = typeName;
 
   // Initializes a getter BlocklyBlock
   // Called by the BlocklyBlock constructor where its type field is set to, e.g., 'TextBox1_getproperty'
@@ -36830,7 +36872,21 @@ Blockly.ComponentBlock.getter = function(propNames, propYailTypes, propTooltips,
         }
     );
 
-    this.appendDummyInput().appendTitle(this.instanceName + '.').appendTitle(dropdown, "PROP");
+    this.componentDropDown = new Blockly.FieldDropdown([["",""]]);
+    this.componentDropDown.block = this;
+    this.componentDropDown.menuGenerator_ = function(){ return Blockly.Component.getComponentNamesByType(this.block.typeName);};
+    this.componentDropDown.changeHandler_ = function(value){
+      if (value !== null && value != "") {
+        this.setValue(value);
+        this.block.instanceName = value;
+      }
+
+    };
+
+
+    this.appendDummyInput().appendTitle(this.componentDropDown, "COMPONENT_SELECTOR")
+    .appendTitle('.').appendTitle(dropdown, "PROP");
+    this.componentDropDown.setValue(this.instanceName);
     // Set the initial output type and tooltip since they won't be set in the dropdown callback
     var newType = Blockly.ComponentBlock.getCurrentArgType(dropdown, propNames, propYailTypes);
     thisBlock.setOutput(true, newType);
@@ -36842,8 +36898,9 @@ Blockly.ComponentBlock.getter = function(propNames, propYailTypes, propTooltips,
     this.rename = function(oldname, newname) {
       if (this.instanceName == oldname) {
         this.instanceName = newname;
-        var title = this.inputList[0].titleRow[0];
-        title.setText(this.instanceName + '.');
+        //var title = this.inputList[0].titleRow[0];
+        //title.setText(this.instanceName + '.');
+        this.componentDropDown.setValue(this.instanceName);
         if (this.type.indexOf(oldname) != -1) {
           this.type = this.type.replace(oldname, newname);
         }
@@ -36867,6 +36924,7 @@ Blockly.ComponentBlock.genericGetter = function(propNames, propYailTypes, propTo
   this.helpUrl = "http://foo";  // TODO: fix
   this.instanceName = typeName;
   this.propYailTypes = propYailTypes;
+  this.typeName = typeName;
 
   // Initializes a genericGetter BlocklyBlock
   // Its type field is set in the BlocklyBlock constructor
@@ -36928,13 +36986,14 @@ Blockly.ComponentBlock.genericGetter = function(propNames, propYailTypes, propTo
  * tooltip for the the property
  */
 
-Blockly.ComponentBlock.setter = function(propNames, propYailTypes, propTooltips, instanceName) {
+Blockly.ComponentBlock.setter = function(propNames, propYailTypes, propTooltips, instanceName, typeName) {
   this.category = 'Component';
   this.blockType = 'setter',
   this.helpUrl = "http://foo";  // TODO: fix
   this.instanceName = instanceName;
   this.propYailTypes = propYailTypes;
   this.propTooltips = propTooltips;
+  this.typeName = typeName;
 
   // Initializes a setter BlocklyBlock
   // The type field is set in BlocklyBlock constructor to, e.g., Label1_setproperty
@@ -36956,10 +37015,24 @@ Blockly.ComponentBlock.setter = function(propNames, propYailTypes, propTooltips,
         }
     );
 
+    this.componentDropDown = new Blockly.FieldDropdown([["",""]]);
+    this.componentDropDown.block = this;
+    this.componentDropDown.menuGenerator_ = function(){ return Blockly.Component.getComponentNamesByType(this.block.typeName);};
+    this.componentDropDown.changeHandler_ = function(value){
+      if (value !== null && value != "") {
+        this.setValue(value);
+        this.block.instanceName = value;
+      }
+
+    };
+
     var initialArgType = Blockly.ComponentBlock.getCurrentArgType(dropdown, propNames, propYailTypes);
-    var valueInput = this.appendValueInput("VALUE", initialArgType).
-    appendTitle('set ' + this.instanceName + '.').appendTitle(dropdown, "PROP").appendTitle(' to');
+    var valueInput = this.appendValueInput("VALUE", initialArgType)
+    .appendTitle('set ')
+    .appendTitle(this.componentDropDown, "COMPONENT_SELECTOR")
+    .appendTitle('.').appendTitle(dropdown, "PROP").appendTitle(' to');
     valueInput.connection.setCheck(initialArgType);
+    this.componentDropDown.setValue(this.instanceName);
     Blockly.Language.setTooltip(
         thisBlock,
         Blockly.ComponentBlock.getCurrentTooltip(dropdown, propNames, propTooltips));
@@ -36972,8 +37045,9 @@ Blockly.ComponentBlock.setter = function(propNames, propYailTypes, propTooltips,
     this.rename = function(oldname, newname) {
       if (this.instanceName == oldname) {
         this.instanceName =  newname;
-        var title = this.inputList[0].titleRow[0];
-        title.setText('set ' + this.instanceName + '.');
+        //var title = this.inputList[0].titleRow[0];
+        //title.setText('set ' + this.instanceName + '.');
+        this.componentDropDown.setValue(this.instanceName);
         if (this.type.indexOf(oldname) != -1) {
           this.type = this.type.replace(oldname, newname);
         }
@@ -37082,24 +37156,37 @@ Blockly.ComponentBlock.getCurrentTooltip = function (fieldDropdown, propNames, p
  * Create a component (object) block for a component with the given
  * instance name.
  */
-Blockly.ComponentBlock.component = function(instanceName) {
+Blockly.ComponentBlock.component = function(instanceName, typeName) {
   this.category = 'Component';
   this.blockType = 'component',
   this.helpUrl = "http://foo";  // TODO: fix
   this.instanceName = instanceName;
+  this.typeName = typeName;
 
   // Initialize this type of ComponentBlock
   this.init = function() {
     this.setColour(Blockly.ComponentBlock.COLOUR_COMPONENT);
-    this.appendDummyInput().appendTitle(this.instanceName);
+    this.componentDropDown = new Blockly.FieldDropdown([["",""]]);
+    this.componentDropDown.block = this;
+    this.componentDropDown.menuGenerator_ = function(){ return Blockly.Component.getComponentNamesByType(this.block.typeName);};
+    this.componentDropDown.changeHandler_ = function(value){
+      if (value !== null && value != "") {
+        this.setValue(value);
+        this.block.instanceName = value;
+      }
+
+    };
+    this.appendDummyInput().appendTitle(this.componentDropDown, "COMPONENT_SELECTOR");
+    this.componentDropDown.setValue(this.instanceName);
     this.setOutput(true, "COMPONENT");
 
     // Renames the block's instanceName, type, and reset its title
     this.rename = function(oldname, newname) {
       if (this.instanceName == oldname) {
         this.instanceName = newname;
-        var title = this.inputList[0].titleRow[0];
-        title.setText(this.instanceName);
+        //var title = this.inputList[0].titleRow[0];
+        //title.setText(this.instanceName);
+        this.componentDropDown.setValue(this.instanceName);
         if (this.type.indexOf(oldname) != -1) {
           this.type = this.type.replace(oldname, newname);
         }
@@ -38023,9 +38110,7 @@ Blockly.Language.controls_if = {
 };
 
 Blockly.Language.controls_if_if = {
-  // If_if condition.
-  category: Blockly.LANG_CATEGORY_CONTROLS,
-  helpUrl: Blockly.LANG_CONTROLS_IF_HELPURL,
+  // If condition.
   init: function() {
     this.setColour(Blockly.CONTROL_CATEGORY_HUE);
     this.appendDummyInput()
@@ -38037,9 +38122,7 @@ Blockly.Language.controls_if_if = {
 };
 
 Blockly.Language.controls_if_elseif = {
-  // If_else-If condition.
-  category: Blockly.LANG_CATEGORY_CONTROLS,
-  helpUrl: Blockly.LANG_CONTROLS_IF_HELPURL,
+  // Else-If condition.
   init: function() {
     this.setColour(Blockly.CONTROL_CATEGORY_HUE);
     this.appendDummyInput()
@@ -38052,9 +38135,7 @@ Blockly.Language.controls_if_elseif = {
 };
 
 Blockly.Language.controls_if_else = {
-  // If_else condition.
-  category: Blockly.LANG_CATEGORY_CONTROLS,
-  helpUrl: Blockly.LANG_CONTROLS_IF_HELPURL,
+  // Else condition.
   init: function() {
     this.setColour(Blockly.CONTROL_CATEGORY_HUE);
     this.appendDummyInput()
@@ -38150,7 +38231,7 @@ Blockly.Language.controls_forRange = {
     // this.appendValueInput('VAR').appendTitle('for range').appendTitle('variable').setAlign(Blockly.ALIGN_RIGHT);
     // this.appendValueInput('START').setCheck(Number).appendTitle('start').setAlign(Blockly.ALIGN_RIGHT);
     this.appendValueInput('START')
-        .setCheck(Array)
+        .setCheck(Number)
         .appendTitle("for range")
         .appendTitle(new Blockly.FieldTextInput("i", Blockly.LexicalVariable.renameParam), 'VAR')
         .appendTitle('start')
@@ -41604,7 +41685,7 @@ Blockly.Yail.event = function(instanceName, eventName) {
     }
 
     var code = Blockly.Yail.YAIL_DEFINE_EVENT
-      + instanceName
+      + this.getTitleValue("COMPONENT_SELECTOR")
       + Blockly.Yail.YAIL_SPACER 
       + eventName
       + Blockly.Yail.YAIL_OPEN_COMBINATION 
@@ -41704,6 +41785,7 @@ Blockly.Yail.methodHelper = function(methodBlock, name, methodName, generic) {
         + Blockly.Yail.YAIL_SPACER;
   } else {
     callPrefix = Blockly.Yail.YAIL_CALL_COMPONENT_METHOD; 
+    name = methodBlock.getTitleValue("COMPONENT_SELECTOR");
   }
   for (var x = 0; x < methodBlock.inputList.length; x++) {
     // TODO(hal, andrew): check for empty socket and generate error if necessary
@@ -41741,7 +41823,7 @@ Blockly.Yail.setproperty = function(instanceName) {
   return function() {
     var propName = this.getTitleValue("PROP");
     var propType = this.propYailTypes[propName];
-    var assignLabel = Blockly.Yail.YAIL_QUOTE + instanceName + Blockly.Yail.YAIL_SPACER 
+    var assignLabel = Blockly.Yail.YAIL_QUOTE + this.getTitleValue("COMPONENT_SELECTOR") + Blockly.Yail.YAIL_SPACER
       + Blockly.Yail.YAIL_QUOTE + propName;
     var code = Blockly.Yail.YAIL_SET_AND_COERCE_PROPERTY + assignLabel + Blockly.Yail.YAIL_SPACER;
     // TODO(hal, andrew): check for empty socket and generate error if necessary
@@ -41793,7 +41875,7 @@ Blockly.Yail.getproperty = function(instanceName) {
     var propType = this.propYailTypes[propName];
     var code = Blockly.Yail.YAIL_GET_PROPERTY
       + Blockly.Yail.YAIL_QUOTE
-      + instanceName
+      + this.getTitleValue("COMPONENT_SELECTOR")
       + Blockly.Yail.YAIL_SPACER
       + Blockly.Yail.YAIL_QUOTE
       + propName
@@ -41839,7 +41921,7 @@ Blockly.Yail.genericGetproperty = function(typeName) {
  */
 Blockly.Yail.componentObject = function(instanceName) {
   return function() { 
-    return [Blockly.Yail.YAIL_GET_COMPONENT + instanceName + Blockly.Yail.YAIL_CLOSE_COMBINATION,
+    return [Blockly.Yail.YAIL_GET_COMPONENT + this.getTitleValue("COMPONENT_SELECTOR") + Blockly.Yail.YAIL_CLOSE_COMBINATION,
             Blockly.Yail.ORDER_ATOMIC];
   }
 }
