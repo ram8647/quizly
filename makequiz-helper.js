@@ -474,7 +474,7 @@ function addBuiltIns (typenames) {
     type = typenames[i];
     var types;
     if (type == "math") {
-      types = ["math_add", "math_compare","math_divide","math_division","math_is_a_number", "math_multiply","math_number", 
+      types = ["math_add", "math_compare","math_divide","math_division","math_is_a_number", "math_multiply","math_mutator_item", "mutator_container", "math_number", 
                 "math_on_list", "math_power",
 	       "math_random_float", "math_random_int", "math_random_set_seed", "math_round", "math_single", "math_subtract"];
     } else if (type == "logic") {
