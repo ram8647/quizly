@@ -34985,7 +34985,8 @@ Blockly.CodeGenerator.prototype.valueToCode = function(block, name, order) {
     // Disabled block.
     return '';
   }
-  if (!(tuple instanceof Array)) {
+  //  if (!(tuple instanceof Array)) {
+  if (!isArray(tuple)) {
     // Value blocks must return code and order of operations info.
     // Statement blocks must only return code.
     throw 'Expecting tuple from value block "' + targetBlock.type + '".';
@@ -40843,6 +40844,7 @@ Blockly.Language.local_declaration_statement = {
     while (currentVar) {
         varList.push(currentVar);
         i++;
+        currentVar = this.getTitleValue('VAR' + i);
     }
     return varList;
   },
