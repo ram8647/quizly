@@ -487,7 +487,7 @@ function addBuiltIns (typenames) {
         "procedures_defreturn", "procedures_mutatorarg", "procedures_mutatorcontainer", 
         "removeProcedureValues", "getProcedureNames"];
     } else if (type == "controls") {
-      types = ["controls_if", "controls_if_else", "controls_if_elseif", 
+      types = ["controls_do_then_return", "controls_if", "controls_if_else", "controls_if_elseif", 
        "controls_if_if", "controls_while", "controls_forEach", "controls_forRange"];
     } else if (type == "lists") {
       types = ["lists_add_items", "lists_add_items_item", "lists_append_list", 
