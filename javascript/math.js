@@ -441,3 +441,38 @@ Blockly.JavaScript.math_random_float = function() {
   // Random fraction between 0 and 1.
   return ['Math.random()', Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
+
+/**
+ * The App Inventor is_a_number function.  
+ */
+Blockly.JavaScript.math_is_a_number = function() {
+  var arg = Blockly.JavaScript.valueToCode(this, 'NUM', Blockly.JavaScript.ORDER_NONE) || '0';
+  var code = '!Math.NaN(' + arg + ')';
+  if (code) {
+    return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+  }
+};
+
+/**
+ * The App Inventor random_set_seed procedure.
+ * 
+ * NOTE: JavaScript does not have a built-in set_seed function. So
+ *  to do this you'd have to write your own RNG. It appears
+ *  from the Yail code here that Kawa has a random-set-seed function.
+ */
+Blockly.JavaScript.math_random_set_seed = function() {
+  // Basic is_a_number.
+  var argument = Blockly.JavaScript.valueToCode(this, 'NUM', Blockly.Yail.ORDER_NONE) || '0';
+//  var code ;
+//   var code = Blockly.Yail.YAIL_CALL_YAIL_PRIMITIVE + "random-set-seed"
+//       + Blockly.Yail.YAIL_SPACER;
+//   code = code + Blockly.Yail.YAIL_OPEN_COMBINATION
+//       + Blockly.Yail.YAIL_LIST_CONSTRUCTOR + Blockly.Yail.YAIL_SPACER
+//       + argument + Blockly.Yail.YAIL_CLOSE_COMBINATION;
+//   code = code + Blockly.Yail.YAIL_SPACER + Blockly.Yail.YAIL_QUOTE
+//       + Blockly.Yail.YAIL_OPEN_COMBINATION + "number"
+//       + Blockly.Yail.YAIL_CLOSE_COMBINATION + Blockly.Yail.YAIL_SPACER;
+//   code = code + Blockly.Yail.YAIL_DOUBLE_QUOTE + "random set seed"
+//       + Blockly.Yail.YAIL_DOUBLE_QUOTE + Blockly.Yail.YAIL_CLOSE_COMBINATION;
+//  return code;
+};
