@@ -34962,7 +34962,7 @@ Blockly.CodeGenerator.prototype.blockToCode = function(block) {
         'for block type "' + block.type + '".';
   }
   var code = func.call(block);
-  if (code instanceof Array && code.length == 2) {
+  if (code instanceof Array) {
     // Value blocks return tuples of code and operator order.
     return [this.scrub_(block, code[0]), code[1]];
   } else {
@@ -43353,9 +43353,9 @@ Blockly.Yail.local_variable = function(block,isExpression) {
   code += Blockly.Yail.YAIL_SPACER +  Blockly.Yail.YAIL_CLOSE_COMBINATION;
   // [lyn, 01/15/2013] Added to fix bug in local declaration expressions:
   if(isExpression){
-    code += Blockly.Yail.YAIL_SPACER +  Blockly.Yail.valueToCode(block, 'RETURN');
+    code += Blockly.Yail.YAIL_SPACER +  Blockly.Yail.valueToCode(block, 'RETURN', Blockly.Yail.ORDER_NONE);
   } else {
-    code += Blockly.Yail.YAIL_SPACER +  Blockly.Yail.statementToCode(block, 'STACK');
+    code += Blockly.Yail.YAIL_SPACER +  Blockly.Yail.statementToCode(block, 'STACK', Blockly.Yail.ORDER_NONE);
   }
   code += Blockly.Yail.YAIL_SPACER +  Blockly.Yail.YAIL_CLOSE_COMBINATION;
   if(!isExpression){
