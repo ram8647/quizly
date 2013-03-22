@@ -27,16 +27,27 @@ Blockly.JavaScript = Blockly.Generator.get('JavaScript');
 
 Blockly.JavaScript.definitions_ = {}
 
+/**
+ * Generates code for procedure and function definitions, the
+ * only difference being that functions generate a RETURN value.
+ * The definition is posted on Blockly.JavaScript.definitions_
+ * 
+ * Procedure and function defs have different forms:
+ * 
+ * procedure: procedure <name> do <stack>
+ * function : procedure <name> return <expr>
+ * 
+ * Rather than being on an internal <stack>, statements that occur 
+ *  within the scope of the function may be contained in the
+ *  blocks that plug into the return slot. That's why the
+ *  return value may be an array. 
+ *  
+ */
 Blockly.JavaScript.procedures_defreturn = function() {
   // Define a procedure with a return value.
-  //  var funcName = Blockly.JavaScript.variableDB_.getName(
-  //      this.getTitleValue('NAME'), Blockly.Procedures.NAME_TYPE);
-  var funcName =  this.getTitleValue('NAME');
+  var funcName = Blockly.JavaScript.variableDB_.getName(
+      this.getTitleValue('NAME'), Blockly.Procedures.NAME_TYPE);
   var branch = Blockly.JavaScript.statementToCode(this, 'STACK');
-  if (Blockly.JavaScript.INFINITE_LOOP_TRAP) {
-    branch = Blockly.JavaScript.INFINITE_LOOP_TRAP.replace(/%1/g,
-        '\'' + this.id + '\'') + branch;
-  }
   var returnValue = Blockly.JavaScript.valueToCode(this, 'RETURN',
       Blockly.JavaScript.ORDER_NONE) || '';
   if (returnValue) {
@@ -62,7 +73,6 @@ Blockly.JavaScript.procedures_defnoreturn =
 Blockly.JavaScript.procedures_callreturn = function() {
   // Call a procedure with a return value.
   var funcName = Blockly.JavaScript.variableDB_.getName(
-//       this.getTitleValue('NAME'), Blockly.Procedures.NAME_TYPE);
       this.getTitleValue('PROCNAME'), Blockly.Procedures.NAME_TYPE);
   var args = [];
   for (var x = 0; x < this.arguments_.length; x++) {
@@ -102,3 +112,4 @@ Blockly.JavaScript.procedures_ifreturn = function() {
   code += '}\n';
   return code;
 };
+

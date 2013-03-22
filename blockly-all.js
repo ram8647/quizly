@@ -32523,7 +32523,14 @@ Blockly.onKeyDown_ = function(e) {
         // 'x' for cut.
         Blockly.copy_(Blockly.selected);
         Blockly.selected.dispose(true, true);
+      } else if (e.keyCode == 75) {         // 'Ctrl-k' for copying the displayed string to the Clipboard
+        alert("Copy this string : " + "<xml>" + Blockly.Xml.domToText(Blockly.Xml.blockToDom_(Blockly.selected)) + "</xml>" );
       }
+    }
+
+    if (e.keyCode == 80) { // 'Ctrl-p' for paste from the Clipboard
+      var text = prompt("paste text here");
+      Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, Blockly.Xml.textToDom(text))
     }
     if (e.keyCode == 86) {
       // 'v' for paste.
@@ -34955,7 +34962,7 @@ Blockly.CodeGenerator.prototype.blockToCode = function(block) {
         'for block type "' + block.type + '".';
   }
   var code = func.call(block);
-  if (code instanceof Array) {
+  if (code instanceof Array && code.length == 2) {
     // Value blocks return tuples of code and operator order.
     return [this.scrub_(block, code[0]), code[1]];
   } else {

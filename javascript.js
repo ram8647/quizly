@@ -91,6 +91,7 @@ Blockly.JavaScript.ORDER_LOGICAL_OR = 14;    // ||
 Blockly.JavaScript.ORDER_CONDITIONAL = 15;   // ?:
 Blockly.JavaScript.ORDER_ASSIGNMENT = 16;    // = += -= *= /= %= <<= >>= ...
 Blockly.JavaScript.ORDER_COMMA = 17;         // ,
+Blockly.JavaScript.ORDER_ANONYMOUS_FUNCTION = 79; // local variable declaration expression
 Blockly.JavaScript.ORDER_NONE = 99;          // (...)
 
 /**

@@ -62,6 +62,22 @@ Blockly.JavaScript.controls_repeat = function() {
   return code;
 };
 
+/**
+ *  App Inventor while block -- a variation of Blockly's whileUntil.
+ */
+Blockly.JavaScript.controls_while = function() {
+  var stack = Blockly.JavaScript.statementToCode(this, 'DO');
+
+  if (Blockly.JavaScript.INFINITE_LOOP_TRAP) {
+    stack = Blockly.JavaScript.INFINITE_LOOP_TRAP.replace(/%1/g,
+        '\'' + this.id + '\'') + stack;
+  }
+
+  var test = Blockly.JavaScript.valueToCode(this, 'TEST',Blockly.JavaScript.ORDER_NONE) || 'false';
+  var code = 'while (' + test + ') {\n' + stack + '}\n';
+  return code;
+}
+
 Blockly.JavaScript.controls_whileUntil = function() {
   // Do while/until loop.
   var until = this.getTitleValue('MODE') == 'UNTIL';
@@ -78,6 +94,8 @@ Blockly.JavaScript.controls_whileUntil = function() {
   }
   return 'while (' + argument0 + ') {\n' + branch + '}\n';
 };
+
+
 
 Blockly.JavaScript.controls_for = function() {
   // For loop.
@@ -170,3 +188,29 @@ Blockly.JavaScript.controls_flow_statements = function() {
   }
   throw 'Unknown flow statement.';
 };
+
+/** 
+ * Generates JavaScript code for the do then return statement, which 
+ *  takes the following form:  do <stack> then return <expr>.
+ */
+Blockly.JavaScript.controls_do_then_return = function() {
+  // do <stack> then return <expr>
+  var stack = Blockly.JavaScript.statementToCode(this, 'STM');
+  if (Blockly.JavaScript.INFINITE_LOOP_TRAP) {
+    stack = Blockly.JavaScript.INFINITE_LOOP_TRAP.replace(/%1/g,
+        '\'' + this.id + '\'') + stack;
+  }
+
+  var returnValue = Blockly.JavaScript.valueToCode(this, 'VALUE', Blockly.JavaScript.ORDER_NONE)  || ''; 
+
+  // We use an anonymous function, which makes it easy to separate the stack and return expression
+  var code = 'function() {\n';
+  code += '  '  + stack;
+  code += '  '  + 'return ' + returnValue;
+  code += ';\n  }()';
+  
+  return [code, Blockly.JavaScript.ORDER_ANONYMOUS_FUNCTION];
+
+};
+
+
