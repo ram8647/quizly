@@ -210,7 +210,20 @@ Blockly.JavaScript.controls_do_then_return = function() {
   code += ';\n  }()';
   
   return [code, Blockly.JavaScript.ORDER_ANONYMOUS_FUNCTION];
-
 };
+
+/**
+ *  App Inventor choose-then-return block.
+ */
+Blockly.JavaScript.controls_choose = function() {
+  var test = Blockly.JavaScript.valueToCode(this, 'TEST', Blockly.JavaScript.ORDER_NONE) || 'false';
+  var thenReturn = Blockly.JavaScript.valueToCode(this, 'THENRETURN', Blockly.JavaScript.ORDER_NONE) || '';
+  var elseReturn = Blockly.JavaScript.valueToCode(this, 'ELSERETURN', Blockly.JavaScript.ORDER_NONE) || '';
+
+  var code = 'function() {\n    if (' + test + ') {\n' + '      return '  +  thenReturn + '; \n    } else {\n' + 
+     '      return ' + elseReturn + '; \n    }\n  }()';
+  return [code,Blockly.JavaScript.ORDER_ANONYMOUS_FUNCTION];
+};
+
 
 
