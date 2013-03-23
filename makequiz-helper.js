@@ -416,6 +416,8 @@ function giveTestHint() {
   processHint(Blockly.Quizmaker);
 }
 
+
+
 /**
  *  The onclick function for the 'generate' button.
  */
@@ -423,7 +425,8 @@ function generateJSON() {
   var jsonObj = generateQuizJsonObj(Blockly.Quizmaker);
   Blockly.Quizmaker.JsonObj = jsonObj;
   var str = JSON.stringify(jsonObj);
-  alert("Copy and paste the following JSON string into the quizzes file:\n\n" + "\"" + jsonObj.Name + "\" :" + str)
+  //  alert("Copy and paste the following JSON string into the quizzes file:\n\n" + "\"" + jsonObj.Name + "\" :" + str)
+  parent.alert("\"" + jsonObj.Name + "\" :" + str)
 }
 
 /**
@@ -487,7 +490,7 @@ function addBuiltIns (typenames) {
         "procedures_defreturn", "procedures_mutatorarg", "procedures_mutatorcontainer", 
         "removeProcedureValues", "getProcedureNames"];
     } else if (type == "controls") {
-      types = ["controls_do_then_return", "controls_if", "controls_if_else", "controls_if_elseif", 
+      types = ["controls_choose", "controls_do_then_return", "controls_if", "controls_if_else", "controls_if_elseif", 
        "controls_if_if", "controls_while", "controls_forEach", "controls_forRange"];
     } else if (type == "lists") {
       types = ["lists_add_items", "lists_add_items_item", "lists_append_list", 
