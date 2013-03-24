@@ -383,6 +383,10 @@ function reset() {
      function blocklyLoaded(blockly) {
        // Called once Blockly is fully loaded.
        window.Blockly = blockly;
+       if (navigator.appName == "Netscape") {
+         Blockly.svg.height.baseVal.value = 400;
+         alert("Svg height = " + Blockly.svg.height.baseVal.value);
+       }
      }
    </script>
    <iframe style="width: 100%; height: 100%; border: 1px solid #ccc;" src="blockly.html"></iframe>
