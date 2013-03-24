@@ -152,8 +152,8 @@ function createCustomAlert(txt) {
   h1.appendChild(d.createTextNode(ALERT_TITLE));
 
   var msg = alertObj.appendChild(d.createElement("p"));
-  //msg.appendChild(d.createTextNode(txt));
-  msg.innerHTML = txt;
+  msg.appendChild(d.createTextNode(txt));
+//  msg.innerHTML = txt;
 
   var btn = alertObj.appendChild(d.createElement("a"));
   btn.id = "closeBtn";
@@ -331,6 +331,7 @@ function reset() {
      <br>Built-in Blocks 
              <input type="checkbox" name="built_ins" value="math" checked="true">Math
              <input type="checkbox" name="built_ins" value="logic" checked="true">Logic
+             <input type="checkbox" name="built_ins" value="lists" checked="true">Lists
              <input type="checkbox" name="built_ins" value="text" checked="true">Text
              <input type="checkbox" name="built_ins" value="colors" checked="true">Colors
              <input type="checkbox" name="built_ins" value="controls" checked="true">Controls
