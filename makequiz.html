@@ -133,7 +133,11 @@ if (document.getElementById) {
 }
 
 
-function createCustomAlert(txt) {
+function createCustomAlert(txt, title, btn_title) {
+  if (!title) 
+    title = ALERT_TITLE;
+  if (!btn_title)
+    btn_title = ALERT_BUTTON_TEXT;
   var d = document;
 
   if(d.getElementById("modalContainer")) return;
@@ -149,7 +153,7 @@ function createCustomAlert(txt) {
   alertObj.style.visiblity="visible";
 
   var h1 = alertObj.appendChild(d.createElement("h1"));
-  h1.appendChild(d.createTextNode(ALERT_TITLE));
+  h1.appendChild(d.createTextNode(title));
 
   var msg = alertObj.appendChild(d.createElement("p"));
   msg.appendChild(d.createTextNode(txt));
@@ -157,7 +161,7 @@ function createCustomAlert(txt) {
 
   var btn = alertObj.appendChild(d.createElement("a"));
   btn.id = "closeBtn";
-  btn.appendChild(d.createTextNode(ALERT_BUTTON_TEXT));
+  btn.appendChild(d.createTextNode(btn_title));
   btn.href = "#";
   btn.focus();
   btn.onclick = function() { removeCustomAlert();return false; }
@@ -171,6 +175,11 @@ function removeCustomAlert() {
 </script>
 
 <script>
+function createOrUpdateQuiz() {
+  console.log("RAM createOrUpdateQuiz");
+  Blockly.doIt('createorupdate');
+}
+
 function setupProblemBlocks() {
   console.log("RAM setupProblemBlocks()");
   Blockly.doIt('setupproblem');
@@ -203,7 +212,8 @@ function toggleNewTest() {
 
 function onAnswerTypeSelected(option) {
   console.log("RAM onAnswerTypeSelected()");
-  Blockly.doIt('type', option);
+  if (option.value != "")
+    Blockly.doIt('type', option);
 }
 
 function onExpressionTypeSelected(option) {
@@ -222,14 +232,15 @@ function initQuizMaker() {
 }
 function displayHelp() {
   console.log("RAM: help");
-  alert("Help is on the way");
+  Blockly.doIt('help');
+//  alert("Help is on the way");
 }
 function reset() {
   console.log("RAM: reset");
-  var response = confirm("Are you sure? This will reinitialize the app.");
+  var response = confirm("Are you sure? This will reinitialize the quiz.");
   if (response == true) { 
+    document.location.reload(true);
   }
-
 }
 </script>
   <link href="common.css" rel="stylesheet" type="text/css">
@@ -266,8 +277,11 @@ function reset() {
 <body>
 <!--    <fieldset><legend>Quiz Maker Utility</legend> -->
       <input type="hidden" id="name"></input>
-      Name: <input title="Plain text name for the quiz" size="" type="Text" id="display_name" value="Simple Problem"> </input>&nbsp;&nbsp;
-       Answer Type: <select title="The type of quiz"  id="answer_type" onchange="onAnswerTypeSelected(this)"> 
+      Name: <input title="Plain text name for the quiz" size="" type="Text" id="display_name" value="Unique Quiz Name" onchange="createOrUpdateQuiz()"> </input>&nbsp;&nbsp;
+       Quiz Type: <select title="The type of quiz"  id="answer_type" onchange="onAnswerTypeSelected(this)"> 
+                    <option
+                     title="The quiz type defines the type of exercise."
+                     value="">Required: You must select a quiz type.</option>
                     <option 
                       title="The student's answer will be evaluated and the value compared to your solution."
                       value="eval_expr">Expression Evaluation</option>
@@ -282,7 +296,7 @@ function reset() {
        <select title="Type of expression to evaluate" style="visibility:hidden" id="expression_type" onchange="onExpressionTypeSelected(this)"> 
                     <option value="relation">Relational: &LT;, =, ...</option>
                     <option value="arithmetic">Arithmetic: +, *, ...</option>
-                    <option value="boolean">Boolean: AND, OR, NOT</option>
+<!--                     <option value="boolean">Boolean: AND, OR, NOT</option> -->
        </select>
      <button title="Display instructions" 
              class="help"
@@ -308,21 +322,18 @@ function reset() {
 
      <button title="Setup how the quiz will be presented in the workspace" 
              id="problemspace"  
-             onclick="setupProblemBlocks()">1. Setup Problem</button>
+             onclick="setupProblemBlocks()">1. Setup Problem Workspace</button>
      <button title="Setup the blocks for the quiz's solution" 
              id="solutionspace" 
-             disabled="true" 
-             onclick="setupSolutionBlocks()">2. Setup Solution</button>
+             onclick="setupSolutionBlocks()">2. Setup Solution Workspace</button>
 
      <br>Hints: <input type="Text" id="hint_1" size="120" value="Hint #1."> </input>
 
      <button title="Preview whether the quiz is as you want it" 
              id="test" 
-             disabled="true" 
              onclick="previewTheQuiz()">3. Preview the Quiz&nbsp;&nbsp;</button>
      <button title="Display a savable JSON string for the quiz" 
              id="generate" 
-             disabled="true" 
              onclick="generateJSON()">4. Generate JSON</button>
 
      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="Text" id="hint_2" size="125" value="Hint #2."> </input>
@@ -383,9 +394,9 @@ function reset() {
      function blocklyLoaded(blockly) {
        // Called once Blockly is fully loaded.
        window.Blockly = blockly;
-       if (navigator.appName == "Netscape") {
+       if (navigator.userAgent.indexOf("Firefox") != -1) {
          Blockly.svg.height.baseVal.value = 400;
-         alert("Svg height = " + Blockly.svg.height.baseVal.value);
+         alert("For Firefox, setting Svg height = " + Blockly.svg.height.baseVal.value);
        }
      }
    </script>
