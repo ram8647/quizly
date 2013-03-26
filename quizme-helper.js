@@ -331,7 +331,7 @@ function initializeBlocksWorkspace(quiztype, keepers, components) {
 
   // If the language has already been set for this quiz type, just exit  
 
-  if (Blockly.Quizme.language_type == quiztype) {
+  if (quiztype && Blockly.Quizme.language_type == quiztype) {
     console.log("RAM: language set to " + quiztype + " ... exiting");
     return;
   }
@@ -626,8 +626,9 @@ Blockly.Quizme.evaluateEvalFunctionDef = function(helperObj) {
  *    in the mainWorkspace.  
  * @param qname, the name of the quiz and index into the helperObj
  * @param helperObj, either Quizmaker or Quizme
+ * @param blocks, possibly undefined, the blocks that should be used to construct the function
  */
-Blockly.Quizme.setupFunctionDefinition = function(qname, helperObj) {
+  Blockly.Quizme.setupFunctionDefinition = function(qname, helperObj, blocks) {
   if (helperObj.function_name) {
     helperObj[qname].function_name = helperObj.function_name;
   }
@@ -635,7 +636,9 @@ Blockly.Quizme.setupFunctionDefinition = function(qname, helperObj) {
     helperObj[qname].function_inputs = helperObj.function_inputs;
   }
   Blockly.JavaScript.init();
-  var blocks = Blockly.mainWorkspace.topBlocks_;
+  //  var blocks = Blockly.mainWorkspace.topBlocks_;
+  if (!blocks) 
+    blocks  = Blockly.mainWorkspace.topBlocks_;
   Blockly.JavaScript.blockToCode(blocks[0]);      // Creates a definition
   
   return window.eval('(' +
@@ -796,7 +799,8 @@ function generateInstanceMappings(name, helperObj) {
   console.log("generateInstanceMappings()");
   var map = {};
   var dict = helperObj[name].dictionary;
-  if (dict == "undefined") {
+  //  if (dict == "undefined") {
+  if (!dict) {
     //    throw "The dictionary seems to be missing for Quiz " + helperObj.quizName;
     return map;
   }
@@ -839,6 +843,8 @@ function generateInstanceMappings(name, helperObj) {
  */
 function mapQuizVariables(str, dict) {
   console.log("mapQuizVariables() " + str);
+  if (!str) 
+    return str;
   if (!dict) {
     dict = Blockly.Quizme[Blockly.Quizme.quizName].VariableMappings;
   }
