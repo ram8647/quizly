@@ -74,6 +74,22 @@
 
 'use strict';
 
+//  Blocks lists -- should contain only blocks that have JavaScript generators
+var MATH_BLOCKS = ["math_add", "math_compare","math_divide","math_division","math_is_a_number", "math_multiply","math_mutator_item", "math_number", 
+		   "math_on_list", "math_power", "math_random_float", "math_random_int", "math_round", "math_single", "math_subtract"]; //"math_random_set_seed", 
+var LOGIC_BLOCKS = ["logic_boolean", "logic_compare", "logic_false", "logic_negate", "logic_operation", "logic_or"];
+var VARIABLES_BLOCKS = ["global_declaration", "lexical_variable_get", "lexical_variable_set", 
+               "local_declaration_expression", "local_declaration_statement", "local_mutatorarg", "local_mutatorcontainer"];
+var PROCEDURES_BLOCKS = ["procedures_callnoreturn", "procedures_callreturn", "procedures_defnoreturn",
+        "procedures_defreturn", "procedures_mutatorarg", "procedures_mutatorcontainer", 
+        "removeProcedureValues", "getProcedureNames"];
+var CONTROLS_BLOCKS = ["controls_choose", "controls_do_then_return", "controls_if", "controls_if_else", "controls_if_elseif", 
+		       "controls_while", "controls_forEach" ]; //  "controls_if_if", "controls_forRange"
+var LISTS_BLOCKS = ["lists_create_with", "lists_is_empty", "lists_length"]; //"lists_add_items", "lists_add_items_item", "lists_append_list", "lists_create_with_item", "lists_insert_item", "lists_is_in", "lists_is_list", "lists_pick_random_item", "lists_remove_item", "lists_replace_item", "lists_select_item"
+var TEXT_BLOCKS = ["text", "text_join", "text_length","text_isEmpty","text_trim","text_changeCase"]; // "text_join_item", "text_compare", "text_starts_at", "text_contains", "text_split", "text_split_at_spaces", "text_segment", "text_replace_all"
+var TOPLEVEL_BLOCKS = ["mutator_container", "InstantInTime", "YailTypeToBlocklyType", "YailTypeToBlocklyTypeMap","setTooltip","wrapSentence"];
+
+
 // Path to images used in UI
 var imgpath = "./quizme/media/";
 var maindocument = parent.document;
@@ -312,6 +328,41 @@ function showQuiz(quiztype) {
 }
 
 /**
+ * Initializes Blockly.Language with only those blocks for which there
+ *  are JavaScript generators.
+ *
+ * NOTE: Blockly.WholeLanguage is created in quizme-initblocklyeditor.js
+ */
+function initQuizmeLanguage() {
+  console.log("RAM: initQuizmeLanguage ");
+ 
+  var whitelist = [];
+  whitelist = whitelist.concat(MATH_BLOCKS).concat(LOGIC_BLOCKS).concat(VARIABLES_BLOCKS).concat(PROCEDURES_BLOCKS);
+  whitelist = whitelist.concat(CONTROLS_BLOCKS).concat(LISTS_BLOCKS).concat(TEXT_BLOCKS).concat(TOPLEVEL_BLOCKS);
+
+  // Initialize Blockly.Language by copying whitelisted blocks from WholeLanguage
+  Blockly.Language = {}
+  for (var propname in Blockly.WholeLanguage) {
+    if (whitelist.indexOf(propname) != -1)
+      Blockly.Language[propname] = Blockly.WholeLanguage[propname];
+  }
+
+  // Add the App Inventor components to the langauge and initialize the Toolbox  
+
+  resetComponentInstances();  // In quizme-helper.js
+  var components = ['Button', 'Sound'];
+  Blockly.Quizme.addComponents(components);
+ 
+  // Remove generics
+  for (var k = 0; k < components.length; k++) {
+    var component_name = components[k];
+    delete(Blockly.Language[component_name + "_setproperty"]);
+    delete(Blockly.Language[component_name + "_getproperty"]);
+  } 
+//  Blockly.Toolbox.init();
+}
+
+/**
  * Initializes the Quizme blocks workspace, which contains two
  *  types of elements:  built-in language blocks such as math, logic,
  *  control blocks, and App Inventor components, such as 
@@ -319,7 +370,7 @@ function showQuiz(quiztype) {
  *
  * @param quiztype -- the type of quiz being presented. This is
  *  needed to initialize the Blockly.Language, which varies
- *  depending on quiztype
+ *  depending on quiztype.  
  * @param keepers, an array giving names of the built-in language
  *  elements to keep in the language. If the first list element is 'all',
  *  then all built-in elements are loaded.
@@ -330,30 +381,26 @@ function initializeBlocksWorkspace(quiztype, keepers, components) {
   console.log("RAM: initializeBlocksWorkspace() quiztype = " + quiztype + " keepers = " + keepers);
 
   // If the language has already been set for this quiz type, just exit  
+  // NOTE: Leave quiztype=undefined to reset the language
 
   if (quiztype && Blockly.Quizme.language_type == quiztype) {
     console.log("RAM: language set to " + quiztype + " ... exiting");
     return;
   }
 
-  // We use Blockly.WholeLanguage so that we always filter from the
-  // complete language. Keepers is a white list of language elements 
-  // used to produce a subset of the whole language.
-
-  Blockly.Language = Blockly.WholeLanguage;
-  if (keepers[0] == 'all') {
-    Blockly.Language = Blockly.WholeLanguage;
-  } else {                      
-    var newLanguage = {};
-    for (var x = 0; x < keepers.length; x++) {
-      newLanguage[keepers[x]] = Blockly.WholeLanguage[keepers[x]];
+  // Setup and filter the Quizme language
+  initQuizmeLanguage();
+  var newLanguage = {}
+  for (var propname in Blockly.Language) {
+    if (keepers.indexOf(propname) != -1) {
+      newLanguage[propname] = Blockly.Language[propname];
     }
-    Blockly.Language = newLanguage;
-    Blockly.Quizme.language_type = quiztype;
-    console.log("RAM: Blockly.Quizme.language_type = " + Blockly.Quizme.language_type);
-
-    resetBlocklyLanguage();
   }
+  Blockly.Language = newLanguage;
+  Blockly.Quizme.language_type = quiztype;
+  console.log("RAM: Blockly.Quizme.language_type = " + Blockly.Quizme.language_type);
+
+  resetBlocklyLanguage();
 
   // Add the App Inventor components to the langauge and initialize the Toolbox  
   resetComponentInstances();
@@ -684,7 +731,11 @@ Blockly.Quizme.testFunctionAgainstStandard = function(standard, fn, inputs) {
     var stdresult = stdcall;  //standard(inputs[k]);
     var fnresult = fncall; // fn(inputs[k]);
     console.log("input=" + inputs[k] + " std=" + stdresult + " fn=" + fnresult);
-    result =  stdresult != undefined && (stdresult == fnresult);
+      if (stdresult && ( isArray(stdresult))) {
+      result =  stdresult != undefined && arrcmp(stdresult, fnresult);
+    } else {
+      result =  stdresult != undefined && (stdresult == fnresult);
+    }
     if (result != true) {
       errmsg = 'Your function failed on input<font color="red"> ' + inputs[k] + '</font>. The result should be <font color="red">' 
                  + stdresult + '</font>. Your result was <font color="red">' + fnresult + '</font>';
@@ -872,4 +923,25 @@ function mapQuizVariables(str, dict) {
   return str;
 }
 
+/**
+*  Array equality that should work on nested arrays.
+*/
+function arrcmp(arr_1, arr_2) {
+  var equal = arr_1.length == arr_2.length; 
+  if (equal) {
+    for (var k = 0; k < arr_1.length; k++) {
+      var a1 = arr_1[k];
+      var a2 = arr_2[k];
+      if ( isArray(a1)) {
+        equal = arrcmp(a1,a2); // recursive call
+        if (!equal) 
+          return false;           
+      } else {
+        if (a1 != a2)
+          return false;
+      }
+    }
+  }
+  return equal;
+}
 

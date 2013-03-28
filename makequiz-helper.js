@@ -215,29 +215,10 @@ function initQuizMaker(path) {
 
   // Initialize the structures that handles scoped variables
   Blockly.BlocklyEditor.startquizme();
-  initBlocklyWorkspace();
-}
-
-/**
- * Initializes the Blockly workspace, where solutions are constructed,
- * The various types of quiz problems display various built-in or
- * App Inventor blocks. This function selects just those blocks called
- * for in the prblem.
- *
- * NOTE: Blockly.WholeLanguage is created in quizme-initblocklyeditor.js
- */
-function initBlocklyWorkspace() {
-  console.log("RAM: initBlocklyWorkspace ");
-
-  Blockly.Language = Blockly.WholeLanguage;  // Use the whole language
-
-  // Add the App Inventor components to the langauge and initialize the Toolbox  
-
-  resetComponentInstances();  // In quizme-helper.js
-  var components = ['Button', 'Sound'];
-  Blockly.Quizme.addComponents(components);
+  initQuizmeLanguage();
   Blockly.Toolbox.init();
 }
+
 
 /**
  * Displays the quiz in the browser and allows user to test the quiz.
@@ -360,6 +341,8 @@ function generateQuizJsonObj(quizHelper) {
   obj.XmlDictionary = (quizHelper[name].dictionary) ?  quizHelper[name].dictionary : "undefined"; 
   obj.Xmlgenerator = (quizHelper[name].Xmlgenerator) ? "" + quizHelper[name].Xmlgenerator : "undefined";
   obj.Xmltemplate = (quizHelper[name].Xmltemplate) ? quizHelper[name].Xmltemplate : quizHelper.problemWorkspace;
+  if (!obj.Xmltemplate) 
+    obj.Xmltemplate = "<xml></xml>";  // Case where problem space has been skipped
   obj.Xmlsolution = (quizHelper[name].Xmltemplate) ? "" : quizHelper[name].solutionWorkspace;
   return obj;
 }
@@ -368,7 +351,8 @@ function generateQuizJsonObj(quizHelper) {
  * Utility function for adding the names of blocks that should populate the
  *  various drawers, given a list of type (drawer) names.
  * @param typenames, an array of "math", "list", etc.
- * 
+ *
+ * NOTE: MATH_BLOCKS and other blocks lists are defined in quizme-helper.js. 
  */
 function addBuiltIns (typenames) {
   console.log("addBuiltIns()");
@@ -376,36 +360,29 @@ function addBuiltIns (typenames) {
   var type = "";
   for (var i = 0; i < typenames.length; i++) {
     type = typenames[i];
-    var types;
+    var types ;
     if (type == "math") {
-      types = ["math_add", "math_compare","math_divide","math_division","math_is_a_number", "math_multiply","math_mutator_item", "mutator_container", "math_number", 
-                "math_on_list", "math_power",
-	       "math_random_float", "math_random_int", "math_random_set_seed", "math_round", "math_single", "math_subtract"];
+      types = MATH_BLOCKS;
     } else if (type == "logic") {
-      types = ["logic_boolean", "logic_compare", "logic_false", "logic_negate", "logic_operation", "logic_or"];
+      types = LOGIC_BLOCKS;
     } else if (type == "variables") {
-      types = ["global_declaration", "lexical_variable_get", "lexical_variable_set", 
-               "local_declaration_expression", "local_declaration_statement", "local_mutatorarg", "local_mutatorcontainer"];
+      types = VARIABLES_BLOCKS;
     } else if (type == "procedures") {
-      types = ["procedures_callnoreturn", "procedures_callreturn", "procedures_defnoreturn",
-        "procedures_defreturn", "procedures_mutatorarg", "procedures_mutatorcontainer", 
-        "removeProcedureValues", "getProcedureNames"];
+      types = PROCEDURES_BLOCKS;
     } else if (type == "controls") {
-      types = ["controls_choose", "controls_do_then_return", "controls_if", "controls_if_else", "controls_if_elseif", 
-       "controls_if_if", "controls_while", "controls_forEach", "controls_forRange"];
+      types = CONTROLS_BLOCKS;
     } else if (type == "lists") {
-      types = ["lists_add_items", "lists_add_items_item", "lists_append_list", 
-	 "lists_insert_item", "lists_is_empty", "lists_is_in", "lists_is_list",
-	 "lists_length", "lists_pick_random_item", "lists_remove_item", "lists_replace_item",
-	 "lists_select_item"];
+      types = LISTS_BLOCKS;
     } else if (type == "text") {
-	types = ["text_compare", "text_contains", "text_isEmpty", "text_join",
-		 "text_join_item", "text_length", "text_replace_all", "text_segment", "text_split",
-		 "text_split_at_spaces", "text_trim", "wrapSentence"];
+      types = TEXT_BLOCKS;
     }
     for (var k = 0; k < types.length; k++) {
       list.push(types[k]);   
     }
+  }
+  types = TOPLEVEL_BLOCKS;
+  for (var k = 0; k < types.length; k++) {
+    list.push(types[k]); 
   }
   return list;
 }
@@ -848,17 +825,8 @@ function populateWorkspaceWithExpressionBlock(expr_type) {
   var xml = "";
   if (expr_type == EXPR_REL) {
     xml = generateFunction(RELATION_GENERATOR, RELATION_TEMPLATE);
-//     var fn_str = RELATION_GENERATOR;
-//     Blockly.Quizmaker.Xmlgenerator = eval( '(' + fn_str + ')' );
-//     Blockly.Quizmaker.Xmltemplate = RELATION_TEMPLATE;
-//     xml = Blockly.Quizmaker.Xmlgenerator(Blockly.Quizmaker.Xmltemplate, -5, 10);
   } else if (expr_type == EXPR_ARITH) {
     xml = generateFunction(ARITHMETIC_GENERATOR, ARITHMETIC_TEMPLATE);
-//     var fn_str = ARITHMETIC_GENERATOR;
-//     Blockly.Quizmaker.Xmlgenerator = eval( '(' + fn_str + ')' );
-//     Blockly.Quizmaker.Xmltemplate = ARITHMETIC_TEMPLATE;
-//     xml = Blockly.Quizmaker.Xmlgenerator(Blockly.Quizmaker.Xmltemplate, -5, 10);
-//     setProblemWorkspace(xml);
   }
   setProblemWorkspace(xml);
   setMainWorkspaceFromText(xml);
@@ -871,7 +839,7 @@ function populateWorkspaceWithExpressionBlock(expr_type) {
  */
 function generateFunction(fn_str, template) {
   Blockly.Quizmaker.Xmlgenerator = eval( '(' + fn_str + ')' );
-  Blockly.Quizmaker.Xmltemplate = RELATION_TEMPLATE;
+  Blockly.Quizmaker.Xmltemplate = template;
   return Blockly.Quizmaker.Xmlgenerator(Blockly.Quizmaker.Xmltemplate, -5, 10);
 }
 
