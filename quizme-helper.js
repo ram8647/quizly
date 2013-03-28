@@ -83,8 +83,8 @@ var VARIABLES_BLOCKS = ["global_declaration", "lexical_variable_get", "lexical_v
 var PROCEDURES_BLOCKS = ["procedures_callnoreturn", "procedures_callreturn", "procedures_defnoreturn",
         "procedures_defreturn", "procedures_mutatorarg", "procedures_mutatorcontainer", 
         "removeProcedureValues", "getProcedureNames"];
-var CONTROLS_BLOCKS = ["controls_choose", "controls_do_then_return", "controls_if", "controls_if_else", "controls_if_elseif", 
-		       "controls_while", "controls_forEach" ]; //  "controls_if_if", "controls_forRange"
+var CONTROLS_BLOCKS = ["controls_choose", "controls_do_then_return", "controls_if", "controls_if_else", "controls_if_elseif","controls_if_if",  
+		       "controls_while", "controls_forEach" ]; //  "controls_forRange"
 var LISTS_BLOCKS = ["lists_create_with", "lists_is_empty", "lists_length"]; //"lists_add_items", "lists_add_items_item", "lists_append_list", "lists_create_with_item", "lists_insert_item", "lists_is_in", "lists_is_list", "lists_pick_random_item", "lists_remove_item", "lists_replace_item", "lists_select_item"
 var TEXT_BLOCKS = ["text", "text_join", "text_length","text_isEmpty","text_trim","text_changeCase"]; // "text_join_item", "text_compare", "text_starts_at", "text_contains", "text_split", "text_split_at_spaces", "text_segment", "text_replace_all"
 var TOPLEVEL_BLOCKS = ["mutator_container", "InstantInTime", "YailTypeToBlocklyType", "YailTypeToBlocklyTypeMap","setTooltip","wrapSentence"];
