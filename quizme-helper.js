@@ -24,25 +24,7 @@
 
 
 /**
- *  As of 2/19/2013 Quizzes are now defined as JSon objects
- *   in quizzes.json.  Here's a sample:
-
- "quiz_relations" : {
-  "Name" : "quiz_relations", 
-  "DisplayName" : "Simple Numerical Relations", 
-  "ProblemType" : "math_compare",
-  "Description" : "Generate simple numerical relational operations on integers.",
-  "QuestionHTML" : "Evaluate the expression shown in the work area.",
-  "AnswerHTML" : "",
-  "AnswerType" : "boolean",
-  "AnswerVisibility" : "visible",
-  "ResultHTML" : "",
-  "Hints" : ["This is hint #1", "This is hint #2", "This is hint #3"],
-  "BuiltIns" : ["math_number", "math_compare", "math_add", "math_subtract", "math_division", "math_multiply", "math_power"],
-  "Components" : [],
-  "Xmlgenerator" : "function xmlGenerator(xml, low, high, op) {var ops = ['EQ', 'NEQ', 'LT', 'LTE', 'GT', 'GTE'];   if (!op) { op = ops[Math.floor(Math.random() * ops.length)]; } var n1 = Math.floor(Math.random() * 10); var n2 = Math.floor(Math.random() * 10); if (low && high) { n1 = low + Math.floor(Math.random() * (high - low + 1)); n2 = low + Math.floor(Math.random() * (high - low + 1)); } xml = xml.replace('$OP', op); xml = xml.replace('$N1', n1); xml = xml.replace('$N2', n2); return xml; }",
-  "Xmltemplate" : "<xml><block type=\"math_compare\" inline=\"true\" x=\"85\" y=\"100\"><title name=\"OP\" >$OP</title><value name=\"A\"><block type=\"math_number\"><title name=\"NUM\">$N1</title></block></value><value name=\"B\"><block type=\"math_number\"><title name=\"NUM\">$N2</title></block></value></block></xml>"
- }
+ *  As of 2/19/2013 Quizzes are defined as JSon objects in quizzes.json.
 
  *  How to implement a new quiz that is evaluated by comparing the Xml of
  *  the user's solution with the Xml of the correct solution.
@@ -74,7 +56,9 @@
 
 'use strict';
 
-//  Blocks lists -- should contain only blocks that have JavaScript generators
+var DEBUG = false;
+
+//  Blocks lists -- should contain only blocks that have JavaScript generators, plus blocks that support mutators.
 var MATH_BLOCKS = ["math_add", "math_compare","math_divide","math_division","math_is_a_number", "math_multiply","math_mutator_item", "math_number", 
 		   "math_on_list", "math_power", "math_random_float", "math_random_int", "math_round", "math_single", "math_subtract"]; //"math_random_set_seed", 
 var LOGIC_BLOCKS = ["logic_boolean", "logic_compare", "logic_false", "logic_negate", "logic_operation", "logic_or"];
@@ -85,7 +69,7 @@ var PROCEDURES_BLOCKS = ["procedures_callnoreturn", "procedures_callreturn", "pr
         "removeProcedureValues", "getProcedureNames"];
 var CONTROLS_BLOCKS = ["controls_choose", "controls_do_then_return", "controls_if", "controls_if_else", "controls_if_elseif","controls_if_if",  
 		       "controls_while", "controls_forEach" ]; //  "controls_forRange"
-var LISTS_BLOCKS = ["lists_create_with", "lists_is_empty", "lists_length"]; //"lists_add_items", "lists_add_items_item", "lists_append_list", "lists_create_with_item", "lists_insert_item", "lists_is_in", "lists_is_list", "lists_pick_random_item", "lists_remove_item", "lists_replace_item", "lists_select_item"
+var LISTS_BLOCKS = ["lists_create_with", "lists_create_with_item", "lists_is_empty", "lists_length"]; //"lists_add_items", "lists_add_items_item", "lists_append_list", "lists_create_with_item", "lists_insert_item", "lists_is_in", "lists_is_list", "lists_pick_random_item", "lists_remove_item", "lists_replace_item", "lists_select_item"
 var TEXT_BLOCKS = ["text", "text_join", "text_length","text_isEmpty","text_trim","text_changeCase"]; // "text_join_item", "text_compare", "text_starts_at", "text_contains", "text_split", "text_split_at_spaces", "text_segment", "text_replace_all"
 var TOPLEVEL_BLOCKS = ["mutator_container", "InstantInTime", "YailTypeToBlocklyType", "YailTypeToBlocklyTypeMap","setTooltip","wrapSentence"];
 
@@ -93,11 +77,9 @@ var TOPLEVEL_BLOCKS = ["mutator_container", "InstantInTime", "YailTypeToBlocklyT
 // Path to images used in UI
 var imgpath = "./quizme/media/";
 var maindocument = parent.document;
-// if (document.title == "Blockly Frame" && parent.document.title.indexOf("QB") == 0)
-//   maindocument = document;
 
 Blockly.hello = function(command, quizname) {
-  console.log("RAM: Blockly says " + command);
+  if (DEBUG) console.log("RAM: Blockly says " + command);
   if (command == 'submit')
     submitNewToggle();
   else if (command == 'hint') 
@@ -119,17 +101,25 @@ function isArray(object) {
 }
 
 /**
- * Initialize Quizme 
+ * Initialize Quizme.
+ * TODO: Change quiztype to quizname throughout making sure there are no external
+ *  references to it such as from QuizMaker.
+ *
  * @param quiztype, either undefined or a string giving one of the defined quiztypes
  * @param quizmepath, path to the quizme source files
  */
 function initQuizme(quiztype, quizmepath) {
-  console.log("RAM: initializing ... quiztype= " + quiztype + " path=" + quizmepath);
+  if (DEBUG) console.log("RAM: initializing ... quiztype= " + quiztype + " path=" + quizmepath);
 
+  // App Inventor's Drawer needs to point to Quizly's Toolbox.
+  Blockly.Drawer = Blockly.Toolbox;
+  Blockly.Toolbox.hide = function() {}   // To cover calls to Drawer.hide()
+
+  // Load the quizzes and components from data files.
   Blockly.Quizme.loadQuizzes(quizmepath + "quizzes.json");
   Blockly.Quizme.components = Blockly.Quizme.inputFromComponentsArray();
 
-  // Set up the quiz selector drop down
+  // Set up the quiz selector drop down.
   var quizselector = maindocument.getElementById('quiz_selector');
   if (quizselector) {
     var quizzes = Blockly.Quizme.quiznames;
@@ -141,6 +131,7 @@ function initQuizme(quiztype, quizmepath) {
     quizselector.innerHTML = selectHtml;
   }
      
+  // Set up path names.
   Blockly.Quizme.pathname = quizmepath;
   Blockly.Quizme.imgpath = quizmepath + 'quizme/media/';
 
@@ -176,59 +167,6 @@ function initQuizme(quiztype, quizmepath) {
   showQuiz(quiztype);
 }
 
-
-/**
- *  This is for an assessment activity in Course Builder,
- *  which would be defined in a file such as 
- *  <cbroot>assets/js/assessment.P1.js
- *
- * The enclosing window may or may not have a selector, hint button, etc.
- */
-function processCbAssessment(assessment) {
-  var quiztype;
-  if (assessment) {
-    quiztype = assessment['quiztype']; 
-    var selector_prompt = window.parent.document.getElementById('selector_prompt');
-    if (selector_prompt)
-      selector_prompt.hidden = true;
-    var selector = window.parent.document.getElementById('quiz_selector');
-    if (selector) 
-      selector.hidden = true;
-    var hint_button = window.parent.document.getElementById('hint_button');
-    if (hint_button) {
-      if (assessment['hints'] == true) 
-	hint_button.hidden = false;
-      else 
-	hint_button.hidden = true;
-    }
-  }
-  return quiztype;
-}
-
-function processCbActivity(activity) {
-  var quiztype;
-  if (activity) {
-    quiztype = activity.quizType; 
-
-    var selector_prompt = window.parent.document.getElementById('selector_prompt');
-    if (selector_prompt)
-      selector_prompt.hidden = true;
-    var selector = window.parent.document.getElementById('quiz_selector');
-    if (selector) 
-      selector.hidden = true;
-
-    var hint_button = window.parent.document.getElementById('hint_button');
-    if (hint_button) {
-      if (activity[0].hints == true) 
-        hint_button.hidden = false;
-      else 
-        hint_button.hidden = false;
-    }
-  }
-  return quiztype;
-}
-
-
 /**
  * Displays a quiz question of a given type.  Quizzes are input from 
  * quizzes.json by Blockly.Quizme.add() in quizme.js.  They are stored
@@ -240,22 +178,21 @@ function processCbActivity(activity) {
  * TODO: This function is too long. Break it up. 
  */
 function showQuiz(quiztype) {
-  console.log("RAM: showQuiz " + quiztype);
+  if (DEBUG) console.log("RAM: showQuiz " + quiztype);
 
   Blockly.mainWorkspace.clear();  // Do this first, before setting up built-ins and components.
 
-  // TODO: This list should eventually be input from a data file
-  //  var quiztypes = ['quiz_relations', 'quiz_arithmetic', 'quiz_relations_fillin', 'quiz_ifelse', 'quiz_increment_variable'];
+  // The quiztypes are really quiznames hanging off of Blockly.Quizme.
   var quiztypes = Blockly.Quizme.quiznames;
 
-  // The maindocument may or may not have a selector
+  // The maindocument may or may not have a selector.
   if (quiztype == undefined) {
     var quizSelector = maindocument.getElementById('quiz_selector');
     if (quizSelector) {
       quiztype = quizSelector.options[quizSelector.selectedIndex].value;
     }
   }
-  // If still unefined, choose a random quiz type
+  // If quiztype still undefined, choose a random quiz type
   if (quiztype == undefined) {
     var n = Math.floor(Math.random() * quiztypes.length);
     quiztype = quiztypes[n];  
@@ -264,15 +201,9 @@ function showQuiz(quiztype) {
   var keepers = [];
   var components = [];
 
-  // By this point, quiztype is set to one of the valid types. So for
-  // each type of quiz, set up the Blockly.Language before setting
-  // the quizzes other properties.
-  // TODO: Convert 'quiz_arithmetic' and 'quiz_relations_fillin' to 
-  //   Json encoded quizzes like the others.
-  // TODO: Create additional JSon properties to represent the
-  //  number and types of arguments passed to xmlGenerator() below.
-  //  Some take no arguments, some take numeric values within certain
-  //  ranges.
+  // By this point, quiztype is set to one of the valid name. So for
+  // each quiz, set up the Blockly.Language before setting
+  // the quiz's other properties.
 
   // Generate the variable mappings for this quiz (optional)
   var quiz = Blockly.Quizme[quiztype];
@@ -285,9 +216,9 @@ function showQuiz(quiztype) {
 
   keepers = Blockly.Quizme[quiztype].built_ins;
   components = Blockly.Quizme[quiztype].components;
-  initializeBlocksWorkspace(quiztype, keepers, components);
+  customizeQuizmeLanguage(quiztype, keepers, components);
 
-  console.log("RAM: quiztype = " + quiztype);
+  if (DEBUG) console.log("RAM: quiztype = " + quiztype);
   var button = maindocument.getElementById('submit_new_toggle');
   if (button) 
     button.innerHTML = "Submit";
@@ -307,12 +238,10 @@ function showQuiz(quiztype) {
 
   // Dynamically generate a random quiz
 
-  //  console.log("RAM: function = " + Blockly.Quizme.xmlGenerator);
-
   var xml = Blockly.Quizme[quiztype].xml;
   if (Blockly.Quizme.xmlGenerator instanceof Function) {
     xml = Blockly.Quizme.xmlGenerator(xml, 1, 10);
-    console.log("RAM: xml= " + xml);
+    if (DEBUG) console.log("RAM: xml= " + xml);
   }
 
   Blockly.Quizme.xml = Blockly.Xml.textToDom(xml);    
@@ -329,12 +258,15 @@ function showQuiz(quiztype) {
 
 /**
  * Initializes Blockly.Language with only those blocks for which there
- *  are JavaScript generators.
+ *  are JavaScript generators and blocks that support mutators.
+ *
+ * When this function completes Blockly.Language should contain all 
+ *  built-in blocks plus whatever AI Components are set here.
  *
  * NOTE: Blockly.WholeLanguage is created in quizme-initblocklyeditor.js
  */
 function initQuizmeLanguage() {
-  console.log("RAM: initQuizmeLanguage ");
+  if (DEBUG) console.log("RAM: initQuizmeLanguage ");
  
   var whitelist = [];
   whitelist = whitelist.concat(MATH_BLOCKS).concat(LOGIC_BLOCKS).concat(VARIABLES_BLOCKS).concat(PROCEDURES_BLOCKS);
@@ -347,8 +279,6 @@ function initQuizmeLanguage() {
       Blockly.Language[propname] = Blockly.WholeLanguage[propname];
   }
 
-  // Add the App Inventor components to the langauge and initialize the Toolbox  
-
   resetComponentInstances();  // In quizme-helper.js
   var components = ['Button', 'Sound'];
   Blockly.Quizme.addComponents(components);
@@ -359,14 +289,66 @@ function initQuizmeLanguage() {
     delete(Blockly.Language[component_name + "_setproperty"]);
     delete(Blockly.Language[component_name + "_getproperty"]);
   } 
-//  Blockly.Toolbox.init();
 }
 
 /**
- * Initializes the Quizme blocks workspace, which contains two
- *  types of elements:  built-in language blocks such as math, logic,
- *  control blocks, and App Inventor components, such as 
- *  Button, Sound, etc.
+ *  Initializes the toolbox's language tree (menu) to the current language.
+ *  Note that the toolbox tree is initially set statically during injection.  
+ *  We create a dynamic tree for each quiz. 
+ *  
+ *  @param language -- usually called with  Blockly.Language.
+ *  @return a Dom object representing the tree of categories and blocks 
+ *   that appear in the toolbox and its flyout.
+ */
+function initToolboxLanguageTree(language) {
+  resetBlocklyLanguage();  // Hack to add some special Language properties
+
+  // Start with an empty tree.
+  Blockly.languageTree = Blockly.Xml.textToDom("<xml id='toolbox' style='display:none'></xml>");
+
+  // Initialize the category list
+  var cats = [];
+
+  //  Iterate through the blocks in the language to construct the toolbox languageTree
+  //  for (var propname in Blockly.WholeLanguage) {
+  for (var propname in language) {
+    if (DEBUG) console.log("Adding to Blockly.languageTree " + propname);
+
+    // Use a tempWorkspace so that procedure def blocks are not set to visible.
+    var tempWorkspace = new Blockly.Workspace();
+    var blk = new Blockly.Block(tempWorkspace, propname);
+
+    // If this block has a category, append the category name to category list.
+    var catname = blk['category'];
+    if (catname) {
+      if (catname == 'Component') {
+        cats[''] = '';
+        cats['COMPONENTS'] = '';
+        catname = blk.typeName;    // For components use the typename for category.
+      }
+      var category = cats[catname];
+      if (!category) {
+        category = "";
+        cats[catname] = category;
+      }
+      category = category.concat("<block type='" + propname + "'></block>");
+      cats[catname] = category;
+    }
+  }
+  // Now build and return the categorized tree.
+  var treeString = "<xml id='toolbox' style='display:none'>";
+  for (var cat in cats) {
+    treeString = treeString.concat("<category name='" + cat + "'>" + cats[cat] + "</category>");
+  }
+  treeString = treeString.concat("</xml>");
+  return Blockly.Xml.textToDom(treeString);
+}
+
+/**
+ * Customizes the Quizme language for just those blocks needed for a 
+ *  particular quiz. At the end of this function, the Quizly toolbox
+ *  should contain only those categories and blocks specified in the
+ *  quiz's Json entry.
  *
  * @param quiztype -- the type of quiz being presented. This is
  *  needed to initialize the Blockly.Language, which varies
@@ -377,34 +359,52 @@ function initQuizmeLanguage() {
  * @param components, an array of App Inventor components that we want
  *  to add to Blockly.Language
  */
-function initializeBlocksWorkspace(quiztype, keepers, components) {
-  console.log("RAM: initializeBlocksWorkspace() quiztype = " + quiztype + " keepers = " + keepers);
+function customizeQuizmeLanguage(quiztype, keepers, components) {
+  if (DEBUG) console.log("RAM: customizeQuizmeLanguage() quiztype = " + quiztype + " keepers = " + keepers);
 
   // If the language has already been set for this quiz type, just exit  
   // NOTE: Leave quiztype=undefined to reset the language
 
   if (quiztype && Blockly.Quizme.language_type == quiztype) {
-    console.log("RAM: language set to " + quiztype + " ... exiting");
+    if (DEBUG) console.log("RAM: language set to " + quiztype + " ... exiting");
     return;
   }
 
-  // Setup and filter the Quizme language
+  // Initialize the language with all blocks.
   initQuizmeLanguage();
   var newLanguage = {}
   for (var propname in Blockly.Language) {
     if (keepers.indexOf(propname) != -1) {
       newLanguage[propname] = Blockly.Language[propname];
     }
+    if (Blockly.Language[propname].category == 'Component' &&
+        Blockly.Language[propname].blockType != 'genericmethod') {
+      var typeName = Blockly.Language[propname].typeName;
+      if (components.indexOf(typeName) != -1) {
+        newLanguage[propname] = Blockly.Language[propname];
+      }
+    }
   }
   Blockly.Language = newLanguage;
-  Blockly.Quizme.language_type = quiztype;
-  console.log("RAM: Blockly.Quizme.language_type = " + Blockly.Quizme.language_type);
 
-  resetBlocklyLanguage();
+  // Construct the languageTree used to populate the toolbox.
+  Blockly.languageTree = initToolboxLanguageTree(Blockly.Language);
+
+  Blockly.Quizme.language_type = quiztype;
+  if (DEBUG) console.log("RAM: Blockly.Quizme.language_type = " + Blockly.Quizme.language_type);
+
+  resetBlocklyLanguage();  // Hack to add certain neede properties back onto Blockly.Language.
 
   // Add the App Inventor components to the langauge and initialize the Toolbox  
   resetComponentInstances();
   Blockly.Quizme.addComponents(components);
+    
+  // Delete the current toolbox tree (svg element) from the webpage.
+  var html = Blockly.Toolbox.HtmlDiv;
+  var children = html.childNodes;
+  if (children[1])
+    children[1].remove();
+
   Blockly.Toolbox.init();
 }
 
@@ -456,7 +456,7 @@ function resetComponentInstances() {
   Blockly.ComponentInstances = {};
 
   Blockly.ComponentInstances.addInstance = function(name, uid) {
-    console.log("RAM In Blockly.ComponentInsance.addInstance " + name);
+    if (DEBUG) console.log("RAM ComponentInstances.addInstance " + name);
     Blockly.ComponentInstances[name] = {};
     Blockly.ComponentInstances[name].uid = uid;
     Blockly.ComponentInstances[name].blocks = [];
@@ -477,7 +477,7 @@ function resetComponentInstances() {
  * Displays the quiz in the browser.
  */
 function renderQuiz() {
-  console.log("RAM: renderQuiz()");
+  if (DEBUG) console.log("RAM: renderQuiz()");
   Blockly.mainWorkspace.clear(); 
   var quizquestion = maindocument.getElementById('quiz_question');
   //  quizquestion.innerHTML = Blockly.Quizme.questionHTML;  
@@ -515,7 +515,7 @@ function renderQuiz() {
  * Handles the Submit/New Question toggle button.
  */
 function submitNewToggle() {
-  console.log("RAM: submitNewToggle");
+  if (DEBUG) console.log("RAM: submitNewToggle");
   var buttonLabel = maindocument.getElementById('submit_new_toggle').innerHTML;
   var result_element = maindocument.getElementById('quiz_result')
   if (buttonLabel == 'Submit') {
@@ -531,7 +531,7 @@ function submitNewToggle() {
  * @param helperObj, either Blockly.Quizmaker or Blockly.Quizme
  */
 function processHint(helperObj) {
-  console.log("RAM: processHint");
+  if (DEBUG) console.log("RAM: processHint");
   var hints = helperObj.hints;
   var count = helperObj.hintCounter;
   var hintHTML = "";
@@ -547,7 +547,7 @@ function processHint(helperObj) {
 }
 
 function giveHint() {
-  console.log("RAM: giveHint()");
+  if (DEBUG) console.log("RAM: giveHint()");
   processHint(Blockly.Quizme);
 }
 
@@ -562,7 +562,7 @@ function giveHint() {
  *  @param redo is set to true if you want the user to keep trying
  */
 Blockly.Quizme.giveFeedback = function(isCorrect, correctStr, mistakeStr, redo) {
-    console.log("RAM: givefeedback() isCorrect = " + isCorrect);
+    if (DEBUG) console.log("RAM: givefeedback() isCorrect = " + isCorrect);
     var imgpath = Blockly.Quizme.imgpath;
     var correctMsg = "<img src="  + "." + imgpath + "smiley.jpg" + " > " + correctStr;
     var errMsg = "<img src="  + "." + imgpath + "frown.jpg" + " > " + mistakeStr;
@@ -600,7 +600,7 @@ Blockly.Quizme.giveFeedback = function(isCorrect, correctStr, mistakeStr, redo) 
  *  used to separate different types of evaluation algorithms.
  */
 Blockly.Quizme.evaluateUserAnswer = function() {
-  console.log("RAM: evaluateUserAnswer()");
+  if (DEBUG) console.log("RAM: evaluateUserAnswer()");
   var btn = maindocument.getElementById('submit_new_toggle');
   if (btn) {
     btn.innerHTML = "New Question";
@@ -633,7 +633,7 @@ Blockly.Quizme.evaluateUserAnswer = function() {
  *  expected value.
  */
 Blockly.Quizme.evaluateEvalBlocksAnswerType = function() {
-  console.log("RAM: evaluateEvalBlocksAnswerType()");
+  if (DEBUG) console.log("RAM: evaluateEvalBlocksAnswerType()");
   var result = Blockly.Quizme.eval_math_compare_topblock();
   Blockly.Quizme.giveFeedback(result == true, 
      "Good your expression evaluates to <font color=\"green\">" + true + "</font>. Nice!", 
@@ -649,7 +649,7 @@ Blockly.Quizme.evaluateEvalBlocksAnswerType = function() {
  *
  */
 Blockly.Quizme.evaluateEvalFunctionDef = function(helperObj) {
-  console.log("RAM: evaluateEvalFunctionDef() for quiz " + helperObj.quizName);
+  if (DEBUG) console.log("RAM: evaluateEvalFunctionDef() for quiz " + helperObj.quizName);
 
   var qname = helperObj.quizName;
 
@@ -701,7 +701,7 @@ Blockly.Quizme.evaluateEvalFunctionDef = function(helperObj) {
  * @param inputs -- an array of arrays of input arguments.
  */
 Blockly.Quizme.testFunctionAgainstStandard = function(standard, fn, inputs) {
-  console.log("RAM: Testing fn against standard ...");
+  if (DEBUG) console.log("RAM: Testing fn against standard ...");
   if (!fn) {
     return [false, 'Can\'t find your function. Double check the name (spelling counts).'];
   }
@@ -730,7 +730,7 @@ Blockly.Quizme.testFunctionAgainstStandard = function(standard, fn, inputs) {
     }
     var stdresult = stdcall;  //standard(inputs[k]);
     var fnresult = fncall; // fn(inputs[k]);
-    console.log("input=" + inputs[k] + " std=" + stdresult + " fn=" + fnresult);
+    if (DEBUG) console.log("input=" + inputs[k] + " std=" + stdresult + " fn=" + fnresult);
       if (stdresult && ( isArray(stdresult))) {
       result =  stdresult != undefined && arrcmp(stdresult, fnresult);
     } else {
@@ -758,7 +758,7 @@ return [result,errmsg];
  *  replace '-91.9' and 'Y' would replace '$#STR1#$'.
  */
 Blockly.Quizme.evaluateXmlBlocksAnswerType = function(solution, mappings) {
-  console.log("RAM: evaluateXmlBlocksAnswerType");
+  if (DEBUG) console.log("RAM: evaluateXmlBlocksAnswerType");
   var result = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
   result = Blockly.Quizme.removeXY(result);
   result = Blockly.Quizme.removeTag("xml", result);
@@ -772,9 +772,6 @@ Blockly.Quizme.evaluateXmlBlocksAnswerType = function(solution, mappings) {
   solution = Blockly.Quizme.removeXY(solution);
   solution = Blockly.Quizme.removeTag("xml", solution);
 
-  //  console.log("Result = " + result);
-  //  console.log("Solution = " + solution);
-  
   Blockly.Quizme.giveFeedback(result.indexOf(solution) != -1, 
      "Good your solution is correct", 
 		 "Oops, your solution contains a mistake. Try again.", 
@@ -802,7 +799,6 @@ Blockly.Quizme.removeXY = function(str) {
     startY = str.indexOf("y=");
     endY = str.indexOf('"', startY+3);
   }
-  //  console.log("RAM, removed xy: " + str);
   return str;
 }
 
@@ -811,17 +807,16 @@ Blockly.Quizme.removeXY = function(str) {
  * @param tag a string representing the tag, e.g., 'xml'
  */
 Blockly.Quizme.removeTag = function(tag, str) {
-  console.log("RAM: removeTag " + tag);
+  if (DEBUG) console.log("RAM: removeTag " + tag);
   var startTag = str.indexOf("<" + tag);
   var endTag = str.indexOf(">", startTag + 1 + tag.length);
   str = str.substring(0, startTag) + str.substring(endTag + 1);
-  console.log (startTag + "," + endTag);
+  if (DEBUG) console.log (startTag + "," + endTag);
 
   var startEndTag = str.indexOf("</" + tag);
   var endEndTag = str.indexOf(">", startEndTag + 2 + tag.length);
   str = str.substring(0, startEndTag) + str.substring(endEndTag+1);
-  //  console.log("RAM, removed xy: " + tag);
-  console.log (startEndTag + "," + endEndTag);
+  if (DEBUG) console.log (startEndTag + "," + endEndTag);
   return str;
 }
 
@@ -847,7 +842,7 @@ Blockly.Quizme.removeTag = function(tag, str) {
  * 
  */
 function generateInstanceMappings(name, helperObj) {
-  console.log("generateInstanceMappings()");
+  if (DEBUG) console.log("generateInstanceMappings()");
   var map = {};
   var dict = helperObj[name].dictionary;
   //  if (dict == "undefined") {
@@ -893,7 +888,7 @@ function generateInstanceMappings(name, helperObj) {
  * 
  */
 function mapQuizVariables(str, dict) {
-  console.log("mapQuizVariables() " + str);
+  if (DEBUG) console.log("mapQuizVariables() " + str);
   if (!str) 
     return str;
   if (!dict) {
@@ -943,5 +938,56 @@ function arrcmp(arr_1, arr_2) {
     }
   }
   return equal;
+}
+
+/**
+ *  This is for an assessment activity in Course Builder,
+ *  which would be defined in a file such as 
+ *  <cbroot>assets/js/assessment.P1.js
+ *
+ * The enclosing window may or may not have a selector, hint button, etc.
+ */
+function processCbAssessment(assessment) {
+  var quiztype;
+  if (assessment) {
+    quiztype = assessment['quiztype']; 
+    var selector_prompt = window.parent.document.getElementById('selector_prompt');
+    if (selector_prompt)
+      selector_prompt.hidden = true;
+    var selector = window.parent.document.getElementById('quiz_selector');
+    if (selector) 
+      selector.hidden = true;
+    var hint_button = window.parent.document.getElementById('hint_button');
+    if (hint_button) {
+      if (assessment['hints'] == true) 
+	hint_button.hidden = false;
+      else 
+	hint_button.hidden = true;
+    }
+  }
+  return quiztype;
+}
+
+function processCbActivity(activity) {
+  var quiztype;
+  if (activity) {
+    quiztype = activity.quizType; 
+
+    var selector_prompt = window.parent.document.getElementById('selector_prompt');
+    if (selector_prompt)
+      selector_prompt.hidden = true;
+    var selector = window.parent.document.getElementById('quiz_selector');
+    if (selector) 
+      selector.hidden = true;
+
+    var hint_button = window.parent.document.getElementById('hint_button');
+    if (hint_button) {
+      if (activity[0].hints == true) 
+        hint_button.hidden = false;
+      else 
+        hint_button.hidden = false;
+    }
+  }
+  return quiztype;
 }
 

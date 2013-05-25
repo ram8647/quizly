@@ -1,0 +1,321 @@
+This describes what is needed to upgrade Quizly when App Inventor (AI) is upgraded.  
+It assumes that AI upgrades include upgrades to Blockly core files, such as 
+toolbox.js, even though these are not used by AI.  If that is not the case, it
+will be necessary to get some files (e.g., toolbox.js) directly from Blockly.
+
+QUICK OVERVIEW
+--------------
+
+* Replace blockly-all.js with:
+   [AppinventorRoot]/build/blocklyeditor/blockly-all.js
+
+* Replace blockly-toolbox.js with:
+   [AppinventorRoot]/lib/blockly/src/core/toolbox.js
+
+* In blockly.html, the Blockly.inject() call should be:
+  Blockly.inject(document.body,
+   {path: './', 
+    backpack:true, 
+    trashcan: true, 
+    toolbox: '<xml id="toolbox" style="display:none">
+      <category name="TOOLBOX">
+       <block type="bogus"></block>
+      </category></xml>' 
+   });
+
+* In quizme-helper.js, initQuizme, AppInventor's Drawer must point to our Toolbox:
+    Blockly.Drawer = Blockly.Toolbox;
+
+That's it!
+
+LONGER STORY
+------------
+
+Quizly integrates to AI through the blockly-all.js file, which is
+copied from AI's build/blocklyeditor/blockly-all.js.
+
+The main difference between Quizly and AI is that Quizly uses
+Blockly's Toolbox whereas AI uses its own custom Drawer instead of
+Toolbox.  The reason for this is that AI's blocks editor, which is
+based on Blockly, must interface with AI's Designer, which is written
+in Java and uses Google's Google Web Toolkit (GWT).  We don't need
+to worry about GWT.  Quizly is written entirely in Javascript, as is
+Blockly.
+
+The main task in upgrading Quizly has to do with the differences
+between the way that the blocks editor is injected into the iframe
+in Blockly, Quizly (which is more like Blockly), and AI.  
+
+Quizly is based on Blockly's code app (i.e., not directly on Blockly's core):  
+  http://blockly-demo.appspot.com/static/apps/code/en.html
+
+Blockly Injection
+-----------------
+
+For Blockly's code app, here is Blockly's init() function in frame.html:
+
+    function init() {
+      var rtl = false;
+      var toolbox = null;
+      if (window.parent.document) {
+        // document.dir fails in Mozilla, use document.body.parentNode.dir.
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=151407
+        rtl = window.parent.document.body.parentNode.dir == 'rtl';
+        toolbox = window.parent.document.getElementById('toolbox');
+      }
+      Blockly.inject(document.body,
+          {path: '../../',
+           rtl: rtl,
+           toolbox: toolbox});
+
+      if (window.parent.init) {
+        // Let the top-level application know that Blockly is ready.
+        window.parent.init(Blockly);
+      } else {
+        // Attempt to diagnose the problem.
+        var msg = 'Error: Unable to communicate between frames.\n\n';
+        if (window.parent == window) {
+          msg += 'Try loading index.html instead of frame.html';
+        } else if (window.location.protocol == 'file:') {
+          msg += 'This may be due to a security restriction preventing\n' +
+              'access when using the file:// protocol.\n' +
+              'http://code.google.com/p/chromium/issues/detail?id=47416';
+        }
+        alert(msg);
+      }
+    }
+
+Note that the Blockly toolbox is set from an svg element in the parent window:
+
+   window.parent.document.getElementById('toolbox').  
+
+This means that the toolbox is separate from the iframe that contains
+the workspace.  In Blockly, the toolbox is coded as a static XML
+structure and injected into the page via a Javascript function in
+templates.js:
+
+codepage.toolbox = function(opt_data, opt_ignored, opt_ijData) {
+  return '<xml id="toolbox" style="display: none"><category name="' + '<LOTS LEFT OUT>' +  
+    '</category></xml>';
+};
+
+The key point is that when Blockly.inject() is called
+
+  Blockly.inject = function(container, opt_options) {
+    // Verify that the container is in document.
+    if (!goog.dom.contains(document, container)) {
+      throw 'Error: container is not in current document.';
+    }
+    if (opt_options) {
+      // TODO(scr): don't mix this in to global variables.
+      goog.mixin(Blockly, Blockly.parseOptions_(opt_options));
+    }
+    Blockly.createDom_(container);
+    Blockly.init_();
+  };
+
+the toolbox option has been set to the element in the iframe's enclosing window. This means
+that when Blockly.init_() is called, the Blockly.Toolbox attribute is set and everything
+loads nicely:
+
+  Blockly.init_ = function() {
+
+    // Stuff commented out above
+
+    var addScrollbars = true;
+    if (Blockly.languageTree) {
+      if (Blockly.Toolbox) {
+	Blockly.Toolbox.init();
+      } else if (Blockly.Flyout) {
+	// Build a fixed flyout with the root blocks.
+	Blockly.mainWorkspace.flyout_.init(Blockly.mainWorkspace,
+	    Blockly.getMainWorkspaceMetrics, true);
+	Blockly.mainWorkspace.flyout_.show(Blockly.languageTree.childNodes);
+	// Translate the workspace sideways to avoid the fixed flyout.
+	Blockly.mainWorkspace.scrollX = Blockly.mainWorkspace.flyout_.width_;
+	var translation = 'translate(' + Blockly.mainWorkspace.scrollX + ', 0)';
+	Blockly.mainWorkspace.getCanvas().setAttribute('transform', translation);
+	Blockly.mainWorkspace.getBubbleCanvas().setAttribute('transform',
+							     translation);
+	addScrollbars = false;
+      }
+    }
+    
+    // Stuff commented out below
+  };
+
+App Inventor Injection
+----------------------
+
+In App Inventor, there is no Toolbox. Instead there is a Drawer.   In AI
+Blockly.inject() is called from Blockly.BlocklyEditor.startup(), which is
+called in blocklyframe.html:
+
+      function init() {
+        // We expect window.location.hash to have the form:
+        // projectId_formName, and to be unique among
+        // all the Blockly instances created in this App Inventor session.
+        if (Blockly['ReplState'] == undefined)
+            Blockly.ReplState = new Blockly.ReplStateObj();
+        var formName = window.location.hash.substr(1);
+        Blockly.BlocklyEditor.startup(document.body, formName);
+        if (!window.parent.Blocklies) {
+          // We keep a set of Blockly objects indexed by name
+          // of the form for which they are the blocks editor
+          window.parent.Blocklies = {};
+          window.parent.ReplState = new Blockly.ReplStateObj(); // There should be one of these for the whole system
+        }
+        window.parent.Blocklies[formName] = Blockly;
+        Blockly.ReplMgr.ReplState = window.parent.ReplState;
+        Blockly.ReplMgr.formName = formName; <!-- So we can tell the AssetManager which form we are on. -->
+        window.parent.BlocklyPanel_initBlocksArea(formName);
+      }
+
+In Blockly.BlocklyEditor.js (which is merged into blockly-all.js) here is the 
+injection code:
+
+  Blockly.BlocklyEditor.startup = function(documentBody, formName) {
+    Blockly.inject(documentBody);
+    Blockly.Drawer.createDom();
+    Blockly.Drawer.init();
+    Blockly.BlocklyEditor.formName_ = formName;
+    // Lots of other initialization stuff deleted here
+  }
+
+Note that inject() is passed just one argument, which means that its options
+parameter is left out:
+
+  Blockly.inject = function(container, opt_options) {
+    // Verify that the container is in document.
+    if (!goog.dom.contains(document, container)) {
+      throw 'Error: container is not in current document.';
+    }
+    if (opt_options) {
+      // TODO(scr): don't mix this in to global variables.
+      goog.mixin(Blockly, Blockly.parseOptions_(opt_options));
+    }
+    Blockly.createDom_(container);
+    Blockly.init_();
+  };
+
+Thus, when Blockly.init_() is called, Blockly.Toolbox is null:
+
+  Blockly.init_ = function() {
+
+    // Stuff left out above 
+
+    var addScrollbars = true;
+    if (Blockly.languageTree) {
+      if (Blockly.Toolbox) {
+	Blockly.Toolbox.init();
+      } else if (Blockly.Flyout) {
+	// Build a fixed flyout with the root blocks.
+	Blockly.mainWorkspace.flyout_.init(Blockly.mainWorkspace,
+	    Blockly.getMainWorkspaceMetrics, true);
+	Blockly.mainWorkspace.flyout_.show(Blockly.languageTree.childNodes);
+	addScrollbars = false;
+      }
+    }
+    // Stuff left out below
+
+  };
+
+
+Quizly Injection
+----------------
+
+Quizly differs slightly from both Blockly's code app and AI. Unlike 
+the Blockly.code app, which uses a static toolbox, Quizly's toolbox is
+dynamic. The categories and blocks it contains depend on the type of quiz
+being presented.  In AI, the Drawer is dynamic, depending on which 
+Components are included in the project -- the built-in Language
+blocks are static.
+
+In Quizly:
+
+* The Toolbox is a dynamic part of the iframe, so it is not available
+in the iframe's parent window, as it is in Blockly.
+
+* The Toolbox is implemented in blockly-toolbox.js -- i.e., separately 
+from blockly-all.js -- which is identicaly to Blockly/core/toolbox.js. 
+That is where the following stuff happens:
+
+  Blockly.Toolbox = {};  // Create the name space for the toolbox
+  Blockly.Toolbox.init() // Initialization function
+
+These functions must be available during Blockly.init_(). 
+
+blockly.html
+------------
+
+In Quizly, injection takes place in blockly.html as follows:
+
+  Blockly.inject(document.body,
+   {path: './', 
+    backpack:true, 
+    trashcan: true, 
+    toolbox: '<xml id="toolbox" style="display:none">
+               <category name="TOOLBOX">
+                <block type="bogus"></block>
+               </category>
+              </xml>' 
+   });
+
+This toolbox property creates a static toolbox with the single category named
+'TOOLBOX'.  This will appear in Quizly's UI as a header for the toolbox.  Dynamic
+toolbox categories and blocks are loaded into the Toolbox whenever a new quiz
+is selected.  
+
+Here's the code in quizme-helper that constructs the Blockly.languageTree and
+loads it into the Toolbox:
+
+  function initToolboxLanguageTree(language) {
+    // Initialize languageTree for populating the toolbox
+    resetBlocklyLanguage();  // Hack to add some special Language properties
+    Blockly.languageTree = Blockly.Xml.textToDom("<xml id='toolbox' style='display:none'></xml>");
+
+    // Initialize the category list
+    var cats = [];
+
+    //  Iterate through the blocks in the language to construct the toolbox languageTree
+    //  for (var propname in Blockly.WholeLanguage) {
+    for (var propname in language) {
+      console.log("Adding to Blockly.languageTree " + propname);
+      var tempWorkspace = new Blockly.Workspace();
+      var blk = new Blockly.Block(tempWorkspace, propname);
+
+      // If this block has a category, append the category name to category list
+      var catname = blk['category'];
+      if (catname) {
+	var category = cats[catname];
+	if (!category) {
+	  category = "";
+	  cats[catname] = category;
+	}
+	category = category.concat("<block type='" + propname + "'></block>");
+	cats[catname] = category;
+      }
+    }
+    // Now build and return the categorized tree
+    var treeString = "<xml id='toolbox' style='display:none'>";
+    for (var cat in cats) {
+      treeString = treeString.concat("<category name='" + cat + "'>" + cats[cat] + "</category>");
+    }
+    treeString = treeString.concat("</xml>");
+    return Blockly.Xml.textToDom(treeString);
+  }
+
+Also, the actual workspace in the UI has to be re-initialized every time a new quiz
+is selected.  This happens in quizme-helper.initializeBlocksWorkspace():
+
+  // Delete the current toolbox tree from the webpage
+  var html = Blockly.Toolbox.HtmlDiv;
+  var children = html.childNodes;
+  if (children[1])
+    children[1].remove();
+
+
+
+
+
+
