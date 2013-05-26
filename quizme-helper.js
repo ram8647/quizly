@@ -615,7 +615,11 @@ Blockly.Quizme.evaluateUserAnswer = function() {
   } 
   else if (Blockly.Quizme.answerType == "func_def") {
     result = Blockly.Quizme.evaluateEvalFunctionDef(Blockly.Quizme); 
-  } else {
+  } 
+  else if (Blockly.Quizme.answerType == "proc_def") {
+    result = Blockly.Quizme.evaluateEvalProcedureDef(Blockly.Quizme); 
+  }
+  else {
     var solution = Blockly.Quizme.solution;
     var answer = maindocument.getElementById('quiz_answer').value.toLowerCase();
     result = solution == answer;
@@ -738,6 +742,114 @@ Blockly.Quizme.testFunctionAgainstStandard = function(standard, fn, inputs) {
     }
     if (result != true) {
       errmsg = 'Your function failed on input<font color="red"> ' + inputs[k] + '</font>. The result should be <font color="red">' 
+                 + stdresult + '</font>. Your result was <font color="red">' + fnresult + '</font>';
+    }
+    k = k + 1;
+  }
+return [result,errmsg];
+}
+
+/**
+ * Evaluates proc_def problem. 
+ * @param helperObj, either Blockly.Quizmaker or Blockly.Quizme
+ *
+ */
+Blockly.Quizme.evaluateEvalProcedureDef = function(helperObj) {
+  console.log("RAM: evaluateEvalProcedureDef() for quiz " + helperObj.quizName);
+
+  var qname = helperObj.quizName;
+
+  // Set up the standard and the test functions
+  var testFn = Blockly.Quizme.setupProcedureDefinition(helperObj.quizName, helperObj);
+  var stdFn = window.eval( '(' + helperObj[qname].procedure_def + ')' );
+
+  // Test the two functions on the inputs
+  var inputs = helperObj[qname].procedure_inputs;
+  var testresult = Blockly.Quizme.testProcedureAgainstStandard(stdFn, testFn, inputs);
+/*
+  Blockly.Quizme.giveFeedback(testresult[0], 
+    "Correct! Your function passed all " + inputs.length + " of our test cases.  Good show!",
+			      "Oops, " + testresult[1] + ". Try again!", true);
+  */
+  Blockly.Quizme.giveFeedback(true, 
+    "Correct! Your function passed all of our test cases.  Good show!",
+			      "Oops, Try again!", true);
+  return true;
+}
+
+
+
+/**
+ *  Called when the answer_type is "proc_def. This creates the procedure definition
+ *    initializes JavaScript and then creates and saves a procedure definition for the blocks
+ *    in the mainWorkspace.  
+ * @param qname, the name of the quiz and index into the helperObj
+ * @param helperObj, either Quizmaker or Quizme
+ * @param blocks, possibly undefined, the blocks that should be used to construct the procedure
+ */
+  Blockly.Quizme.setupProcedureDefinition = function(qname, helperObj, blocks) {
+  if (helperObj.procedure_name) {
+    helperObj[qname].procedure_name = helperObj.procedure_name;
+  }
+  if (helperObj.procedure_inputs) {
+    helperObj[qname].procedure_inputs = helperObj.procedure_inputs;
+  }
+  Blockly.JavaScript.init();
+  //  var blocks = Blockly.mainWorkspace.topBlocks_;
+  if (!blocks) 
+    blocks  = Blockly.mainWorkspace.topBlocks_;
+  Blockly.JavaScript.blockToCode(blocks[0]);      // Creates a definition
+  
+  return window.eval('(' +
+        Blockly.JavaScript.definitions_[helperObj[qname].procedure_name] + ')');
+}
+
+/**
+ *  Tests the student's procedure input-by-input against the
+ *   quiz's procedure definition, return true if it passes
+ *   all the tests.
+ * @param standard -- the correct function definitino
+ * @param fn -- the student's definitino
+ * @param inputs -- an array of arrays of input arguments.
+ */
+Blockly.Quizme.testProcedureAgainstStandard = function(standard, fn, inputs) {
+  console.log("RAM: Testing fn against standard ...");
+  if (!fn) {
+    return [false, 'Can\'t find your procedure. Double check the name (spelling counts).'];
+  }
+
+  var k = 0;
+  var result = true;
+  var errmsg = "";
+  while (k < inputs.length && result == true) {
+    var input = inputs[k].split(',');
+    //    if (input instanceof Array) {
+    if (isArray(input)) {
+      var stdcall = 'standard' + '(';
+      var fncall = 'fn' + '(';
+      for (var i = 0; i < input.length; i++) {
+        stdcall = stdcall + input[i];
+        fncall = fncall + input[i];
+        if (i < input.length - 1) {
+          stdcall = stdcall + ',';
+          fncall = fncall + ',';
+	}
+      }
+      stdcall = stdcall + ')';      
+      fncall = fncall + ')';
+      stdcall = eval(stdcall);
+      fncall = eval(fncall);
+    }
+    var stdresult = stdcall;  //standard(inputs[k]);
+    var fnresult = fncall; // fn(inputs[k]);
+    console.log("input=" + inputs[k] + " std=" + stdresult + " fn=" + fnresult);
+      if (stdresult && ( isArray(stdresult))) {
+      result =  stdresult != undefined && arrcmp(stdresult, fnresult);
+    } else {
+      result =  stdresult != undefined && (stdresult == fnresult);
+    }
+    if (result != true) {
+      errmsg = 'Your procedure failed on input<font color="red"> ' + inputs[k] + '</font>. The result should be <font color="red">' 
                  + stdresult + '</font>. Your result was <font color="red">' + fnresult + '</font>';
     }
     k = k + 1;

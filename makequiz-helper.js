@@ -95,6 +95,7 @@ var MAINDOCUMENT = parent.document;  // Document that holds Blockly iFrame
 var EVAL_EXPR = 'eval_expr';
 var XML_BLOCKS = 'xml_blocks';
 var FUNC_DEF = 'func_def';
+var PROC_DEF = 'proc_def';
 
 // HTML element names
 var HINT_HTML = 'hint_html';
@@ -127,16 +128,16 @@ var ARITHMETIC_GENERATOR = "function xmlGenerator(xml,low, high, op){var ops = [
 
 var ARITHMETIC_TEMPLATE = '<xml><block type=\"$type\" inline=\"true\" x=\"85\" y=\"100\"><value name=\"$name1\"><block type=\"math_number\"><title name=\"NUM\">$arg1</title></block></value><value name=\"$name2\"><block type=\"math_number\"><title name=\"NUM\">$arg2</title></block></value></block></xml>';
 
-var HELP_STR = "The normal workflow is as follows\n\n" + 
-           "* Select the type of quiz.\n" +
-           "* Fill in the name of the quiz and a brief description.\n" +
-           "* Compose the quiz question and hints\n\t -- these can be HTML.\n" +
-           "* Select the built-in and component blocks\n\t -- i.e., those needed to solve the problem .\n" +
-           "* Click on 'Setup problem space'\n\t -- with blocks the student should start with.\n" +
-           "* Click on 'Set up solution workspace'\n\t -- construct your solution to the problem.\n" +
-           "* Click on 'Preview the Quiz'\n\t -- to try the quiz yourself.\n" +
-           "* Click on 'Generate JSON'\n\t -- to save the Quiz as a JSON string.\n\n" +
-  "You can go back-and-forth between these various steps until you're happy with the quiz.\n\n" +
+var HELP_STR = "The normal workflow is as follows<br><br>" + 
+           "* Select the type of quiz.<br>" +
+           "* Fill in the name of the quiz and a brief description.<br>" +
+           "* Compose the quiz question and hints<br>&nbsp &nbsp &nbsp &nbsp &nbsp-- these can be HTML.<br>" +
+           "* Select the built-in and component blocks<br>&nbsp &nbsp &nbsp &nbsp &nbsp -- i.e., those needed to solve the problem .<br>" +
+           "* Click on 'Setup problem space'<br>&nbsp &nbsp &nbsp &nbsp &nbsp -- with blocks the student should start with.<br>" +
+           "* Click on 'Set up solution workspace'<br>&nbsp &nbsp &nbsp &nbsp &nbsp -- construct your solution to the problem.<br>" +
+           "* Click on 'Preview the Quiz'<br>&nbsp &nbsp &nbsp &nbsp &nbsp -- to try the quiz yourself.<br>" +
+           "* Click on 'Generate JSON'<br>&nbsp &nbsp &nbsp &nbsp &nbsp -- to save the Quiz as a JSON string.<br><br>" +
+  "You can go back-and-forth between these various steps until you're happy with the quiz.<br><br>" +
   "The JSON string can be pasted into 'quizzes.json' and loaded into Quizly.";
 
 // Path to images used in UI
@@ -155,42 +156,48 @@ Blockly.doIt = function(command, param) {
     initQuizMaker(param);
   } 
   else if (command == 'createorupdate') {
-    createOrUpdateQuizObject();
+    createOrUpdateQuizObject(param);
   }
   else if (command == 'setupproblem') {
-    createOrUpdateQuizObject();
+    createOrUpdateQuizObject(param);
     setupProblemBlocks();
   }
   else if (command == 'setupsolution') {
-    createOrUpdateQuizObject();
+    createOrUpdateQuizObject(param);
     setupSolutionBlocks();
   }
   else if (command == 'preview') {
-    createOrUpdateQuizObject();
+    createOrUpdateQuizObject(param);
     previewTheQuiz();
   }
   else if (command == 'json') {
-    createOrUpdateQuizObject();
+    createOrUpdateQuizObject(param);
     generateJSON();
   }
   else if (command == 'hint')
     giveTestHint();
   else if (command == 'submit') {
-    handleToggleButton();
+    handleToggleButton(param);
   }
   else if (command == 'type') {
     onAnswerTypeSelected(param);
-    createOrUpdateQuizObject();
+    createOrUpdateQuizObject(0);
   }
   else if (command == 'expression') {
     onExpressionTypeSelected(param);
   }
   else if (command == 'variables') {
     createQuizDictionary(param);
-    createOrUpdateQuizObject();
+    createOrUpdateQuizObject(0);
   } else if (command == 'help') {
-    alert(HELP_STR);
+    displayHelp();
+    //alert(HELP_STR);
   }
+}
+
+function displayHelp(){
+	console.log("RAM: Display help");
+	MAINDOCUMENT.getElementById("help_div").innerHTML = HELP_STR;
 }
 
 /**
@@ -199,6 +206,10 @@ Blockly.doIt = function(command, param) {
  */
 function initQuizMaker(path) {
   console.log("RAM: initializing ... path=" + path);
+
+  // App Inventor's Drawer needs to point to Quizly's Toolbox.
+  Blockly.Drawer = Blockly.Toolbox;
+  Blockly.Toolbox.hide = function() {}   // To cover calls to Drawer.hide()
 
   Blockly.Quizmaker = {};
   setState(INIT);
@@ -216,6 +227,7 @@ function initQuizMaker(path) {
   // Initialize the structures that handles scoped variables
   Blockly.BlocklyEditor.startquizme();
   initQuizmeLanguage();
+  Blockly.languageTree = initToolboxLanguageTree(Blockly.Language);
   Blockly.Toolbox.init();
 }
 
@@ -226,6 +238,12 @@ function initQuizMaker(path) {
  */
 function previewTheQuiz() {
   console.log("RAM: previewTheQuiz()");
+  if ( !isAnswerTypeSelected() ) {
+    alert("You must first select a quiz type under the 'Quiz info' tab ... ignoring.");
+    window.parent.setupInfo();
+    return;
+  }
+
   if ( isInState(INIT)  && getAnswerType() != EVAL_EXPR ) {
     alert("The quiz has not been properly set up...ignoring");
     return;
@@ -248,12 +266,16 @@ function previewTheQuiz() {
   // Set up the MAINDOCUMENT for previewing the quiz
   setView(PREV); 
 
-  initializeBlocksWorkspace(undefined, builtins, components);  // undefined forces initialization
+  customizeQuizmeLanguage(undefined, builtins, components); // undefined forces initialization
 
   // If this is a func_def problem, construct a function definition from the solutionWorkspace.
 
   if ( getAnswerType() == FUNC_DEF) {
     createFunctionDef();   
+  }
+  
+  if ( getAnswerType() == PROC_DEF) {
+  	 createProcedureDef();
   }
 
   // Set up the workspace
@@ -271,12 +293,20 @@ function setupPreviewWorkspace(answer_type) {
     var probSpace = mapQuizVariables(getProblemWorkspace(), getVariableMappings() );
     if (probSpace)
       setMainWorkspaceFromText(probSpace);
-  } else if (answer_type == FUNC_DEF) {
+  } 
+  else if (answer_type == FUNC_DEF) {
     var probSpace = mapQuizVariables(getProblemWorkspace(), getVariableMappings() );
     if (probSpace) {
       setMainWorkspaceFromText(probSpace);
     }
-  } else if (answer_type == EVAL_EXPR) {
+  }
+  else if (answer_type == PROC_DEF) {
+    var probSpace = mapQuizVariables(getProblemWorkspace(), getVariableMappings() );
+    if (probSpace) {
+      setMainWorkspaceFromText(probSpace);
+    }
+  }
+   else if (answer_type == EVAL_EXPR) {
     populateWorkspaceWithExpressionBlock(Blockly.Quizmaker.quiz.expr_type);
     Blockly.Quizmaker.solution = evalMainWorkspace();
   } 
@@ -300,14 +330,22 @@ function giveTestHint() {
  */
 function generateJSON() {
   console.log("RAM: generateJSON()");
+
+  if ( !isAnswerTypeSelected() ) {
+    alert("You must first select a quiz type under the 'Quiz info' tab ... ignoring.");
+    window.parent.setupInfo();
+    return;
+  }
+
   var jsonObj = generateQuizJsonObj(Blockly.Quizmaker);
-  if (!jsonObj) 
+  if (!jsonObj)
     return;
   setState(JGEN);
   Blockly.Quizmaker.JsonObj = jsonObj;
   var str = JSON.stringify(jsonObj);
   //  alert("Copy and paste the following JSON string into the quizzes file:\n\n" + "\"" + jsonObj.Name + "\" :" + str)
   parent.alert("\"" + jsonObj.Name + "\" :" + str)
+
 }
 
 /**
@@ -397,7 +435,8 @@ function setupProblemBlocks() {
   console.log("SetupProblemBlocks");
 
   if ( !isAnswerTypeSelected() ) {
-    alert("You must first select a quiz type...ignoring.");
+    alert("You must first select a quiz type under the 'Quiz info' tab ... ignoring.");
+    window.parent.setupInfo();
     return;
   }
 
@@ -419,6 +458,13 @@ function setupProblemBlocks() {
  */
 function setupSolutionBlocks() {
   console.log("setupSolutionBlocks()");
+
+  if ( !isAnswerTypeSelected() ) {
+    alert("You must first select a quiz type under the 'Quiz info' tab ... ignoring.");
+    window.parent.setupInfo();
+    return;
+  }
+
   var quiz_type = getQuizType();
   if ( !quiz_type)
     return;
@@ -486,7 +532,7 @@ function testGiveHint() {
 /**
  * Handles the Submit/New Question toggle button.
  */
-function handleToggleButton() {
+function handleToggleButton(param) {
   console.log("RAM: handleToggleButton()");
   MAINDOCUMENT.getElementById(QUIZ_RESULT).style.visibility="visible";
 
@@ -495,7 +541,7 @@ function handleToggleButton() {
     MAINDOCUMENT.getElementById(QUIZ_RESULT).style.visibility = "visible";
     evaluateQuizResult();
   } else {
-    createOrUpdateQuizObject();
+    createOrUpdateQuizObject(param);
     previewTheQuiz(true);  // true means this is a redo
     MAINDOCUMENT.getElementById(QUIZ_RESULT).style.visibility = "hidden";
     MAINDOCUMENT.getElementById(TOGGLE_BTN).innerHTML = 'Submit';
@@ -513,6 +559,7 @@ function onAnswerTypeSelected(selectObj) {
 
   if (quiz_type == EVAL_EXPR) {
     MAINDOCUMENT.getElementById(EXPR_TYPE).style.visibility="visible";
+    MAINDOCUMENT.getElementById(QUES_HTML).value = "Evaluate the expression shown in the workspace and type your answer into the textbox.";
   } else if (quiz_type == XML_BLOCKS) {
     MAINDOCUMENT.getElementById(EXPR_TYPE).style.visibility="hidden";
   } else if (quiz_type == FUNC_DEF) {
@@ -532,6 +579,23 @@ function onAnswerTypeSelected(selectObj) {
     if (cbox_option.value == "procedures") {
       cbox_option.checked = true;
     }
+  } else if (quiz_type == PROC_DEF) {
+    MAINDOCUMENT.getElementById(EXPR_TYPE).style.visibility="hidden";
+    var p_name = prompt("Procedure name (must be legal JavaScript function name)?");
+    while (!p_name) {
+      p_name = prompt("A procedure name is required for this type of problem.");
+    }
+    Blockly.Quizmaker.procedure_name = p_name;
+    var inputs = prompt("Input a semicolon-separated list of test cases where each case is a commas-separated list of input arguments -- e.g., 3,4; 4,5; 5,6");
+    if (inputs) {
+      Blockly.Quizmaker.procedure_inputs = inputs.split(';');
+    } else {
+      Blockly.Quizmaker.procedure_inputs = [];
+    }
+    var cbox_option = MAINDOCUMENT.getElementsByName(BUILT_INS)[6];
+    if (cbox_option.value == "procedures") {
+      cbox_option.checked = true;
+    }
   }
 }
 
@@ -545,7 +609,7 @@ function onExpressionTypeSelected(selectObj) {
  * Creates a new Quiz object on Blockly.Quizmaker or updates the
  *  existing one.
  */
-function createOrUpdateQuizObject() {
+function createOrUpdateQuizObject(hint_counter) {
   console.log("createOrUpdateQuizObject()");
   
   var display_name = MAINDOCUMENT.getElementById(DISPLAY_NAME).value;
@@ -574,9 +638,15 @@ function createOrUpdateQuizObject() {
   quizObj.answer_type = MAINDOCUMENT.getElementById(ANSWER_TYPE).value;
   var expr_ndx = MAINDOCUMENT.getElementById(EXPR_TYPE).selectedIndex;
   quizObj.expr_type = MAINDOCUMENT.getElementById(EXPR_TYPE).options[expr_ndx].value;
-  Blockly.Quizmaker.hints = quizObj.hints = [ MAINDOCUMENT.getElementById(HINT1).value, 
-                              MAINDOCUMENT.getElementById(HINT2).value, 
-                              MAINDOCUMENT.getElementById(HINT3).value];
+  quizObj.hints = []; 
+  for(var i = 1; i<=hint_counter; i++){
+		var id = 'hint_'+i;
+		console.log(id);
+		console.log(maindocument.getElementById(id).value);
+		quizObj.hints.push(maindocument.getElementById(id).value);
+	
+	}
+  Blockly.Quizmaker.hints =  quizObj.hints;  
   Blockly.Quizmaker.hintCounter = quizObj.hintCounter = 0;
 
   // The blocks and components that will be displayed to user
@@ -630,7 +700,11 @@ function evaluateQuizResult() {
     Blockly.Quizme.evaluateEvalFunctionDef(Blockly.Quizmaker);
 
   // All other types -- this may need to be refined
-  } else {
+  }
+  else if (answer_type == PROC_DEF) {
+    Blockly.Quizme.evaluateEvalProcedureDef(Blockly.Quizmaker);
+  }
+   else {
     var solution = "" + Blockly.Quizmaker.solution;
     var answer = MAINDOCUMENT.getElementById(QUIZ_ANSWER).value.toLowerCase();
 
@@ -734,6 +808,31 @@ function createFunctionDef() {
   }
 }
 
+/**
+ *  Calls Quizme.setupProcedureDefinition, passing it the blocks
+ *   saved in the solutionWorkspace.  The function definition 
+ *   is placed on Blockly.JavaScript.definitions_.
+ */
+function createProcedureDef() {
+  console.log("createProcedureDef()");
+
+  var txt = getSolutionWorkspace();
+  var qname = getQuizName();
+  if (txt) {
+    var ws = new Blockly.Workspace(true);  // Create def from solution Xml
+    ws.createDom();
+    var dom = Blockly.Xml.textToDom(txt);
+    Blockly.Xml.domToWorkspace(ws, dom);
+    var blocks = ws.getTopBlocks();
+    Blockly.Quizmaker.function_def = Blockly.Quizmaker.quiz.function_def =  
+      Blockly.Quizme.setupFunctionDefinition(qname, Blockly.Quizmaker, blocks);
+  } else {
+    // Function will be created from mainWorkspace
+    Blockly.Quizmaker.function_def = Blockly.Quizmaker.quiz.function_def =  
+      Blockly.Quizme.setupFunctionDefinition(qname, Blockly.Quizmaker);
+  }
+}
+
 
 function evalMainWorkspace() {
   return Blockly.Quizme.eval(Blockly.mainWorkspace.getTopBlocks()[0]);
@@ -762,26 +861,30 @@ function setProblemSpaceView(ans_type) {
   MAINDOCUMENT.getElementById(HINT_BTN).style.visibility="hidden";
   MAINDOCUMENT.getElementById(TOGGLE_BTN).style.visibility="hidden";
   MAINDOCUMENT.getElementById(QUIZ_RESULT).style.visibility="hidden";
+   
   var instructions = MAINDOCUMENT.getElementById(INSTR);
-  instructions.style.visibility="visible";
+  //instructions.style.visibility="visible";
 
-  if (ans_type == XML_BLOCKS || ans_type == FUNC_DEF) {
+  var quiz_question = Blockly.Quizmaker[Blockly.Quizmaker.quizName].question_html;
+  if (ans_type == XML_BLOCKS || ans_type == FUNC_DEF || ans_type == PROC_DEF) {
     instructions.innerHTML = '<font color="purple">Put together 0 or more blocks as you would like them to appear to the student.' + 
-			     '<br>Then click the \'Setup Solution\' button.</font>';
+      '<br>Then click the \'Setup Solution\' button.</font>' + 
+      '<br><br><font color="green">Quiz Question: ' + quiz_question + '</font>';
 
   // For eval_expr problems, we go right to Test the quiz.
   } else if (ans_type == EVAL_EXPR) {
     var expr_ndx = MAINDOCUMENT.getElementById(EXPR_TYPE).selectedIndex;
     var expr_type = MAINDOCUMENT.getElementById(EXPR_TYPE).options[expr_ndx].value;
     instructions.innerHTML = '<font color="purple">The student will be presented with a random ' + expr_type + ' expression as seen here. ' + 
-	       '<br>You\'re ready to test this quiz. Click the \'Test the Quiz\' button.</font>';
+       '<br>You\'re ready to preview this quiz.</font>' + 
+       '<br><br><font color="green">Quiz Question: ' + quiz_question + '</font>';
 
     populateWorkspaceWithExpressionBlock(expr_type);
   }
 }
 
 function setPreviewView() {
-  MAINDOCUMENT.getElementById('instructions').style.visibility="hidden";
+  //MAINDOCUMENT.getElementById('instructions').style.visibility="hidden";
   MAINDOCUMENT.getElementById(QUIZ_NAME).style.visibility="visible";
   MAINDOCUMENT.getElementById(QUIZ_QUES).style.visibility="visible";
   MAINDOCUMENT.getElementById(HINT_HTML).style.visibility="visible";
@@ -802,9 +905,12 @@ function setPreviewView() {
 
 function setSolutionSpaceView() {
   var instructions = MAINDOCUMENT.getElementById('instructions');
-  instructions.style.visibility="visible";
+  //instructions.style.visibility="visible";
+  var quiz_question = Blockly.Quizmaker[Blockly.Quizmaker.quizName].question_html;
   instructions.innerHTML = '<font color="purple">Put together the blocks for a solution to the problem. You can use your variables in the blocks.' + 
-	     '<br>Then click the \'Preview the Quiz\' button.</font>';
+    '<br>Then click the \'Preview the Quiz\' button.</font>' +
+    '<br><br><font color="green">Quiz Question: ' + quiz_question + '</font>';
+
   MAINDOCUMENT.getElementById(QUIZ_NAME).style.visibility="hidden";
   MAINDOCUMENT.getElementById(QUIZ_QUES).style.visibility="hidden";
   MAINDOCUMENT.getElementById(HINT_HTML).style.visibility="hidden";

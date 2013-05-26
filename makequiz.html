@@ -1,407 +1,431 @@
 <html>
-<head>
-  <meta charset="utf-8">
-  <!-- NOTE:  Don't change this Title -->
-  <title>Quiz Maker Utility</title>
+  <head>
+    <meta charset="utf-8">
+    <!-- NOTE: Don't change this Title -->
+    <title>
+      Quiz Maker Utility
+    </title>
+    <!-- Style for the custom alert box -->
+    <!-- See: http://snipplr.com/view/46677/custom-alert-box-formatted-and-controlled-by-jscss/ -->
+    <link href="common.css" rel="stylesheet" type="text/css">
+    <link href="makequiz.css" rel="stylesheet" type="text/css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="./makequiz.js"></script>
+    <script type="text/javascript">
+    </script>
+    <script>
+      var show_frame = false;
+      var hint_counter = 1;
+    	$(function () {
+    		$("#setup").fadeIn();
+   		$("#qframe").hide();
+   		$("#instructions").hide();
+   		$("#question").hide();
+   		$("#js").hide();
+   		$("#json").hide();
+   		$("#help").hide();
+    	});
+    	
+    	function setupInfo(){
+    		$("#setup").fadeIn();
+   		$("#qframe").hide();
+   		$("#instructions").hide();
+   		$("#question").hide();
+   		$("#js").hide();
+   		$("#json").hide();
+   		$("#help").hide();
+    	}
+    	
+      function createOrUpdateQuiz() {
+        console.log("RAM createOrUpdateQuiz");
+        Blockly.doIt('createorupdate',hint_counter);
+      }
+      
+      
+      function setupProblemBlocks() {
+           $("#setup").hide();
+           $("#question").hide();
+           $("#json").hide();
+           $("#help").hide();
+	   $("#js").hide();
+  	   $("#instructions").fadeIn();
+           $("#qframe").fadeIn();
+           console.log("RAM setupProblemBlocks()");
+           Blockly.doIt('setupproblem',hint_counter);
+      }
+      
+      function setupSolutionBlocks() {
+		   $("#setup").hide();
+     		$("#question").hide();
+   		$("#json").hide();
+   		$("#help").hide();
+   		$("#js").hide();
+	  		$("#instructions").fadeIn();
+	  		$("#qframe").fadeIn();
+        console.log("RAM setupSolutionBlocks()");
+        Blockly.doIt('setupsolution',hint_counter);
+      }
+      
+      function previewTheQuiz() {
+      	$("#setup").hide();
+     		$("#question").fadeIn();
+   		$("#json").hide();
+   		$("#help").hide();
+   		$("#js").hide();
+	  		$("#instructions").hide();
+	  		$("#qframe").fadeIn();
+        console.log("RAM previewTheQuiz()");
+        Blockly.doIt('preview',hint_counter);
+      }
+      
+      function generateJSON() {
+      	$("#setup").hide();
+     		$("#question").hide();
+   		$("#json").fadeIn();
+   		$("#help").hide();
+   		$("#js").hide();
+	  		$("#instructions").hide();
+	  		$("#qframe").hide();
+        console.log("RAM generateJSON()");
+        Blockly.doIt('json',hint_counter);
+      }
+      
+      function testGiveHint() {
+        console.log("RAM testGiveHint()");
+        Blockly.doIt('hint',hint_counter);
+      }
+      
+      function toggleNewTest() {
+        console.log("RAM toggleNewTest()");
+        Blockly.doIt('submit',hint_counter);
+      }
+      
+      function onAnswerTypeSelected(option) {
+        console.log("RAM onAnswerTypeSelected()");
+        if (option.value != "")
+          Blockly.doIt('type', option);
+      }
+      
+      function onExpressionTypeSelected(option) {
+        console.log("RAM onExpressionTypeSelected()");
+        Blockly.doIt('expression', option);
+      }
+      
+      function getVariableRanges(obj) {
+        console.log("RAM getVariableRanges()");
+        Blockly.doIt('variables', obj);
+      }
+      
+      function initQuizMaker() {
+        console.log("RAM initQuizMaker()");
+        Blockly.doIt('init', './');
+      }
+      
+      function displayHelp() {
+        console.log("RAM: help");
+        $("#setup").hide();
+     		$("#question").hide();
+   		$("#json").hide();
+   		$("#js").hide();
+   		$("#help").fadeIn();
+	  		$("#instructions").hide();
+	  		$("#qframe").hide();
+        Blockly.doIt('help');
+        //  alert("Help is on the way");
+      }
+      
+      function displayJS() {
+        console.log("RAM: JavaScript");
+        $("#setup").hide();
+     		$("#question").hide();
+   		$("#json").hide();
+   		$("#help").hide();
+   		$("#js").fadeIn();
+	  		$("#instructions").hide();
+	  		$("#qframe").hide();
+        showCode();
+        //  alert("Help is on the way");
+      }
+      
+      
+      
+      function reset() {
+        console.log("RAM: reset");
+        var response = confirm("Are you sure? This will reinitialize the quiz.");
+        if (response == true) {
+          document.location.reload(true);
+        }
+      }
+      
+      function addHint() {
+        hint_counter++;
+        console.log("RAM: added hint");
+        var text = document.createElement('div');
+        text.innerHTML = '<br><input type="Text" id="hint_'+hint_counter+'" size="120" placeholder="Hint #'+hint_counter+'."> </input>';
+        document.getElementById("hint_input").appendChild(text);
+        
+      }
+    </script>
+   </head>
+   
+   <body>
+     <div id="tabs">
+
+        <table>
+          <tr id="tabRow" height="1em">
+            <td id="tab_create" class="tabon" onclick="tabClick(this.id)">Create</td>
+            <td class="tabmin">&nbsp;</td>
+            <td id="tab_quiz" class="taboff" onclick="tabClick(this.id)">Quiz</td>
+            <td class="tabmin">&nbsp;</td>
+            <td id="tab_solution" class="taboff" onclick="tabClick(this.id)">Solution</td>
+            <td class="tabmin">&nbsp;</td>
+            <td id="tab_preview" class="taboff" onclick="tabClick(this.id)">Preview</td>
+            <td class="tabmin">&nbsp;</td>
+            <td id="tab_json" class="taboff" onclick="tabClick(this.id)">Json</td>
+            <td class="tabmax">
+              <button style="color:green" title="Display help" onclick="displayHelp();">
+                 Help
+              </button>
+              <button style="color:red" title="Reset everything" class="launch" onclick="reset()">
+                 Reset
+              </button>
+            </td>
+          </tr>
+        </table>
+
+<!--        <ul> -->
+<!--          <li class="active"> -->
+<!--            <a href="#" rel="info" onclick="setupInfo()"> -->
+<!--              Quiz info -->
+<!--            </a> -->
+<!--          </li> -->
+<!--          <li> -->
+<!--            <a href="#setup" rel="setup" onclick="setupProblemBlocks()"> -->
+<!--              Setup the quiz -->
+<!--            </a> -->
+<!--          </li> -->
+<!--          <li> -->
+<!--            <a href="#solution" rel="solution" onclick="setupSolutionBlocks()"> -->
+<!--              Setup the solution -->
+<!--            </a> -->
+<!--          </li> -->
+<!--          <li> -->
+<!--            <a href="#preview" rel="preview"  onclick="previewTheQuiz()"> -->
+<!--              Preview the quiz -->
+<!--            </a> -->
+<!--          </li> -->
+<!--          <li> -->
+<!--            <a href="#json" rel="json" onclick="generateJSON()"> -->
+<!--              JSON -->
+<!--            </a> -->
+<!--          </li> -->
+<!--          <li> -->
+<!--            <a href="#js" rel="json" onclick="displayJS()"> -->
+<!--              JavaScript -->
+<!--            </a> -->
+<!--          </li> -->
+<!--          <li> -->
+<!--            <a href="#help" rel="help" onclick="displayHelp()"> -->
+<!--              Help -->
+<!--            </a> -->
+<!--          </li> -->
+<!--          <li> -->
+<!--            <a href="#reset" rel="reset" onclick="reset()"> -->
+<!--              Reset -->
+<!--            </a> -->
+<!--          </li> -->
+<!--        </ul> -->
+     </div>
+     
+     <!-- Tabs begin here -->
+     <div id="tabs_content">
+       
+      <!--Setup the Problem -->
+      <div id="setup" class="tab_content" style="display: block; visibility: visible">
+          Quiz Type:
+
+       <!-- Selection drop-down to select the quiz type -->
+	<select title="The type of quiz" id="answer_type" onchange="onAnswerTypeSelected(this)">
+	 <option title="The quiz type defines the type of exercise." value="">
+	   Required: You must select a quiz type.
+	 </option>
+	 <option title="The student's answer will be evaluated and the value compared to your solution." value="eval_expr">
+	   Expression Evaluation
+	 </option>
+	 <option title="The student's answer will be compared character-by-charecter with your solution." value="xml_blocks">
+	   Exact Block-for-block Match
+	 </option>
+	 <option title="The student-defined function will be evaluated on test inputs that you provide  and the results compared with your function's results." value="func_def">
+	   Function Definition
+	 </option>
+	 <option title="Procedure test." value="proc_def">
+	   Procedure Definition
+	 </option>
+	</select>
+
+        </input>
+          &nbsp;&nbsp;&nbsp; Quiz Name:
+        <input title="Plain text name for the quiz" size="" type="Text" id="display_name" value="Unique Quiz Name" onchange="createOrUpdateQuiz()">
+        </input>
 
 
-<!-- Style for the custom alert box -->
-<!-- See: http://snipplr.com/view/46677/custom-alert-box-formatted-and-controlled-by-jscss/ -->
-<style>
-#modalContainer {
-  background-color:transparent;
-  position:absolute;
-  width:100%;
-  height:100%;
-  top:0px;
-  left:0px;
-  z-index:10000;
-}
+    <!-- Some invisible elements that appear based on selection of answer_type -->
+        <select title="Type of expression to evaluate" style="visibility:hidden" id="expression_type" onchange="onExpressionTypeSelected(this)">
+         <option value="relation">
+           Relational: &LT;, =, ...
+         </option>
+         <option value="arithmetic">
+           Arithmetic: +, *, ...
+         </option>
 
-#alertBox {
-  position:relative;
-  width:50%;
-  min-height:50px;
-  word-wrap:break-word;
-  margin-top:50px;
-  border:2px solid #000;
-  background-color:#F2F5F6;
-  background-repeat:no-repeat;
-  background-position:20px 30px;
-}
+	 <!-- Not yet implemented -->
+	 <!--  <option value="boolean"> Boolean: AND, OR, NOT </option>  -->
+        </select>
+        <br>
+        <br>
+          Description:
+        <input title="Type is a brief description of the quiz" type="Text" id="description" size="111" value="Describe the quiz problem.">
+        </input>
+        <br>
+        <br>
+          QuestionHTML:
+        <textarea id="question_html" rows="2" cols= "80" 
+                  onkeypress="if (event.keyCode == 13) getVariableRanges(this)"
+                  title="Question presented to student. Can have HTML and variables. Type <enter> to prompt for variables.">
+Can have HTML and string variables such as $#STR1#$ and numeric variables such as -91.9. Press &lt;ENTER&gt; to set variables.
+        </textarea>
 
-#modalContainer > #alertBox {
-  position:fixed;
-}
-
-#alertBox h1 {
-  margin:0;
-  font:bold 0.9em verdana,arial;
-  background-color:#78919B;
-  color:#FFF;
-  border-bottom:1px solid #000;
-  padding:2px 0 2px 5px;
-}
-
-#alertBox p {
-  font:0.7em verdana,arial;
-  height:100%;
-  padding-left:0px;
-  margin-left:0px;
-  word-wrap:break-word;
-}
-
-#alertBox #closeBtn {
-  display:block;
-  position:relative;
-  margin:5px auto;
-  padding:3px;
-  border:2px solid #000;
-  width:70px;
-  font:0.7em verdana,arial;
-  text-transform:uppercase;
-  text-align:center;
-  color:#FFF;
-  background-color:#78919B;
-  text-decoration:none;
-}
-
-/* unrelated styles */
-
-#mContainer {
-  position:relative;
-  width:600px;
-  margin:auto;
-  padding:5px;
-  border-top:2px solid #000;
-  border-bottom:2px solid #000;
-  font:0.7em verdana,arial;
-}
-
-h1,h2 {
-  margin:0;
-  padding:4px;
-  font:bold 1.5em verdana;
-  border-bottom:1px solid #000;
-}
-
-code {
-  font-size:1.2em;
-  color:#069;
-}
-
-#credits {
-  position:relative;
-  margin:25px auto 0px auto;
-  width:350px; 
-  font:0.7em verdana;
-  border-top:1px solid #000;
-  border-bottom:1px solid #000;
-  height:90px;
-  padding-top:4px;
-}
-
-#credits img {
-  float:left;
-  margin:5px 10px 5px 0px;
-  border:1px solid #000000;
-  width:80px;
-  height:79px;
-}
-
-.important {
-  background-color:#F5FCC8;
-  padding:2px;
-}
-
-code span {
-  color:green;
-}
-</style>
-
-<script type="text/javascript">
-// Script to support custom alert box available through this top-level window.
-// http://snipplr.com/view/46677/custom-alert-box-formatted-and-controlled-by-jscss/
-
-var ALERT_TITLE = "Copy and paste the following JSON string into quizzes.json.";
-var ALERT_BUTTON_TEXT = "Ok";
-
-if (document.getElementById) {
-  window.alert = function(txt) {
-    createCustomAlert(txt);
-  }
-}
-
-
-function createCustomAlert(txt, title, btn_title) {
-  if (!title) 
-    title = ALERT_TITLE;
-  if (!btn_title)
-    btn_title = ALERT_BUTTON_TEXT;
-  var d = document;
-
-  if(d.getElementById("modalContainer")) return;
-
-  var mObj = d.getElementsByTagName("body")[0].appendChild(d.createElement("div"));
-  mObj.id = "modalContainer";
-  mObj.style.height = d.documentElement.scrollHeight + "px";
-
-  var alertObj = mObj.appendChild(d.createElement("div"));
-  alertObj.id = "alertBox";
-  if(d.all && !window.opera) alertObj.style.top = document.documentElement.scrollTop + "px";
-  alertObj.style.left = (d.documentElement.scrollWidth - alertObj.offsetWidth)/2 + "px";
-  alertObj.style.visiblity="visible";
-
-  var h1 = alertObj.appendChild(d.createElement("h1"));
-  h1.appendChild(d.createTextNode(title));
-
-  var msg = alertObj.appendChild(d.createElement("p"));
-  msg.appendChild(d.createTextNode(txt));
-//  msg.innerHTML = txt;
-
-  var btn = alertObj.appendChild(d.createElement("a"));
-  btn.id = "closeBtn";
-  btn.appendChild(d.createTextNode(btn_title));
-  btn.href = "#";
-  btn.focus();
-  btn.onclick = function() { removeCustomAlert();return false; }
-
-  alertObj.style.display = "block";
-}
-
-function removeCustomAlert() {
-  document.getElementsByTagName("body")[0].removeChild(document.getElementById("modalContainer"));
-}
-</script>
-
-<script>
-function createOrUpdateQuiz() {
-  console.log("RAM createOrUpdateQuiz");
-  Blockly.doIt('createorupdate');
-}
-
-function setupProblemBlocks() {
-  console.log("RAM setupProblemBlocks()");
-  Blockly.doIt('setupproblem');
-}
-
-function setupSolutionBlocks() {
-  console.log("RAM setupSolutionBlocks()");
-  Blockly.doIt('setupsolution');
-}
-
-function previewTheQuiz() {
-  console.log("RAM previewTheQuiz()");
-  Blockly.doIt('preview');
-}
-
-function generateJSON() {
-  console.log("RAM generateJSON()");
-  Blockly.doIt('json');
-}
-
-function testGiveHint() {
-  console.log("RAM testGiveHint()");
-  Blockly.doIt('hint');
-}
-
-function toggleNewTest() {
-  console.log("RAM toggleNewTest()");
-  Blockly.doIt('submit');
-}
-
-function onAnswerTypeSelected(option) {
-  console.log("RAM onAnswerTypeSelected()");
-  if (option.value != "")
-    Blockly.doIt('type', option);
-}
-
-function onExpressionTypeSelected(option) {
-  console.log("RAM onExpressionTypeSelected()");
-  Blockly.doIt('expression', option);
-}
-
-function getVariableRanges(obj) {
-  console.log("RAM getVariableRanges()");
-  Blockly.doIt('variables', obj);
-}
-
-function initQuizMaker() {
-  console.log("RAM initQuizMaker()");
-  Blockly.doIt('init', './');
-}
-function displayHelp() {
-  console.log("RAM: help");
-  Blockly.doIt('help');
-//  alert("Help is on the way");
-}
-function reset() {
-  console.log("RAM: reset");
-  var response = confirm("Are you sure? This will reinitialize the quiz.");
-  if (response == true) { 
-    document.location.reload(true);
-  }
-}
-</script>
-  <link href="common.css" rel="stylesheet" type="text/css">
-
-  <style>
-    body {
-      background-color: white;
-      font-family: sans-serif;
-    }
-    h1 {
-      font-weight: normal;
-      font-size: 140%;
-    }
-    #svgDiv {
-      height: 350px;
-      width: 98%;
-      border: 1px solid #ccc;
-    }
-
-    /* Quiz area */
-    textarea.quiz_question {
-      text-align:left;
-      background-color= #f3f3f3;
-      rows="4";
-      columns="60";
-    }
-    textarea.quiz_result {
-      text-align:left;
-      rows="4";
-      columns="60";
-    }
-  </style>
-</head>
-<body>
-<!--    <fieldset><legend>Quiz Maker Utility</legend> -->
-      <input type="hidden" id="name"></input>
-      Name: <input title="Plain text name for the quiz" size="" type="Text" id="display_name" value="Unique Quiz Name" onchange="createOrUpdateQuiz()"> </input>&nbsp;&nbsp;
-       Quiz Type: <select title="The type of quiz"  id="answer_type" onchange="onAnswerTypeSelected(this)"> 
-                    <option
-                     title="The quiz type defines the type of exercise."
-                     value="">Required: You must select a quiz type.</option>
-                    <option 
-                      title="The student's answer will be evaluated and the value compared to your solution."
-                      value="eval_expr">Expression Evaluation</option>
-                    <option 
-                      title="The student's answer will be compared character-by-charecter with your solution." 
-                      value="xml_blocks">Exact Block-for-block Match</option>
-                    <option 
-                      title="The student-defined function will be evaluated on test inputs that you provide  and the results compared with your function's results."
-                      value="func_def">Function Definition</option>
-                    </select>
-     <!-- Some invisible elements that appear based on selection of answer_type -->
-       <select title="Type of expression to evaluate" style="visibility:hidden" id="expression_type" onchange="onExpressionTypeSelected(this)"> 
-                    <option value="relation">Relational: &LT;, =, ...</option>
-                    <option value="arithmetic">Arithmetic: +, *, ...</option>
-<!--                     <option value="boolean">Boolean: AND, OR, NOT</option> -->
-       </select>
-     <button title="Display instructions" 
-             class="help"
-             id="help_btn" 
-             onclick="displayHelp()"
-             align="right">Help</button>
-     <button title="Reinitialize everything" 
-             class="help"
-             id="reset_btn" 
-             onclick="reset()"
-             align="right">Reset</button>
-
-     <br>Description: <input title="Type is a brief description of the quiz" 
-                             type="Text" 
-                             id="description" 
-                             size="111" 
-                             value="Describe the quiz problem."> </input>
-     <br>QuestionHTML: <input title="Question presented to student. Can have HTML and variables. Hint <enter> to prompt for variables"  
-                              type="Text" 
-                              onkeypress="if (event.keyCode == 13) getVariableRanges(this)" 
-                              id="question_html" size="106" 
-                              value="Can have HTML and string variables such as $#STR1#$ and numeric variables like -91.9. Press <ENTER> to set."</input>
-
-     <button title="Setup how the quiz will be presented in the workspace" 
-             id="problemspace"  
-             onclick="setupProblemBlocks()">1. Setup Problem Workspace</button>
-     <button title="Setup the blocks for the quiz's solution" 
-             id="solutionspace" 
-             onclick="setupSolutionBlocks()">2. Setup Solution Workspace</button>
-
-     <br>Hints: <input type="Text" id="hint_1" size="120" value="Hint #1."> </input>
-
-     <button title="Preview whether the quiz is as you want it" 
-             id="test" 
-             onclick="previewTheQuiz()">3. Preview the Quiz&nbsp;&nbsp;</button>
-     <button title="Display a savable JSON string for the quiz" 
-             id="generate" 
-             onclick="generateJSON()">4. Generate JSON</button>
-
-     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="Text" id="hint_2" size="125" value="Hint #2."> </input>
-     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="Text" id="hint_3" size="125" value="Hint #3."> </input>
-
-     <br>Built-in Blocks 
-             <input type="checkbox" name="built_ins" value="math" checked="true">Math
-             <input type="checkbox" name="built_ins" value="logic" checked="true">Logic
-             <input type="checkbox" name="built_ins" value="lists" checked="true">Lists
-             <input type="checkbox" name="built_ins" value="text" checked="true">Text
-             <input type="checkbox" name="built_ins" value="colors" checked="true">Colors
-             <input type="checkbox" name="built_ins" value="controls" checked="true">Controls
-             <input type="checkbox" name="built_ins" value="variables" checked="true">Variables
-             <input type="checkbox" name="built_ins" value="procedures" checked="true">Procedures
-     <br>Components
-             <input type="checkbox" name="components" value="Button">Button
-             <input type="checkbox" name="components" value="Sound">Sound
-   <br>
-   <br>
-<!--    <fieldset><legend>Blocks Workspace: Used for setting up problem, setting up solution, and testing the quiz.</legend>  -->
-    <table>
-       <div style="visibility:hidden" id="instructions">Instructions go here</div>
-       <tr>
-	<td>
-        <div id="quiz_name" style="visibility:hidden">Quiz Name goes here</div>
-	</td>
-       </tr>
-       <tr>
-         <td>
-          <div id="quiz_question" style="visibility:hidden">
-	    Here is where the quiz question goes.
-	  </div>
-          <div id="hint_html" style="visibility:hidden">
-	    Here is where the hint goes.
-	  </div>
+        <!-- Hints -->
+      <div id="hint_input">
+        <br>
+        <br>
+        <table><tr><td>
+	    Hints: 
+	  <input type="Text" id="hint_1" size="90" placeholder="Type a hint here and click 'Add' button.">
+	  </input>
         </td>
         <td>
-	    <table>
-	      <tr><td>
-                 <input style="visibility:hidden" id="quiz_answer" width="40" type="text" onkeypress="if (event.keyCode == 13) toggleNewTest()"></input></td>
-		 <td class="tabmin">&nbsp;</td>
- 		 <td align="center"><button style="visibility:hidden" id="hint_button" onclick="testGiveHint()">Hint</button></td>
-		 <td class="tabmin">&nbsp;</td>
-		 <td class="tabmin">&nbsp;</td>
- 		 <td align="center"><button style="visibility:hidden" id="submit_new_toggle" onclick="toggleNewTest()">Submit</button></td>
-		 <td class="tabmin">&nbsp;</td>
-	      </tr>
-	    </table>
+      <button title="Add a hint" onclick="addHint()">
+        Add another hint.
+      </button>
         </td>
+        </tr>
+        </table>
+      </div>
+      <br>
+      <br>
+        Built-in Blocks
+      <input type="checkbox" name="built_ins" value="math" checked="true">
+        Math
+      <input type="checkbox" name="built_ins" value="logic" checked="true">
+        Logic
+      <input type="checkbox" name="built_ins" value="lists" checked="true">
+        Lists
+      <input type="checkbox" name="built_ins" value="text" checked="true">
+        Text
+      <input type="checkbox" name="built_ins" value="colors" checked="true">
+        Colors
+      <input type="checkbox" name="built_ins" value="controls" checked="true">
+        Controls
+      <input type="checkbox" name="built_ins" value="variables" checked="true">
+        Variables
+      <input type="checkbox" name="built_ins" value="procedures" checked="true">
+        Procedures
+      <br>
+      <br>
+        Components
+      <input type="checkbox" name="components" value="Button">
+        Button
+      <input type="checkbox" name="components" value="Sound">
+        Sound
+      <br>
+      <br>
+     </div>
+     <!-- End of Setup Block-->
 
-       </tr>
-       <tr>
-	  <td><div style="visibility:hidden" contenteditable="true" width="300px" height="100px" id="quiz_result" readonly="readonly">Result goes here </div></td>
-     </tr>
-   </table>
-   <hr>
-   <script>
-     function blocklyLoaded(blockly) {
-       // Called once Blockly is fully loaded.
-       window.Blockly = blockly;
-       if (navigator.userAgent.indexOf("Firefox") != -1) {
-         Blockly.svg.height.baseVal.value = 400;
-         alert("For Firefox, setting Svg height = " + Blockly.svg.height.baseVal.value);
-       }
-     }
-   </script>
-   <iframe style="width: 100%; height: 100%; border: 1px solid #ccc;" src="blockly.html"></iframe>
-<!--   </fieldset> -->
-<!-- </fieldset> -->
+     <div id="instructions">
+       Instructions go here
+     </div>
+    <div id="question">
+      <div id="quiz_name" style="visibility:hidden">
+        Quiz Name goes here
+      </div>
+
+      <div id="quiz_question" style="visibility:hidden">
+        Here is where the quiz question goes.
+      </div>
+      <div id="hint_html" style="visibility:hidden">
+        Here is where the hint goes.
+      </div>
+
+      <table> <!-- For displaying a preview of the quiz. -->
+         <tr>
+            <td>
+              <input style="visibility:hidden" id="quiz_answer" width="40" type="text" onkeypress="if (event.keyCode == 13) toggleNewTest()">
+              </input>
+            </td>
+            <td class="tabmin">
+              &nbsp;
+            </td>
+            <td align="center">
+             <button style="visibility:hidden" id="hint_button" onclick="testGiveHint()">
+               Hint
+             </button>
+            </td>
+            <td class="tabmin">
+              &nbsp;
+           </td>
+           <td class="tabmin">
+              &nbsp;
+           </td>
+           <td align="center">
+             <button style="visibility:hidden" id="submit_new_toggle" onclick="toggleNewTest()">
+               Submit
+             </button>
+           </td>
+           <td class="tabmin">
+             &nbsp;
+           </td>
+         </tr>
+     </table>
+
+     <div style="visibility:hidden" contenteditable="true" width="300px" height="100px" id="quiz_result" readonly="readonly">
+       Result goes here
+     </div>
+   </div>
+
+   <!-- Here is where the Blockly workspace is injected. -->
+   <div id="qframe">  
+    <script>
+      function blocklyLoaded(blockly) {
+	// Called once Blockly is fully loaded.
+	window.Blockly = blockly;
+	if (navigator.userAgent.indexOf("Firefox") != -1) {
+	  Blockly.svg.height.baseVal.value = 400;
+	  alert("For Firefox, setting Svg height = " + Blockly.svg.height.baseVal.value);
+	}
+      }
+    </script>
+    <iframe id="preview_frame" style="width: 100%; height: 100%; border: 1px solid #ccc;" src="blockly.html">
+    </iframe>
+   </div>
+
+  <div id="json" class="tab_content">
+    <p id="json_code">
+    </p>
+  </div>
+
+  <div id="js" class="tab_content">
+    <div id = "js_div">
+    </div>
+  </div>
+
+  <div id="help" class="tab_content">
+    <div id = "help_div">
+      Help content goes here.
+    </div>
+  </div>
+</div>
+</div>
 </body>
 </html>
