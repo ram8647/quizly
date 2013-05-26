@@ -52,16 +52,35 @@
       // NOTE: Blockly injects a static toolbox in the form of an Xml tree. We want our toolbox to be dynamic but 
       //  we must initialize it here. The TOOLBOX category serves as a static heading for the toolbox.
       function initBlockly() {
+
+        var href = window.parent.document.location.href;
+        var quizname;
+        var arglist = href.split('?')[1];
+        if (arglist) {
+          var params = arglist.split('&');
+          for (var i = 0; i < params.length; i++) {
+             var keyval = params[i].split('=');
+             if (keyval[0] == 'quizname')
+               quizname = keyval[1];
+          }
+        }
+
         Blockly.inject(document.body,
-            {path: './', backpack:true, trashcan: true, toolbox: '<xml id="toolbox" style="display:none"><category name="TOOLBOX"><block type="bogus"></block></category></xml>' });
+            {path: './',
+             backpack:true,
+             trashcan: true,
+             toolbox: '<xml id="toolbox" style="display:none"><category name="TOOLBOX"><block type="bogus"></block></category></xml>'
+            });
 
         // Let the top-level application know that Blockly is ready.
         // Do any Quizme initializations here.
         window.parent.blocklyLoaded(Blockly);
+
+
         if (window.parent.document.title == "Quiz Maker Utility")
           initQuizMaker('./');
         else 
-          initQuizme(undefined, './');
+          initQuizme(quizname, './', arglist);
       }
     </script>
 
