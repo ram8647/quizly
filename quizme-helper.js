@@ -58,6 +58,7 @@
 
 var DEBUG = false;
 var SELECTOR_OPTION = 'selector';
+var BACKPACK_OPTION = 'backpack';
 
 //  Blocks lists -- should contain only blocks that have JavaScript generators, plus blocks that support mutators.
 var MATH_BLOCKS = ["math_add", "math_compare","math_divide","math_division","math_is_a_number", "math_multiply","math_mutator_item", "math_number", 
@@ -76,7 +77,7 @@ var TOPLEVEL_BLOCKS = ["mutator_container", "InstantInTime", "YailTypeToBlocklyT
 
 
 // Path to images used in UI
-var imgpath = "./quizme/media/";
+var imgpath = "./quizly/media/";
 var maindocument = parent.document;
 
 Blockly.hello = function(command, quizname) {
@@ -103,12 +104,10 @@ function isArray(object) {
 
 /**
  * Initialize Quizme.
- * TODO: Change quiztype to quizname throughout making sure there are no external
- *  references to it such as from QuizMaker.
  *
  * @param quizname, either undefined or a string giving one of the defined quiznames
  * @param quizmepath, path to the quizme source files
- * @param arglist, the list of GET args passed, e.g., 'quizname=name&selector=hidden&
+ * @param arglist, the list of GET args passed, e.g., 'quizname=name&selector=hidden&backpack=hidden
  */
 function initQuizme(quizname, quizmepath, arglist) {
   if (DEBUG) console.log("RAM: initializing ... quizname= " + quizname + " path=" + quizmepath + " arglist = " + arglist);
@@ -124,7 +123,14 @@ function initQuizme(quizname, quizmepath, arglist) {
   // Parse the argument list --> creates Blockly.Quizme.options
   parseArgList(arglist);
 
-  // Set up the quiz selector drop down.
+  // Do we want to hide the backpack?
+  if (Blockly.Quizme.options['backpack'] == 'hidden') {
+    var bp = Blockly.mainWorkspace.backpack;
+    if (bp)
+      bp.dispose();
+  }
+
+  // Set up the quiz selector drop down, if there is one
   var quizselector = maindocument.getElementById('quiz_selector');
   if (quizselector) {
     var quizzes = Blockly.Quizme.quiznames;
@@ -204,22 +210,25 @@ function showQuiz(quizname) {
 
   Blockly.mainWorkspace.clear();  // Do this first, before setting up built-ins and components.
 
-  // The quiznames are really quiznames hanging off of Blockly.Quizme.
   var quiznames = Blockly.Quizme.quiznames;
 
   // The maindocument may or may not have a selector.
   if (quizname == undefined) {
     var quizSelector = maindocument.getElementById('quiz_selector');
-    if (quizSelector) {
+    if (quizSelector && Blockly.Quizme.options[SELECTOR_OPTION] != 'hidden') {
       quizSelector.style.visibility = 'visible';
       maindocument.getElementById('selector_prompt').style.visibility='visible';
       quizname = quizSelector.options[quizSelector.selectedIndex].value;
     }
-  // quizname is defined but we may want to hide the seletor
-  } else if (Blockly.Quizme.options[SELECTOR_OPTION] == 'hidden')  {
+  }
+  // Do we want to hide the selector?
+  if (Blockly.Quizme.options[SELECTOR_OPTION] == 'hidden')  {
      var selector = maindocument.getElementById('quiz_selector');
-     selector.style.visibility= 'hidden';
-     maindocument.getElementById('selector_prompt').style.visibility='hidden';
+     if (selector) {
+       maindocument.getElementById('selector').remove();
+       maindocument.getElementById('selector_prompt').remove();
+       maindocument.getElementById('heading').remove();
+     }
   }
   // If quizname still undefined, choose a random quiz type
   if (quizname == undefined) {
@@ -566,7 +575,7 @@ function processHint(helperObj) {
   var hintHTML = "";
   var hint_element = maindocument.getElementById('hint_html');
   if (helperObj.hintCounter < helperObj.hints.length) {
-    hintHTML = '<font color="green">' + hints[count]  + '</font>';
+    hintHTML = '<font color="magenta">Hint: ' + hints[count]  + '</font>';
     ++helperObj.hintCounter;
   } else {
     hintHTML = '<font color="red">Sorry, no more hints available</font>.';
@@ -631,7 +640,8 @@ Blockly.Quizme.giveFeedback = function(isCorrect, correctStr, mistakeStr, redo) 
 Blockly.Quizme.evaluateUserAnswer = function() {
   if (DEBUG) console.log("RAM: evaluateUserAnswer()");
   var btn = maindocument.getElementById('submit_new_toggle');
-  if (btn) {
+  //  if (btn) {
+  if (btn && Blockly.Quizme.options[SELECTOR_OPTION] != 'hidden') {
     btn.innerHTML = "New Question";
   }
   var result;
@@ -669,8 +679,8 @@ Blockly.Quizme.evaluateEvalBlocksAnswerType = function() {
   if (DEBUG) console.log("RAM: evaluateEvalBlocksAnswerType()");
   var result = Blockly.Quizme.eval_math_compare_topblock();
   Blockly.Quizme.giveFeedback(result == true, 
-     "Good your expression evaluates to <font color=\"green\">" + true + "</font>. Nice!", 
-     "Oops, your expression evaluates to <font color=\"red\">" + result + "</font>. "  + 
+     "Good! Your expression evaluates to <font color=\"green\">" + true + "</font>. Nice!",
+     "Oops! Your expression evaluates to <font color=\"red\">" + result + "</font>. "  +
 	       "Try again.",
      true);
   return result;
@@ -914,8 +924,8 @@ Blockly.Quizme.evaluateXmlBlocksAnswerType = function(solution, mappings) {
   solution = Blockly.Quizme.removeTag("xml", solution);
 
   Blockly.Quizme.giveFeedback(result.indexOf(solution) != -1, 
-     "Good your solution is correct", 
-		 "Oops, your solution contains a mistake. Try again.", 
+     "Good!  Your solution is correct.",
+		 "Oops! Your solution contains a mistake. Try again.",
 		 true);
   return result;
 }
