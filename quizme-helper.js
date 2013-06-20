@@ -56,7 +56,7 @@
 
 'use strict';
 
-var DEBUG = false;
+var DEBUG = true;
 var SELECTOR_OPTION = 'selector';
 var BACKPACK_OPTION = 'backpack';
 
@@ -73,6 +73,8 @@ var CONTROLS_BLOCKS = ["controls_choose", "controls_do_then_return", "controls_i
 		       "controls_while", "controls_forEach" ]; //  "controls_forRange"
 var LISTS_BLOCKS = ["lists_create_with", "lists_create_with_item", "lists_is_empty", "lists_length"]; //"lists_add_items", "lists_add_items_item", "lists_append_list", "lists_create_with_item", "lists_insert_item", "lists_is_in", "lists_is_list", "lists_pick_random_item", "lists_remove_item", "lists_replace_item", "lists_select_item"
 var TEXT_BLOCKS = ["text", "text_join", "text_length","text_isEmpty","text_trim","text_changeCase"]; // "text_join_item", "text_compare", "text_starts_at", "text_contains", "text_split", "text_split_at_spaces", "text_segment", "text_replace_all"
+var COLOR_BLOCKS = ["color_black", "color_white", "color_red", "color_pink", "color_orange", "color_yellow", "color_green", "color_cyan", "color_blue", "color_magenta", "color_light_gray", 
+                    "color_gray", "color_dark_gray", "color_make_color", "color_split_color", ];
 var TOPLEVEL_BLOCKS = ["mutator_container", "InstantInTime", "YailTypeToBlocklyType", "YailTypeToBlocklyTypeMap","setTooltip","wrapSentence"];
 
 
@@ -308,7 +310,7 @@ function initQuizmeLanguage() {
  
   var whitelist = [];
   whitelist = whitelist.concat(MATH_BLOCKS).concat(LOGIC_BLOCKS).concat(VARIABLES_BLOCKS).concat(PROCEDURES_BLOCKS);
-  whitelist = whitelist.concat(CONTROLS_BLOCKS).concat(LISTS_BLOCKS).concat(TEXT_BLOCKS).concat(TOPLEVEL_BLOCKS);
+  whitelist = whitelist.concat(CONTROLS_BLOCKS).concat(LISTS_BLOCKS).concat(TEXT_BLOCKS).concat(COLOR_BLOCKS).concat(TOPLEVEL_BLOCKS);
 
   // Initialize Blockly.Language by copying whitelisted blocks from WholeLanguage
   Blockly.Language = {}

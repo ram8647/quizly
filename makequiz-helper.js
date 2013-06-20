@@ -413,6 +413,8 @@ function addBuiltIns (typenames) {
       types = LISTS_BLOCKS;
     } else if (type == "text") {
       types = TEXT_BLOCKS;
+    } else if (type == "colors") {
+      types = COLOR_BLOCKS;
     }
     for (var k = 0; k < types.length; k++) {
       list.push(types[k]);   
