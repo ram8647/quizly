@@ -6,12 +6,6 @@
 
   <link type="text/css" rel="stylesheet" href="media/blockly.css">
 
-  <script>
-    function blocklyLoaded(blockly) {
-      // Called once Blockly is fully loaded.
-      window.Blockly = blockly;
-    }
-  </script>
   <script type="text/javascript" src="closure-library/goog/base.js"></script>
   <script type="text/javascript" src="./jquery-1.9.1.min.js"></script>
   <!-- blockly-all.js is copied from appinventor/build/blocklyeditor -->
@@ -39,14 +33,18 @@
   <script type="text/javascript" src="./quizme-eval.js"></script>
 <!--   <script type="text/javascript" src="./activity-quizme.js"></script> -->
 
-    <style>
-      html, body {
-        background-color: #fff;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-      }
-    </style>
+  <style>
+    html, body {
+      background-color: #fff;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    .blocklySvg {
+      height: 100%;
+      width: 100%;
+    }
+  </style>
 
     <script>
       // NOTE: Blockly injects a static toolbox in the form of an Xml tree. We want our toolbox to be dynamic but 
