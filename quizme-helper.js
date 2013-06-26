@@ -227,9 +227,12 @@ function showQuiz(quizname) {
   if (Blockly.Quizme.options[SELECTOR_OPTION] == 'hidden')  {
      var selector = maindocument.getElementById('quiz_selector');
      if (selector) {
-       maindocument.getElementById('selector').remove();
-       maindocument.getElementById('selector_prompt').remove();
-       maindocument.getElementById('heading').remove();
+       var element = maindocument.getElementById('selector');
+       element.parentNode.removeChild(element);
+       element = maindocument.getElementById('selector_prompt');
+       element.parentNode.removeChild(element);
+       element =  maindocument.getElementById('heading');
+       element.parentNode.removeChild(element);
      }
   }
   // If quizname still undefined, choose a random quiz type
