@@ -323,7 +323,7 @@ function initQuizmeLanguage() {
   }
 
   resetComponentInstances();  // In quizme-helper.js
-  var components = ['Button', 'Sound'];
+  var components = ['Button', 'Sound', 'Label', 'Canvas'];
   Blockly.Quizme.addComponents(components);
  
   // Remove generics
@@ -446,7 +446,7 @@ function customizeQuizmeLanguage(quizname, keepers, components) {
   var html = Blockly.Toolbox.HtmlDiv;
   var children = html.childNodes;
   if (children[1])
-    children[1].remove();
+    children[1].parentNode.removeChild(children[1]);
 
   Blockly.Toolbox.init();
 }
