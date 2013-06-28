@@ -222,6 +222,13 @@ function showQuiz(quizname) {
       maindocument.getElementById('selector_prompt').style.visibility='visible';
       quizname = quizSelector.options[quizSelector.selectedIndex].value;
     }
+  } else {   // quizname is set
+    var quizSelector = maindocument.getElementById('quiz_selector');
+    if (quizSelector && Blockly.Quizme.options[SELECTOR_OPTION] != 'hidden') {
+      quizSelector.style.visibility = 'visible';
+      maindocument.getElementById('selector_prompt').style.visibility='visible';
+      quizSelector.value = quizname;
+    }
   }
   // Do we want to hide the selector?
   if (Blockly.Quizme.options[SELECTOR_OPTION] == 'hidden')  {
