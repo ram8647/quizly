@@ -63,12 +63,33 @@
           }
         }
 
+        // Typeblocking configuration
+	var typeblock_config = {
+	  frame: 'ai_frame',
+	  typeBlockDiv: 'ai_type_block',
+	  inputText: 'ac_input_text'
+	};
+
         Blockly.inject(document.body,
             {path: './',
              backpack:true,
              trashcan: true,
              toolbox: '<xml id="toolbox" style="display:none"><category name="TOOLBOX"><block type="bogus"></block></category></xml>'
             });
+
+	 //This is what Blockly's init function does when passing options.
+	 //We are overriding the init process so putting it here
+	 goog.mixin(Blockly, {
+	   collapse : true,
+	   configForTypeBlock: typeblock_config
+	 });
+
+	//This would also be done in Blockly init, but we need to do it here cause of
+	//the different init process in drawer (it'd be undefined at the time it hits
+	//init in Blockly)
+	if (Blockly.editable)
+	  Blockly.TypeBlock(Blockly.configForTypeBlock);
+
 
         // Let the top-level application know that Blockly is ready.
         // Do any Quizme initializations here.
@@ -83,6 +104,11 @@
     </script>
 
 </head>
-<body onload="initBlockly()">
+<body id="ai_frame" onload="initBlockly()">
+ <div id="ai_type_block" style="display:none">
+  <p>
+    <input id="ac_input_text" />
+  </p>
+ </div>
 </body>
 </html>

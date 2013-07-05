@@ -9,6 +9,17 @@ QUICK OVERVIEW
 * Replace blockly-all.js with:
    [AppinventorRoot]/build/blocklyeditor/blockly-all.js
 
+* Blockly-all.js is now compressed down to 800K.
+
+* Blockly.Language.INPUT and Blockly.Language.OUTPUT cause a crash because our
+  Blockly.Language is dynamic (whereas App Inventor's is static).  These have
+  to be globally replaced in blockly-all.js with:
+  Blockly.Language_INPUT and Blockly.Language_OUTPUT.
+
+  NOTE: Do a global replace on the compressed blockly-all:
+  sed -i -e 's/Blockly\.Language\.INPUT/Blockly\.Language\_INPUT/g' blockly-all.js
+  sed -i -e 's/Blockly\.Language\.OUTPUT/Blockly\.Language\_OUTPUT/g' blockly-all.js
+
 * Replace blockly-toolbox.js with:
    [AppinventorRoot]/lib/blockly/src/core/toolbox.js
 
@@ -22,9 +33,43 @@ QUICK OVERVIEW
        <block type="bogus"></block>
       </category></xml>' 
    });
+ 
+* In blockly.html, need to configure typeblocking:
+
+   // Typeblocking configuration
+   var typeblock_config = {
+    frame: 'ai_frame',
+    typeBlockDiv: 'ai_type_block',
+    inputText: 'ac_input_text'
+  };
+
+* In blockly.html, after injection: 
+   //This is what Blockly's init function does when passing options.
+   //We are overriding the init process so putting it here
+   goog.mixin(Blockly, {
+     collapse : true,
+     configForTypeBlock: typeblock_config
+   });
+
+  //This would also be done in Blockly init, but we need to do it here cause of
+  //the different init process in drawer (it'd be undefined at the time it hits
+  //init in Blockly)
+  if (Blockly.editable)
+    Blockly.TypeBlock(Blockly.configForTypeBlock);
+
+* In blockly.html the body should include typeblock div:
+  <body id="ai_frame" onload="initBlockly()">
+   <div id="ai_type_block" style="display:none">
+    <p>
+      <input id="ac_input_text" />
+    </p>
+   </div>
+  </body>
 
 * In quizme-helper.js, initQuizme, AppInventor's Drawer must point to our Toolbox:
     Blockly.Drawer = Blockly.Toolbox;
+
+
 
 That's it!
 
