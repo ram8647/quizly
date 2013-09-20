@@ -670,7 +670,7 @@ Blockly.Quizme.evaluateUserAnswer = function() {
   else if (Blockly.Quizme.answerType == "proc_def") {
     result = Blockly.Quizme.evaluateEvalProcedureDef(Blockly.Quizme);
   }
-  else {
+  else {  // Drop through case eval_expr
     var solution = Blockly.Quizme.solution;
     var answer = maindocument.getElementById('quiz_answer').value.toLowerCase();
     result = solution == answer;

@@ -104,6 +104,7 @@ var TOGGLE_BTN = 'submit_new_toggle';
 var EXPR_TYPE = 'expression_type';
 var EXPR_ARITH = 'arithmetic';
 var EXPR_REL = 'relation';
+var EXPR_FILLIN_REL = 'relation_fillin';
 var DISPLAY_NAME = 'display_name';
 var DESC = 'description';
 var QUES_HTML = 'question_html';
@@ -123,6 +124,8 @@ var INSTR = 'instructions';
 var RELATION_GENERATOR = "function xmlGenerator(xml, low, high, op) {var ops = ['EQ', 'NEQ', 'LT', 'LTE', 'GT', 'GTE'];   if (!op) { op = ops[Math.floor(Math.random() * ops.length)]; } var n1 = Math.floor(Math.random() * 10); var n2 = Math.floor(Math.random() * 10); if (low && high) { n1 = low + Math.floor(Math.random() * (high - low + 1)); n2 = low + Math.floor(Math.random() * (high - low + 1)); } xml = xml.replace('$OP', op); xml = xml.replace('$N1', n1); xml = xml.replace('$N2', n2); return xml; }";
 
 var RELATION_TEMPLATE = "<xml><block type=\"math_compare\"><title name=\"OP\" >$OP</title><value name=\"A\"><block type=\"math_number\"><title name=\"NUM\">$N1</title></block></value><value name=\"B\"><block type=\"math_number\"><title name=\"NUM\">$N2</title></block></value></block></xml>";
+
+var RELATION_FILLIN_TEMPLATE = "<xml><block type=\"math_compare\"><title name=\"OP\">$OP</title><value name=\"A\"><block type=\"math_number\"><title name=\"NUM\">$N1</title></block></value></block><block type=\"math_number\" x=\"85\" y=\"55\"><title name=\"NUM\">$N2</title></block></xml>";
 
 var ARITHMETIC_GENERATOR = "function xmlGenerator(xml,low, high, op){var ops = ['ADD', 'MINUS', 'MULTIPLY', 'DIVIDE', 'POWER'];var name1=''; var name2=''; var type = '';if (!op){op = ops[Math.floor(Math.random() * ops.length)];if (op == 'ADD'){name1='NUM0'; name2='NUM1'; type = 'math_add';}else if (op == 'MINUS'){name1='A';name2='B';type = 'math_subtract';} else if (op == 'MULTIPLY'){name1='NUM0';name2='NUM1';type = 'math_multiply'; } else if (op == 'DIVIDE') {name1='A';name2='B';type = 'math_division';} else {type = 'math_power';name1='A';name2='B';}}var n1 = Math.floor(Math.random() * 10);var n2 = Math.floor(Math.random() * 10);if (low && high) {n1 = low + Math.floor(Math.random() * (high - low + 1));n2 = low + Math.floor(Math.random() * (high - low + 1));}if (op == 'DIVIDE' && n2 == 0) {n2 = 1;}if (op == 'DIVIDE') {var factor = Math.floor(Math.random() * 5);n1 = n2 * factor;}if (op == 'POWER' && n2 > 3) {n2 = 3;}xml = xml.replace('$type', type);xml = xml.replace('$arg1', n1);xml = xml.replace('$arg2', n2);xml=xml.replace('$name1',name1);xml=xml.replace('$name2',name2);return xml; }";
 
@@ -367,13 +370,16 @@ function generateQuizJsonObj(quizHelper) {
   obj.QuestionHTML = quizHelper[name].question_html;
   obj.AnswerHTML = "";
   obj.AnswerType = quizHelper[name].answer_type;
+  if (obj.AnswerType == EVAL_EXPR && quizHelper[name].expr_type == EXPR_FILLIN_REL) {  // Temporary HACK
+    obj.AnswerType = "eval_blocks";
+  }
   obj.AnswerVisibility = quizHelper[name].visibility;
   obj.ResultHTML = "";
   obj.Hints = quizHelper[name].hints;
   obj.BuiltIns = quizHelper[name].built_ins;
   obj.Components = quizHelper[name].components;
   obj.VariableMappings = quizHelper[name].VariableMappings;
-  obj.FunctionName = (quizHelper[name].function_name) ? quizHelper[name].function_name : "";;
+  obj.FunctionName = (quizHelper[name].function_name) ? quizHelper[name].function_name : "";
   obj.FunctionDef = (quizHelper[name].function_def) ? "" + quizHelper[name].function_def : "undefined";
   obj.FunctionInputs = (quizHelper[name].function_inputs) ? quizHelper[name].function_inputs : "undefined";
   obj.XmlDictionary = (quizHelper[name].dictionary) ?  quizHelper[name].dictionary : "undefined"; 
@@ -557,6 +563,9 @@ function onAnswerTypeSelected(selectObj) {
   console.log("onAnswerTypeSelected,  index = " + selectObj.selectedIndex);
   var idx = selectObj.selectedIndex;
   var quiz_type = selectObj.options[idx].value;
+  var expr_ndx = MAINDOCUMENT.getElementById(EXPR_TYPE).selectedIndex;
+  var expr_type = MAINDOCUMENT.getElementById(EXPR_TYPE).options[expr_ndx].value;
+
   Blockly.Quizmaker.quizType = quiz_type;
 
   if (quiz_type == EVAL_EXPR) {
@@ -604,6 +613,11 @@ function onAnswerTypeSelected(selectObj) {
 
 function onExpressionTypeSelected(selectObj) {
   console.log("onExpressionTypeSelected,  index = " + selectObj.selectedIndex);
+  if (selectObj.selectedOptions[0].value == EXPR_FILLIN_REL) {
+    MAINDOCUMENT.getElementById(EXPR_TYPE).style.visibility="visible";
+    MAINDOCUMENT.getElementById(QUES_HTML).value = "Complete the expression in any way you wish so that the resulting expression is true.";
+    MAINDOCUMENT.getElementById(QUIZ_ANSWER).style.visibility="hidden";
+  }
 }
 
 
@@ -616,6 +630,8 @@ function createOrUpdateQuizObject(hint_counter) {
   
   var display_name = MAINDOCUMENT.getElementById(DISPLAY_NAME).value;
   var qname = "quiz_" + display_name.toLowerCase().replace(/ /g,'_');
+  var expr_ndx = MAINDOCUMENT.getElementById(EXPR_TYPE).selectedIndex;
+  var expr_type = MAINDOCUMENT.getElementById(EXPR_TYPE).options[expr_ndx].value;
 
   var quizObj;
   if (Blockly.Quizmaker.quiz) {           
@@ -638,6 +654,7 @@ function createOrUpdateQuizObject(hint_counter) {
   quizObj.description = MAINDOCUMENT.getElementById(DESC).value;
   quizObj.question_html = MAINDOCUMENT.getElementById(QUES_HTML).value;
   quizObj.answer_type = MAINDOCUMENT.getElementById(ANSWER_TYPE).value;
+  quizObj.expr_type = expr_type;
   var expr_ndx = MAINDOCUMENT.getElementById(EXPR_TYPE).selectedIndex;
   quizObj.expr_type = MAINDOCUMENT.getElementById(EXPR_TYPE).options[expr_ndx].value;
   quizObj.hints = []; 
@@ -691,6 +708,9 @@ function evaluateQuizResult() {
 
   MAINDOCUMENT.getElementById(TOGGLE_BTN).innerHTML = "New Question";
   var answer_type = getAnswerType();
+  var expr_ndx = MAINDOCUMENT.getElementById(EXPR_TYPE).selectedIndex;
+  var expr_type = MAINDOCUMENT.getElementById(EXPR_TYPE).options[expr_ndx].value;
+
   if (answer_type == XML_BLOCKS) {
     var qname = Blockly.Quizmaker.quizName;
     Blockly.Quizme.evaluateXmlBlocksAnswerType(Blockly.Quizmaker.solutionWorkspace, Blockly.Quizmaker[qname].VariableMappings); 
@@ -706,7 +726,14 @@ function evaluateQuizResult() {
   else if (answer_type == PROC_DEF) {
     Blockly.Quizme.evaluateEvalProcedureDef(Blockly.Quizmaker);
   }
-   else {
+  else if (answer_type == EVAL_EXPR && expr_type == EXPR_FILLIN_REL) {
+    var answer = evalMainWorkspace();
+
+    Blockly.Quizme.giveFeedback(answer,
+	"That is correct!",
+        "Oops, your answer was <font color=\"red\">" + answer + "</font>");
+  }
+  else { // answer_type = EVAL_EXPR && expr_type == EXPR_REL
     var solution = "" + Blockly.Quizmaker.solution;
     var answer = MAINDOCUMENT.getElementById(QUIZ_ANSWER).value.toLowerCase();
 
@@ -780,7 +807,10 @@ function getVariableMappings() {
 function getAnswerType() {
   var ans_ndx = MAINDOCUMENT.getElementById(ANSWER_TYPE).selectedIndex;
   var ans_type = MAINDOCUMENT.getElementById(ANSWER_TYPE).options[ans_ndx].value;
+  var expr_ndx = MAINDOCUMENT.getElementById(EXPR_TYPE).selectedIndex;
+  var expr_type = MAINDOCUMENT.getElementById(EXPR_TYPE).options[expr_ndx].value;
   Blockly.Quizmaker.quiz.answer_type = ans_type;
+  Blockly.Quizmaker.quiz.expr_type = expr_type;
   console.log("Answer type = " + ans_type);
   return  ans_type;
 }
@@ -898,7 +928,7 @@ function setPreviewView() {
   quizquestion.innerHTML = mapQuizVariables(Blockly.Quizmaker.quiz.question_html, Blockly.Quizmaker.quiz.VariableMappings);  
   var quizanswer = MAINDOCUMENT.getElementById(QUIZ_ANSWER);
   quizanswer.value = "";
-  Blockly.Quizmaker.quiz.visibility = (Blockly.Quizmaker.quiz.answer_type == EVAL_EXPR) ? "visible" : "hidden";
+  Blockly.Quizmaker.quiz.visibility = (Blockly.Quizmaker.quiz.answer_type == EVAL_EXPR && Blockly.Quizmaker.quiz.expr_type != EXPR_FILLIN_REL) ? "visible" : "hidden";
   quizanswer.style.visibility = Blockly.Quizmaker.quiz.visibility;
   quizanswer.hidden = false;
   MAINDOCUMENT.getElementById(HINT_HTML).innerHTML = "";
@@ -933,6 +963,8 @@ function populateWorkspaceWithExpressionBlock(expr_type) {
   var xml = "";
   if (expr_type == EXPR_REL) {
     xml = generateFunction(RELATION_GENERATOR, RELATION_TEMPLATE);
+  } else if (expr_type == EXPR_FILLIN_REL) {
+    xml = generateFunction(RELATION_GENERATOR, RELATION_FILLIN_TEMPLATE);
   } else if (expr_type == EXPR_ARITH) {
     xml = generateFunction(ARITHMETIC_GENERATOR, ARITHMETIC_TEMPLATE);
   }

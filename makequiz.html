@@ -192,49 +192,6 @@
             </td>
           </tr>
         </table>
-
-<!--        <ul> -->
-<!--          <li class="active"> -->
-<!--            <a href="#" rel="info" onclick="setupInfo()"> -->
-<!--              Quiz info -->
-<!--            </a> -->
-<!--          </li> -->
-<!--          <li> -->
-<!--            <a href="#setup" rel="setup" onclick="setupProblemBlocks()"> -->
-<!--              Setup the quiz -->
-<!--            </a> -->
-<!--          </li> -->
-<!--          <li> -->
-<!--            <a href="#solution" rel="solution" onclick="setupSolutionBlocks()"> -->
-<!--              Setup the solution -->
-<!--            </a> -->
-<!--          </li> -->
-<!--          <li> -->
-<!--            <a href="#preview" rel="preview"  onclick="previewTheQuiz()"> -->
-<!--              Preview the quiz -->
-<!--            </a> -->
-<!--          </li> -->
-<!--          <li> -->
-<!--            <a href="#json" rel="json" onclick="generateJSON()"> -->
-<!--              JSON -->
-<!--            </a> -->
-<!--          </li> -->
-<!--          <li> -->
-<!--            <a href="#js" rel="json" onclick="displayJS()"> -->
-<!--              JavaScript -->
-<!--            </a> -->
-<!--          </li> -->
-<!--          <li> -->
-<!--            <a href="#help" rel="help" onclick="displayHelp()"> -->
-<!--              Help -->
-<!--            </a> -->
-<!--          </li> -->
-<!--          <li> -->
-<!--            <a href="#reset" rel="reset" onclick="reset()"> -->
-<!--              Reset -->
-<!--            </a> -->
-<!--          </li> -->
-<!--        </ul> -->
      </div>
      
      <!-- Tabs begin here -->
@@ -273,6 +230,9 @@
         <select title="Type of expression to evaluate" style="visibility:hidden" id="expression_type" onchange="onExpressionTypeSelected(this)">
          <option value="relation">
            Relational: &LT;, =, ...
+         </option>
+         <option value="relation_fillin">
+           Relational: Complete a relational expression
          </option>
          <option value="arithmetic">
            Arithmetic: +, *, ...
