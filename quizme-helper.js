@@ -520,7 +520,6 @@ function resetComponentInstances() {
   Blockly.ComponentInstances.addBlockName = function(name, blockName) {
     Blockly.ComponentInstances[name].blocks.push(blockName);
   }
-
 }
 
 /**
@@ -709,7 +708,8 @@ Blockly.Quizme.evaluateEvalFunctionDef = function(helperObj) {
   var qname = helperObj.quizName;
 
   // Set up the standard and the test functions
-  var testFn = Blockly.Quizme.setupFunctionDefinition(helperObj.quizName, helperObj);
+  var testFn = window.eval(Blockly.Quizme.setupFunctionDefinition(helperObj.quizName, helperObj));
+  //  var testFn = Blockly.Quizme.setupFunctionDefinition(helperObj.quizName, helperObj);
   var stdFn = window.eval( '(' + helperObj[qname].function_def + ')' );
 
   // Test the two functions on the inputs
@@ -738,13 +738,16 @@ Blockly.Quizme.evaluateEvalFunctionDef = function(helperObj) {
     helperObj[qname].function_inputs = helperObj.function_inputs;
   }
   Blockly.JavaScript.init();
-  //  var blocks = Blockly.mainWorkspace.topBlocks_;
   if (!blocks) 
     blocks  = Blockly.mainWorkspace.topBlocks_;
-  Blockly.JavaScript.blockToCode(blocks[0]);      // Creates a definition
   
-  return window.eval('(' +
-        Blockly.JavaScript.definitions_[helperObj[qname].function_name] + ')');
+  // Bhargavi: Generates code for all blocks, not just a single function definition
+  for(var i = 0; i<blocks.length; i++)	{
+    Blockly.JavaScript.blockToCode(blocks[i]);  
+    }    
+  var code = Blockly.Generator.workspaceToCode('JavaScript');
+  //  code += helperObj[qname].function_name; 
+  return code; 
 }
 
 /**
@@ -812,22 +815,39 @@ Blockly.Quizme.evaluateEvalProcedureDef = function(helperObj) {
 
   // Set up the standard and the test functions
   var testFn = Blockly.Quizme.setupProcedureDefinition(helperObj.quizName, helperObj);
-  var stdFn = window.eval( '(' + helperObj[qname].procedure_def + ')' );
+  var stdFn = helperObj[qname].function_def;
+  var result = true;
 
-  // Test the two functions on the inputs
-  var inputs = helperObj[qname].procedure_inputs;
-  var testresult = Blockly.Quizme.testProcedureAgainstStandard(stdFn, testFn, inputs);
-/*
-  Blockly.Quizme.giveFeedback(testresult[0],
-    "Correct! Your function passed all " + inputs.length + " of our test cases.  Good show!",
-			      "Oops, " + testresult[1] + ". Try again!", true);
-  */
-  Blockly.Quizme.giveFeedback(true, 
-    "Correct! Your function passed all of our test cases.  Good show!",
-			      "Oops, Try again!", true);
-  return true;
+  // Run 5 random tests
+  for (var i = 0; i<5; i++) {
+    result = Blockly.Quizme.testProcedureAgainstStandard(stdFn, testFn, helperObj);
+    if(!result[0])
+      break;
+  };
+  Blockly.Quizme.giveFeedback(result[0],
+    "Correct! Your function passed 5 randomly generated test cases.  Good show!",
+			      "Oops. " + result[1] + ". Try again!", true);
 }
 
+/**
+ *  Compares two objects containing variable bindings.
+ * @param g1, an object of variable bindings
+ * @param g1, an object of variable bindings
+ */
+
+Blockly.Quizme.compare = function(g1,g2)  {
+  var compare = true;
+  var errmsg = "";
+  for (var name in g1) {
+    compare = name in g2;
+   if (compare) 
+     compare = g1[name]==g2[name];
+   if(!compare)
+     errmsg = "Fails on test case for variable " + name + ". Correct value should be  " + g1[name] + ". Your value is " + g2[name];
+     break;
+  };
+  return [compare, errmsg];
+}
 
 
 /**
@@ -839,73 +859,145 @@ Blockly.Quizme.evaluateEvalProcedureDef = function(helperObj) {
  * @param blocks, possibly undefined, the blocks that should be used to construct the procedure
  */
   Blockly.Quizme.setupProcedureDefinition = function(qname, helperObj, blocks) {
-  if (helperObj.procedure_name) {
-    helperObj[qname].procedure_name = helperObj.procedure_name;
+  if (helperObj.function_name) {
+    helperObj[qname].function_name = helperObj.function_name;
   }
   if (helperObj.procedure_inputs) {
     helperObj[qname].procedure_inputs = helperObj.procedure_inputs;
   }
   Blockly.JavaScript.init();
-  //  var blocks = Blockly.mainWorkspace.topBlocks_;
   if (!blocks)
     blocks  = Blockly.mainWorkspace.topBlocks_;
-  Blockly.JavaScript.blockToCode(blocks[0]);      // Creates a definition
 
-  return window.eval('(' +
-        Blockly.JavaScript.definitions_[helperObj[qname].procedure_name] + ')');
+  // Bhargavi: Generate code for all blocks, not just single function definition
+  for(var i = 0; i<blocks.length; i++)	{
+    Blockly.JavaScript.blockToCode(blocks[i]);  
+    }    
+  var code = Blockly.Generator.workspaceToCode('JavaScript');
+  //alert(code);
+  return code; 
 }
 
 /**
  *  Tests the student's procedure input-by-input against the
  *   quiz's procedure definition, return true if it passes
  *   all the tests.
- * @param standard -- the correct function definitino
- * @param fn -- the student's definitino
- * @param inputs -- an array of arrays of input arguments.
+ * @param stdFn -- the correct function definitino
+ * @param testFn -- the student's definitino
+ * @param helperObj -- object containing quizzes data
  */
-Blockly.Quizme.testProcedureAgainstStandard = function(standard, fn, inputs) {
-  console.log("RAM: Testing fn against standard ...");
-  if (!fn) {
+Blockly.Quizme.testProcedureAgainstStandard = function(stdFn, testFn, helperObj) {
+  console.log("RAM: Testing procedure against standard for quiz " + helperObj.quizName);
+
+  // Extract procedure name and parameter types from the signature
+  var qname = helperObj.quizName;
+  var procSignature = helperObj[qname].function_name;
+  procSignature = procSignature.trim();
+  var procName = procSignature.substring(0,procSignature.indexOf("("));  // Extract the procedure name
+  var paramTypeList = procSignature.substring(procSignature.indexOf("(")+1, procSignature.indexOf(")"));
+  paramTypeList = paramTypeList.trim();
+
+  // Create an array of parameter types -- i.e., num, or str, or list
+  var paramtypes = [];
+  if (paramTypeList.length != 0)
+     paramtypes = paramTypeList.split(',');
+
+  if (testFn.indexOf(procName) == -1) {
     return [false, 'Can\'t find your procedure. Double check the name (spelling counts).'];
   }
 
-  var k = 0;
-  var result = true;
-  var errmsg = "";
-  while (k < inputs.length && result == true) {
-    var input = inputs[k].split(',');
-    //    if (input instanceof Array) {
-    if (isArray(input)) {
-      var stdcall = 'standard' + '(';
-      var fncall = 'fn' + '(';
-      for (var i = 0; i < input.length; i++) {
-        stdcall = stdcall + input[i];
-        fncall = fncall + input[i];
-        if (i < input.length - 1) {
-          stdcall = stdcall + ',';
-          fncall = fncall + ',';
-	}
-      }
-      stdcall = stdcall + ')';
-      fncall = fncall + ')';
-      stdcall = eval(stdcall);
-      fncall = eval(fncall);
-    }
-    var stdresult = stdcall;  //standard(inputs[k]);
-    var fnresult = fncall; // fn(inputs[k]);
-    console.log("input=" + inputs[k] + " std=" + stdresult + " fn=" + fnresult);
-      if (stdresult && ( isArray(stdresult))) {
-      result =  stdresult != undefined && arrcmp(stdresult, fnresult);
-    } else {
-      result =  stdresult != undefined && (stdresult == fnresult);
-    }
-    if (result != true) {
-      errmsg = 'Your procedure failed on input<font color="red"> ' + inputs[k] + '</font>. The result should be <font color="red">' 
-                 + stdresult + '</font>. Your result was <font color="red">' + fnresult + '</font>';
-    }
-    k = k + 1;
+  //  Create an array of parameter variable names
+  var params = [];
+  var p1 = stdFn.indexOf("var ");
+  var p2 = stdFn.indexOf(" ", p1+1);
+  var p3 = stdFn.indexOf(";", p1);
+  var param;
+  while (p1 != -1) {
+    param = stdFn.substring(p1+4, p3);  // Grab the parameter
+    if (param.indexOf("global") == -1)  // Make sure it's not a global
+      params.push(param);               // Add it to the list
+    p1 = stdFn.indexOf("var ", p1+1);
+    p2 = stdFn.indexOf(" ", p1+1);
+    p3 = stdFn.indexOf(";", p1);
   }
-return [result,errmsg];
+
+  // Create an array of global variable declarations
+  //  which take the form: var global_X;
+  var globals = [];
+  var i1 = stdFn.indexOf("var global");
+  var i2 = stdFn.indexOf(" ", i1+4);
+  var i3 = stdFn.indexOf(";", i1);
+  if (i3 < i2) 
+    i2 = i3;
+
+  // Looping for each global variable
+  var temp;
+  while (i1 != -1) {
+    temp = stdFn.substring(i1+4,i2);     // Grab the variable name (minus 'var')
+    if (globals.indexOf(temp) == -1)  
+      globals.push(temp);                // Push the name of the global variable
+    i1 = stdFn.indexOf("var global", i1+1);  // And get the next one
+    i2 = stdFn.indexOf(" ", i1+4);
+    i3 = stdFn.indexOf(";", i1);
+    if (i3 < i2) 
+      i2 = i3;
+  };
+  
+  // Add a test function to the code for both testFn and stdFn
+  testFn += "function test() {";
+  stdFn += "function test() {";
+   
+  // In the test function body, generate a random assignment statement for each global variable
+  for (i1 = 0; i1 <globals.length; i1++) {
+    i2 = Math.floor(Math.random()*10) +1;             // random number from 1 to 10
+    testFn += "\n" + globals[i1] + " = " + i2 +";\n";
+    stdFn += "\n" + globals[i1] + " = " + i2 +";\n";
+  };
+
+  // Add a procedure call to the test function body
+  stdFn += procName + "(";
+  testFn += procName + "(";
+  
+  // Add parameter values to the procedure call -- currently we only support numbers
+  // The array paramtypes stores the types of the parameter -- num, str, list
+  for (var i = 0; i < params.length; i++) {
+    var v;
+    if (paramtypes[i] == 'num') {
+      v = Math.floor(Math.random()*10) +1;             // random number from 1 to 10      
+    } else if (paramtypes[i] == 'str') {
+      v = "'" + "str" + Math.floor(Math.random()*10) + "'";     // string of the form strN
+    } else if (paramtypes[i] == 'list') {
+      v = [];
+    }
+    var comma = (i < params.length-1) ? "," : "";
+    stdFn += v + comma; 
+    testFn += v + comma;    
+  }
+  stdFn += ");\n var ret = {";
+  testFn += ");\n var ret = {";
+
+  //  stdFn += helperObj[qname].function_name + "();\n var ret = {";
+  //  testFn += helperObj[qname].function_name + "();\n var ret = {";
+  
+  // Generate a ret object consisting of variable bindings for each global variable for 
+  //   both the testFn and stdfn
+  for(i1 = 0; i1 < globals.length-1; i1++) {
+    stdFn += "g"+i1+": " +globals[i1]+ ",";
+    testFn += "g"+i1+": " +globals[i1]+ ",";
+  };
+  stdFn += "g"+i1+": " +globals[i1];
+  testFn += "g"+i1+": " +globals[i1];
+  
+  stdFn+="};\n return ret;} test()";
+  testFn+="};\n return ret;} test()";
+
+  // Now evaluate the code. This will respectively call testFn and the stdFn and generate
+  //  two sets of variable bindings
+  var z = window.eval(testFn);
+  var y = window.eval(stdFn);
+
+  // Compare the two sets of variable bindings.
+  return Blockly.Quizme.compare(y,z);
 }
 
 /**

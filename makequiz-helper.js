@@ -592,17 +592,17 @@ function onAnswerTypeSelected(selectObj) {
     }
   } else if (quiz_type == PROC_DEF) {
     MAINDOCUMENT.getElementById(EXPR_TYPE).style.visibility="hidden";
-    var p_name = prompt("Procedure name (must be legal JavaScript function name)?");
+    var p_name = prompt("Procedure signature, including typed parameter list  -- e.g., procName() or procName(num, str, list)?");
     while (!p_name) {
-      p_name = prompt("A procedure name is required for this type of problem.");
+      p_name = prompt("A procedure signature is required for this type of problem.");
     }
-    Blockly.Quizmaker.procedure_name = p_name;
-    var inputs = prompt("Input a semicolon-separated list of test cases where each case is a commas-separated list of input arguments -- e.g., 3,4; 4,5; 5,6");
-    if (inputs) {
-      Blockly.Quizmaker.procedure_inputs = inputs.split(';');
-    } else {
-      Blockly.Quizmaker.procedure_inputs = [];
-    }
+    Blockly.Quizmaker.function_name = p_name;
+//     var inputs = prompt("Input a semicolon-separated list of test cases where each case is a commas-separated list of input arguments -- e.g., 3,4; 4,5; 5,6");
+//     if (inputs) {
+//       Blockly.Quizmaker.function_inputs = inputs.split(';');
+//     } else {
+//       Blockly.Quizmaker.function_inputs = [];
+//     }
     var cbox_option = MAINDOCUMENT.getElementsByName(BUILT_INS)[6];
     if (cbox_option.value == "procedures") {
       cbox_option.checked = true;
