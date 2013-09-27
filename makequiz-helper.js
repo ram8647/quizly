@@ -93,7 +93,8 @@ var MAINDOCUMENT = parent.document;  // Document that holds Blockly iFrame
 
 // QUIZ TYPES
 var EVAL_EXPR = 'eval_expr';
-var XML_BLOCKS = 'xml_blocks';
+var EVAL_EXPR_FILLIN = 'eval_expr_fillin';
+var EVAL_STMT = 'eval_stmt';
 var FUNC_DEF = 'func_def';
 var PROC_DEF = 'proc_def';
 
@@ -190,7 +191,7 @@ Blockly.doIt = function(command, param) {
     onExpressionTypeSelected(param);
   }
   else if (command == 'variables') {
-    createQuizDictionary(param);
+    createQuizDictionary(param);  // param is Question html
     createOrUpdateQuizObject(0);
   } else if (command == 'help') {
     displayHelp();
@@ -257,6 +258,9 @@ function previewTheQuiz() {
     saveProblemWorkspace();
   } else if ( isInState(SOLU) ) {
     saveSolutionWorkspace();
+    if ( getAnswerType() == EVAL_STMT) {
+      createProcedureDef();          // Function def is used in EVAL_STMT, including with variables
+    }
   }
 
   var qname = Blockly.Quizmaker.quiz.quizName;
@@ -292,27 +296,14 @@ function setupPreviewWorkspace(answer_type) {
   Blockly.mainWorkspace.clear(); 
   setState(PREV);
   var qname = Blockly.Quizmaker.quizName;
-  if (answer_type == XML_BLOCKS) {
+  if (answer_type == EVAL_EXPR) {
+    populateWorkspaceWithExpressionBlock(Blockly.Quizmaker.quiz.expr_type);
+    Blockly.Quizmaker.solution = evalMainWorkspace();
+  } else {
     var probSpace = mapQuizVariables(getProblemWorkspace(), getVariableMappings() );
     if (probSpace)
       setMainWorkspaceFromText(probSpace);
-  } 
-  else if (answer_type == FUNC_DEF) {
-    var probSpace = mapQuizVariables(getProblemWorkspace(), getVariableMappings() );
-    if (probSpace) {
-      setMainWorkspaceFromText(probSpace);
-    }
   }
-  else if (answer_type == PROC_DEF) {
-    var probSpace = mapQuizVariables(getProblemWorkspace(), getVariableMappings() );
-    if (probSpace) {
-      setMainWorkspaceFromText(probSpace);
-    }
-  }
-   else if (answer_type == EVAL_EXPR) {
-    populateWorkspaceWithExpressionBlock(Blockly.Quizmaker.quiz.expr_type);
-    Blockly.Quizmaker.solution = evalMainWorkspace();
-  } 
 }
 
 /**
@@ -370,8 +361,10 @@ function generateQuizJsonObj(quizHelper) {
   obj.QuestionHTML = quizHelper[name].question_html;
   obj.AnswerHTML = "";
   obj.AnswerType = quizHelper[name].answer_type;
-  if (obj.AnswerType == EVAL_EXPR && quizHelper[name].expr_type == EXPR_FILLIN_REL) {  // Temporary HACK
-    obj.AnswerType = "eval_blocks";
+
+  // There are two types of EVAL_EXPR, one of which requires that the expression be completed
+  if (obj.AnswerType == EVAL_EXPR && quizHelper[name].expr_type == EXPR_FILLIN_REL) {  
+    obj.AnswerType = EVAL_EXPR_FILLIN;
   }
   obj.AnswerVisibility = quizHelper[name].visibility;
   obj.ResultHTML = "";
@@ -502,7 +495,12 @@ function setupSolutionBlocks() {
  * 
  */
 function createQuizDictionary(textObj) {
-  var str = textObj.value;
+  var str;
+  if (typeof(textObj) == "string") {
+    str = textObj;
+  } else {
+    str = textObj.value;
+  }
   console.log("createQuizDictionary str = " + str);
   Blockly.Quizmaker.Dictionary = {};
   var ndx = str.indexOf( STRVAR_DELIMITER_LEFT );
@@ -571,7 +569,7 @@ function onAnswerTypeSelected(selectObj) {
   if (quiz_type == EVAL_EXPR) {
     MAINDOCUMENT.getElementById(EXPR_TYPE).style.visibility="visible";
     MAINDOCUMENT.getElementById(QUES_HTML).value = "Evaluate the expression shown in the workspace and type your answer into the textbox.";
-  } else if (quiz_type == XML_BLOCKS) {
+  } else if (quiz_type == EVAL_STMT) {
     MAINDOCUMENT.getElementById(EXPR_TYPE).style.visibility="hidden";
   } else if (quiz_type == FUNC_DEF) {
     MAINDOCUMENT.getElementById(EXPR_TYPE).style.visibility="hidden";
@@ -597,12 +595,6 @@ function onAnswerTypeSelected(selectObj) {
       p_name = prompt("A procedure signature is required for this type of problem.");
     }
     Blockly.Quizmaker.function_name = p_name;
-//     var inputs = prompt("Input a semicolon-separated list of test cases where each case is a commas-separated list of input arguments -- e.g., 3,4; 4,5; 5,6");
-//     if (inputs) {
-//       Blockly.Quizmaker.function_inputs = inputs.split(';');
-//     } else {
-//       Blockly.Quizmaker.function_inputs = [];
-//     }
     var cbox_option = MAINDOCUMENT.getElementsByName(BUILT_INS)[6];
     if (cbox_option.value == "procedures") {
       cbox_option.checked = true;
@@ -711,11 +703,11 @@ function evaluateQuizResult() {
   var expr_ndx = MAINDOCUMENT.getElementById(EXPR_TYPE).selectedIndex;
   var expr_type = MAINDOCUMENT.getElementById(EXPR_TYPE).options[expr_ndx].value;
 
-  if (answer_type == XML_BLOCKS) {
+  if (answer_type == EVAL_STMT) {
     var qname = Blockly.Quizmaker.quizName;
-    Blockly.Quizme.evaluateXmlBlocksAnswerType(Blockly.Quizmaker.solutionWorkspace, Blockly.Quizmaker[qname].VariableMappings); 
+    Blockly.Quizme.evaluateStatement(Blockly.Quizmaker);
   }
-  else if (answer_type == "eval_blocks") {
+  else if (answer_type == EVAL_EXPR_FILLIN) {
     Blockly.Quizme.evaluateEvalBlocksAnswerType(); 
 
   } else if (answer_type == FUNC_DEF) {
@@ -865,7 +857,6 @@ function createProcedureDef() {
   }
 }
 
-
 function evalMainWorkspace() {
   return Blockly.Quizme.eval(Blockly.mainWorkspace.getTopBlocks()[0]);
 }
@@ -898,7 +889,7 @@ function setProblemSpaceView(ans_type) {
   //instructions.style.visibility="visible";
 
   var quiz_question = Blockly.Quizmaker[Blockly.Quizmaker.quizName].question_html;
-  if (ans_type == XML_BLOCKS || ans_type == FUNC_DEF || ans_type == PROC_DEF) {
+  if (ans_type == EVAL_STMT || ans_type == FUNC_DEF || ans_type == PROC_DEF) {
     instructions.innerHTML = '<font color="purple">Put together 0 or more blocks as you would like them to appear to the student.' + 
       '<br>Then click the \'Setup Solution\' button.</font>' + 
       '<br><br><font color="green">Quiz Question: ' + quiz_question + '</font>';

@@ -60,6 +60,13 @@ var DEBUG = true;
 var SELECTOR_OPTION = 'selector';
 var BACKPACK_OPTION = 'backpack';
 
+// QUIZ TYPES
+var EVAL_EXPR = 'eval_expr';
+var EVAL_EXPR_FILLIN = 'eval_expr_fillin';
+var EVAL_STMT = 'eval_stmt';
+var FUNC_DEF = 'func_def';
+var PROC_DEF = 'proc_def';
+
 //  Blocks lists -- should contain only blocks that have JavaScript generators, plus blocks that support mutators.
 var MATH_BLOCKS = ["math_add", "math_compare","math_divide","math_division","math_is_a_number", "math_multiply","math_mutator_item", "math_number", 
 		   "math_on_list", "math_power", "math_random_float", "math_random_int", "math_round", "math_single", "math_subtract"]; //"math_random_set_seed", 
@@ -260,7 +267,8 @@ function showQuiz(quizname) {
   if (quiz) {
     Blockly.Quizme.Dictionary = quiz.dictionary;;
     if (Blockly.Quizme.Dictionary) {
-      Blockly.Quizme.VariableMappings = generateInstanceMappings(quizname, Blockly.Quizme);
+      Blockly.Quizme.VariableMappings = Blockly.Quizme[quizname].VariableMappings 
+        = generateInstanceMappings(quizname, Blockly.Quizme);
     }
   }
 
@@ -300,7 +308,7 @@ function showQuiz(quizname) {
 
   // For boolean and numeric answer types, the solution has to be
   //  calculated after the blocks are rendered.
-  if (Blockly.Quizme.answerType == 'boolean' || Blockly.Quizme.answerType == 'eval_expr') {
+  if (Blockly.Quizme.answerType == 'boolean' || Blockly.Quizme.answerType == EVAL_EXPR) {
     var block = Blockly.mainWorkspace.topBlocks_[0];
     Blockly.Quizme.solution = "" + Blockly.Quizme.eval(block);
   }
@@ -529,10 +537,9 @@ function renderQuiz() {
   if (DEBUG) console.log("RAM: renderQuiz()");
   Blockly.mainWorkspace.clear(); 
   var quizquestion = maindocument.getElementById('quiz_question');
-  //  quizquestion.innerHTML = Blockly.Quizme.questionHTML;  
-  //  quizquestion.innerHTML = Blockly.Quizme.questionHTML;  
+  var quizName = Blockly.Quizme.quizName;
   if (quizquestion) {
-    quizquestion.innerHTML = mapQuizVariables(Blockly.Quizme.questionHTML, Blockly.Quizme.VariableMappings);  
+    quizquestion.innerHTML = mapQuizVariables(Blockly.Quizme.questionHTML, Blockly.Quizme[quizName].VariableMappings);  
     quizquestion.style.backgroundColor = "#f3f0000";
   }
   var visibility = Blockly.Quizme.answerVisibility;
@@ -651,22 +658,20 @@ Blockly.Quizme.giveFeedback = function(isCorrect, correctStr, mistakeStr, redo) 
 Blockly.Quizme.evaluateUserAnswer = function() {
   if (DEBUG) console.log("RAM: evaluateUserAnswer()");
   var btn = maindocument.getElementById('submit_new_toggle');
-  //  if (btn) {
   if (btn && Blockly.Quizme.options[SELECTOR_OPTION] != 'hidden') {
     btn.innerHTML = "New Question";
   }
   var result;
-  if (Blockly.Quizme.answerType == "xml_blocks") {
-    result = Blockly.Quizme.evaluateXmlBlocksAnswerType(Blockly.Quizme.solution, 
-       Blockly.Quizme.VariableMappings); 
+  if (Blockly.Quizme.answerType == EVAL_STMT) {
+    result = Blockly.Quizme.evaluateStatement(Blockly.Quizme);
   }
-  else if (Blockly.Quizme.answerType == "eval_blocks") {
+  else if (Blockly.Quizme.answerType == EVAL_EXPR_FILLIN) {
     result = Blockly.Quizme.evaluateEvalBlocksAnswerType(); 
   }
-  else if (Blockly.Quizme.answerType == "func_def") {
+  else if (Blockly.Quizme.answerType == FUNC_DEF) {
     result = Blockly.Quizme.evaluateEvalFunctionDef(Blockly.Quizme); 
   }
-  else if (Blockly.Quizme.answerType == "proc_def") {
+  else if (Blockly.Quizme.answerType == PROC_DEF) {
     result = Blockly.Quizme.evaluateEvalProcedureDef(Blockly.Quizme);
   }
   else {  // Drop through case eval_expr
@@ -682,7 +687,7 @@ Blockly.Quizme.evaluateUserAnswer = function() {
 }
 
 /**
- * Evaluates users answer for answerType = eval_blocks, which means it
+ * Evaluates users answer for answerType = eval_expr_fillin, which means it
  *  actually evalues the blocks in the workspace and compares value with
  *  expected value.
  */
@@ -709,7 +714,6 @@ Blockly.Quizme.evaluateEvalFunctionDef = function(helperObj) {
 
   // Set up the standard and the test functions
   var testFn = window.eval(Blockly.Quizme.setupFunctionDefinition(helperObj.quizName, helperObj));
-  //  var testFn = Blockly.Quizme.setupFunctionDefinition(helperObj.quizName, helperObj);
   var stdFn = window.eval( '(' + helperObj[qname].function_def + ')' );
 
   // Test the two functions on the inputs
@@ -740,13 +744,7 @@ Blockly.Quizme.evaluateEvalFunctionDef = function(helperObj) {
   Blockly.JavaScript.init();
   if (!blocks) 
     blocks  = Blockly.mainWorkspace.topBlocks_;
-  
-  // Bhargavi: Generates code for all blocks, not just a single function definition
-  for(var i = 0; i<blocks.length; i++)	{
-    Blockly.JavaScript.blockToCode(blocks[i]);  
-    }    
   var code = Blockly.Generator.workspaceToCode('JavaScript');
-  //  code += helperObj[qname].function_name; 
   return code; 
 }
 
@@ -757,6 +755,7 @@ Blockly.Quizme.evaluateEvalFunctionDef = function(helperObj) {
  * @param standard -- the correct function definitino
  * @param fn -- the student's definitino
  * @param inputs -- an array of arrays of input arguments.
+ * @TODO: Break this up into helper functions.
  */
 Blockly.Quizme.testFunctionAgainstStandard = function(standard, fn, inputs) {
   if (DEBUG) console.log("RAM: Testing fn against standard ...");
@@ -825,7 +824,7 @@ Blockly.Quizme.evaluateEvalProcedureDef = function(helperObj) {
       break;
   };
   Blockly.Quizme.giveFeedback(result[0],
-    "Correct! Your function passed 5 randomly generated test cases.  Good show!",
+    "Correct! Your procedure passed 5 randomly generated test cases.  Good show!",
 			      "Oops. " + result[1] + ". Try again!", true);
 }
 
@@ -842,10 +841,11 @@ Blockly.Quizme.compare = function(g1,g2)  {
     compare = name in g2;
    if (compare) 
      compare = g1[name]==g2[name];
-   if(!compare)
+   if(!compare) {
      errmsg = "Fails on test case for variable " + name + ". Correct value should be  " + g1[name] + ". Your value is " + g2[name];
      break;
-  };
+   }
+  }
   return [compare, errmsg];
 }
 
@@ -868,13 +868,7 @@ Blockly.Quizme.compare = function(g1,g2)  {
   Blockly.JavaScript.init();
   if (!blocks)
     blocks  = Blockly.mainWorkspace.topBlocks_;
-
-  // Bhargavi: Generate code for all blocks, not just single function definition
-  for(var i = 0; i<blocks.length; i++)	{
-    Blockly.JavaScript.blockToCode(blocks[i]);  
-    }    
   var code = Blockly.Generator.workspaceToCode('JavaScript');
-  //alert(code);
   return code; 
 }
 
@@ -976,9 +970,6 @@ Blockly.Quizme.testProcedureAgainstStandard = function(stdFn, testFn, helperObj)
   stdFn += ");\n var ret = {";
   testFn += ");\n var ret = {";
 
-  //  stdFn += helperObj[qname].function_name + "();\n var ret = {";
-  //  testFn += helperObj[qname].function_name + "();\n var ret = {";
-  
   // Generate a ret object consisting of variable bindings for each global variable for 
   //   both the testFn and stdfn
   for(i1 = 0; i1 < globals.length-1; i1++) {
@@ -1001,37 +992,66 @@ Blockly.Quizme.testProcedureAgainstStandard = function(stdFn, testFn, helperObj)
 }
 
 /**
- * Evaluates user answer for answerType = xml_blocks, which means it
- *  compares the Xml code of the user's answer to the Xml code for the
- *  expected answer, doing an exact string match. 
- *
- * @param solution -- a string giving the expected solution. The solution
- *  can contain variables of the form '$#STR1#$' and '-91.9' or -92.9'.
- * 
- * @param mappings -- the map that assigns specific values to the variables
- *  in str. For example: {1: "85", STR1: "Y"}. In this case '85' would
- *  replace '-91.9' and 'Y' would replace '$#STR1#$'.
+ *  Evaluates statements in the workspace by placing them in a procedure
+ *  and calling the procedure in a test function and checking whether the
+ *  values of the global variables match those in the solution.
  */
-Blockly.Quizme.evaluateXmlBlocksAnswerType = function(solution, mappings) {
-  if (DEBUG) console.log("RAM: evaluateXmlBlocksAnswerType");
-  var result = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
-  result = Blockly.Quizme.removeXY(result);
-  result = Blockly.Quizme.removeTag("xml", result);
+Blockly.Quizme.evaluateStatement = function(helperObj) {
+  console.log("RAM: evaluateEvalProcedureDef() for quiz " + helperObj.quizName);
 
-  if (mappings) {
-    solution = mapQuizVariables(solution, mappings);
-  } else if (Blockly.Quizme[Blockly.Quizme.quizName].dictionary) {
-    solution = mapQuizVariables(solution, Blockly.Quizme.VariableMappings);
-  }
-    
-  solution = Blockly.Quizme.removeXY(solution);
-  solution = Blockly.Quizme.removeTag("xml", solution);
+  var qname = helperObj.quizName;
 
-  Blockly.Quizme.giveFeedback(result.indexOf(solution) != -1, 
-     "Good!  Your solution is correct.",
-		 "Oops! Your solution contains a mistake. Try again.",
-		 true);
-  return result;
+  // Get the solution code
+  var answerCode = helperObj[qname].function_def;
+  //  answerCode = mapQuizVariables(answerCode, getVariableMappings() );
+  answerCode = mapQuizVariables(answerCode, helperObj[qname].VariableMappings );
+
+  // Create an array of global variable declarations
+  //  which take the form: var global_X;
+  var globals = [];
+  var i1 = answerCode.indexOf("var global");
+  var i2 = answerCode.indexOf(" ", i1+4);
+  var i3 = answerCode.indexOf(";", i1);
+  if (i3 < i2) 
+    i2 = i3;
+
+  // Put each global in the array
+  var temp;
+  while (i1 != -1) {
+    temp = answerCode.substring(i1+4,i2);     // Grab the variable name (minus 'var')
+    if (globals.indexOf(temp) == -1)  
+      globals.push(temp);                // Push the name of the global variable
+    i1 = answerCode.indexOf("var global", i1+1);  // And get the next one
+    i2 = answerCode.indexOf(" ", i1+4);
+    i3 = answerCode.indexOf(";", i1);
+    if (i3 < i2) 
+      i2 = i3;
+  };
+  
+  // Get the testcode from the workspace
+  Blockly.JavaScript.init();
+  var testCode = Blockly.Generator.workspaceToCode('JavaScript');
+
+  testCode = "function test() { \n" + testCode + "\n var ret={";
+  answerCode = "function test() { \n" + answerCode + "\n var ret={";
+
+  for(i1 = 0; i1 < globals.length-1; i1++) {
+    testCode += "g"+i1+": " +globals[i1]+ ",";
+    answerCode += "g"+i1+": " +globals[i1]+ ",";
+  };
+  testCode += "g"+i1+": " +globals[i1];
+  testCode += "}; \n return ret; }\ntest()";
+  answerCode += "g"+i1+": " +globals[i1];
+  answerCode += "}; \n return ret; }\ntest()";
+
+  var z = window.eval(testCode);
+  var y = window.eval(answerCode);
+
+  // Compare the two sets of variable bindings.
+  var result = Blockly.Quizme.compare(y,z);
+  Blockly.Quizme.giveFeedback(result[0],
+    "Correct! Your code produces the same values as the target solution.  Good show!",
+			      "Oops. " + result[1] + ". Try again!", true);
 }
 
 /**
@@ -1100,16 +1120,19 @@ function generateInstanceMappings(name, helperObj) {
   if (DEBUG) console.log("generateInstanceMappings()");
   var map = {};
   var dict = helperObj[name].dictionary;
-  //  if (dict == "undefined") {
+
+  // Try to create dict. Maybe the user forgot to create the dictionary in MakeQuiz?
   if (!dict) {
-    //    throw "The dictionary seems to be missing for Quiz " + helperObj.quizName;
+    createQuizDictionary(helperObj.quiz.question_html);  
+    dict = helperObj.Dictionary;
+  }
+  if (!dict) {
     return map;
   }
-    
+  
   var mapping = "";
   for (var key in dict) {
     var value = dict[key];
-    //    if (value instanceof Array) {
     if (isArray(value)) {
       mapping = value[Math.floor(Math.random() * value.length)];   
     } else if (value.indexOf("...")) {      // Range of numbers
