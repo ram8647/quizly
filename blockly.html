@@ -22,6 +22,7 @@
   <script type="text/javascript" src="./javascript/lists.js"></script>
   <script type="text/javascript" src="./javascript/text.js"></script>
   <script type="text/javascript" src="./javascript/variables.js"></script>
+  <script type="text/javascript" src="./javascript/componentblock.js"></script>
 
   <!-- quizme-initblocklyeditor.js is revised version of Blockly.BlocklyEditor.startup  --> 
   <script type="text/javascript" src="quizme-initblocklyeditor.js"></script>
@@ -31,7 +32,9 @@
   <script type="text/javascript" src="./component-types.js"></script>
   <script type="text/javascript" src="./makequiz-helper.js"></script>
   <script type="text/javascript" src="./quizme-eval.js"></script>
-<!--   <script type="text/javascript" src="./activity-quizme.js"></script> -->
+
+  <!--  This should be loaded last b/c it overrides certain built-in functions. -->
+  <script type="text/javascript" src="./overrides.js"></script>
 
   <style>
     html, body {

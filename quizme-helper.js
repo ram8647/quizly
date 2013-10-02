@@ -992,6 +992,8 @@ function getFunctionParamNames(fn) {
  * @param code -- the workspace code
  */
 function getGlobalVariableNames(code) {
+  if (!code)
+    return [];
   var globals = [];
   var i1 = code.indexOf("var global");
   var i2 = code.indexOf(" ", i1+4);
