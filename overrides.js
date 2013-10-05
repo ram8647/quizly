@@ -32,8 +32,11 @@ Blockly.CodeGenerator.prototype.blockToCode = function(block) {
   if (!func) {
 
     // OVERRIDE:  Check for 'event' component blocks
-    if (block.blockType == 'event') 
-      func = this['event'];
+    var bType = block.blockType;
+    if (bType  == 'event' || bType == 'setter') 
+      func = this[bType];
+    else if (block.type.indexOf('color_') == 0) // Starts with 'color'
+      func = this['color_block'];
     else
       throw 'Language "' + this.name_ + '" does not know how to generate code ' +
         'for block type "' + block.type + '".';

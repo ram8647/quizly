@@ -66,6 +66,7 @@ var EVAL_EXPR_FILLIN = 'eval_expr_fillin';
 var EVAL_STMT = 'eval_stmt';
 var FUNC_DEF = 'func_def';
 var PROC_DEF = 'proc_def';
+var XML_BLOCKS = 'xml_blocks';
 
 //  Blocks lists -- should contain only blocks that have JavaScript generators, plus blocks that support mutators.
 var MATH_BLOCKS = ["math_add", "math_compare","math_divide","math_division","math_is_a_number", "math_multiply","math_mutator_item", "math_number", 
@@ -673,6 +674,10 @@ Blockly.Quizme.evaluateUserAnswer = function() {
   else if (Blockly.Quizme.answerType == PROC_DEF) {
     result = Blockly.Quizme.evaluateEvalProcedureDef(Blockly.Quizme);
   }
+  else if (Blockly.Quizme.answerType == XML_BLOCKS) {
+    result = Blockly.Quizme.evaluateXmlBlocksAnswerType(Blockly.Quizme.solution,
+             Blockly.Quizme.VariableMappings);
+  }
   else {  // Drop through case eval_expr
     var solution = Blockly.Quizme.solution;
     var answer = maindocument.getElementById('quiz_answer').value.toLowerCase();
@@ -682,6 +687,40 @@ Blockly.Quizme.evaluateUserAnswer = function() {
         "Oops, your answer was <font color=\"red\">" + answer + "</font>. "  +
     	"The correct answer is <font color=\"green\">" + solution + "</font>");
   }
+  return result;
+}
+
+/**
+ * Evaluates user answer for answerType = xml_blocks, which means it
+ *  compares the Xml code of the user's answer to the Xml code for the
+ *  expected answer, doing an exact string match. 
+ *
+ * @param solution -- a string giving the expected solution. The solution
+ *  can contain variables of the form '$#STR1#$' and '-91.9' or -92.9'.
+ * 
+ * @param mappings -- the map that assigns specific values to the variables
+ *  in str. For example: {1: "85", STR1: "Y"}. In this case '85' would
+ *  replace '-91.9' and 'Y' would replace '$#STR1#$'.
+ */
+Blockly.Quizme.evaluateXmlBlocksAnswerType = function(solution, mappings) {
+  if (DEBUG) console.log("RAM: evaluateXmlBlocksAnswerType");
+  var result = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
+  result = Blockly.Quizme.removeXY(result);
+  result = Blockly.Quizme.removeTag("xml", result);
+
+  if (mappings) {
+    solution = mapQuizVariables(solution, mappings);
+  } else if (Blockly.Quizme[Blockly.Quizme.quizName].dictionary) {
+    solution = mapQuizVariables(solution, Blockly.Quizme.VariableMappings);
+  }
+    
+  solution = Blockly.Quizme.removeXY(solution);
+  solution = Blockly.Quizme.removeTag("xml", solution);
+
+  Blockly.Quizme.giveFeedback(result.indexOf(solution) != -1, 
+     "Good!  Your solution is correct.",
+		 "Oops! Your solution contains a mistake. Try again.",
+		 true);
   return result;
 }
 
@@ -931,7 +970,7 @@ Blockly.Quizme.testProcedureAgainstStandard = function(stdFn, testFn, helperObj)
   testFn += "\ntest()";
   
   // Return the result of evaluating and comparing the code
-  return Blockly.Quizme.compare(testFn, stdFn, globals);
+  return Blockly.Quizme.compare(stdFn, testFn, globals);
 }
 
 /**
@@ -988,14 +1027,15 @@ function getFunctionParamNames(fn) {
 }
 
 /**
- * Returns an array of global variable names parsed from the workspace code.
- * @param code -- the workspace code
+ * Returns an array of global variable names parsed from the code.
+ * @param code -- the workspace or solution code
  */
 function getGlobalVariableNames(code) {
   if (!code)
     return [];
   var globals = [];
-  var i1 = code.indexOf("var global");
+  //  var i1 = code.indexOf("var global");
+  var i1 = code.indexOf("var ");
   var i2 = code.indexOf(" ", i1+4);
   var i3 = code.indexOf(";", i1);
   if (i3 < i2) 
@@ -1005,9 +1045,13 @@ function getGlobalVariableNames(code) {
   var temp;
   while (i1 != -1) {
     temp = code.substring(i1+4,i2);     // Grab the variable name (minus 'var')
+    if (temp.indexOf('global') == -1)   // Add the global prefix if it is missing
+      temp = 'global_' + temp;
+
     if (globals.indexOf(temp) == -1)  
       globals.push(temp);                // Push the name of the global variable
-    i1 = code.indexOf("var global", i1+1);  // And get the next one
+    //    i1 = code.indexOf("var global", i1+1);  // And get the next one
+    i1 = code.indexOf("var ", i1+1);  // And get the next one
     i2 = code.indexOf(" ", i1+4);
     i3 = code.indexOf(";", i1);
     if (i3 < i2) 

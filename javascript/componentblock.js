@@ -15,12 +15,10 @@ Blockly.JavaScript = Blockly.Generator.get('JavaScript');
  * Returns a function that takes no arguments, generates JavaScript for an event handler declaration block
  * and returns the generated code string.
  *
- * @param {String} instanceName the block's instance name, e.g., Button1
- * @param {String} eventName  the type of event, e.g., Click
- * @returns {Function} event code generation function with instanceName and eventName bound in
+ * @returns null
  */
 Blockly.JavaScript.event = function() {
-  console.log('Generating event code for ' + this.instanceName);
+  console.log('Generating event code for ' + this.type);
   var funcName = this.instanceName + this.eventType.name;
   var body = '';
   for (var i = 0; i < this.childBlocks_.length; i++) {
@@ -30,5 +28,30 @@ Blockly.JavaScript.event = function() {
   code = Blockly.JavaScript.scrub_(this, code);
   Blockly.JavaScript.definitions_[funcName] = code;
   return null;
+}
+
+/**
+ * Return a variable assignment statement using the Component's name and
+ *  property as a compound global variable name.
+ *
+ */
+Blockly.JavaScript.setter = function() {
+  console.log('Generating setter code for ' + this.type);
+  var propName = this.getTitleValue("PROP");                    // e.g. Text
+  var compName = this.getTitleValue("COMPONENT_SELECTOR");   // e.g., Label1
+  var varName = "global_" + compName + propName;
+  var value = Blockly.JavaScript.blockToCode(this.childBlocks_[0]);
+  var code = varName + ' = ' + value[0] + ';\n';     // e.g., Label1Text
+  return code;
+}
+
+/**
+ * Generates code for color blocks
+ *
+ */
+Blockly.JavaScript.color_block = function() {
+  console.log('Generating setter code for ' + this.type);
+  var code = -1 * (window.Math.pow(16,6) - window.parseInt("0x" + this.getTitleValue('COLOR').substr(1)));
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
 }
 
