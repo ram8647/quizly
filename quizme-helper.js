@@ -594,7 +594,8 @@ function processHint(helperObj) {
   var hintHTML = "";
   var hint_element = maindocument.getElementById('hint_html');
   if (helperObj.hintCounter < helperObj.hints.length) {
-    hintHTML = '<font color="magenta">Hint: ' + hints[count]  + '</font>';
+    var hint = mapQuizVariables(hints[count], helperObj.VariableMappings);
+    hintHTML = '<font color="magenta">Hint: ' + hint  + '</font>';
     ++helperObj.hintCounter;
   } else {
     hintHTML = '<font color="red">Sorry, no more hints available</font>.';
@@ -886,11 +887,20 @@ Blockly.Quizme.evaluateEvalProcedureDef = function(helperObj) {
 Blockly.Quizme.compare = function(stdFn,testFn,globals)  {
    // Evaluate both functions producing objects g1, g2 containin global bindings of the form 
    // {g0:v0, g1:v1} where g0 is a generated name for a global variable and v0 is its value.
-  var resultTestFn = window.eval(testFn);  
-  var resultStdFn = window.eval(stdFn);
 
   var compare = true;              // Compare the respective results
   var errmsg = "";
+  var resultTestFn;
+  var resultStdFn;
+  try {
+    resultTestFn = window.eval(testFn);  
+    resultStdFn = window.eval(stdFn);
+  } catch (err) {
+    errmsg = "When tested, your code generated the following error:  " + err;
+    compare = false;
+    return [compare,errmsg];
+  }
+
   for (var name in resultTestFn) {
     compare = name in resultStdFn;
     if (compare) 

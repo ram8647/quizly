@@ -30,12 +30,19 @@ Blockly.JavaScript.lists_create_empty = function() {
   return ['[]', Blockly.JavaScript.ORDER_ATOMIC];
 };
 
+/**
+ * Code generator for the make-a-list block.
+ * 
+ *  NOTE: make-a-list slots (itemCount) can be empty in 
+ *  which case the JavaScript should be [], not [null].
+ */
 Blockly.JavaScript.lists_create_with = function() {
   // Create a list with any number of elements of any type.
-  var code = new Array(this.itemCount_);
+  var code = [];
   for (var n = 0; n < this.itemCount_; n++) {
-    code[n] = Blockly.JavaScript.valueToCode(this, 'ADD' + n,
-        Blockly.JavaScript.ORDER_COMMA) || 'null';
+    var val = Blockly.JavaScript.valueToCode(this, 'ADD' + n, Blockly.JavaScript.ORDER_COMMA) || 'null';
+    if (val != 'null')
+      code.push(val);
   }
   code = '[' + code.join(', ') + ']';
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
