@@ -60,6 +60,7 @@ Blockly.Quizme.addQuiz = function(name, jsonStr, quizObj) {
   //  console.log("RAM: Quizme.add, jsonStr = " + jsonStr.Name);
   quizObj[name] = {};
   quizObj[name].quizName = jsonStr.Name;
+  quizObj[name].description = jsonStr.Description;
   quizObj[name].display_name = jsonStr.DisplayName;
   quizObj[name].description = jsonStr.Description;
   quizObj[name].problem_type = jsonStr.ProblemType;

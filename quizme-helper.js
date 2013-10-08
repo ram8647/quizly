@@ -282,6 +282,7 @@ function showQuiz(quizname) {
   if (button) 
     button.innerHTML = "Submit";
   Blockly.Quizme.quizName = quizname;
+  Blockly.Quizme.description = Blockly.Quizme[quizname].description;
   Blockly.Quizme.question_type = Blockly.Quizme[quizname].problem_type;
   Blockly.Quizme.questionHTML = Blockly.Quizme[quizname].question_html;
   Blockly.Quizme.answerHTML = Blockly.Quizme[quizname].answer_html;
@@ -560,6 +561,9 @@ function renderQuiz() {
   var hint_html = maindocument.getElementById('hint_html');
   if (hint_html)
     hint_html.innerHTML = "";
+  var link_html = maindocument.getElementById('link_html');
+  if (link_html)
+    link_html.innerHTML = "Tutorial: " + Blockly.Quizme.description;
   var xmlStr = Blockly.Xml.domToText(Blockly.Quizme.xml);
   var mappedStr = mapQuizVariables(xmlStr, Blockly.Quizme.VariableMappings);
   if (mappedStr)
