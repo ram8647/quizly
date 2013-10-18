@@ -1,0 +1,295 @@
+{namespace tunepage}
+
+/**
+ * This is a Closure Template.
+ *
+ * To regenerate just en.js, run this command:
+ * java -jar ../_soy/SoyToJsSrcCompiler.jar --outputPathFormat generated/en.js --srcs ../common.soy,template.soy
+ *
+ * To regenerate all files, see: trunk/apps/template.soy.
+ */
+
+/**
+ * Translated messages for use in JavaScript.
+ */
+{template .messages}
+  {call apps.messages /}
+  <div style="display: none">
+    <span id="Tune_dialogRedo">{msg meaning="Tune.dialogRedo" desc="block text - Let the user rehear the puzzle tune."}Play the puzzle tune again{/msg}</span>
+    <span id="Tune_playA">{msg meaning="Tune.playA" desc="block text - Imperative or infinitive of a verb for a playing a note."}play note a{/msg}</span>
+    <span id="Tune_playE">{msg meaning="Tune.playE" desc="block text - Imperative or infinitive of a verb for a playing a note."}play note e{/msg}</span>
+    <span id="Tune_playC">{msg meaning="Tune.playC" desc="block text - Imperative or infinitive of a verb for a playing a note."}play note c{/msg}</span>
+    <span id="Tune_playG">{msg meaning="Tune.playG" desc="block text - Imperative or infinitive of a verb for a playing a note."}play note g{/msg}</span>
+    <span id="Tune_doCode">{msg meaning="Tune.doCode" desc="block text - Imperative or infinitive of a verb preceding one or more commands to a person.  This is part of [https://code.google.com/p/blockly/wiki/Loops#repeat repeat] and [https://code.google.com/p/blockly/wiki/IfElse#If_blocks if] blocks."}do{/msg}</span>
+    <span id="Tune_elseCode">{msg meaning="Tune.elseCode" desc="block text - Conjunction meaning 'otherwise', introducing commands to be performed if a previous condition was not true, as in 'if x\u003E3, do this, else do that'.  See [https://code.google.com/p/blockly/wiki/IfElse#If-Else_blocks]."}else{/msg}</span>
+    // This definition was copied up here ahead of when it is needed so that it is adjacent
+    // to the previous definition.
+    <span id="Tune_helpIfElse">{msg meaning="Tune.helpIfElse" desc="callout - This is shown when the 'if-else' block is introduced.  For 'if-else' concatenate the words for 'if' and 'else/otherwise'."}If-else blocks will do one thing or the other.{/msg}</span>
+    <span id="Tune_repeatTimes">{{msg meaning="Tune.repeatTimes" desc="block text - Imperative or infinitive of a verb to repeat the following commands a certain number of times.  The phrase is followed by a slot containing a numberaa.\n\nSee also:\n* {lb}{lb}msg-blockly|Maze.helpRepeatMany{rb}{rb}."}}repeat times{{/msg}}</span>
+    <span id="Tune_playATooltip">{msg meaning="Tune.playToolTip" desc="block text - Plays a note."}play{/msg}</span>
+    <span id="Tune_playETooltip">{msg meaning="Tune.playToolTip" desc="block text - Plays a note."}play{/msg}</span>
+    <span id="Tune_playCTooltip">{msg meaning="Tune.playToolTip" desc="block text - Plays a note."}play{/msg}</span>
+    <span id="Tune_playGTooltip">{msg meaning="Tune.playToolTip" desc="block text - Plays a note."}play{/msg}</span>
+    <span id="Tune_ifTooltip">{msg meaning="Tune.ifTooltip" desc="tooltip - 'path' refers to a path through a maze."}If something is true, then do some actions.{/msg}</span>
+    <span id="Tune_ifelseTooltip">{msg meaning="Tune.ifelseTooltip" desc="tooltip - 'path' refers to a path through a maze."}If something is true, then do the first block of actions.  Otherwise, do the second block of actions.{/msg}</span>
+    <span id="Tune_whileTooltip">{msg meaning="Tune.whileTooltip" desc="tooltip - Repeat the enclosed commands until the tune has been successfully completed (the end point reached)."}Repeat the enclosed actions until the tune is completed.{/msg}</span>
+    <span id="Tune_repeatTimesTooltip">{msg meaning="Tune.repeatTimesTooltip" desc="tooltip - Repeat the enclosed commands the designated number of times."}Repeat the enclosed actions the designated number of times.{/msg}</span>
+    <span id="Tune_packageTooltip">{msg meaning="Tune.packageTooltip" desc="tooltip - 'package' refers to an Android APK file"}Package the workspace as an app.{/msg}</span>
+    <span id="Tune_runTooltip">{msg meaning="Tune.runTooltip" desc="tooltip - Play the user's tune."}Play the blocks in the workspace.{/msg}</span>
+    <span id="Tune_resetTooltip">{msg meaning="Tune.resetTooltip" desc="tooltip - Reset the puzzle."}Reset the puzzle.{/msg}</span>
+    <span id="Tune_capacity0">{msg meaning="Tune.capacity0" desc="warning - No more blocks may be added until some are removed.  Please include '%0' in the translated string.  It will be replaced with '0' and made bold."}You have %0 blocks left.{/msg}</span>
+    <span id="Tune_capacity1">{{msg meaning="Tune.capacity1" desc="warning - Only one more block may be added.  Please include '%1' in the translated string. It will be replaced with '1' and made bold.\n\nSee also:\n* {msg-blockly|Maze.capacity2}"}}You have %1 block left.{{/msg}}</span>
+    <span id="Tune_capacity2">{{msg meaning="Tunea.capacity2" desc="warning - Only %2 more blocks may be used, where %2 is an integer greater than 1.\n\nSee also:\n* {msg-blockly|Tune.capacity1}"}}You have %2 blocks left.{{/msg}}</span>
+    <span id="Tune_nextLevel">{msg meaning="Tune.nextLevel" desc="alert - This is displayed when the user solves the tune, inviting them to precede to the next level of difficulty.\n\nParameters:\n* %1 - the number of the next level, which is always an integer greater than 1."}Congratulations! Are you ready to proceed to level %1?{/msg}</span>
+    <span id="Tune_regrets">{msg meaning="Tune.regrets" desc="alert - This is displayed when the user fails to solve the tune puzzle, inviting them try again."}Awww! That doesn't sound right. Try again!{/msg}</span>
+    <span id="Tune_finalLevel">{msg meaning="Tune.finalLevel" desc="alert - This is displayed when the user solves the most difficult level."}Congratulations! You have solved the final level.{/msg}</span>
+  </div>
+{/template}
+
+/**
+ * Web page structure.
+ */
+{template .start}
+  {call .messages /}
+  <table width="100%">
+    <tr>
+      <td>
+        <h1>
+          <span id="title">
+            <a href="../index.html">{msg meaning="Apps.blocklyMessage" desc="IBID"}App Inventor Play That Tune{/msg}</a>
+            {sp}:{sp}
+            {msg meaning="Tune.tune" desc="title - Specifies that this is the '''Tune''' tutorial."}
+              Tune
+            {/msg}
+          </span>
+          {sp}&nbsp;{sp}
+          {for $i in range(1, 6)}
+            {sp}
+            {if $i == $ij.level}
+              <span class="tab" id="selected">{$i}</span>
+            {else}
+              {if $i < $ij.level}
+                <a class="tab previous" href="?lang={$ij.lang}&level={$i}&skin={$ij.skin}">{$i}</a>
+              {else}
+                <a class="tab" href="?lang={$ij.lang}&level={$i}&skin={$ij.skin}">{$i}</a>
+              {/if}
+            {/if}
+          {/for}
+          <a class="tab" href="?lang={$ij.lang}&level=6&skin={$ij.skin}">Create</a>
+<!--           <a class="package"  href="http://appinventor.cs.trincoll.edu/csp/hourofcode/builder/package.php?blocks=%3Cblock%3E%3C/block%3E&yail=(def%20null)">Test Loading</a> -->
+        </h1>
+      </td>
+      <td class="farSide">
+        <select id="languageMenu"></select>
+        {sp}&nbsp;{sp} 
+        <button style="display:none; position:relative" id="packageButton" class="package" title="{msg meaning="Tune.packageTooltip" desc="tooltip - Pressing this button packages an App Inventor app and displays a QR code."}Packages the workspace into an Android app.{/msg}">
+          <img src="../../media/1x1.gif" class="stop icon21"> {msg meaning="Tune.packageTooltip" desc="IBID"}Package{/msg}
+        </button>
+<!--         <button class="primary" id="packageButton">  -->
+<!--           <img src="../../media/1x1.gif">  -->
+<!--           <span>&#x25BE;</span>  -->
+<!--         </button>  -->
+      </td>
+    </tr>
+  </table>
+
+<!--   <div id="pleaseWaitDialog">  -->
+<!--     <div>  -->
+<!--         <p>Please wait</p>  -->
+<!--         <img src="/ripplemobile/images/ajax-loader.gif" /> -->
+<!--     </div>  -->
+<!--   </div> -->
+
+  <div id="visualization" >
+    <img style="position:relative" src = "./media/screenshot-400.png">
+    <img id="noteC" style="position:absolute; left:22px; top:525px; display:none" src = "./media/reddot-40.png">
+    <img id="noteE" style="position:absolute; left:115px; top:525px; display:none" src = "./media/reddot-40.png">
+    <img id="noteG" style="position:absolute; left:205px; top:525px; display:none" src = "./media/reddot-40.png">
+    <img id="noteA" style="position:absolute; left:252px; top:525px; display:none" src = "./media/reddot-40.png">
+    <button style="border:1px solid #ff0000; position:absolute; left:0px; top:55px; width:390px; height:300px" id="runButton" class="primary" title="{msg meaning="Tune.runTooltip" desc="tooltip - Pressing this button runs the computer program in the workspace to play the tune."}Plays the tune specified in the blocks.{/msg}">
+          <img src="../../media/1x1.gif" class="run icon21"> {msg meaning="Apps.runProgram" desc="IBID"}Play that tune{/msg} 
+    </button>
+    <button style="border:1px solid #ff0000; display:none; position:absolute; left:0px; top:55px; width:390px; height:300px" id="resetButton" class="primary" title="{msg meaning="Tune.resetTooltip" desc="tooltip - Pressing this button restores the player to the start position and enables the user's program to be run again."}Reset the puzzle tune to its start state.{/msg}">
+          <img src="../../media/1x1.gif" class="stop icon21"> {msg meaning="Apps.resetProgram" desc="IBID"}Reset{/msg}
+     </button>
+     <div id="capacityBubble">
+       <div id="capacity"></div> 
+     </div> 
+  </div>
+
+<!--  <script type="text/javascript" src="../../blockly_uncompressed.js"></script>  -->
+  <script type="text/javascript" src="../../blockly_compressed.js"></script>
+  <script type="text/javascript" src="../../javascript_compressed.js"></script> 
+  <script type="text/javascript" src="../{$ij.langSrc}"></script>  
+  <script type="text/javascript" src="tune-blocks.js"></script>
+<!--  <script type="text/javascript" src="../../blockly-all.js"></script> -->
+  <script type="text/javascript" src="../../blockly-all-uncompressed.js"></script>
+  <script type="text/javascript" src="../../blockly-toolbox.js"></script> 
+  <script type="text/javascript" src="../../javascript.js"></script>
+  <script type="text/javascript" src="tune-javascript.js"></script>
+  {call .toolbox /}
+  <div id="blockly"></div>
+  <svg version="1.1" height="1px" width="1px">
+    <text id="arrowTest" style="font-family: sans-serif; font-size: 11pt;">⟲⟳</text>
+  </svg>
+
+  <div id="pegmanMenu"></div>
+
+  {call apps.dialog /}
+  {call apps.codeDialog /}
+  {call apps.storageDialog /}
+  <div id="dialogDone" class="dialogHiddenContent">
+    <div id="dialogDoneText" style="font-size: large; margin: 1em;"></div>
+    <img src="../../media/1x1.gif" id="pegSpin">
+    <div id="dialogDoneButtons" class="farSide" style="padding: 1ex 3ex 0"></div>
+  </div>
+  <div id="dialogHelpStack" class="dialogHiddenContent">
+    <table><tr><td>
+      <img src="help.png">
+    </td><td>&nbsp;</td><td>
+      {{msg meaning="Tune.helpStack" desc="callout - The words for 'stack' and 'blocks' should be the same as for stacking children's blocks. Use the imperative verb form appropriate for speaking to a child, gender unspecified.  If no gender-neutral singular/familiar form exists but a gender-neutral plural/formal form exists, use that instead.  Be sure to use the same translation of 'play note' as above.\n\n'play note' refers to {lb}{lb}msg-blockly|Tune.playA{rb}{rb}."}}To help me play that tune stack a couple of 'play note' blocks together inside the 'when PlayButton clicked' block.{{/msg}}
+    </td><td valign="top">
+      <img src="help_stack.png" class="mirrorImg" height=63 width=136>
+    </td></tr></table>
+  </div>
+  <div id="dialogHelpOneTopBlock" class="dialogHiddenContent">
+    <table><tr><td>
+      <img src="help.png">
+    </td><td>&nbsp;</td><td>
+      {msg meaning="Tune.helpOneTopBlock" desc="callout - This is displayed if a user attempts to run a program composed of multiple stacks of blocks, letting them know they need to create a single stack."}Make sure all the blocks in the workspace are connected together.{/msg}
+      <iframe id="iframeOneTopBlock" src=""></iframe>
+    </td></tr></table>
+  </div>
+  <div id="dialogHelpRun" class="dialogHiddenContent">
+    <table><tr><td>
+      {msg meaning="Tune.helpRun" desc="callout - This is shown after the user has created a program on the first level."}Play your tune to hear what happens.{/msg}
+    </td><td rowspan=2>
+      <img src="help.png">
+    </td></tr><tr><td>
+      <div><img src="help_run.png" class="mirrorImg" height=27 width=141></div>
+    </td></tr></table>
+  </div>
+  <div id="dialogIntroduceThePuzzle" class="dialogHiddenContent">
+    <table><tr><td>
+      {msg meaning="Tune.helpIntroducePuzzle" desc="callout - This introduces the puzzle tune."}Listen and watch: can you play this tune?.{/msg}
+    </td><td rowspan=2>
+      <img src="help.png">
+    </td></tr><tr><td>
+      <div><img src="help_run.png" class="mirrorImg" height=27 width=141></div>
+    </td></tr></table>
+  </div>
+  <div id="dialogHelpReset" class="dialogHiddenContent">
+    <table><tr><td>
+      {{msg meaning="Tune.helpReset" desc="callout - This is shown after the user has run a program that does not solve the maze.\n\n'Reset' refers to {lb}{lb}msg-blockly|Apps.resetProgram{rb}{rb}."}}Your program didn't play the correct tune.  Press 'Reset' and try again.{{/msg}}
+    </td><td rowspan=2>
+      <img src="help.png">
+    </td></tr><tr><td>
+      <div><img src="help_run.png" class="mirrorImg" height=27 width=141></div>
+    </td></tr></table>
+  </div>
+  <div id="dialogHelpRepeat" class="dialogHiddenContent">
+    <table><tr><td>
+      <img src="help_up.png">
+    </td><td>
+      {msg meaning="Tune.helpRepeat" desc="callout - This is shown when the 'repeat' block is introduced.  A 'block' refers to a child's building block."}Play the tune using only two blocks.  Use 'repeat' to run a sequence of blocks more than once.{/msg}
+    </td><td>
+      <img src="help.png">
+    </td></tr></table>
+  </div>
+  <div id="dialogHelpCapacity" class="dialogHiddenContent">
+    <table><tr><td>
+      <img src="help.png">
+    </td><td>&nbsp;</td><td>
+      {msg meaning="Tune.helpCapacity" desc="callout - This is shown after the user has used all the blocks permitted on this level."}You have used up all the blocks for this level.  To create a new block, you first need to delete an existing block.{/msg}
+    </td></tr></table>
+  </div>
+  <div id="dialogHelpRepeatMany" class="dialogHiddenContent">
+    <table><tr><td>
+      <img src="help_up.png">
+    </td><td>
+      {{msg meaning="Tune.helpRepeatMany" desc="callout - This is a hint that the user should place a second block inside of a 'repeat' block.\n\n'repeat' should be consistent with {lb}{lb}msg-blockly|Tune.repeatUntil{rb}{rb}."}}You can fit more than one block inside a 'repeat' block.{{/msg}}
+    </td><td>
+      <img src="help.png">
+    </td></tr></table>
+  </div>
+  <div id="dialogHelpSkins" class="dialogHiddenContent">
+    <table><tr><td>
+      <img src="help.png">
+    </td><td>
+      {{msg meaning="Tune.helpSkins" desc="callout - This is a hint that the user can change the appearance of the player that moves within the maze."}}Choose your favourite player from this menu.{{/msg}}
+    </td><td>
+      <img src="help_up.png">
+    </td></tr></table>
+  </div>
+  <div id="dialogHelpIf" class="dialogHiddenContent">
+    <table><tr><td>
+      <img src="help_up.png">
+    </td><td>
+      {msg meaning="Tune.helpIf" desc="callout - This is shown when the 'if' block is introduced.  An example of an 'if' block is: 'if there is a path to the left, turn left'."}An 'if' block will do something only if the condition is true.  Try turning left if there is a path to the left.{/msg}
+    </td><td>
+      <img src="help.png">
+    </td></tr></table>
+  </div>
+  <div id="dialogHelpMenu" class="dialogHiddenContent">
+    <table><tr><td>
+      <img src="help_up.png">
+    </td><td id="helpMenuText">
+      {msg meaning="Tune.helpMenu" desc="callout - %1 will be replaced with an image of the dropdown menu that the user needs to click."}Click on %1 in the 'if' block to change its condition.{/msg}
+    </td><td>
+      <img src="help.png">
+    </td></tr></table>
+  </div>
+  <div id="dialogHelpIfElse" class="dialogHiddenContent">
+    <table><tr><td>
+      <img src="help_down.png">
+    </td><td>
+      {msg meaning="Tune.helpIfElse" desc="IBID"}If-else blocks will do one thing or the other.{/msg}
+    </td><td>
+      <img src="help.png">
+    </td></tr></table>
+  </div>
+  <div id="dialogLastLevel" class="dialogHiddenContent">
+    <table><tr><td>
+      <img src="help.png">
+    </td><td>&nbsp;</td><td>
+      {msg meaning="Tune.helpLastLevel" desc="callout - Make your own tune."}Great job! You've finished all the puzzles. Now try making your own tune. You can package it as an app for your Android device.{/msg}
+      {call apps.ok /}
+    </td></tr></table>
+  </div>
+  <div id="qrcode">
+  <tt id="qrcodetext" style="font-size:7px"></tt>
+  </div>
+{/template}
+
+/**
+ * Toolboxes for each level.
+ */
+{template .toolbox}
+  <xml id="toolbox" style="display: none;">
+    <block type="tune_play_c"></block>
+    <block type="tune_play_e"></block>
+    <block type="tune_play_g"></block>
+    <block type="tune_play_a"></block>
+    {if $ij.level > 2}
+      <block type="tune_times"></block>
+      {if $ij.level > 6}
+        <block type="tune_if"></block>
+      {/if}
+      {if $ij.level > 8}
+         <block type="tune_ifElse"></block>
+      {/if}
+    {/if}
+  </xml>
+{/template}
+
+/**
+ * Readonly Blockly in an iframe.
+ */
+{template .readonly}
+  {call .messages /}
+
+  <script type="text/javascript" src="../../blockly_compressed.js"></script>
+  <script type="text/javascript" src="../../{$ij.langSrc}"></script>
+  <script type="text/javascript" src="blocks.js"></script>
+  <div id="blockly"></div>
+{/template}

@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file original="SoyMsgBundle" datatype="x-soy-msg-bundle" xml:space="preserve" source-language="en">
+    <body>
+      <trans-unit id="768570576516576913" datatype="html">
+        <source>text</source>
+        <note priority="1" from="description">variable name - Default [https://code.google.com/p/blockly/wiki/Variables variable] representing a [https://code.google.com/p/blockly/wiki/Text piece of text].  This should be a single word, preferably short.</note>
+        <note priority="1" from="meaning">Apps.textVariable</note>
+      </trans-unit>
+      <trans-unit id="1061578198057067927" datatype="html">
+        <source>You have used up all the blocks for this level.  To create a new block, you first need to delete an existing block.</source>
+        <note priority="1" from="description">callout - This is shown after the user has used all the blocks permitted on this level.</note>
+        <note priority="1" from="meaning">Maze.helpCapacity</note>
+      </trans-unit>
+      <trans-unit id="1147828512596473179" datatype="html">
+        <source>Play Tune</source>
+        <note priority="1" from="description">IBID</note>
+        <note priority="1" from="meaning">Apps.runProgram</note>
+      </trans-unit>
+      <trans-unit id="1456515588173174520" datatype="html">
+        <source>Click on %1 in the 'if' block to change its condition.</source>
+        <note priority="1" from="description">callout - %1 will be replaced with an image of the dropdown menu that the user needs to click.</note>
+        <note priority="1" from="meaning">Maze.helpMenu</note>
+      </trans-unit>
+      <trans-unit id="1686883036031489642" datatype="html">
+        <source>Logic</source>
+        <note priority="1" from="description">category - Blocks related to [https://code.google.com/p/blockly/wiki/Logic logic].</note>
+        <note priority="1" from="meaning">Apps.catLogic</note>
+      </trans-unit>
+      <trans-unit id="1762544291054063159" datatype="html">
+        <source>Tune</source>
+        <note priority="1" from="description">title - Specifies that this is the '''Tunes''' tutorial.</note>
+        <note priority="1" from="meaning">Tunes.tune</note>
+      </trans-unit>
+      <trans-unit id="2005588694273942629" datatype="html">
+        <source>If there is a path in the specified direction, then do the first block of actions.  Otherwise, do the second block of actions.</source>
+        <note priority="1" from="description">tooltip - 'path' refers to a path through a maze.</note>
+        <note priority="1" from="meaning">Tunes.ifelseTooltip</note>
+      </trans-unit>
+      <trans-unit id="2075728723517768097" datatype="html">
+        <source>Makes the player do what the blocks say.</source>
+        <note priority="1" from="description">tooltip - Pressing this button runs the computer program the user has written to move the player through the maze.</note>
+        <note priority="1" from="meaning">Maze.runTooltip</note>
+      </trans-unit>
+      <trans-unit id="2129486521834087303" datatype="html">
+        <source>Repeat the enclosed actions until finish point is reached.</source>
+        <note priority="1" from="description">tooltip - Repeat the enclosed commands until the tune has been successfully completed (the end point reached).</note>
+        <note priority="1" from="meaning">Tunes.whileTooltip</note>
+      </trans-unit>
+      <trans-unit id="2561306449483326985" datatype="html">
+        <source>Text</source>
+        <note priority="1" from="description">category - Blocks related to [https://code.google.com/p/blockly/wiki/Text text processing].</note>
+        <note priority="1" from="meaning">Apps.catText</note>
+      </trans-unit>
+      <trans-unit id="2570539532822249158" datatype="html">
+        <source>Sorry, '%1' doesn't correspond with any saved program.</source>
+        <note priority="1" from="description">alert - A request to retrieve a stored program does not have a valid URL. %1 is the invalid portion of the URL.</note>
+        <note priority="1" from="meaning">Apps.hashError</note>
+      </trans-unit>
+      <trans-unit id="2589076887053036089" datatype="html">
+        <source>If-else blocks will do one thing or the other.</source>
+        <note priority="1" from="description">callout - This is shown when the 'if-else' block is introduced.  For 'if-else' concatenate the words for 'if' and 'else/otherwise'.</note>
+        <note priority="1" from="meaning">Tunes.helpIfElse</note>
+      </trans-unit>
+      <trans-unit id="3190825933229819894" datatype="html">
+        <source>Put the player back at the start of the maze.</source>
+        <note priority="1" from="description">tooltip - Pressing this button restores the player to the start position and enables the user's program to be run again.</note>
+        <note priority="1" from="meaning">Maze.resetTooltip</note>
+      </trans-unit>
+      <trans-unit id="3279501947911403228" datatype="html">
+        <source>Variables</source>
+        <note priority="1" from="description">category - Blocks related to [https://code.google.com/p/blockly/wiki/Variables variables].</note>
+        <note priority="1" from="meaning">Apps.catVariables</note>
+      </trans-unit>
+      <trans-unit id="3478101938294488773" datatype="html">
+        <source>You can fit more than one block inside a 'repeat' block.</source>
+        <note priority="1" from="description">callout - This is a hint that the user should place a second block inside of a 'repeat' block.\n\n'repeat' should be consistent with {lb}{lb}msg-blockly|Maze.repeatUntil{rb}{rb}.</note>
+        <note priority="1" from="meaning">Maze.helpRepeatMany</note>
+      </trans-unit>
+      <trans-unit id="3964361619617826429" datatype="html">
+        <source>OK</source>
+        <note priority="1" from="description">Label on button for user to press when done reading help information.\n{lb}{lb}Identical|OK{rb}{rb}</note>
+        <note priority="1" from="meaning">Apps.dialogOk</note>
+      </trans-unit>
+      <trans-unit id="4362899193616566882" datatype="html">
+        <source>Stack a couple of 'move forward' blocks together to help me reach the goal.</source>
+        <note priority="1" from="description">callout - The words for 'stack' and 'blocks' should be the same as for stacking children's blocks. Use the imperative verb form appropriate for speaking to a child, gender unspecified.  If no gender-neutral singular/familiar form exists but a gender-neutral plural/formal form exists, use that instead.  Be sure to use the same translation of 'move forward' as above.\n\n'move forward' refers to {lb}{lb}msg-blockly|Maze.moveForward{rb}{rb}.</note>
+        <note priority="1" from="meaning">Maze.helpStack</note>
+      </trans-unit>
+      <trans-unit id="4751586063015654997" datatype="html">
+        <source>Run your program to see what happens.</source>
+        <note priority="1" from="description">callout - This is shown after the user has created a program on the first level.</note>
+        <note priority="1" from="meaning">Maze.helpRun</note>
+      </trans-unit>
+      <trans-unit id="4991334951997362501" datatype="html">
+        <source>App Inventor Tunes</source>
+        <note priority="1" from="description">IBID</note>
+        <note priority="1" from="meaning">Apps.blocklyMessage</note>
+      </trans-unit>
+      <trans-unit id="5076791813618961196" datatype="html">
+        <source>An 'if' block will do something only if the condition is true.  Try turning left if there is a path to the left.</source>
+        <note priority="1" from="description">callout - This is shown when the 'if' block is introduced.  An example of an 'if' block is: 'if there is a path to the left, turn left'.</note>
+        <note priority="1" from="meaning">Maze.helpIf</note>
+      </trans-unit>
+      <trans-unit id="5228644712032003482" datatype="html">
+        <source>Congratulations! You have solved the final level.</source>
+        <note priority="1" from="description">alert - This is displayed when the user solves the most difficult level.</note>
+        <note priority="1" from="meaning">Tunes.finalLevel</note>
+      </trans-unit>
+      <trans-unit id="5355893896926183437" datatype="html">
+        <source>On this level, you need to stack together all of the blocks in the white workspace.</source>
+        <note priority="1" from="description">callout - This is displayed if a user attempts to run a program composed of multiple stacks of blocks, letting them know they need to create a single stack.</note>
+        <note priority="1" from="meaning">Maze.helpOneTopBlock</note>
+      </trans-unit>
+      <trans-unit id="5391382062551588177" datatype="html">
+        <source>Save and link to blocks.</source>
+        <note priority="1" from="description">tooltip - Clicking on this button will cause the current program to be saved and for a URL to be shown to later retrieve it.</note>
+        <note priority="1" from="meaning">Apps.linkTooltip</note>
+      </trans-unit>
+      <trans-unit id="5457355231432428749" datatype="html">
+        <source>You have %1 block left.</source>
+        <note priority="1" from="description">warning - Only one more block may be added.  Please include '%1' in the translated string. It will be replaced with '1' and made bold.\n\nSee also:\n* {msg-blockly|Maze.capacity2}</note>
+        <note priority="1" from="meaning">Tunes.capacity1</note>
+      </trans-unit>
+      <trans-unit id="5532942470899034153" datatype="html">
+        <source>Colour</source>
+        <note priority="1" from="description">category - Blocks related to [https://code.google.com/p/blockly/wiki/Colour colour].</note>
+        <note priority="1" from="meaning">Apps.catColour</note>
+      </trans-unit>
+      <trans-unit id="5683520235628284499" datatype="html">
+        <source>Choose your favourite player from this menu.</source>
+        <note priority="1" from="description">callout - This is a hint that the user can change the appearance of the player that moves within the maze.</note>
+        <note priority="1" from="meaning">Maze.helpSkins</note>
+      </trans-unit>
+      <trans-unit id="5758425077401246127" datatype="html">
+        <source>Could not load your saved file.  Perhaps it was created with a different version of Blockly?</source>
+        <note priority="1" from="description">alert - There was a problem loading a file previously saved by the user.  The most likely reason for the problem is that it was created with an earlier, incompatible version of Blockly.  This message will be followed by technical information useful to engineers trying to understand the problem.</note>
+        <note priority="1" from="meaning">Apps.xmlError</note>
+      </trans-unit>
+      <trans-unit id="5803514418162480510" datatype="html">
+        <source>Procedures</source>
+        <note priority="1" from="description">category - Blocks related to [http://en.wikipedia.org/wiki/Subroutine defining or using procedures/functions].</note>
+        <note priority="1" from="meaning">Apps.catProcedures</note>
+      </trans-unit>
+      <trans-unit id="5838195295317713027" datatype="html">
+        <source>See generated JavaScript code.</source>
+        <note priority="1" from="description">tooltip (pop-up help) for button; pressing the button causes a program in the JavaScript computer language to be displayed, based on the program created by the user.</note>
+        <note priority="1" from="meaning">Apps.codeTooltip</note>
+      </trans-unit>
+      <trans-unit id="6151363102275652962" datatype="html">
+        <source>move forward</source>
+        <note priority="1" from="description">block text - Imperative or infinitive of a verb for a playing a note.</note>
+        <note priority="1" from="meaning">Tunes.play</note>
+      </trans-unit>
+      <trans-unit id="6189808175540281396" datatype="html">
+        <source>Run Program</source>
+        <note priority="1" from="description">button label - Pressing the button runs the computer program the user has written.</note>
+        <note priority="1" from="meaning">Apps.runProgram</note>
+      </trans-unit>
+      <trans-unit id="6192625840582724866" datatype="html">
+        <source>Share your blocks with this link:\n\n%1</source>
+        <note priority="1" from="description">alert - After the user has pressed a button to save his/her program, this provides the URL (%1) to retrieve the program.  The characters '\n\n' indicate that a blank line will be displayed before the URL (in English).  Leave those in unless you move %1 to the beginning or middle of the text, in which case you should use your judgment about where blank lines would be most useful.\n\nParameters:\n* %1 - URL of saved program.</note>
+        <note priority="1" from="meaning">Apps.linkAlert</note>
+      </trans-unit>
+      <trans-unit id="6316320629891574281" datatype="html">
+        <source>Run the program defined by the blocks in the workspace.</source>
+        <note priority="1" from="description">tooltip - Pressing this button runs the computer program the user has written.</note>
+        <note priority="1" from="meaning">Apps.runTooltip</note>
+      </trans-unit>
+      <trans-unit id="6491926390857975299" datatype="html">
+        <source>There was a problem with the request.</source>
+        <note priority="1" from="description">alert - The URL is invalid or a server error occurred.  This message will be followed by technical information useful to engineers trying to understand the problem.</note>
+        <note priority="1" from="meaning">Apps.httpRequestError</note>
+      </trans-unit>
+      <trans-unit id="6533409555866489852" datatype="html">
+        <source>Reset</source>
+        <note priority="1" from="description">button label - Pressing the button causes the output of the program to be erased but does not delete the user's program).</note>
+        <note priority="1" from="meaning">Apps.resetProgram</note>
+      </trans-unit>
+      <trans-unit id="6634463376195072639" datatype="html">
+        <source>Congratulations! Are you ready to proceed to level %1?</source>
+        <note priority="1" from="description">alert - This is displayed when the user solves the tune, inviting them to precede to the next level of difficulty.\n\nParameters:\n* %1 - the number of the next level, which is always an integer greater than 1.</note>
+        <note priority="1" from="meaning">Tunes.nextLevel</note>
+      </trans-unit>
+      <trans-unit id="6650354588969822092" datatype="html">
+        <source>Blockly</source>
+        <note priority="1" from="description">The project name.  If readers of your language would know approximately how to pronounce 'Blockly', leave unchanged.  Otherwise, include a transliteration in parentheses, such as the Russian: 'Blockly (\u0411\u043bo\u043a\u043b\u0438)'.</note>
+        <note priority="1" from="meaning">Apps.blocklyMessage</note>
+      </trans-unit>
+      <trans-unit id="6682302477448017479" datatype="html">
+        <source>Reach the end of this path using only two blocks.  Use 'repeat' to run a block more than once.</source>
+        <note priority="1" from="description">callout - This is shown when the 'repeat' block is introduced.  The word 'path' refers to a path through a maze, and 'block' refers to a child's building block.</note>
+        <note priority="1" from="meaning">Maze.helpRepeat</note>
+      </trans-unit>
+      <trans-unit id="6726669612150574563" datatype="html">
+        <source>else</source>
+        <note priority="1" from="description">block text - Conjunction meaning 'otherwise', introducing commands to be performed if a previous condition was not true, as in 'if x\u003E3, do this, else do that'.  See [https://code.google.com/p/blockly/wiki/IfElse#If-Else_blocks].</note>
+        <note priority="1" from="meaning">Tunes.elseCode</note>
+      </trans-unit>
+      <trans-unit id="6834423977243440902" datatype="html">
+        <source>repeat until</source>
+        <note priority="1" from="description">block text - Imperative or infinitive of a verb to repeat the following commands.  The phrase is followed by the symbol denoting the end of the tune.\n\nSee also:\n* {lb}{lb}msg-blockly|Maze.helpRepeatMany{rb}{rb}.</note>
+        <note priority="1" from="meaning">Tunes.repeatUntil</note>
+      </trans-unit>
+      <trans-unit id="7135964206164849448" datatype="html">
+        <source>Can you solve this complicated maze?  Try following the left-hand wall.  Advanced programmers only!</source>
+        <note priority="1" from="description">callout - This advises the user to solve a maze by keeping his/her left hand in contact with the wall while proceding through it.  The final sentence is a warning that only advanced programmers should attempt this problem, as beginners tend to get frustrated.</note>
+        <note priority="1" from="meaning">Maze.helpWallFollow</note>
+      </trans-unit>
+      <trans-unit id="7201005307210794868" datatype="html">
+        <source>You have %2 blocks left.</source>
+        <note priority="1" from="description">warning - Only %2 more blocks may be used, where %2 is an integer greater than 1.\n\nSee also:\n* {msg-blockly|Maze.capacity1}</note>
+        <note priority="1" from="meaning">Tunesa.capacity2</note>
+      </trans-unit>
+      <trans-unit id="7292987728460683440" datatype="html">
+        <source>You have %0 blocks left.</source>
+        <note priority="1" from="description">warning - No more blocks may be added until some are removed.  Please include '%0' in the translated string.  It will be replaced with '0' and made bold.</note>
+        <note priority="1" from="meaning">Tunes.capacity0</note>
+      </trans-unit>
+      <trans-unit id="7314181232693154293" datatype="html">
+        <source>list</source>
+        <note priority="1" from="description">variable name - Default [https://code.google.com/p/blockly/wiki/Variables variable] representing a [https://code.google.com/p/blockly/wiki/Lists list].  This should be a single word, preferably short.</note>
+        <note priority="1" from="meaning">Apps.listVariable</note>
+      </trans-unit>
+      <trans-unit id="7469567262752207891" datatype="html">
+        <source>If there is a path in the specified direction, then do some actions.</source>
+        <note priority="1" from="description">tooltip - 'path' refers to a path through a maze.</note>
+        <note priority="1" from="meaning">Tunes.ifTooltip</note>
+      </trans-unit>
+      <trans-unit id="7880221162350996120" datatype="html">
+        <source>Lists</source>
+        <note priority="1" from="description">category - Blocks related to [https://code.google.com/p/blockly/wiki/Lists lists].</note>
+        <note priority="1" from="meaning">Apps.catLists</note>
+      </trans-unit>
+      <trans-unit id="8027439891619732350" datatype="html">
+        <source>do</source>
+        <note priority="1" from="description">block text - Imperative or infinitive of a verb preceding one or more commands to a person.  This is part of [https://code.google.com/p/blockly/wiki/Loops#repeat repeat] and [https://code.google.com/p/blockly/wiki/IfElse#If_blocks if] blocks.</note>
+        <note priority="1" from="meaning">Tunes.doCode</note>
+      </trans-unit>
+      <trans-unit id="8109604937581467227" datatype="html">
+        <source>Your program didn't solve the maze.  Press 'Reset' and try again.</source>
+        <note priority="1" from="description">callout - This is shown after the user has run a program that does not solve the maze.\n\n'Reset' refers to {lb}{lb}msg-blockly|Apps.resetProgram{rb}{rb}.</note>
+        <note priority="1" from="meaning">Maze.helpReset</note>
+      </trans-unit>
+      <trans-unit id="8504064665960111059" datatype="html">
+        <source>Math</source>
+        <note priority="1" from="description">category - Blocks related to mathematics.</note>
+        <note priority="1" from="meaning">Apps.catMath</note>
+      </trans-unit>
+      <trans-unit id="8514812131842527965" datatype="html">
+        <source>Loops</source>
+        <note priority="1" from="description">category - Blocks related to [http://en.wikipedia.org/wiki/Control_flow#Loops loops].</note>
+        <note priority="1" from="meaning">Apps.catLoops</note>
+      </trans-unit>
+      <trans-unit id="8605819299263106886" datatype="html">
+        <source>Cancel</source>
+        <note priority="1" from="description">Label on button for user to press when not wanting to proceed.\n{lb}{lb}Identical|Cancel{rb}{rb}</note>
+        <note priority="1" from="meaning">Apps.dialogCancel</note>
+      </trans-unit>
+      <trans-unit id="8678021904034212986" datatype="html">
+        <source>If-else blocks will do one thing or the other.</source>
+        <note priority="1" from="description">IBID</note>
+        <note priority="1" from="meaning">Maze.helpIfElse</note>
+      </trans-unit>
+      <trans-unit id="9151382257658567281" datatype="html">
+        <source>a visual programming environment</source>
+        <note priority="1" from="description">A short description of Blockly.</note>
+        <note priority="1" from="meaning">Apps.subtitle</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
