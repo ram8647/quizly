@@ -56,10 +56,10 @@
       <td>
         <h1>
           <span id="title">
-            <a href="../index.html">{msg meaning="Apps.blocklyMessage" desc="IBID"}App Inventor Play That Tune{/msg}</a>
+            <a href="../index.html">{msg meaning="Apps.blocklyMessage" desc="IBID"}Play That Tune{/msg}</a>
             {sp}:{sp}
             {msg meaning="Tune.tune" desc="title - Specifies that this is the '''Tune''' tutorial."}
-              Tune
+            Level 
             {/msg}
           </span>
           {sp}&nbsp;{sp}
@@ -76,29 +76,17 @@
             {/if}
           {/for}
           <a class="tab" href="?lang={$ij.lang}&level=6&skin={$ij.skin}">Create</a>
-<!--           <a class="package"  href="http://appinventor.cs.trincoll.edu/csp/hourofcode/builder/package.php?blocks=%3Cblock%3E%3C/block%3E&yail=(def%20null)">Test Loading</a> -->
         </h1>
       </td>
       <td class="farSide">
         <select id="languageMenu"></select>
         {sp}&nbsp;{sp} 
-        <button style="display:none; position:relative" id="packageButton" class="package" title="{msg meaning="Tune.packageTooltip" desc="tooltip - Pressing this button packages an App Inventor app and displays a QR code."}Packages the workspace into an Android app.{/msg}">
+        <button style="display:none; position:relative" id="packageButton" class="package" title="{msg meaning="Tune.packageTooltip" desc="tooltip - Pressing this button packages an Android app and displays a QR code."}Packages the workspace into an Android app.{/msg}">
           <img src="../../media/1x1.gif" class="stop icon21"> {msg meaning="Tune.packageTooltip" desc="IBID"}Package{/msg}
         </button>
-<!--         <button class="primary" id="packageButton">  -->
-<!--           <img src="../../media/1x1.gif">  -->
-<!--           <span>&#x25BE;</span>  -->
-<!--         </button>  -->
       </td>
     </tr>
   </table>
-
-<!--   <div id="pleaseWaitDialog">  -->
-<!--     <div>  -->
-<!--         <p>Please wait</p>  -->
-<!--         <img src="/ripplemobile/images/ajax-loader.gif" /> -->
-<!--     </div>  -->
-<!--   </div> -->
 
   <div id="visualization" >
     <img style="position:relative" src = "./media/screenshot-400.png">
@@ -169,7 +157,10 @@
       <div><img src="help_run.png" class="mirrorImg" height=27 width=141></div>
     </td></tr></table>
   </div>
+
   <div id="dialogIntroduceThePuzzle" class="dialogHiddenContent">
+    <div id="dialogIntroduceText" style="font-size: large; margin: 1em;"></div>
+    <img src="../../media/1x1.gif" id="pegSpin">
     <table><tr><td>
       {msg meaning="Tune.helpIntroducePuzzle" desc="callout - This introduces the puzzle tune."}Listen and watch: can you play this tune?.{/msg}
     </td><td rowspan=2>
@@ -177,7 +168,9 @@
     </td></tr><tr><td>
       <div><img src="help_run.png" class="mirrorImg" height=27 width=141></div>
     </td></tr></table>
+    <div id="dialogIntroduceButtons" class="farSide" style="padding: 1ex 3ex 0"></div>
   </div>
+
   <div id="dialogHelpReset" class="dialogHiddenContent">
     <table><tr><td>
       {{msg meaning="Tune.helpReset" desc="callout - This is shown after the user has run a program that does not solve the maze.\n\n'Reset' refers to {lb}{lb}msg-blockly|Apps.resetProgram{rb}{rb}."}}Your program didn't play the correct tune.  Press 'Reset' and try again.{{/msg}}
@@ -187,6 +180,7 @@
       <div><img src="help_run.png" class="mirrorImg" height=27 width=141></div>
     </td></tr></table>
   </div>
+
   <div id="dialogHelpRepeat" class="dialogHiddenContent">
     <table><tr><td>
       <img src="help_up.png">
@@ -196,6 +190,7 @@
       <img src="help.png">
     </td></tr></table>
   </div>
+
   <div id="dialogHelpCapacity" class="dialogHiddenContent">
     <table><tr><td>
       <img src="help.png">
@@ -203,6 +198,7 @@
       {msg meaning="Tune.helpCapacity" desc="callout - This is shown after the user has used all the blocks permitted on this level."}You have used up all the blocks for this level.  To create a new block, you first need to delete an existing block.{/msg}
     </td></tr></table>
   </div>
+
   <div id="dialogHelpRepeatMany" class="dialogHiddenContent">
     <table><tr><td>
       <img src="help_up.png">
@@ -212,6 +208,7 @@
       <img src="help.png">
     </td></tr></table>
   </div>
+
   <div id="dialogHelpSkins" class="dialogHiddenContent">
     <table><tr><td>
       <img src="help.png">
@@ -221,6 +218,7 @@
       <img src="help_up.png">
     </td></tr></table>
   </div>
+
   <div id="dialogHelpIf" class="dialogHiddenContent">
     <table><tr><td>
       <img src="help_up.png">
@@ -230,6 +228,7 @@
       <img src="help.png">
     </td></tr></table>
   </div>
+
   <div id="dialogHelpMenu" class="dialogHiddenContent">
     <table><tr><td>
       <img src="help_up.png">
@@ -239,6 +238,7 @@
       <img src="help.png">
     </td></tr></table>
   </div>
+
   <div id="dialogHelpIfElse" class="dialogHiddenContent">
     <table><tr><td>
       <img src="help_down.png">
@@ -248,6 +248,7 @@
       <img src="help.png">
     </td></tr></table>
   </div>
+
   <div id="dialogLastLevel" class="dialogHiddenContent">
     <table><tr><td>
       <img src="help.png">

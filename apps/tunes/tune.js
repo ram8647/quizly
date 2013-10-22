@@ -120,8 +120,6 @@ Tune.init = function() {
   Blockly.loadAudio_(['apps/tunes/3c.wav', 'apps/tunes/3c.wav'], 'noteC');
   Blockly.loadAudio_(['apps/tunes/3e.wav', 'apps/tunes/3e.wav'], 'noteE');
 
-  //  Blockly.JavaScript.INFINITE_LOOP_TRAP = '  BlocklyApps.checkTimeout(%1);\n';
-
   var blocklyDiv = document.getElementById('blockly');
   var visualization = document.getElementById('visualization');
   var onresize = function(e) {
@@ -141,8 +139,6 @@ Tune.init = function() {
   var defaultXml =
       '<xml>' +
       '<block type="button_click" x="69" y="143"><statement name="DO"><block type="tune_play_c"></block></statement></block>' +
-  //      '  <block type="tune_play_c" x="70" y="70"></block>' +
-  //      '  <block type="button_click" x="70" y="70"></block>' +
       '</xml>';
   BlocklyApps.loadBlocks(defaultXml);
 
@@ -176,12 +172,13 @@ Tune.init = function() {
         BlocklyApps.stopDialogKeyDown);
     BlocklyApps.startDialogKeyDown();
   } else {
+    // NOTE: Removing this delay; user has to dismiss instructions
     // All other levels get interactive help.  But wait 5 seconds for the
     // user to think a bit before they are told what to do.
-    window.setTimeout(function() {
-      Blockly.addChangeListener(function() {Tune.levelHelp()});
-      Tune.levelHelp();
-    }, 5000);
+    //    window.setTimeout(function() {
+    //      Blockly.addChangeListener(function() {Tune.levelHelp()});
+    //      Tune.levelHelp();
+    //    }, 5000);
   }
 
   // Lazy-load the syntax-highlighting.
@@ -221,12 +218,6 @@ Tune.levelHelp = function() {
     } else {
       var topBlocks = Blockly.mainWorkspace.getTopBlocks(true)
       if (topBlocks.length > 1) {
-///        var iframe = document.getElementById('iframeOneTopBlock');
-//         var xml = '<block type="maze_moveForward" x="10" y="10">' +
-//             '<next><block type="maze_moveForward"></block></next></block>';
-//         iframe.src = 'readonly.html' +
-//             '?lang=' + encodeURIComponent(BlocklyApps.LANG) +
-//             '&xml=' + encodeURIComponent(xml);
         content = document.getElementById('dialogHelpOneTopBlock');
         style = {width: '360px', top: '120px'};
         style[Blockly.RTL ? 'right' : 'left'] = '225px';
@@ -384,8 +375,31 @@ Tune.reset = function(first) {
    if (Tune.LEVEL < Tune.MAX_LEVEL) {
      var content = document.getElementById('dialogIntroduceThePuzzle');
      var style = {left: '400px', top: '400px'};
+
+     var redo = document.createElement('button');
+     var buttonDiv = document.getElementById('dialogIntroduceButtons');
+     buttonDiv.textContent = '';
+     redo.className = 'secondary';
+     redo.appendChild(document.createTextNode(BlocklyApps.getMsg('Tune_dialogRedo')));
+     redo.addEventListener('click', Tune.resetButtonClick, true);
+     redo.addEventListener('touchend', Tune.resetButtonClick, true);
+     buttonDiv.appendChild(redo);
+
+     var ok = document.createElement('button');
+     ok.appendChild(
+	 document.createTextNode(BlocklyApps.getMsg('dialogOk')));
+     ok.addEventListener('click', Tune.cancelReset, true);
+     ok.addEventListener('touchend', Tune.cancelReset, true);
+     buttonDiv.appendChild(ok);
+
+     // Show the IntroducePuzzle dialog
      BlocklyApps.showDialog(content, null, false, true, style,
-	  BlocklyApps.stopDialogKeyDown);
+	 function() {
+	   document.body.removeEventListener('keydown',
+	       Tune.congratulationsKeyDown_, true);
+	   });
+     document.body.addEventListener('keydown',
+	 Tune.congratulationsKeyDown_, true);
 
      for (var i=0; i < Tune.puzzles[Tune.LEVEL].length; i++) 
        Tune.puzzle.push(Tune.puzzles[Tune.LEVEL][i]);
@@ -468,11 +482,12 @@ Tune.resetButtonClick = function() {
   Blockly.mainWorkspace.traceOn(false);
   Tune.reset(false);
 
+  // Dispensing with this; user dismisses dialog
   // Show help dialog but wait 3 seconds
-  window.setTimeout(function() {
-    Blockly.addChangeListener(function() {Tune.levelHelp()});
-    Tune.levelHelp();
-  }, 3000);
+  //  window.setTimeout(function() {
+  //    Blockly.addChangeListener(function() {Tune.levelHelp()});
+  //    Tune.levelHelp();
+  //  }, 3000);
 };
 
 /**
@@ -777,18 +792,3 @@ Tune.nextLevel = function() {
       '&skin=' + Tune.SKIN_ID;
 };
 
-/**
- * If the user has executed too many actions, we're probably in an infinite
- * loop.  Sadly I wasn't able to solve the Halting Problem for this demo.
- * @param {?string} id ID of loop block to highlight if timeout is reached.
- * @throws {false} Throws an error to terminate the user's program.
- */
-Tune.checkTimeout = function(id) {
-//   if (Maze.ticks-- < 0) {
-//     if (id) {
-//       // Highlight an infinite loop on death.
-//       Maze.path.push(['loop', id]);
-//     }
-//     throw false;
-//   }
-};
