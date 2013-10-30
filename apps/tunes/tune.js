@@ -1,5 +1,5 @@
 /**
- * Quizly/apps/tune derived from Blockly/apps/maze
+ * Quizly/apps/tune derived and adapted from Blockly/apps/maze
  *
  * Copyright 2012 Google Inc.
  * Copyright 2013 Trinity College
@@ -21,6 +21,7 @@
 /**
  * @fileoverview JavaScript for Quizly's Tune application.
  * @author fraser@google.com (Neil Fraser)
+ * @author ram8648@gmail.com (Ralph Morelli)
  */
 'use strict';
 
@@ -28,6 +29,9 @@
  * Create a namespace for the application.
  */
 var Tune = {};
+
+
+var PACKAGE_URL = 'http://appinventor.cs.trincoll.edu/csp/tunebuilder/package.php';
 
 // Supported languages.
 //BlocklyApps.LANGUAGES = ['br', 'ca', 'cs', 'da', 'de', 'el', 'en',
@@ -40,13 +44,15 @@ BlocklyApps.LANG = BlocklyApps.getLang();
 document.write('<script type="text/javascript" src="generated/' +
                BlocklyApps.LANG + '.js"></script>\n');
 
-Tune.noteMap = { 'noteC': '3c.wav', 'noteE':'3e.wav','noteG':'3g.wav','noteA':'3a.wav'};
+Tune.noteMap = { 'noteC':'3c.wav', 'noteD':'3d.wav', 'noteE':'3e.wav','noteF':'3f.wav',
+                 'noteG':'3g.wav','noteA':'3a.wav', 'noteB':'3b.wav', 'noteCHigh':'3chigh.wav'};
 
 // The set of 10 puzzles
 Tune.puzzles = [ 
    [],                                    // 0. Dummy entry
    ['noteC', 'noteG'],                    // 1. 2 notes
-   ['noteA', 'noteC', 'noteE', 'noteG'],  // 2. My dog has fleas
+   //   ['noteA', 'noteC', 'noteE', 'noteG'],  // 2. My dog has fleas
+   ['noteC', 'noteD', 'noteE', 'noteF', 'noteG', 'noteA', 'noteB', 'noteCHigh'],  // 2. My dog has fleas
    ['noteC', 'noteC', 'noteC'],           // 3. Repeat 3 times (2 blocks)
                                          //   4. Repeat 4 times (3 blocks)
    ['noteC', 'noteE', 'noteC', 'noteE', 'noteC', 'noteE','noteG'],
@@ -115,10 +121,14 @@ Tune.init = function() {
        rtl: rtl,
        toolbox: toolbox,
        trashcan: true});
-  Blockly.loadAudio_(['apps/tunes/3a.wav', 'apps/tunes/3a.wav'], 'noteA');
-  Blockly.loadAudio_(['apps/tunes/3g.wav', 'apps/tunes/3g.wav'], 'noteG');
   Blockly.loadAudio_(['apps/tunes/3c.wav', 'apps/tunes/3c.wav'], 'noteC');
+  Blockly.loadAudio_(['apps/tunes/3d.wav', 'apps/tunes/3d.wav'], 'noteD');
   Blockly.loadAudio_(['apps/tunes/3e.wav', 'apps/tunes/3e.wav'], 'noteE');
+  Blockly.loadAudio_(['apps/tunes/3f.wav', 'apps/tunes/3f.wav'], 'noteF');
+  Blockly.loadAudio_(['apps/tunes/3g.wav', 'apps/tunes/3g.wav'], 'noteG');
+  Blockly.loadAudio_(['apps/tunes/3a.wav', 'apps/tunes/3a.wav'], 'noteA');
+  Blockly.loadAudio_(['apps/tunes/3b.wav', 'apps/tunes/3b.wav'], 'noteB');
+  Blockly.loadAudio_(['apps/tunes/3chigh.wav', 'apps/tunes/3chigh.wav'], 'noteCHigh');
 
   var blocklyDiv = document.getElementById('blockly');
   var visualization = document.getElementById('visualization');
@@ -247,7 +257,7 @@ Tune.levelHelp = function() {
         origin = document.getElementById('capacityBubble');
       } else {
         content = document.getElementById('dialogHelpRepeat');
-        style = {width: '360px', top: '320px'};
+        style = {width: '360px', top: '575px'};
         style[Blockly.RTL ? 'right' : 'left'] = '425px';
         origin = toolbar[3].getSvgRoot();
       }
@@ -282,7 +292,7 @@ Tune.levelHelp = function() {
       }
       if (showHelp) {
         content = document.getElementById('dialogHelpRepeatMany');
-        style = {width: '360px', top: '320px'};
+        style = {width: '360px', top: '575px'};
         style[Blockly.RTL ? 'right' : 'left'] = '425px';
         origin = toolbar[3].getSvgRoot();
       }
@@ -509,8 +519,9 @@ Tune.cancelReset = function() {
 
 /**
  * Packages into App Inventor code. There are two pieces of code that must be
- *  passed to the server. The first is the blocks. These will be inserted into 
- *  a global list named 'sounds'.  The second is the yail code corresponding to
+ *  passed to the server. The first is the blocks that define the global sounds 
+ *  variable, which is just the list of sounds the app plays. These will be inserted into 
+ *  a global list variable named 'sounds'.  The second is the yail code corresponding to
  *  that list. 
  *
  * The App Inventor app plays all the sounds in the 'sounds' list when its 
@@ -523,6 +534,7 @@ Tune.packageButtonClick = function() {
   Tune.notes = [];
   eval(code);
 
+  // Initialize the blocks for a global list declaration.
   var appinventorBlks = 
     '<block type="global_declaration" inline="false" x="320" y="-36">' +
     '\n <title name="NAME">sounds</title>' + 
@@ -530,9 +542,11 @@ Tune.packageButtonClick = function() {
     '\n  <block type="lists_create_with" inline="false">' +
     '\n    <mutation items="' + Tune.notes.length + '"></mutation>';
 
+  // Initialize a YAIL def of the sounds list.
   var yailCode = '(def sounds (call-yail-primitive make-yail-list (*list-for-runtime* ';  
   var yailAny = "'(";
     
+  // For each note in the tune, add appropriate blocks and YAIL code.
   for (var i=0; i < Tune.notes.length; i++)  {
     yailCode += '"' + Tune.noteMap[Tune.notes[i]] + '" ';
     yailAny += 'any ';
@@ -543,29 +557,46 @@ Tune.packageButtonClick = function() {
       '\n</block>' +
       '\n</value>';
   }
+
+  // Finish up the code snippets
   yailAny += ') ';
   yailCode += ') ';
   yailCode += yailAny;
   yailCode += '"make a list"))';
-
   appinventorBlks += '\n</block> \n</value> \n</block>';
 
   //  alert(appinventorBlks + ' ' + yailCode);
+  var packageBtn = document.getElementById('packageButton');
+  packageBtn.innerText = 'Packaging...';
   alert('Packaging your app will take a minute. Click Ok to start.');
 
-  var url = 'http://appinventor.cs.trincoll.edu/csp/hourofcode/builder/package.php';
-  url += '?blocks=' + appinventorBlks;
-  url += '&yail=' + yailCode;
-
-  var httpResponse = Tune.httpGet(url);
-  var popup = open("","QR Popup", "width=250, height=250, left=800,top=300,resizable=no");
-  popup.document.title="Scan your app";
-  var tt = popup.document.createElement("tt");
-  tt.style.fontSize="5px";
-  tt.innerHTML = httpResponse;
-
-   popup.document.body.appendChild(tt);
+  // Create an HTTP post request
+  var mypostrequest = new XMLHttpRequest();
+  
+  // Function to handle result of HTTP request
+  mypostrequest.onreadystatechange = function() {
+    if (mypostrequest.readyState == 4) {
+      if (mypostrequest.status==200 || window.location.href.indexOf("http")==-1) {
+	packageBtn.innerText = 'Package';
+	var popup = open("","QR Popup", "width=250, height=250, left=800,top=300,resizable=no");
+	popup.document.title="Scan your app";
+	var tt = popup.document.createElement("tt");
+	tt.style.fontSize="5px";
+	tt.innerHTML = mypostrequest.responseText;
+        popup.document.body.appendChild(tt);
+      }  else {
+        alert("An error has occured making the request")
+      }
+    }
+  };
+  
+  // Send the request to the server
+  var parameters="blocks=" + encodeURIComponent(appinventorBlks) + "&yail=" + encodeURIComponent(yailCode);
+  mypostrequest.open("POST", PACKAGE_URL, true);
+  mypostrequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  mypostrequest.send(parameters);
 };
+
 
 Tune.httpGet = function(theUrl) {
   var xmlHttp = null;

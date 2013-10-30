@@ -29,16 +29,29 @@
 
 // Extensions to Blockly's language.
 
-Blockly.Blocks['tune_play_a'] = {
+Blockly.Blocks['tune_play_c'] = {
   // Block for playing a note
   init: function() {
     this.setHelpUrl('http://code.google.com/p/blockly/wiki/Move');
     this.setColour(290);
     this.appendDummyInput()
-        .appendTitle(BlocklyApps.getMsg('Tune_playA'));
+        .appendTitle(BlocklyApps.getMsg('Tune_playC'));
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setTooltip(BlocklyApps.getMsg('Tune_playATooltip'));
+    this.setTooltip(BlocklyApps.getMsg('Tune_playCTooltip'));
+  }
+};
+
+Blockly.Blocks['tune_play_d'] = {
+  // Block for playing a note
+  init: function() {
+    this.setHelpUrl('http://code.google.com/p/blockly/wiki/Move');
+    this.setColour(290);
+    this.appendDummyInput()
+        .appendTitle(BlocklyApps.getMsg('Tune_playD'));
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip(BlocklyApps.getMsg('Tune_playDTooltip'));
   }
 };
 
@@ -55,16 +68,16 @@ Blockly.Blocks['tune_play_e'] = {
   }
 };
 
-Blockly.Blocks['tune_play_c'] = {
+Blockly.Blocks['tune_play_f'] = {
   // Block for playing a note
   init: function() {
     this.setHelpUrl('http://code.google.com/p/blockly/wiki/Move');
     this.setColour(290);
     this.appendDummyInput()
-        .appendTitle(BlocklyApps.getMsg('Tune_playC'));
+        .appendTitle(BlocklyApps.getMsg('Tune_playF'));
     this.setPreviousStatement(true);
     this.setNextStatement(true);
-    this.setTooltip(BlocklyApps.getMsg('Tune_playCTooltip'));
+    this.setTooltip(BlocklyApps.getMsg('Tune_playFooltip'));
   }
 };
 
@@ -81,6 +94,44 @@ Blockly.Blocks['tune_play_g'] = {
   }
 };
 
+Blockly.Blocks['tune_play_a'] = {
+  // Block for playing a note
+  init: function() {
+    this.setHelpUrl('http://code.google.com/p/blockly/wiki/Move');
+    this.setColour(290);
+    this.appendDummyInput()
+        .appendTitle(BlocklyApps.getMsg('Tune_playA'));
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip(BlocklyApps.getMsg('Tune_playATooltip'));
+  }
+};
+
+Blockly.Blocks['tune_play_b'] = {
+  // Block for playing a note
+  init: function() {
+    this.setHelpUrl('http://code.google.com/p/blockly/wiki/Move');
+    this.setColour(290);
+    this.appendDummyInput()
+        .appendTitle(BlocklyApps.getMsg('Tune_playB'));
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip(BlocklyApps.getMsg('Tune_playBTooltip'));
+  }
+};
+
+Blockly.Blocks['tune_play_c_high'] = {
+  // Block for playing a note
+  init: function() {
+    this.setHelpUrl('http://code.google.com/p/blockly/wiki/Move');
+    this.setColour(290);
+    this.appendDummyInput()
+        .appendTitle(BlocklyApps.getMsg('Tune_playCHigh'));
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip(BlocklyApps.getMsg('Tune_playCHighTooltip'));
+  }
+};
 
 Blockly.Blocks['tune_if'] = {
   // Block for 'if' conditional if there is a path.

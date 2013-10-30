@@ -27,22 +27,41 @@
  */
 'use strict';
 
+// Level of nesting for for loops
+Blockly.JavaScript.nestLevel = 0;
+
 // Extensions to Blockly's JavaScript generator.
 
-Blockly.JavaScript['tune_play_a'] = function(block) {
-  return "Tune.notes.push('noteA');\n";
+Blockly.JavaScript['tune_play_c'] = function(block) { 
+  return 'Tune.notes.push("noteC");\n';
+};
+
+Blockly.JavaScript['tune_play_d'] = function(block) { 
+  return 'Tune.notes.push("noteD");\n';
 };
 
 Blockly.JavaScript['tune_play_e'] = function(block) {
   return 'Tune.notes.push("noteE");\n';
 };
 
-Blockly.JavaScript['tune_play_c'] = function(block) { 
-  return 'Tune.notes.push("noteC");\n';
+Blockly.JavaScript['tune_play_f'] = function(block) {
+  return 'Tune.notes.push("noteF");\n';
 };
 
 Blockly.JavaScript['tune_play_g'] = function(block) {
   return 'Tune.notes.push("noteG");\n';
+};
+
+Blockly.JavaScript['tune_play_a'] = function(block) {
+  return "Tune.notes.push('noteA');\n";
+};
+
+Blockly.JavaScript['tune_play_b'] = function(block) {
+  return 'Tune.notes.push("noteB");\n';
+};
+
+Blockly.JavaScript['tune_play_c_high'] = function(block) {
+  return 'Tune.notes.push("noteCHigh");\n';
 };
 
 Blockly.JavaScript['tune_if'] = function(block) {
@@ -79,11 +98,14 @@ Blockly.JavaScript['tune_times'] = function(block) {
   // Generate JavaScript for do times loop
   var n = block.getTitleValue('N');
   var branch = Blockly.JavaScript.statementToCode(block, 'DO');
+  Blockly.JavaScript.nestLevel += 1;
+  var loopvar = 'i' +  Blockly.JavaScript.nestLevel;
+
   if (Blockly.JavaScript.INFINITE_LOOP_TRAP) {
     branch = Blockly.JavaScript.INFINITE_LOOP_TRAP.replace(/%1/g,
         '\'block_id_' + block.id + '\'') + branch;
   }
-  return 'for (var i=0; i < ' + n + '; i++) {\n' + branch + '}\n';
+  return 'for (var ' + loopvar + '=0; ' + loopvar + ' < ' + n + '; ' + loopvar + '++) {\n' + branch + '}\n';
 };
 
 Blockly.JavaScript['button_click'] = function(block) {
