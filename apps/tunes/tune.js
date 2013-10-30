@@ -380,6 +380,8 @@ Tune.saveToStorage = function() {
  * @param {boolean} first True if an opening animation is to be played.
  */
 Tune.reset = function(first) {
+   document.getElementById('runButton').style.display = 'inline';
+   document.getElementById('resetButton').style.display = 'none';
    clearInterval(Tune.notesTimer);
 
    if (Tune.LEVEL < Tune.MAX_LEVEL) {
@@ -424,6 +426,8 @@ Tune.reset = function(first) {
  */
 Tune.runButtonClick = function() {
   BlocklyApps.hideDialog(false);
+  document.getElementById('runButton').style.display = 'none';
+  document.getElementById('resetButton').style.display = 'inline';
 
   // Only allow a single top block on level 1.
   //  if (Tune.LEVEL == 1 && Blockly.mainWorkspace.getTopBlocks().length > 1) {
@@ -616,6 +620,11 @@ Tune.playNotes = function() {
   Tune.resetKeys();
   if (Tune.notes.length == 0) {
     clearInterval(Tune.notesTimer);
+
+    // Redisplay the PlayButton
+    document.getElementById('runButton').style.display = 'inline';
+    document.getElementById('resetButton').style.display = 'none';
+
     if (Tune.LEVEL < Tune.MAX_LEVEL) // We don't test at Max level
       Tune.testUsersTune();    
   }
