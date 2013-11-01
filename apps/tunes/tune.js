@@ -71,6 +71,10 @@ Tune.notes = [];           // The user's tune, destructed when played
 Tune.notesEval = [];       // Copy of the user's notes for testing
 Tune.notesTimer = null;    // Timer for playing the user's tune
 
+Tune.intervals = [];       // A stack of interval changes during the tune
+                           // Interval values are pushed onto the stack by 
+                           // set_interval and popped by if_interval
+
 Tune.TIMER_CYCLE = 50;     // The fixed rate at which the clock ticks
 Tune.FLASH_CYCLE = 100;    // The fixed rate at which keys flash visibly
 Tune.TIMER_SHORT = 250;    // Three fixed note-playing rates
@@ -656,7 +660,7 @@ Tune.playNotes = function() {
     // Some 'notes' are events like 'interval500' that set the interval
     Tune.note = Tune.notes.shift();
     console.log("Playing  " + Tune.note);
-    while (Tune.note.indexOf('interval') == 0) {
+    while (Tune.note && Tune.note.indexOf('interval') == 0) {
       var n = 1 * Tune.note.substr(8);      // Convert the last 3 characters to a number
       Tune.Timer_interval = n;
       Tune.note = Tune.notes.shift();
@@ -731,6 +735,7 @@ Tune.execute = function() {
   // 5. If the user's notes match the puzzle, congratulate else send regrets.
 
   Tune.notes = [];
+  Tune.intervals = [];
 
   // This pushes the user's notes on Tune.notes
   eval(code);
