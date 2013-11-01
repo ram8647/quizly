@@ -91,7 +91,8 @@ Blockly.JavaScript['tune_if'] = function(block) {
   var branch = Blockly.JavaScript.statementToCode(block, 'DO');
   var condition = interval ==  Tune.Timer_interval;
   //  var code = 'if (' + condition + '  /* Tune.Timer_interval == ' + interval + '*/) {\n' + branch + '}\n';
-  var code = 'if (Tune.Timer_interval == ' + interval + ') {\n' + branch + '}\n';
+  //  var code = 'if (Tune.Timer_interval == ' + interval + ') {\n' + branch + '}\n';
+  var code = 'if (Tune.intervals.shift() == ' +  interval + ') {\n' + branch + '}\n';
   return code;
 };
 
