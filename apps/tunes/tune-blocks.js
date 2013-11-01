@@ -29,6 +29,21 @@
 
 // Extensions to Blockly's language.
 
+Blockly.Blocks['set_interval'] = {
+  // Block for setting the interval between the notes
+  init: function() {
+    var CHOICES = [['short','short'],['medium','medium'],['long','long']];
+    this.setHelpUrl('http://code.google.com/p/blockly/wiki/Move');
+    this.setColour(50);
+    this.appendDummyInput()
+        .appendTitle(BlocklyApps.getMsg('Tune_setInterval'))
+        .appendTitle(new Blockly.FieldDropdown(CHOICES), 'S');
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip(BlocklyApps.getMsg('Tune_setIntervalTooltip'));
+  }
+};
+
 Blockly.Blocks['tune_play_c'] = {
   // Block for playing a note
   init: function() {
@@ -134,20 +149,13 @@ Blockly.Blocks['tune_play_c_high'] = {
 };
 
 Blockly.Blocks['tune_if'] = {
-  // Block for 'if' conditional if there is a path.
+  // Block for 'if' conditional if the interval is a certain value
   init: function() {
-//     var DIRECTIONS =
-//         [[BlocklyApps.getMsg('Tune_pathAhead'), 'isPathForward'],
-//          [BlocklyApps.getMsg('Tune_pathLeft'), 'isPathLeft'],
-//          [BlocklyApps.getMsg('Tune_pathRight'), 'isPathRight']];
-//     if (Tune.addArrows) {
-//       // Append arrows to direction messages.
-//       DIRECTIONS[1][0] += ' \u27F2';
-//       DIRECTIONS[2][0] += ' \u27F3';
-//     }
+    var CHOICES = [['short','short'],['medium','medium'],['long','long']];
     this.setColour(210);
-//     this.appendDummyInput()
-//         .appendTitle(new Blockly.FieldDropdown(DIRECTIONS), 'DIR');
+    this.appendDummyInput()
+        .appendTitle(BlocklyApps.getMsg('Tune_ifInterval'))
+        .appendTitle(new Blockly.FieldDropdown(CHOICES), 'INT');
     this.appendStatementInput('DO')
         .appendTitle(BlocklyApps.getMsg('Tune_doCode'));
     this.setTooltip(BlocklyApps.getMsg('Tune_ifTooltip'));
@@ -159,18 +167,11 @@ Blockly.Blocks['tune_if'] = {
 Blockly.Blocks['tune_ifElse'] = {
   // Block for 'if/else' conditional if there is a path.
   init: function() {
-    var DIRECTIONS =
-        [[BlocklyApps.getMsg('Tune_pathAhead'), 'isPathForward'],
-         [BlocklyApps.getMsg('Tune_pathLeft'), 'isPathLeft'],
-         [BlocklyApps.getMsg('Tune_pathRight'), 'isPathRight']];
-    if (Tune.addArrows) {
-      // Append arrows to direction messages.
-      DIRECTIONS[1][0] += ' \u27F2';
-      DIRECTIONS[2][0] += ' \u27F3';
-    }
+    var CHOICES = [['short','short'],['medium','medium'],['long','long']];
     this.setColour(210);
     this.appendDummyInput()
-        .appendTitle(new Blockly.FieldDropdown(DIRECTIONS), 'DIR');
+        .appendTitle(BlocklyApps.getMsg('Tune_ifInterval'))
+        .appendTitle(new Blockly.FieldDropdown(CHOICES), 'INT');
     this.appendStatementInput('DO')
         .appendTitle(BlocklyApps.getMsg('Tune_doCode'));
     this.appendStatementInput('ELSE')

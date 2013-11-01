@@ -24,12 +24,15 @@
     <span id="Tune_playA">{msg meaning="Tune.playA" desc="block text - Imperative or infinitive of a verb for a playing a note."}play note a{/msg}</span>
     <span id="Tune_playB">{msg meaning="Tune.playB" desc="block text - Imperative or infinitive of a verb for a playing a note."}play note b{/msg}</span>
     <span id="Tune_playCHigh">{msg meaning="Tune.playCHigh" desc="block text - Imperative or infinitive of a verb for a playing a note."}play note c high{/msg}</span>
+    <span id="Tune_setInterval">{msg meaning="Tune.setInterval" desc="block text - Imperative or infinitive for setting a variable."}set interval{/msg}</span>
+    <span id="Tune_ifInterval">{msg meaning="Tune.ifInterval" desc="block text - If statement"}if interval equals{/msg}</span>
     <span id="Tune_doCode">{msg meaning="Tune.doCode" desc="block text - Imperative or infinitive of a verb preceding one or more commands to a person.  This is part of [https://code.google.com/p/blockly/wiki/Loops#repeat repeat] and [https://code.google.com/p/blockly/wiki/IfElse#If_blocks if] blocks."}do{/msg}</span>
     <span id="Tune_elseCode">{msg meaning="Tune.elseCode" desc="block text - Conjunction meaning 'otherwise', introducing commands to be performed if a previous condition was not true, as in 'if x\u003E3, do this, else do that'.  See [https://code.google.com/p/blockly/wiki/IfElse#If-Else_blocks]."}else{/msg}</span>
     // This definition was copied up here ahead of when it is needed so that it is adjacent
     // to the previous definition.
     <span id="Tune_helpIfElse">{msg meaning="Tune.helpIfElse" desc="callout - This is shown when the 'if-else' block is introduced.  For 'if-else' concatenate the words for 'if' and 'else/otherwise'."}If-else blocks will do one thing or the other.{/msg}</span>
     <span id="Tune_repeatTimes">{{msg meaning="Tune.repeatTimes" desc="block text - Imperative or infinitive of a verb to repeat the following commands a certain number of times.  The phrase is followed by a slot containing a number.\n\nSee also:\n* {lb}{lb}msg-blockly|Maze.helpRepeatMany{rb}{rb}."}}repeat times{{/msg}}</span>
+    <span id="Tune_setIntervalTooltip">{msg meaning="Tune.setIntervalToolTip" desc="block text - Sets the interval between notes."}set the interval between notes{/msg}</span>
     <span id="Tune_playCTooltip">{msg meaning="Tune.playToolTip" desc="block text - Plays a note."}play the desigated note{/msg}</span>
     <span id="Tune_playDTooltip">{msg meaning="Tune.playToolTip" desc="block text - Plays a note."}play the desigated note{/msg}</span>
     <span id="Tune_playETooltip">{msg meaning="Tune.playToolTip" desc="block text - Plays a note."}play the desigated note{/msg}</span>
@@ -289,6 +292,11 @@
     <block type="tune_play_c_high"></block>
     {if $ij.level > 2}
       <block type="tune_times"></block>
+      {if $ij.level > 4}
+        <block type="set_interval"></block>
+        <block type="tune_if"></block>
+         <block type="tune_ifElse"></block>
+      {/if}
       {if $ij.level > 6}
         <block type="tune_if"></block>
       {/if}
