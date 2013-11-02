@@ -32,7 +32,9 @@
 Blockly.Blocks['set_interval'] = {
   // Block for setting the interval between the notes
   init: function() {
-    var CHOICES = [['short','short'],['medium','medium'],['long','long']];
+    var CHOICES = [[Tune.TIMER_INTERVAL_SHORT,Tune.TIMER_INTERVAL_SHORT],
+                   [Tune.TIMER_INTERVAL_MEDIUM,Tune.TIMER_INTERVAL_MEDIUM],
+                   [Tune.TIMER_INTERVAL_LONG,Tune.TIMER_INTERVAL_LONG]];
     this.setHelpUrl('http://code.google.com/p/blockly/wiki/Move');
     this.setColour(50);
     this.appendDummyInput()
@@ -151,7 +153,9 @@ Blockly.Blocks['tune_play_c_high'] = {
 Blockly.Blocks['tune_if'] = {
   // Block for 'if' conditional if the interval is a certain value
   init: function() {
-    var CHOICES = [['short','short'],['medium','medium'],['long','long']];
+    var CHOICES = [[Tune.TIMER_INTERVAL_SHORT,Tune.TIMER_INTERVAL_SHORT],
+                   [Tune.TIMER_INTERVAL_MEDIUM,Tune.TIMER_INTERVAL_MEDIUM],
+                   [Tune.TIMER_INTERVAL_LONG,Tune.TIMER_INTERVAL_LONG]];
     this.setColour(210);
     this.appendDummyInput()
         .appendTitle(BlocklyApps.getMsg('Tune_ifInterval'))

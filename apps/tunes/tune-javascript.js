@@ -35,19 +35,19 @@ Blockly.JavaScript.nestLevel = 0;
 // A side effect block
 Blockly.JavaScript['set_interval'] = function(block) { 
   var s = block.getTitleValue('S');
-  var n = 'interval';
-  var m = 500;
-  if (s == 'short') {
-    n = 'interval250';
-    m = 250;    
+  var n = '';
+  var m = Tune.TIMER_MEDIUM;
+  if (s == Tune.TIMER_INTERVAL_SHORT) {
+    n = Tune.TIMER_INTERVAL_SHORT;
+    m = Tune.TIMER_SHORT;    
   }
-  else if (s == 'long') {
-    n = 'interval750';
-    m = 750;    
+  else if (s == Tune.TIMER_INTERVAL_LONG) {
+    n = Tune.TIMER_INTERVAL_LONG;
+    m = Tune.TIMER_LONG;    
   }
   else  {
-    n = 'interval500';
-    m = 500;    
+    n = Tune.TIMER_INTERVAL_MEDIUM;
+    m = Tune.TIMER_MEDIUM;    
   }
   //  Tune.Timer_interval = m;   // Side effect
   return 'Tune.intervals.push(' + m + ');\nTune.notes.push("' + n + '");\n';
@@ -90,8 +90,6 @@ Blockly.JavaScript['tune_if'] = function(block) {
   var interval = Tune.IntervalMap[block.getTitleValue('INT')];
   var branch = Blockly.JavaScript.statementToCode(block, 'DO');
   var condition = interval ==  Tune.Timer_interval;
-  //  var code = 'if (' + condition + '  /* Tune.Timer_interval == ' + interval + '*/) {\n' + branch + '}\n';
-  //  var code = 'if (Tune.Timer_interval == ' + interval + ') {\n' + branch + '}\n';
   var code = 'if (Tune.intervals.shift() == ' +  interval + ') {\n' + branch + '}\n';
   return code;
 };
@@ -104,8 +102,6 @@ Blockly.JavaScript['tune_ifElse'] = function(block) {
   var condition = interval ==  Tune.Timer_interval;
   var interval_state = Tune.intervals.shift();
 
-  //  var code = 'if (' + condition + ' /* Tune.Timer_interval == ' + interval + '*/) {\n' + branch0 +
-  //  var code = 'if (Tune.Timer_interval == ' +  interval + ') {\n' + branch0 +
   var code = 'if (Tune.intervals.shift() == ' +  interval + ') {\n' + branch0 +
              '} else {\n' + branch1 + '}\n';
   return code;

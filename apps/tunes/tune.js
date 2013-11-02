@@ -44,9 +44,6 @@ BlocklyApps.LANG = BlocklyApps.getLang();
 document.write('<script type="text/javascript" src="generated/' +
                BlocklyApps.LANG + '.js"></script>\n');
 
-Tune.noteMap = { 'noteC':'3c.wav', 'noteD':'3d.wav', 'noteE':'3e.wav','noteF':'3f.wav',
-                 'noteG':'3g.wav','noteA':'3a.wav', 'noteB':'3b.wav', 'noteCHigh':'3chigh.wav'};
-
 // The set of 10 puzzles
 Tune.puzzles = [ 
    [],                                    // 0. Dummy entry
@@ -78,12 +75,21 @@ Tune.intervals = [];       // A stack of interval changes during the tune
 Tune.TIMER_CYCLE = 50;     // The fixed rate at which the clock ticks
 Tune.FLASH_CYCLE = 100;    // The fixed rate at which keys flash visibly
 Tune.TIMER_SHORT = 250;    // Three fixed note-playing rates
+Tune.TIMER_INTERVAL_SHORT = 'short';
 Tune.TIMER_LONG = 750;
+Tune.TIMER_INTERVAL_LONG = 'long';
 Tune.TIMER_MEDIUM = 500;
+Tune.TIMER_INTERVAL_MEDIUM = 'medium';
 
-Tune.Timer_interval = 500; // The variable rate at which notes are played
+Tune.Timer_interval = Tune.TIMER_MEDIUM; // The variable rate at which notes are played
 Tune.Time = 0;             // Time advances by TIMER_CYCLE on each Timer cycle.
                            // Note events occur on Time % Timer_interval
+
+Tune.noteMap = { 'noteC':'3c.wav', 'noteD':'3d.wav', 'noteE':'3e.wav','noteF':'3f.wav',
+                 'noteG':'3g.wav','noteA':'3a.wav', 'noteB':'3b.wav', 'noteCHigh':'3chigh.wav', 
+                 'medium':Tune.TIMER_INTERVAL_MEDIUM, 
+                 'short':Tune.TIMER_INTERVAL_SHORT, 
+                 'long':Tune.TIMER_INTERVAL_LONG};
 
 Tune.IntervalMap = { 'short': Tune.TIMER_SHORT, 'medium': Tune.TIMER_MEDIUM, 'long': Tune.TIMER_LONG};
 
@@ -657,11 +663,11 @@ Tune.playNotes = function() {
     }
 
     // Otherwise: Get the next note and deal with it
-    // Some 'notes' are events like 'interval500' that set the interval
+    // Some 'notes' are events like 'short' that set the interval
     Tune.note = Tune.notes.shift();
     console.log("Playing  " + Tune.note);
-    while (Tune.note && Tune.note.indexOf('interval') == 0) {
-      var n = 1 * Tune.note.substr(8);      // Convert the last 3 characters to a number
+    while (Tune.note && Tune.note.indexOf('note') == -1) {
+      var n = Tune.IntervalMap[Tune.note];
       Tune.Timer_interval = n;
       Tune.note = Tune.notes.shift();
     }
@@ -699,8 +705,8 @@ Tune.playPuzzle = function() {
     console.log("Playing  " + Tune.note);
 
     // Some 'notes' are events like 'interval500' to set the interval
-    while (Tune.note.indexOf('interval') == 0) {
-      var n = 1 * Tune.note.substr(8);      // Convert the last 3 characters to a number
+    while (Tune.note.indexOf('note') == -1) {
+      var n = Tune.IntervalMap[Tune.note];
       Tune.Timer_interval = n;
       Tune.note = Tune.notes.shift();
     }
@@ -715,7 +721,7 @@ Tune.playPuzzle = function() {
 
 Tune.resetKeys = function() {
   console.log("Resetting key " + Tune.note);
-  if (Tune.note && Tune.note.indexOf('interval') == -1) {
+  if (Tune.note && Tune.note.indexOf('note') == 0) {
     var dot = document.getElementById(Tune.note);
     dot.style.display='none';
   }
