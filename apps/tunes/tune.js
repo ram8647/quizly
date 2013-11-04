@@ -72,18 +72,24 @@ Tune.intervals = [];       // A stack of interval changes during the tune
                            // Interval values are pushed onto the stack by 
                            // set_interval and popped by if_interval
 
+Tune.IS_PUZZLE_TUNE = false; // Used as arguments to Tune.playNotes()
+Tune.IS_USER_TUNE = true;
+
 Tune.TIMER_CYCLE = 50;     // The fixed rate at which the clock ticks
 Tune.FLASH_CYCLE = 100;    // The fixed rate at which keys flash visibly
-Tune.TIMER_SHORT = 250;    // Three fixed note-playing rates
+Tune.TIMER_SHORT = 300;    // Three fixed note-playing rates
 Tune.TIMER_INTERVAL_SHORT = 'short';
-Tune.TIMER_LONG = 750;
+Tune.TIMER_LONG = 900;
 Tune.TIMER_INTERVAL_LONG = 'long';
-Tune.TIMER_MEDIUM = 500;
+Tune.TIMER_MEDIUM = 600;
 Tune.TIMER_INTERVAL_MEDIUM = 'medium';
 
 Tune.Timer_interval = Tune.TIMER_MEDIUM; // The variable rate at which notes are played
 Tune.Time = 0;             // Time advances by TIMER_CYCLE on each Timer cycle.
-                           // Note events occur on Time % Timer_interval
+                          // Note events occur when Time -  TimePrevNote == Timer_interval
+Tune.TimePrevNote = 0;    // Time the previous note was played.
+Tune.LastNotePlayed;
+
 
 Tune.noteMap = { 'noteC':'3c.wav', 'noteD':'3d.wav', 'noteE':'3e.wav','noteF':'3f.wav',
                  'noteG':'3g.wav','noteA':'3a.wav', 'noteB':'3b.wav', 'noteCHigh':'3chigh.wav', 
@@ -436,8 +442,14 @@ Tune.reset = function(first) {
 
      for (var i=0; i < Tune.puzzles[Tune.LEVEL].length; i++) 
        Tune.puzzle.push(Tune.puzzles[Tune.LEVEL][i]);
-     Tune.puzzleTimer = setInterval(function() {
-	 Tune.playPuzzle();
+
+
+     Tune.Time = 0;
+     Tune.TimePrevNote = 0;
+
+     // Play the puzzle for the user
+     Tune.notesTimer = setInterval(function() {
+	 Tune.playNotes(Tune.puzzle, Tune.IS_PUZZLE_TUNE);
        }, Tune.TIMER_CYCLE);
    }
 };
@@ -449,6 +461,9 @@ Tune.runButtonClick = function() {
   BlocklyApps.hideDialog(false);
   document.getElementById('runButton').style.display = 'none';
   document.getElementById('resetButton').style.display = 'inline';
+
+  Tune.Time = 0;
+  Tune.TimePrevNote = 0;
 
   // Only allow a single top block on level 1.
   //  if (Tune.LEVEL == 1 && Blockly.mainWorkspace.getTopBlocks().length > 1) {
@@ -632,97 +647,66 @@ Tune.httpGet = function(theUrl) {
   return xmlHttp.responseText;
 }
 
-
 /**
  *  Plays the next note from the Tune.notes array.
+ *  @param notesArray an array of notes either Tune.notes or Tune.puzzle
+ *  @param isUserTuen a boolean indicating user's tune or puzzle tune
  */
-Tune.playNotes = function() {
-  console.log("Play notes " + Tune.notes);
+Tune.playNotes = function(notesArray, isUserTune) {
   Tune.Time += Tune.TIMER_CYCLE;   // Update the time
+  console.log("Play notes " + Tune.Time + " " + notesArray );
 
   // Flash the keys
-  if (Tune.Time % Tune.FLASH_CYCLE == 0) 
+  if (Tune.Time % Tune.FLASH_CYCLE == 0 || notesArray.length == 0) 
     Tune.resetKeys();
 
-  // Note events happen on Timer_interval boundaries
-  if (Tune.Time % Tune.Timer_interval == 0) {
+  // If the notes are all played, stop the clock and exit
+  if (notesArray.length == 0) {
+    clearInterval(Tune.notesTimer);
 
-    // If the notes are all played, stop the clock and exit
-    if (Tune.notes.length == 0) {
-      clearInterval(Tune.notesTimer);
-
-      // Redisplay the PlayButton
+    // Redisplay the PlayButton if userTune
+    if (isUserTune) {
       document.getElementById('runButton').style.display = 'inline';
       document.getElementById('resetButton').style.display = 'none';
-
-      // Test the user's tune if we're not at MAX_LEVEL
-      if (Tune.LEVEL < Tune.MAX_LEVEL) 
-	Tune.testUsersTune();    
-
-      return;  // We're done
     }
 
-    // Otherwise: Get the next note and deal with it
-    // Some 'notes' are events like 'short' that set the interval
-    Tune.note = Tune.notes.shift();
-    console.log("Playing  " + Tune.note);
-    while (Tune.note && Tune.note.indexOf('note') == -1) {
-      var n = Tune.IntervalMap[Tune.note];
-      Tune.Timer_interval = n;
-      Tune.note = Tune.notes.shift();
-    }
+    // Test the user's tune if we're not at MAX_LEVEL, if userTune
+    if (isUserTune && Tune.LEVEL < Tune.MAX_LEVEL) 
+      Tune.testUsersTune();    
 
-    // Play the note
-    Blockly.playAudio(Tune.note);
-    var dot = document.getElementById(Tune.note);
-    if (dot)
-      dot.style.display='inline';
+    return;  // We're done
+  }
+
+  Tune.note = notesArray[0];   // Check the next note
+
+  // Is it an 'interval' setter, consume the note and set the interval timer
+  if (Tune.note.indexOf('note') == -1) {
+    notesArray.shift();      
+    Tune.Timer_interval = Tune.IntervalMap[Tune.note];
+  } else {
+
+    // If the interval is right, consume and play the note and set TimePrevNote
+    if (Tune.Time - Tune.TimePrevNote ==  Tune.Timer_interval) {
+      notesArray.shift();
+      Tune.TimePrevNote = Tune.Time;
+      console.log("Playing  " + Tune.note);
+      Blockly.playAudio(Tune.note);   
+      Tune.LastNotePlayed = Tune.note;
+      var dot = document.getElementById(Tune.note);
+      if (dot)
+        dot.style.display='inline';
+    }
   }
 };
 
 /**
- *  Plays the next note from the Tune.notes array.
+ *  Resets the red dot of the note that has just been played..
+ *   Some 'notes' are 'interval' setters and so are skipped.
  */
-Tune.playPuzzle = function() {
-  console.log("Play puzzle " + Tune.puzzle);
-  Tune.Time += Tune.TIMER_CYCLE;   // Update the time
-
-  // Flash the keys
-  if (Tune.Time % Tune.FLASH_CYCLE == 0) 
-    Tune.resetKeys();
-
-  // Note events happen on Timer_interval boundaries
-  if (Tune.Time % Tune.Timer_interval == 0) {
-   
-    // If no more notes, stop the clock and exit
-    if (Tune.puzzle.length == 0) {
-      clearInterval(Tune.puzzleTimer);
-      return;
-    }
-
-    // Otherwise play a note
-    Tune.note = Tune.puzzle.shift();
-    console.log("Playing  " + Tune.note);
-
-    // Some 'notes' are events like 'interval500' to set the interval
-    while (Tune.note.indexOf('note') == -1) {
-      var n = Tune.IntervalMap[Tune.note];
-      Tune.Timer_interval = n;
-      Tune.note = Tune.notes.shift();
-    }
-
-    // Play the note
-    Blockly.playAudio(Tune.note);
-    var dot = document.getElementById(Tune.note);
-    if (dot)
-      dot.style.display='inline';
-  }
-};
-
 Tune.resetKeys = function() {
   console.log("Resetting key " + Tune.note);
-  if (Tune.note && Tune.note.indexOf('note') == 0) {
-    var dot = document.getElementById(Tune.note);
+  if (Tune.LastNotePlayed && Tune.LastNotePlayed.indexOf('note') == 0) {
+    var dot = document.getElementById(Tune.LastNotePlayed);
     dot.style.display='none';
   }
 };
@@ -749,9 +733,9 @@ Tune.execute = function() {
   // A clone is used for testing because Tune.notes is destructed
   Tune.notesEval = Tune.notes.slice(0);  
 
-  // Play the user's tune and test whether they are correct
+  // Play the user's tune and test whether it is correct
   Tune.notesTimer = setInterval(function() {
-      Tune.playNotes();
+      Tune.playNotes(Tune.notes, Tune.IS_USER_TUNE);
      }, Tune.TIMER_CYCLE);
 };
 
