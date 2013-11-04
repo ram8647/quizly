@@ -16,6 +16,7 @@
   {call apps.messages /}
   <div style="display: none">
     <span id="Tune_dialogRedo">{msg meaning="Tune.dialogRedo" desc="block text - Let the user rehear the puzzle tune."}Play the puzzle tune again{/msg}</span>
+    <span id="Tune_playNote">{msg meaning="Tune.playNote" desc="block text - Imperative or infinitive of a verb for a playing a note."}play note{/msg}</span>
     <span id="Tune_playC">{msg meaning="Tune.playC" desc="block text - Imperative or infinitive of a verb for a playing a note."}play note C{/msg}</span>
     <span id="Tune_playD">{msg meaning="Tune.playD" desc="block text - Imperative or infinitive of a verb for a playing a note."}play note D{/msg}</span>
     <span id="Tune_playE">{msg meaning="Tune.playE" desc="block text - Imperative or infinitive of a verb for a playing a note."}play note E{/msg}</span>
@@ -33,6 +34,7 @@
     <span id="Tune_helpIfElse">{msg meaning="Tune.helpIfElse" desc="callout - This is shown when the 'if-else' block is introduced.  For 'if-else' concatenate the words for 'if' and 'else/otherwise'."}If-else blocks will do one thing or the other.{/msg}</span>
     <span id="Tune_repeatTimes">{{msg meaning="Tune.repeatTimes" desc="block text - Imperative or infinitive of a verb to repeat the following commands a certain number of times.  The phrase is followed by a slot containing a number.\n\nSee also:\n* {lb}{lb}msg-blockly|Maze.helpRepeatMany{rb}{rb}."}}repeat times{{/msg}}</span>
     <span id="Tune_setIntervalTooltip">{msg meaning="Tune.setIntervalToolTip" desc="block text - Sets the interval between notes."}set the interval between notes{/msg}</span>
+    <span id="Tune_playNoteTooltip">{msg meaning="Tune.playToolTip" desc="block text - Plays the selected note."}play the note from the dropdown menu{/msg}</span>
     <span id="Tune_playCTooltip">{msg meaning="Tune.playToolTip" desc="block text - Plays a note."}play the desigated note{/msg}</span>
     <span id="Tune_playDTooltip">{msg meaning="Tune.playToolTip" desc="block text - Plays a note."}play the desigated note{/msg}</span>
     <span id="Tune_playETooltip">{msg meaning="Tune.playToolTip" desc="block text - Plays a note."}play the desigated note{/msg}</span>
@@ -282,27 +284,32 @@
  */
 {template .toolbox}
   <xml id="toolbox" style="display: none;">
-    <block type="tune_play_c"></block>
-    <block type="tune_play_d"></block>
-    <block type="tune_play_e"></block>
-    <block type="tune_play_f"></block>
-    <block type="tune_play_g"></block>
-    <block type="tune_play_a"></block>
-    <block type="tune_play_b"></block>
-    <block type="tune_play_c_high"></block>
+    {if $ij.level <= 5}
+      <block type="tune_play_c"></block>
+      <block type="tune_play_d"></block>
+      <block type="tune_play_e"></block>
+      <block type="tune_play_f"></block>
+      <block type="tune_play_g"></block>
+      <block type="tune_play_a"></block>
+      <block type="tune_play_b"></block>
+      <block type="tune_play_c_high"></block>
+    {/if}
     {if $ij.level > 2}
       <block type="tune_times"></block>
-      {if $ij.level > 4}
-        <block type="set_interval"></block>
-        <block type="tune_if"></block>
-         <block type="tune_ifElse"></block>
-      {/if}
-      {if $ij.level > 6}
-        <block type="tune_if"></block>
-      {/if}
-      {if $ij.level > 8}
-         <block type="tune_ifElse"></block>
-      {/if}
+    {/if}
+    {if $ij.level > 4}
+      <block type="set_interval"></block>
+      <block type="tune_if"></block>
+      <block type="tune_ifElse"></block>
+    {/if}
+    {if $ij.level > 5}
+      <block type="tune_play_note"></block>
+    {/if}
+    {if $ij.level > 6}
+      <block type="tune_if"></block>
+    {/if}
+    {if $ij.level > 8}
+       <block type="tune_ifElse"></block>
     {/if}
   </xml>
 {/template}

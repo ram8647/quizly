@@ -46,6 +46,24 @@ Blockly.Blocks['set_interval'] = {
   }
 };
 
+// Generic note player block with drop down menu
+Blockly.Blocks['tune_play_note'] = {
+  // Block for playing a selected note
+  init: function() {
+    var CHOICES = [['C','noteC'], ['D', 'noteD'], ['E', 'noteE'], ['F', 'noteF'],
+                   ['G', 'noteG'], ['A', 'noteA'],['B', 'noteB'], ['C high', 'noteCHigh']];
+    this.setHelpUrl('http://code.google.com/p/blockly/wiki/Move');
+    this.setColour(290);
+    this.appendDummyInput()
+        .appendTitle(BlocklyApps.getMsg('Tune_playNote'))
+        .appendTitle(new Blockly.FieldDropdown(CHOICES), 'NOTE')
+        ;
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip(BlocklyApps.getMsg('Tune_playNoteTooltip'));
+  }
+};
+
 Blockly.Blocks['tune_play_c'] = {
   // Block for playing a note
   init: function() {

@@ -53,9 +53,16 @@ Blockly.JavaScript['set_interval'] = function(block) {
   return 'Tune.intervals.push(' + m + ');\nTune.notes.push("' + n + '");\n';
 };
 
+// Generic note block
+Blockly.JavaScript['tune_play_note'] = function(block) { 
+  var note = block.getTitleValue('NOTE');
+  return 'Tune.notes.push("' + note + '");\n';
+};
+
 Blockly.JavaScript['tune_play_c'] = function(block) { 
   return 'Tune.notes.push("noteC");\n';
 };
+
 
 Blockly.JavaScript['tune_play_d'] = function(block) { 
   return 'Tune.notes.push("noteD");\n';
