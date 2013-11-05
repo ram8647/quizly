@@ -44,7 +44,7 @@
     <span id="Tune_playBTooltip">{msg meaning="Tune.playToolTip" desc="block text - Plays a note."}play the desigated note{/msg}</span>
     <span id="Tune_playCHighTooltip">{msg meaning="Tune.playToolTip" desc="block text - Plays a note."}play{/msg}</span>
     <span id="Tune_ifTooltip">{msg meaning="Tune.ifTooltip" desc="tooltip - 'path' refers to a path through a maze."}If something is true, then do some actions.{/msg}</span>
-    <span id="Tune_ifelseTooltip">{msg meaning="Tune.ifelseTooltip" desc="tooltip - 'path' refers to a path through a maze."}If something is true, then do the first block of actions.  Otherwise, do the second block of actions.{/msg}</span>
+    <span id="Tune_ifelseTooltip">{msg meaning="Tune.ifelseTooltip" desc="tooltip - 'interval' refers to the time interval between notes."}If the interval is as specified, then do the first block of actions.  Otherwise, do the second block of actions.{/msg}</span>
     <span id="Tune_whileTooltip">{msg meaning="Tune.whileTooltip" desc="tooltip - Repeat the enclosed commands until the tune has been successfully completed (the end point reached)."}Repeat the enclosed actions until the tune is completed.{/msg}</span>
     <span id="Tune_repeatTimesTooltip">{msg meaning="Tune.repeatTimesTooltip" desc="tooltip - Repeat the enclosed commands the designated number of times."}Repeat the enclosed actions the designated number of times.{/msg}</span>
     <span id="Tune_packageTooltip">{msg meaning="Tune.packageTooltip" desc="tooltip - 'package' refers to an Android APK file"}Package the workspace as an app.{/msg}</span>
@@ -76,7 +76,7 @@
             {/msg}
           </span>
           {sp}&nbsp;{sp}
-          {for $i in range(1, 6)}
+          {for $i in range(1, 10)}
             {sp}
             {if $i == $ij.level}
               <span class="tab" id="selected">{$i}</span>
@@ -88,7 +88,7 @@
               {/if}
             {/if}
           {/for}
-          <a class="tab" href="?lang={$ij.lang}&level=6&skin={$ij.skin}">Create</a>
+          <a class="tab" href="?lang={$ij.lang}&level=10&skin={$ij.skin}">Create</a>
         </h1>
       </td>
       <td class="farSide">
@@ -208,6 +208,36 @@
     </td></tr></table>
   </div>
 
+  <div id="dialogHelpGenericNote" class="dialogHiddenContent">
+    <table><tr><td>
+      <img src="help_up.png">
+    </td><td>
+      {msg meaning="Tune.helpGenericNote" desc="callout - This is shown when the 'play_note' block is introduced.  A 'block' refers to a child's building block."}Look! All note blocks are combined into a single 'play note' block with a drop down menu to select a specific note.{/msg}
+    </td><td>
+      <img src="help.png">
+    </td></tr></table>
+  </div>
+
+  <div id="dialogHelpNestedRepeat" class="dialogHiddenContent">
+    <table><tr><td>
+      <img src="help_up.png">
+    </td><td>
+      {msg meaning="Tune.helpNestedRepeat" desc="callout - This is shown when the 'play_note' block is introduced.  A 'block' refers to a child's building block."}To code this tune, you'll have to put repeat blocks inside of another repeat block.{/msg}
+    </td><td>
+      <img src="help.png">
+    </td></tr></table>
+  </div>
+
+  <div id="dialogHelpInterval" class="dialogHiddenContent">
+    <table><tr><td>
+      <img src="help_up.png">
+    </td><td>
+      {msg meaning="Tune.helpInterval" desc="callout - This is shown when the 'set_interval' block is introduced.  A 'block' refers to a child's building block."}To vary the speed of the notes you can use this block to set the interval between notes to 'short', 'medium', or 'long'. By default the interval is 'medium'.{/msg}
+    </td><td>
+      <img src="help.png">
+    </td></tr></table>
+  </div>
+
   <div id="dialogHelpCapacity" class="dialogHiddenContent">
     <table><tr><td>
       <img src="help.png">
@@ -240,7 +270,7 @@
     <table><tr><td>
       <img src="help_up.png">
     </td><td>
-      {msg meaning="Tune.helpIf" desc="callout - This is shown when the 'if' block is introduced.  An example of an 'if' block is: 'if there is a path to the left, turn left'."}An 'if' block will do something only if the condition is true.  Try turning left if there is a path to the left.{/msg}
+      {msg meaning="Tune.helpIf" desc="callout - This is shown when the 'if' block is introduced.  An example of an 'if' block is: 'if the interval is short, play some notes'."}An 'if' block will do something only if the interval between notes is short (or medium or long).  Try playing some notes fast and some slow during during a loop.{/msg}
     </td><td>
       <img src="help.png">
     </td></tr></table>
@@ -258,9 +288,9 @@
 
   <div id="dialogHelpIfElse" class="dialogHiddenContent">
     <table><tr><td>
-      <img src="help_down.png">
+      <img src="help_up.png">
     </td><td>
-      {msg meaning="Tune.helpIfElse" desc="IBID"}If-else blocks will do one thing or the other.{/msg}
+      {msg meaning="Tune.helpIfElse" desc="IBID"}An if-else block will do one thing or the other depending on whether the interval selected in the dropdown equals the current interval between notes. Try using it to alternate between different sets of notes in a loop. You'll have to change the interval during the loop.{/msg}
     </td><td>
       <img src="help.png">
     </td></tr></table>
@@ -270,7 +300,7 @@
     <table><tr><td>
       <img src="help.png">
     </td><td>&nbsp;</td><td>
-      {msg meaning="Tune.helpLastLevel" desc="callout - Make your own tune."}Great job! You've finished all the puzzles. Now try making your own tune. You can package it as an app for your Android device.{/msg}
+      {msg meaning="Tune.helpLastLevel" desc="callout - Make your own tune."}Great job! You've finished all the puzzles. Now try coding your own tune. When you're done you can package it as an app for your Android device.{/msg}
       {call apps.ok /}
     </td></tr></table>
   </div>
@@ -294,22 +324,18 @@
       <block type="tune_play_b"></block>
       <block type="tune_play_c_high"></block>
     {/if}
-    {if $ij.level > 2}
+    {if $ij.level > 2 and $ij.level <= 5}
       <block type="tune_times"></block>
-    {/if}
-    {if $ij.level > 4}
-      <block type="set_interval"></block>
-      <block type="tune_if"></block>
-      <block type="tune_ifElse"></block>
     {/if}
     {if $ij.level > 5}
       <block type="tune_play_note"></block>
+      <block type="tune_times"></block>
     {/if}
-    {if $ij.level > 6}
-      <block type="tune_if"></block>
+    {if $ij.level > 7}
+      <block type="set_interval"></block>
     {/if}
     {if $ij.level > 8}
-       <block type="tune_ifElse"></block>
+      <block type="tune_ifElse"></block>
     {/if}
   </xml>
 {/template}

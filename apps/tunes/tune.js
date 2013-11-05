@@ -45,21 +45,27 @@ document.write('<script type="text/javascript" src="generated/' +
                BlocklyApps.LANG + '.js"></script>\n');
 
 // The set of 10 puzzles
+Tune.MAX_LEVEL = 10;
 Tune.puzzles = [ 
    [],                                    // 0. Dummy entry
    ['noteC', 'noteG'],                    // 1. 2 notes
-   //   ['noteA', 'noteC', 'noteE', 'noteG'],  // 2. My dog has fleas
-   ['noteC', 'noteD', 'noteE', 'noteF', 'noteG', 'noteA', 'noteB', 'noteCHigh'],  // 2. My dog has fleas
+   ['noteA', 'noteC', 'noteE', 'noteG'],  // 2. My dog has fleas
    ['noteC', 'noteC', 'noteC'],           // 3. Repeat 3 times (2 blocks)
-                                         //   4. Repeat 4 times (3 blocks)
+                                          //   4. Repeat 4 times (3 blocks)
    ['noteC', 'noteE', 'noteC', 'noteE', 'noteC', 'noteE','noteG'],
-                                         // 5. 6 blocks, 3 repeats
-   ['noteC', 'noteG', 'noteE', 'noteG', 'noteE', 'noteG', 'noteE', 'noteG', 'noteE', 'noteC'],
-   //   ['noteC', 'noteE', 'noteG'],  // 6.  C chord
-   //   ['noteC', 'noteE', 'noteG'],  // 6. C chord
-   //   ['noteC', 'noteE', 'noteG'],  // 7. C chord
-   //   ['noteC', 'noteE', 'noteG'],  // 8. C chord
-   //   ['noteC', 'noteE', 'noteG'],  // 9. C chord
+                                          // 5. 6 blocks, 3 repeats
+   ['noteC', 'noteG', 'noteE', 'noteG', 'noteE', 'noteG', 'noteE', 'noteG', 'noteE', 'noteC'], 
+                                          // 6. Two repeat loops in succession
+   ['noteC', 'noteE', 'noteE','noteC', 'noteE', 'noteE','noteCHigh','noteG', 'noteG','noteCHigh','noteG', 'noteG'],  
+                                          // 7. Same as 6 except repeated twice -- nested repeats
+   ['noteC', 'noteE', 'noteE','noteC', 'noteE', 'noteE','noteCHigh','noteG', 'noteG','noteCHigh','noteG', 'noteG',
+    'noteC', 'noteE', 'noteE','noteC', 'noteE', 'noteE','noteCHigh','noteG', 'noteG','noteCHigh','noteG', 'noteG'],  
+                                         // 8. Same as 7 with interval changes included
+   ['noteC', 'noteE', 'noteE','noteC', 'noteE', 'noteE','noteCHigh','noteG', 'noteG','noteCHigh','noteG', 'noteG',
+    'short', 'noteC', 'noteE', 'noteE','noteC', 'noteE', 'noteE','noteCHigh','noteG', 'noteG','noteCHigh','noteG', 'noteG'],  
+                                         // 9.  Uses if/else to alternate C-E-G slow then fast in a loop.               
+   ["noteC", "noteE", "noteG", "short", "noteC", "noteE", "noteG", "medium", "noteC", "noteE", "noteG", "short", "noteC", "noteE", "noteG", "medium", "noteC"],
+
    [],  // 10. Top level -- make your own tune and package it.
   ]; 
 Tune.puzzle = [];          // The current puzzle tune, destructed when played
@@ -100,10 +106,9 @@ Tune.noteMap = { 'noteC':'3c.wav', 'noteD':'3d.wav', 'noteE':'3e.wav','noteF':'3
 Tune.IntervalMap = { 'short': Tune.TIMER_SHORT, 'medium': Tune.TIMER_MEDIUM, 'long': Tune.TIMER_LONG};
 
 // Get the current level from the Url
-Tune.MAX_LEVEL = 6;
 Tune.LEVEL = BlocklyApps.getNumberParamFromUrl('level', 1, Tune.MAX_LEVEL);
 Tune.MAX_BLOCKS = [undefined, // Level 0.
-    Infinity, Infinity, 3, 5, 6, 20, 6, 11, 8, 11][Tune.LEVEL];
+    Infinity, Infinity, 3, 5, 6, 9, 10, 11, 9, 21][Tune.LEVEL];
 /**
  * Outcomes of playing the user's tune -- does it match the puzzle tune
  */
@@ -173,10 +178,24 @@ Tune.init = function() {
   onresize();
   Blockly.fireUiEvent(window, 'resize');
 
-  var defaultXml =
-      '<xml>' +
-      '<block type="button_click" x="69" y="143"><statement name="DO"><block type="tune_play_c"></block></statement></block>' +
-      '</xml>';
+  var defaultXml = '';
+  if (Tune.LEVEL < 6) {
+    defaultXml =  '<xml>' +
+	'<block type="button_click" x="69" y="143"><statement name="DO"><block type="tune_play_c"></block></statement></block>' +
+	'</xml>';
+  } else if (Tune.LEVEL < 9) {
+    defaultXml =  '<xml>' +
+	'<block type="button_click" x="69" y="143"><statement name="DO"><block type="tune_play_note"></block></statement></block>' +
+	'</xml>';
+  } else if (Tune.LEVEL == 9) {
+    defaultXml =  '<xml>' +
+	'<block type="button_click" x="69" y="143"><statement name="DO"><block type="tune_times"><title name="N">2</title></block></statement></block>' +
+	'</xml>';
+  } else {
+    defaultXml =  '<xml>' +
+	'<block type="button_click" x="69" y="143"><statement name="DO"></statement></block>' +
+	'</xml>';
+  }
   BlocklyApps.loadBlocks(defaultXml);
 
   Tune.reset(true);   // Presents the puzzle
@@ -324,65 +343,37 @@ Tune.levelHelp = function() {
         origin = toolbar[3].getSvgRoot();
       }
     }
-  } else if (Tune.LEVEL == 5) {
-//     if (Tune.SKIN_ID == 0 && !Tune.showPegmanMenu.activatedOnce) {
-//       content = document.getElementById('dialogHelpSkins');
-//       style = {width: '360px', top: '60px'};
-//       style[Blockly.RTL ? 'left' : 'right'] = '20px';
-//       origin = document.getElementById('pegmanButton');
-//     }
   } else if (Tune.LEVEL == 6) {
-//     if (userBlocks.indexOf('maze_if') == -1) {
-//       content = document.getElementById('dialogHelpIf');
-//       style = {width: '360px', top: '400px'};
-//       style[Blockly.RTL ? 'right' : 'left'] = '425px';
-//       origin = toolbar[4].getSvgRoot();
-//     }
-  } else if (Tune.LEVEL == 7) {
-    if (!Tune.levelHelp.initialized7_) {
-      // Create fake dropdown.
-      var span = document.createElement('span');
-      span.className = 'helpMenuFake';
-      var options =
-          [BlocklyApps.getMsg('Tune_pathAhead'),
-           BlocklyApps.getMsg('Tune_pathLeft'),
-           BlocklyApps.getMsg('Tune_pathRight')];
-      var prefix = Blockly.commonWordPrefix(options);
-      var suffix = Blockly.commonWordSuffix(options);
-      if (suffix) {
-        var option = options[0].slice(prefix, -suffix);
-      } else {
-        var option = options[0].substring(prefix);
-      }
-      span.textContent = option + ' \u25BE';
-      // Inject fake dropdown into message.
-      var container = document.getElementById('helpMenuText');
-      var msg = container.textContent;
-      container.textContent = '';
-      var parts = msg.split(/%\d/);
-      for (var i = 0; i < parts.length; i++) {
-        container.appendChild(document.createTextNode(parts[i]));
-        if (i != parts.length - 1) {
-          container.appendChild(span.cloneNode(true));
-        }
-      }
-      Tune.levelHelp.initialized7_ = true;
-    }
-    if (userBlocks.indexOf('maze_if') == -1 ||
-        userBlocks.indexOf('isPathForward') != -1) {
-      content = document.getElementById('dialogHelpMenu');
-      style = {width: '360px', top: '400px'};
+    if (userBlocks.indexOf('play_note') == -1) {
+      content = document.getElementById('dialogHelpGenericNote');
+      style = {width: '370px', top: '120px'};
       style[Blockly.RTL ? 'right' : 'left'] = '425px';
-      origin = toolbar[4].getSvgRoot();
+      origin = toolbar[1].getSvgRoot();
+    }
+  } else if (Tune.LEVEL == 7) {
+    if (userBlocks.indexOf('tune_times') == -1) {
+      content = document.getElementById('dialogHelpNestedRepeat');
+      style = {width: '370px', top: '220px'};
+      style[Blockly.RTL ? 'right' : 'left'] = '425px';
+      origin = toolbar[1].getSvgRoot();
+    }
+  } else if (Tune.LEVEL == 8) {
+    if (userBlocks.indexOf('set_interval') == -1) {
+      content = document.getElementById('dialogHelpInterval');
+      style = {width: '370px', top: '250px'};
+      style[Blockly.RTL ? 'right' : 'left'] = '425px';
+      origin = toolbar[1].getSvgRoot();
     }
   } else if (Tune.LEVEL == 9) {
-    if (userBlocks.indexOf('maze_ifElse') == -1) {
-      content = document.getElementById('dialogHelpIfElse');
-      style = {width: '360px', top: '305px'};
-      style[Blockly.RTL ? 'right' : 'left'] = '425px';
-      origin = toolbar[5].getSvgRoot();
-    }
+     if (userBlocks.indexOf('tune_if') == -1) {
+       content = document.getElementById('dialogHelpIfElse');
+       //       content = document.getElementById('dialogHelpIf');
+       style = {width: '360px', top: '375px'};
+       style[Blockly.RTL ? 'right' : 'left'] = '425px';
+       origin = toolbar[3].getSvgRoot();
+     }
   }
+
   if (content) {
     if (content.parentNode != document.getElementById('dialog')) {
       BlocklyApps.showDialog(content, origin, true, false, style, null);
@@ -407,8 +398,13 @@ Tune.saveToStorage = function() {
  * @param {boolean} first True if an opening animation is to be played.
  */
 Tune.reset = function(first) {
+  if (Tune.LEVEL != Tune.MAX_LEVEL) {
+   document.getElementById('runButton').style.display = 'none';
+   document.getElementById('resetButton').style.display = 'inline';
+  } else {
    document.getElementById('runButton').style.display = 'inline';
    document.getElementById('resetButton').style.display = 'none';
+  }
    clearInterval(Tune.notesTimer);
 
    if (Tune.LEVEL < Tune.MAX_LEVEL) {
@@ -420,15 +416,12 @@ Tune.reset = function(first) {
      buttonDiv.textContent = '';
      redo.className = 'secondary';
      redo.appendChild(document.createTextNode(BlocklyApps.getMsg('Tune_dialogRedo')));
-     redo.addEventListener('click', Tune.resetButtonClick, true);
-     redo.addEventListener('touchend', Tune.resetButtonClick, true);
      buttonDiv.appendChild(redo);
 
      var ok = document.createElement('button');
+     ok.className = 'ok';
      ok.appendChild(
 	 document.createTextNode(BlocklyApps.getMsg('dialogOk')));
-     ok.addEventListener('click', Tune.cancelReset, true);
-     ok.addEventListener('touchend', Tune.cancelReset, true);
      buttonDiv.appendChild(ok);
 
      // Show the IntroducePuzzle dialog
@@ -443,9 +436,9 @@ Tune.reset = function(first) {
      for (var i=0; i < Tune.puzzles[Tune.LEVEL].length; i++) 
        Tune.puzzle.push(Tune.puzzles[Tune.LEVEL][i]);
 
-
      Tune.Time = 0;
      Tune.TimePrevNote = 0;
+     Tune.Timer_interval = Tune.TIMER_MEDIUM;
 
      // Play the puzzle for the user
      Tune.notesTimer = setInterval(function() {
@@ -534,11 +527,20 @@ Tune.resetButtonClick = function() {
 
   // Dispensing with this; user dismisses dialog
   // Show help dialog but wait 3 seconds
-  //  window.setTimeout(function() {
-  //    Blockly.addChangeListener(function() {Tune.levelHelp()});
-  //    Tune.levelHelp();
-  //  }, 3000);
+//   window.setTimeout(function() {
+//     Blockly.addChangeListener(function() {Tune.levelHelp()});
+//     Tune.levelHelp();
+//   }, 2000);
 };
+
+Tune.okButtonClicked = function() {
+  BlocklyApps.hideDialog();
+  window.setTimeout(function() {
+    Blockly.addChangeListener(function() {Tune.levelHelp()});
+    Tune.levelHelp();
+  }, 2000);
+};
+
 
 /**
  * Called from the regrets dialog to cancel the reset
@@ -664,11 +666,15 @@ Tune.playNotes = function(notesArray, isUserTune) {
   if (notesArray.length == 0) {
     clearInterval(Tune.notesTimer);
 
-    // Redisplay the PlayButton if userTune
-    if (isUserTune) {
-      document.getElementById('runButton').style.display = 'inline';
-      document.getElementById('resetButton').style.display = 'none';
-    }
+    // Redisplay the PlayButton and enable dialog buttons
+    document.getElementById('runButton').style.display = 'inline';
+    document.getElementById('resetButton').style.display = 'none';
+    var okBtn = document.getElementById('dialogIntroduceButtons').getElementsByClassName('ok')[0];
+    var redoBtn = document.getElementById('dialogIntroduceButtons').getElementsByClassName('secondary')[0];
+    redoBtn.addEventListener('click', Tune.resetButtonClick, true);
+    redoBtn.addEventListener('touchend', Tune.resetButtonClick, true);
+    okBtn.addEventListener('click', Tune.okButtonClicked, true);
+    okBtn.addEventListener('touchend', Tune.okButtonClicked, true);
 
     // Test the user's tune if we're not at MAX_LEVEL, if userTune
     if (isUserTune && Tune.LEVEL < Tune.MAX_LEVEL) 
@@ -716,7 +722,6 @@ Tune.resetKeys = function() {
  */
 Tune.execute = function() {
   var code = Blockly.JavaScript.workspaceToCode();
-  //  Tune.result = Tune.ResultType.UNSET;
 
   // 1. Eval the user's code. This will push notes onto Tune.notes.
   // 2. Clone the notes on Tune.notes.  
@@ -726,6 +731,8 @@ Tune.execute = function() {
 
   Tune.notes = [];
   Tune.intervals = [];
+
+  Tune.Timer_interval = Tune.TIMER_MEDIUM;
 
   // This pushes the user's notes on Tune.notes
   eval(code);
@@ -744,14 +751,15 @@ Tune.execute = function() {
  *  of the puzzle
  */
 Tune.testUsersTune = function() {
-  var result = true;
+  var result = Tune.notesEval.length == Tune.puzzles[Tune.LEVEL].length;
    
-  for (var i=0; i < Tune.puzzles[Tune.LEVEL].length; i++)  {
-    if (Tune.notesEval[i] != Tune.puzzles[Tune.LEVEL][i]) {
-      result =  false;
-      break;
+  if (result) 
+    for (var i=0; i < Tune.puzzles[Tune.LEVEL].length; i++)  {
+      if (Tune.notesEval[i] != Tune.puzzles[Tune.LEVEL][i]) {
+	result =  false;
+	break;
+      }
     }
-  }
 
   if (result == true) {
     Tune.congratulations();
@@ -839,8 +847,9 @@ Tune.regrets = function() {
   var ok = document.createElement('button');
   ok.appendChild(
       document.createTextNode(BlocklyApps.getMsg('dialogOk')));
-  //  ok.addEventListener('click', BlocklyApps.hideDialog, true);
-  //  ok.addEventListener('touchend', BlocklyApps.hideDialog, true);
+  ok.addEventListener('click', BlocklyApps.hideDialog, true);
+  ok.addEventListener('touchend', BlocklyApps.hideDialog, true);
+  ok.className = 'ok';
   ok.addEventListener('click', Tune.cancelReset, true);
   ok.addEventListener('touchend', Tune.cancelReset, true);
   buttonDiv.appendChild(ok);
