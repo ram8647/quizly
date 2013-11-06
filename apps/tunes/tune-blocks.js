@@ -51,7 +51,8 @@ Blockly.Blocks['tune_play_note'] = {
   // Block for playing a selected note
   init: function() {
     var CHOICES = [['C','noteC'], ['D', 'noteD'], ['E', 'noteE'], ['F', 'noteF'],
-                   ['G', 'noteG'], ['A', 'noteA'],['B', 'noteB'], ['C high', 'noteCHigh']];
+                   ['G', 'noteG'], ['A', 'noteA'],['B', 'noteB'], ['C high', 'noteCHigh'], 
+                   ['Rest', 'noteNone']];
     this.setHelpUrl('http://code.google.com/p/blockly/wiki/Move');
     this.setColour(290);
     this.appendDummyInput()

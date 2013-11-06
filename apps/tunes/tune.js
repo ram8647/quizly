@@ -669,16 +669,22 @@ Tune.playNotes = function(notesArray, isUserTune) {
     // Redisplay the PlayButton and enable dialog buttons
     document.getElementById('runButton').style.display = 'inline';
     document.getElementById('resetButton').style.display = 'none';
-    var okBtn = document.getElementById('dialogIntroduceButtons').getElementsByClassName('ok')[0];
-    var redoBtn = document.getElementById('dialogIntroduceButtons').getElementsByClassName('secondary')[0];
-    redoBtn.addEventListener('click', Tune.resetButtonClick, true);
-    redoBtn.addEventListener('touchend', Tune.resetButtonClick, true);
-    okBtn.addEventListener('click', Tune.okButtonClicked, true);
-    okBtn.addEventListener('touchend', Tune.okButtonClicked, true);
 
     // Test the user's tune if we're not at MAX_LEVEL, if userTune
-    if (isUserTune && Tune.LEVEL < Tune.MAX_LEVEL) 
+    if (isUserTune && Tune.LEVEL < Tune.MAX_LEVEL)  {
+      var okBtn = document.getElementById('dialogIntroduceButtons').getElementsByClassName('ok')[0];
+      var redoBtn = document.getElementById('dialogIntroduceButtons').getElementsByClassName('secondary')[0];
+      if (redoBtn) {
+	redoBtn.addEventListener('click', Tune.resetButtonClick, true);
+	redoBtn.addEventListener('touchend', Tune.resetButtonClick, true);
+      }
+      if (okBtn) {
+	okBtn.addEventListener('click', Tune.okButtonClicked, true);
+	okBtn.addEventListener('touchend', Tune.okButtonClicked, true);
+      }
+
       Tune.testUsersTune();    
+    }
 
     return;  // We're done
   }
@@ -696,11 +702,13 @@ Tune.playNotes = function(notesArray, isUserTune) {
       notesArray.shift();
       Tune.TimePrevNote = Tune.Time;
       console.log("Playing  " + Tune.note);
-      Blockly.playAudio(Tune.note);   
       Tune.LastNotePlayed = Tune.note;
-      var dot = document.getElementById(Tune.note);
-      if (dot)
-        dot.style.display='inline';
+      if (Tune.note.indexOf('noteNone') == -1) {
+        Blockly.playAudio(Tune.note);   
+        var dot = document.getElementById(Tune.note);
+        if (dot)
+          dot.style.display='inline';
+      }
     }
   }
 };
@@ -711,7 +719,8 @@ Tune.playNotes = function(notesArray, isUserTune) {
  */
 Tune.resetKeys = function() {
   console.log("Resetting key " + Tune.note);
-  if (Tune.LastNotePlayed && Tune.LastNotePlayed.indexOf('note') == 0) {
+  if (Tune.LastNotePlayed && Tune.LastNotePlayed.indexOf('note') == 0 
+      && Tune.LastNotePlayed.indexOf('noteNone') == -1) {
     var dot = document.getElementById(Tune.LastNotePlayed);
     dot.style.display='none';
   }
