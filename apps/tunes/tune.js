@@ -74,10 +74,6 @@ Tune.notes = [];           // The user's tune, destructed when played
 Tune.notesEval = [];       // Copy of the user's notes for testing
 Tune.notesTimer = null;    // Timer for playing the user's tune
 
-Tune.intervals = [];       // A stack of interval changes during the tune
-                           // Interval values are pushed onto the stack by 
-                           // set_interval and popped by if_interval
-
 Tune.IS_PUZZLE_TUNE = false; // Used as arguments to Tune.playNotes()
 Tune.IS_USER_TUNE = true;
 
@@ -90,7 +86,13 @@ Tune.TIMER_INTERVAL_LONG = 'long';
 Tune.TIMER_MEDIUM = 600;
 Tune.TIMER_INTERVAL_MEDIUM = 'medium';
 
-Tune.Timer_interval = Tune.TIMER_MEDIUM; // The variable rate at which notes are played
+Tune.Timer_interval = Tune.TIMER_MEDIUM;    // The variable rate at which notes are played
+
+// Interval used while interpreting Javascript code.
+// Intervals are assigned by set_interval and tested by if/else_interval.
+Tune.Codegen_interval = Tune.TIMER_MEDIUM;  
+                         
+
 Tune.Time = 0;             // Time advances by TIMER_CYCLE on each Timer cycle.
                           // Note events occur when Time -  TimePrevNote == Timer_interval
 Tune.TimePrevNote = 0;    // Time the previous note was played.
@@ -101,7 +103,8 @@ Tune.noteMap = { 'noteC':'3c.wav', 'noteD':'3d.wav', 'noteE':'3e.wav','noteF':'3
                  'noteG':'3g.wav','noteA':'3a.wav', 'noteB':'3b.wav', 'noteCHigh':'3chigh.wav', 
                  'medium':Tune.TIMER_INTERVAL_MEDIUM, 
                  'short':Tune.TIMER_INTERVAL_SHORT, 
-                 'long':Tune.TIMER_INTERVAL_LONG};
+                 'long':Tune.TIMER_INTERVAL_LONG, 
+                 'noteRest':'3rest.wav'};
 
 Tune.IntervalMap = { 'short': Tune.TIMER_SHORT, 'medium': Tune.TIMER_MEDIUM, 'long': Tune.TIMER_LONG};
 
@@ -441,8 +444,8 @@ Tune.reset = function(first) {
      Tune.Timer_interval = Tune.TIMER_MEDIUM;
 
      // Play the puzzle for the user
-     Tune.notesTimer = setInterval(function() {
-	 Tune.playNotes(Tune.puzzle, Tune.IS_PUZZLE_TUNE);
+     Tune.notesTimer = setInterval(function() {	
+ Tune.playNotes(Tune.puzzle, Tune.IS_PUZZLE_TUNE);
        }, Tune.TIMER_CYCLE);
    }
 };
@@ -703,7 +706,7 @@ Tune.playNotes = function(notesArray, isUserTune) {
       Tune.TimePrevNote = Tune.Time;
       console.log("Playing  " + Tune.note);
       Tune.LastNotePlayed = Tune.note;
-      if (Tune.note.indexOf('noteNone') == -1) {
+      if (Tune.note.indexOf('noteRest') == -1) {
         Blockly.playAudio(Tune.note);   
         var dot = document.getElementById(Tune.note);
         if (dot)
@@ -720,7 +723,7 @@ Tune.playNotes = function(notesArray, isUserTune) {
 Tune.resetKeys = function() {
   console.log("Resetting key " + Tune.note);
   if (Tune.LastNotePlayed && Tune.LastNotePlayed.indexOf('note') == 0 
-      && Tune.LastNotePlayed.indexOf('noteNone') == -1) {
+      && Tune.LastNotePlayed.indexOf('noteRest') == -1) {
     var dot = document.getElementById(Tune.LastNotePlayed);
     dot.style.display='none';
   }
@@ -739,8 +742,7 @@ Tune.execute = function() {
   // 5. If the user's notes match the puzzle, congratulate else send regrets.
 
   Tune.notes = [];
-  Tune.intervals = [];
-
+  Tune.Codegen_interval = Tune.TIMER_MEDIUM;
   Tune.Timer_interval = Tune.TIMER_MEDIUM;
 
   // This pushes the user's notes on Tune.notes

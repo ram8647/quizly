@@ -49,7 +49,8 @@ Blockly.JavaScript['set_interval'] = function(block) {
     n = Tune.TIMER_INTERVAL_MEDIUM;
     m = Tune.TIMER_MEDIUM;    
   }
-  return 'Tune.intervals.push(' + m + ');\nTune.notes.push("' + n + '");\n';
+  ;
+  return 'Tune.Codegen_interval = ' + m + ';\nTune.notes.push("' + n + '");\n';
 };
 
 // Generic note block
@@ -95,12 +96,8 @@ Blockly.JavaScript['tune_if'] = function(block) {
   // Generate JavaScript for 'if' conditional if interval value
   var interval = Tune.IntervalMap[block.getTitleValue('INT')];
   var branch = Blockly.JavaScript.statementToCode(block, 'DO');
-  var condition = interval ==  Tune.Timer_interval;
 
-  // NOTE: The reason for the || clause is that the if block can be used even when the user has not
-  //  placed any set_interval blocks into the code.  In that case, the Timer_interval must be 'medium'.
-  //  So the if or if/else test should only be true if they are testing 'if interval medium'
-  var code = 'if (Tune.intervals.shift() == ' +  interval + ' || (Tune.intervals.length == 0 && Tune.Timer_interval == ' + interval + ')) {\n' + branch + '}\n';
+  var code = 'if (Tune.Codegen_interval == ' +  interval + ') {\n' + branch + '}\n';
   return code;
 };
 
@@ -109,13 +106,8 @@ Blockly.JavaScript['tune_ifElse'] = function(block) {
   var interval = Tune.IntervalMap[block.getTitleValue('INT')];
   var branch0 = Blockly.JavaScript.statementToCode(block, 'DO');
   var branch1 = Blockly.JavaScript.statementToCode(block, 'ELSE');
-  var condition = interval ==  Tune.Timer_interval;
-  var interval_state = Tune.intervals.shift();
 
-  // NOTE: The reason for the || clause is that the if block can be used even when the user has not
-  //  placed any set_interval blocks into the code.  In that case, the Timer_interval must be 'medium'.
-  //  So the if or if/else test should only be true if they are testing 'if interval medium'
-  var code = 'if (Tune.intervals.shift() == ' +  interval + ' || (Tune.intervals.length == 0 && Tune.Timer_interval == ' + interval + ')) {\n' + branch0 + 
+  var code = 'if (Tune.Codegen_interval == ' +  interval + ') {\n' + branch0 + 
              '} else {\n' + branch1 + '}\n';
   return code;
 };
