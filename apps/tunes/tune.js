@@ -577,6 +577,8 @@ Tune.cancelReset = function() {
 Tune.packageButtonClick = function() {
   var code = Blockly.JavaScript.workspaceToCode();
   Tune.notes = [];
+  Tune.Codegen_interval = Tune.TIMER_MEDIUM;
+  Tune.Timer_interval = Tune.TIMER_MEDIUM;
   eval(code);
 
   // Initialize the blocks for a global list declaration.
