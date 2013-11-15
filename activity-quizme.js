@@ -35,9 +35,9 @@ function giveHint() {
   Blockly.hello('hint');
 }
 
-function giveNewQuestion() {
+function giveNewQuestion(quizname) {
   console.log("giveNewQuestion");
-  Blockly.hello('showquiz');
+  Blockly.hello('showquiz', quizname);
 }
 
 /**
@@ -47,7 +47,8 @@ function createBlocklyFrame(domRoot, assessment) {
   iframe = document.createElement('iframe');
   iframe.setAttribute('id', 'quizmeframe');
   iframe.setAttribute('tag', 'quizmeframe');
-  iframe.setAttribute('src', '/assets/js/quizme/blockly.html');
+  //  iframe.setAttribute('src', '/assets/js/quizme/blockly.html');
+  iframe.setAttribute('src', '/assets/lib/blockly.html');
   iframe.setAttribute('width', '995');
   iframe.setAttribute('height', '515');
   domRoot.append(iframe);
@@ -91,16 +92,17 @@ function createBlocklyFrame(domRoot, assessment) {
 function renderQuizmeActivity(quizme, domRoot) {
   console.log("RAM: renderQuizmeActivity");
   var quizActivity = quizme;
-  var questionType = quizActivity.questionType;
-  var quizType = quizActivity.quizType;
 
   var iframe = document.createElement('iframe');
-  iframe.setAttribute('src', '/assets/js/quizme/blockly.html');
+  //  iframe.setAttribute('src', '/assets/js/quizme/blockly.html');
+  iframe.setAttribute('src', '/assets/lib/blockly.html');
   iframe.setAttribute('width', '795');
   iframe.setAttribute('height', '495');
 
-  domRoot.append('<p id="preamble">' + quizActivity.preamble + '</p>');
-  domRoot.append('<p id="quiz_question">' + quizActivity.questionHTML + '</p>');
+  if (quizActivity.preamble) {
+    domRoot.append('<h2 id="preamble">' + quizActivity.preamble + '</h2>');
+  }
+  domRoot.append('<h3 id="quiz_question">' + quizActivity.questionHTML + '</h3>');
 
   if (quizActivity.hasanswerbox) {
     domRoot.append('<input hidden="false" id="quiz_answer" width="40" type="text"></input>');
@@ -113,24 +115,32 @@ function renderQuizmeActivity(quizme, domRoot) {
     domRoot.append('<p/><textarea style="width: 600px; height: 120px;" readonly="true" id="answerOutput"></textarea>');
   }
 
-  if (quizActivity.hints) {
-    domRoot.append('<table><tr><td><div id="hint_html">Here is where the hint goes.</div>' + '&nbsp;&nbsp;' +
-                                '<a class="gcb-button gcb-button-primary" id="hintBtn">Hint</a>' + '&nbsp;&nbsp;' + 
-                                '<a class="gcb-button gcb-button-primary" id="newQuestionBtn">New Question</a>' + '&nbsp;&nbsp;' + 
-                                '<a class="gcb-button gcb-button-primary" id="submitBtn">Submit</a>' + '&nbsp;&nbsp;' + 
-                                '<p hidden="true" id="quiz_result">This is where the feedback goes</p></td></tr></table>');
-  } else {
-    domRoot.append('<table><tr><td>' +
-                                '<a class="gcb-button gcb-button-primary" id="newQuestionBtn">New Question</a>' + '&nbsp;&nbsp;' + 
-                                '<a class="gcb-button gcb-button-primary" id="submitBtn">Submit</a>' + '&nbsp;&nbsp;' + 
-                                '<p hidden="true" id="quiz_result">This is where the feedback goes</p></td></tr></table>');
+  if (!quizActivity.hints || quizActivity.hints == true) {  // Default assumes there are hints
+    domRoot.append('<h3><div id="hint_html">Here is where the hint goes.</div></h3>');
   }
 
-  domRoot.append(iframe);
-  $('#submitBtn').click(function() {checkQuizmeAnswers(quizActivity, false);});
-  $('#hintBtn').click(function() {giveHint();});
-  $('#newQuestionBtn').click(function() {giveNewQuestion();});
+  // Make a table of buttons
+  var table = '<table border="0"><tr>';
+  if (!quizActivity.hints || quizActivity.hints == true) {  // Default assumes there are hints
+    table += '<td><a class="gcb-button gcb-button-primary" id="hintBtn">Hint</a></td>';
+  }
 
+  table += '<td><a class="gcb-button gcb-button-primary" id="submitBtn">Submit</a></td>';
+
+  if (quizActivity.isRepeatable) {
+     table += '<td><a class="gcb-button gcb-button-primary" id="newQuestionBtn">New Question</a></td>';
+  }
+
+  table += '<td><p hidden="true" id="quiz_result">This is where the feedback goes</p></td>';
+
+  table += '</tr></table>';
+
+  domRoot.append(table);
+
+  domRoot.append(iframe);
+  $('#submitBtn').click(function() {checkQuizmeAnswer(quizActivity);});
+  $('#hintBtn').click(function() {giveHint();});
+  $('#newQuestionBtn').click(function() {giveNewQuestion(quizActivity.quizType);});
 }
 
 /**
@@ -156,12 +166,17 @@ function renderCustomActivity(contentsLst, domRoot) {
   domRoot.append(iframe);
 }
 
-function checkQuizmeAnswers(assessment, submitAnswers) {
-  console.log("RAM: checkQuizmeAnswers");
-  for (var i = 0; i < assessment.questionsList.length; i++) {
-    checkQuestion(i, assessment.questionsList[i]);
-  }
+function checkQuizmeAnswer(quizname) {
+  console.log("RAM: checkQuizmeAnswer " + quizname);
+  var quiz = this.parent.Blockly.Quizme[quizname];
+  var scoreArray = [];
+  var isCorrect = evaluateAnswerAndDisplayFeedback();
+      
+  scoreArray.push(isCorrect);
 
+  if (!isCorrect && q.lesson) {
+    lessonsToRead.push(q.lesson);
+  }
 }
 
 function checkQuestion(questionNum, q) {
@@ -201,14 +216,14 @@ function checkQuestion(questionNum, q) {
   else if (q.correctAnswerQuizme) {
     isCorrect = evaluateAnswerAndDisplayFeedback();
   }
-  else if (q.correctAnswerQuizmePractice) {
-    isCorrect = evaluateAnswerAndDisplayFeedback();
-    var submitBtn = document.getElementById('submitAnswersBtn');
-    if (submitBtn) {
-      submitBtn.innerHTML = 'New Question';
-      //     return;
-    }
-  }
+//   else if (q.correctAnswerQuizmePractice) {
+//     isCorrect = evaluateAnswerAndDisplayFeedback();
+//     var submitBtn = document.getElementById('submitAnswersBtn');
+//     if (submitBtn) {
+//       submitBtn.innerHTML = 'New Question';
+//       //     return;
+//     }
+//   }
 
   scoreArray.push(isCorrect);
 
@@ -226,7 +241,8 @@ function evaluateAnswerAndDisplayFeedback() {
   console.log("RAM: evaluateAndRecordAnswer()");
   var result_element = document.getElementById('quiz_result');
   Blockly.Quizme.result_element = result_element;
-  Blockly.Quizme.imgpath = './assets/js/quizme/media/';   // Quiz Builder 
+  //  Blockly.Quizme.imgpath = './assets/js/quizme/media/';   // Quiz Builder 
+  Blockly.Quizme.imgpath = './assets/lib/media/';   // Quiz Builder 
   var result = Blockly.Quizme.evaluateUserAnswer(result_element);
   return result;
 }

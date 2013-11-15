@@ -62,7 +62,6 @@ Blockly.Quizme.addQuiz = function(name, jsonStr, quizObj) {
   quizObj[name].quizName = jsonStr.Name;
   quizObj[name].description = jsonStr.Description;
   quizObj[name].display_name = jsonStr.DisplayName;
-  quizObj[name].description = jsonStr.Description;
   quizObj[name].problem_type = jsonStr.ProblemType;
   quizObj[name].question_html = jsonStr.QuestionHTML;
   quizObj[name].answer_html = jsonStr.AnswerHTML;

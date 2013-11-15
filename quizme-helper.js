@@ -633,6 +633,9 @@ Blockly.Quizme.giveFeedback = function(isCorrect, correctStr, mistakeStr, redo) 
     if (!result_html) {
       result_html = Blockly.Quizme.result_element;   // Try here!
     }
+    if (!result_html) {
+      result_html = window.parent.document.getElementById('result_html');   // Try here!
+    }
     if (isCorrect) {
       if (result_html) {
         result_html.innerHTML = correctMsg;
