@@ -94,8 +94,7 @@ function renderQuizmeActivity(quizme, domRoot) {
   var quizActivity = quizme;
 
   var iframe = document.createElement('iframe');
-  //  iframe.setAttribute('src', '/assets/js/quizme/blockly.html');
-  iframe.setAttribute('src', '/assets/lib/blockly.html');
+  iframe.setAttribute('src', '/assets/lib/quizly/gcb-frame.html');
   iframe.setAttribute('width', '795');
   iframe.setAttribute('height', '495');
 
@@ -241,8 +240,7 @@ function evaluateAnswerAndDisplayFeedback() {
   console.log("RAM: evaluateAndRecordAnswer()");
   var result_element = document.getElementById('quiz_result');
   Blockly.Quizme.result_element = result_element;
-  //  Blockly.Quizme.imgpath = './assets/js/quizme/media/';   // Quiz Builder 
-  Blockly.Quizme.imgpath = './assets/lib/media/';   // Quiz Builder 
+  Blockly.Quizme.imgpath = './assets/lib/quizly/media/';   // Quiz Builder 
   var result = Blockly.Quizme.evaluateUserAnswer(result_element);
   return result;
 }
