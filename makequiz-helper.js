@@ -97,6 +97,7 @@ var EVAL_EXPR_FILLIN = 'eval_expr_fillin';
 var EVAL_STMT = 'eval_stmt';
 var FUNC_DEF = 'func_def';
 var PROC_DEF = 'proc_def';
+var XML_BLOCKS = 'xml_blocks';
 
 // HTML element names
 var HINT_HTML = 'hint_html';
@@ -300,7 +301,7 @@ function setupPreviewWorkspace(answer_type) {
     populateWorkspaceWithExpressionBlock(Blockly.Quizmaker.quiz.expr_type);
     Blockly.Quizmaker.solution = evalMainWorkspace();
   } else {
-    var probSpace = mapQuizVariables(getProblemWorkspace(), getVariableMappings() );
+    var probSpace = mapQuizVariables(Blockly.Quizmaker, getProblemWorkspace(), getVariableMappings() );
     if (probSpace)
       setMainWorkspaceFromText(probSpace);
   }
@@ -509,7 +510,7 @@ function createQuizDictionary(textObj) {
     var tag = str.substring(ndx+2, ndx2);
     var value = "";
     if (tag.indexOf("STR") != -1) {
-      value = prompt("For the STR variable " + tag + " input a comma-separated list of strings.");
+      value = prompt("For the STR variable " + tag + " input a comma-separated list of strings -- no spaces or quotes.");
       Blockly.Quizmaker.Dictionary[tag] = value.split(',');
     }
     ndx = str.indexOf( STRVAR_DELIMITER_LEFT, ndx + 1);
@@ -578,7 +579,7 @@ function onAnswerTypeSelected(selectObj) {
       fn_name = prompt("A function name is required for this type of problem.");
     }
     Blockly.Quizmaker.function_name = fn_name;
-    var inputs = prompt("Input a semicolon-separated list of test cases where each case is a commas-separated list of input arguments -- e.g., 3,4; 4,5; 5,6");
+    var inputs = prompt("Input a semicolon-separated list of test cases where each case is a comma-separated list of input arguments -- e.g., 3,4; 4,5; 5,6");
     if (inputs) {
       Blockly.Quizmaker.function_inputs = inputs.split(';');
     } else {
@@ -724,6 +725,10 @@ function evaluateQuizResult() {
     Blockly.Quizme.giveFeedback(answer,
 	"That is correct!",
         "Oops, your answer was <font color=\"red\">" + answer + "</font>");
+  }
+  else if (answer_type == XML_BLOCKS) {
+    var result = Blockly.Quizme.evaluateXmlBlocksAnswerType(Blockly.Quizmaker, Blockly.Quizmaker.solutionWorkspace,
+             Blockly.Quizmaker.VariableMappings);
   }
   else { // answer_type = EVAL_EXPR && expr_type == EXPR_REL
     var solution = "" + Blockly.Quizmaker.solution;
@@ -916,7 +921,9 @@ function setPreviewView() {
   MAINDOCUMENT.getElementById(TOGGLE_BTN).innerHTML ="Submit";
   MAINDOCUMENT.getElementById(QUIZ_NAME).innerHTML = "Quiz Name: " + Blockly.Quizmaker.quiz.display_name;
   var quizquestion = MAINDOCUMENT.getElementById(QUIZ_QUES);
-  quizquestion.innerHTML = mapQuizVariables(Blockly.Quizmaker.quiz.question_html, Blockly.Quizmaker.quiz.VariableMappings);  
+  quizquestion.innerHTML = mapQuizVariables(Blockly.Quizmaker, 
+              Blockly.Quizmaker.quiz.question_html, 
+              Blockly.Quizmaker.quiz.VariableMappings);  
   var quizanswer = MAINDOCUMENT.getElementById(QUIZ_ANSWER);
   quizanswer.value = "";
   Blockly.Quizmaker.quiz.visibility = (Blockly.Quizmaker.quiz.answer_type == EVAL_EXPR && Blockly.Quizmaker.quiz.expr_type != EXPR_FILLIN_REL) ? "visible" : "hidden";

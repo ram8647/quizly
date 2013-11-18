@@ -541,7 +541,9 @@ function renderQuiz() {
   var quizquestion = maindocument.getElementById('quiz_question');
   var quizName = Blockly.Quizme.quizName;
   if (quizquestion) {
-    quizquestion.innerHTML = mapQuizVariables(Blockly.Quizme.questionHTML, Blockly.Quizme[quizName].VariableMappings);  
+    quizquestion.innerHTML = mapQuizVariables(Blockly.Quizme, 
+        Blockly.Quizme.questionHTML, 
+        Blockly.Quizme[quizName].VariableMappings);  
     quizquestion.style.backgroundColor = "#f3f0000";
   }
   var visibility = Blockly.Quizme.answerVisibility;
@@ -565,7 +567,7 @@ function renderQuiz() {
   if (link_html)
     link_html.innerHTML = "Tutorial: " + Blockly.Quizme.description;
   var xmlStr = Blockly.Xml.domToText(Blockly.Quizme.xml);
-  var mappedStr = mapQuizVariables(xmlStr, Blockly.Quizme.VariableMappings);
+  var mappedStr = mapQuizVariables(Blockly.Quizme, xmlStr, Blockly.Quizme.VariableMappings);
   if (mappedStr)
     Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, Blockly.Xml.textToDom(mappedStr));
   else 
@@ -598,7 +600,7 @@ function processHint(helperObj) {
   var hintHTML = "";
   var hint_element = maindocument.getElementById('hint_html');
   if (helperObj.hintCounter < helperObj.hints.length) {
-    var hint = mapQuizVariables(hints[count], helperObj.VariableMappings);
+    var hint = mapQuizVariables(Blockly.Quizme, hints[count], helperObj.VariableMappings);
     hintHTML = '<font color="magenta">Hint: ' + hint  + '</font>';
     ++helperObj.hintCounter;
   } else {
@@ -683,7 +685,8 @@ Blockly.Quizme.evaluateUserAnswer = function() {
     result = Blockly.Quizme.evaluateEvalProcedureDef(Blockly.Quizme);
   }
   else if (Blockly.Quizme.answerType == XML_BLOCKS) {
-    result = Blockly.Quizme.evaluateXmlBlocksAnswerType(Blockly.Quizme.solution,
+    result = Blockly.Quizme.evaluateXmlBlocksAnswerType(this,
+             Blockly.Quizme.solution,
              Blockly.Quizme.VariableMappings);
   }
   else {  // Drop through case eval_expr
@@ -703,6 +706,8 @@ Blockly.Quizme.evaluateUserAnswer = function() {
  *  compares the Xml code of the user's answer to the Xml code for the
  *  expected answer, doing an exact string match. 
  *
+ * @param helperObj, either Blockly.Quizmaker or Blockly.Quizme
+ *
  * @param solution -- a string giving the expected solution. The solution
  *  can contain variables of the form '$#STR1#$' and '-91.9' or -92.9'.
  * 
@@ -710,16 +715,16 @@ Blockly.Quizme.evaluateUserAnswer = function() {
  *  in str. For example: {1: "85", STR1: "Y"}. In this case '85' would
  *  replace '-91.9' and 'Y' would replace '$#STR1#$'.
  */
-Blockly.Quizme.evaluateXmlBlocksAnswerType = function(solution, mappings) {
+Blockly.Quizme.evaluateXmlBlocksAnswerType = function(helperObj, solution, mappings) {
   if (DEBUG) console.log("RAM: evaluateXmlBlocksAnswerType");
   var result = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
   result = Blockly.Quizme.removeXY(result);
   result = Blockly.Quizme.removeTag("xml", result);
 
   if (mappings) {
-    solution = mapQuizVariables(solution, mappings);
-  } else if (Blockly.Quizme[Blockly.Quizme.quizName].dictionary) {
-    solution = mapQuizVariables(solution, Blockly.Quizme.VariableMappings);
+    solution = mapQuizVariables(helperObj, solution, mappings);
+  } else if (helperObj[helperObj.quizName].dictionary) {
+    solution = mapQuizVariables(helperObj, solution, helperObj.VariableMappings);
   }
     
   solution = Blockly.Quizme.removeXY(solution);
@@ -1132,7 +1137,7 @@ Blockly.Quizme.evaluateStatement = function(helperObj) {
 
   // Get the solution code
   var answerCode = helperObj[qname].function_def;
-  answerCode = mapQuizVariables(answerCode, helperObj[qname].VariableMappings );
+  answerCode = mapQuizVariables(helperObj, answerCode, helperObj[qname].VariableMappings );
 
   var globals = getGlobalVariableNames(answerCode);
 
@@ -1257,6 +1262,7 @@ function generateInstanceMappings(name, helperObj) {
 /**
  * Uses the Blobkly.Quizme.Dictionary to lookup place holders in
  * in the question and hints and replace them with random values.
+ * @param helperObj, either Blockly.Quizme or BlocklyQuizmaker
  *
  * @param str, a string containing variables that to replace
  * @param dict, the mappings of variable names to generated values
@@ -1271,12 +1277,12 @@ function generateInstanceMappings(name, helperObj) {
  *  str = 'Define global Y with initial 85. Press <ENTER> to set.'
  * 
  */
-function mapQuizVariables(str, dict) {
+function mapQuizVariables(helperObj, str, dict) {
   if (DEBUG) console.log("mapQuizVariables() " + str);
   if (!str) 
     return str;
   if (!dict) {
-    dict = Blockly.Quizme[Blockly.Quizme.quizName].VariableMappings;
+    dict = helperObj[helperObj.quizName].VariableMappings;
   }
   if (!dict) {
     return str;
