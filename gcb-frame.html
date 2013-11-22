@@ -4,10 +4,10 @@
   <!-- NOTE:  Don't change this Title -->
   <title>Blockly Frame</title>
 
-  <link type="text/css" rel="stylesheet" href="./blockly.css">
+<!--   <link type="text/css" rel="stylesheet" href="./blockly.css"> -->
 
   <!-- From closure_library.goog/ -->
-  <script type="text/javascript" src="./base.js"></script>  
+<!--   <script type="text/javascript" src="./base.js"></script>   -->
 
   <script type="text/javascript" src="./jquery-1.9.1.min.js"></script>
   <!-- blockly-all.js is copied from appinventor/build/blocklyeditor -->
@@ -24,6 +24,7 @@
   <script type="text/javascript" src="./javascript/lists.js"></script>
   <script type="text/javascript" src="./javascript/text.js"></script>
   <script type="text/javascript" src="./javascript/variables.js"></script>
+  <script type="text/javascript" src="./javascript/componentblock.js"></script>
 
   <!-- quizme-initblocklyeditor.js is revised version of Blockly.BlocklyEditor.startup  --> 
   <script type="text/javascript" src="quizme-initblocklyeditor.js"></script>
@@ -34,6 +35,9 @@
   <script type="text/javascript" src="./makequiz-helper.js"></script>
   <script type="text/javascript" src="./quizme-eval.js"></script>
 <!--   <script type="text/javascript" src="./activity-quizme.js"></script> -->
+
+  <!--  This should be loaded last b/c it overrides certain built-in functions. -->
+  <script type="text/javascript" src="./overrides.js"></script>
 
   <style>
     html, body {

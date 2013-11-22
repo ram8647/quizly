@@ -122,6 +122,11 @@ function isArray(object) {
 function initQuizme(quizname, quizmepath, arglist) {
   if (DEBUG) console.log("RAM: initializing ... quizname= " + quizname + " path=" + quizmepath + " arglist = " + arglist);
 
+  // Save the quizname inside the document in case of redo
+  if (quizname) {
+    maindocument.getElementById('quizname').value = quizname;
+  }
+
   // App Inventor's Drawer needs to point to Quizly's Toolbox.
   Blockly.Drawer = Blockly.Toolbox;
   Blockly.Toolbox.hide = function() {}   // To cover calls to Drawer.hide()
@@ -136,9 +141,38 @@ function initQuizme(quizname, quizmepath, arglist) {
   // Do we want to hide the backpack?
   if (Blockly.Quizme.options['backpack'] == 'hidden') {
     var bp = Blockly.mainWorkspace.backpack;
-    if (bp)
-      bp.dispose();
+    if (bp) {
+      bp.svgGroup_.style.visibility="hidden"
+    }
   }
+
+  // Set up the preamble
+  if (Blockly.Quizme.options['heading']) {
+    var heading =  maindocument.getElementById('heading');
+    heading.innerHTML= unescape(Blockly.Quizme.options['heading']);
+    heading.style.visibility="visible";
+    heading.hidden=false;
+  }
+
+  // Set up hints button
+  if (Blockly.Quizme.options['hints'] == 'false') {
+    var hintBtn = maindocument.getElementById('hint_button');
+    hintBtn.style.visibility="hidden";
+  }
+
+  // Set up new question button
+  var redoBtn;
+  if (Blockly.Quizme.options['repeatable'] == 'true') {
+    redoBtn = maindocument.getElementById('new_question_button');
+    redoBtn.style.visibility="visible";
+    redoBtn.hidden=false;
+  }  else {
+    redoBtn = maindocument.getElementById('new_question_button');
+    redoBtn.hidden=true;
+    redoBtn.style.visibility="hidden";  
+  }
+
+
 
   // Set up the quiz selector drop down, if there is one
   var quizselector = maindocument.getElementById('quiz_selector');
@@ -167,19 +201,19 @@ function initQuizme(quizname, quizmepath, arglist) {
   // Are we within the CourseBuilder practice Quizme context?
   // This would be defined in a file of the form: ./assets/js/quizme-3.1.js
 
-  if (!quizname) {
-    if (window.document.title == "Blockly Frame") {
-      if (window.parent.activity) {
-        quizname = processCbActivity(window.parent.activity);
-      } else if (window.parent.parent.activity) {
-        quizname = processCbAcivity(window.parent.parent.activity);
-      } else if (window.parent.assessment) {
-        quizname = processCbAssessment(window.parent.assessment);
-      } else if (window.parent.parent.assessment) {
-        quizname = processCbAssessment(window.parent.parent.activity);
-      }
-    }
-  }
+//   if (!quizname) {
+//     if (window.document.title == "Blockly Frame") {
+//       if (window.parent.activity) {
+//         quizname = processCbActivity(window.parent.activity);
+//       } else if (window.parent.parent.activity) {
+//         quizname = processCbAcivity(window.parent.parent.activity);
+//       } else if (window.parent.assessment) {
+//         quizname = processCbAssessment(window.parent.assessment);
+//       } else if (window.parent.parent.assessment) {
+//         quizname = processCbAssessment(window.parent.parent.activity);
+//       }
+//     }
+//   }
 
   // Initialize the structures that handles scoped variables
   Blockly.BlocklyEditor.startquizme();
@@ -222,8 +256,11 @@ function showQuiz(quizname) {
 
   var quiznames = Blockly.Quizme.quiznames;
 
-  // The maindocument may or may not have a selector.
-  if (quizname == undefined) {
+  // Find the quizname
+  if (quizname == 'redo') {
+    quizname = maindocument.getElementById('quizname').value;
+  }
+  else if (quizname == undefined) {
     var quizSelector = maindocument.getElementById('quiz_selector');
     if (quizSelector && Blockly.Quizme.options[SELECTOR_OPTION] != 'hidden') {
       quizSelector.style.visibility = 'visible';
@@ -245,8 +282,6 @@ function showQuiz(quizname) {
        var element = maindocument.getElementById('selector');
        element.parentNode.removeChild(element);
        element = maindocument.getElementById('selector_prompt');
-       element.parentNode.removeChild(element);
-       element =  maindocument.getElementById('heading');
        element.parentNode.removeChild(element);
      }
   }
