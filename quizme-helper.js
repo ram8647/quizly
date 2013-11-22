@@ -188,7 +188,7 @@ function initQuizme(quizname, quizmepath, arglist) {
      
   // Set up path names.
   Blockly.Quizme.pathname = quizmepath;
-  Blockly.Quizme.imgpath = quizmepath + 'quizme/media/';
+  Blockly.Quizme.imgpath = quizmepath + 'quizly/media/';
 
   // TODO:  These initializations are for Course Builder, which sets either
   // an assessment or activity variable. It would be better to pass this
