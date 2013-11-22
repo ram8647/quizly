@@ -161,15 +161,15 @@ function initQuizme(quizname, quizmepath, arglist) {
   }
 
   // Set up new question button
-  var redoBtn;
-  if (Blockly.Quizme.options['repeatable'] == 'true') {
-    redoBtn = maindocument.getElementById('new_question_button');
-    redoBtn.style.visibility="visible";
-    redoBtn.hidden=false;
-  }  else {
-    redoBtn = maindocument.getElementById('new_question_button');
-    redoBtn.hidden=true;
-    redoBtn.style.visibility="hidden";  
+  var redoBtn =  maindocument.getElementById('new_question_button');
+  if (redoBtn) {
+    if (Blockly.Quizme.options['repeatable'] == 'true') {
+      redoBtn.style.visibility="visible";
+      redoBtn.hidden=false;
+    }  else {
+      redoBtn.hidden=true;
+      redoBtn.style.visibility="hidden";  
+    }
   }
 
 
