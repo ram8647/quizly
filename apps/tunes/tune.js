@@ -61,8 +61,8 @@ Tune.puzzles = [
    ['noteC', 'noteE', 'noteE','noteC', 'noteE', 'noteE','noteCHigh','noteG', 'noteG','noteCHigh','noteG', 'noteG',
     'noteC', 'noteE', 'noteE','noteC', 'noteE', 'noteE','noteCHigh','noteG', 'noteG','noteCHigh','noteG', 'noteG'],  
                                          // 8. Same as 7 with interval changes included
-   ['noteC', 'noteE', 'noteE','noteC', 'noteE', 'noteE','noteCHigh','noteG', 'noteG','noteCHigh','noteG', 'noteG',
-    'short', 'noteC', 'noteE', 'noteE','noteC', 'noteE', 'noteE','noteCHigh','noteG', 'noteG','noteCHigh','noteG', 'noteG'],  
+   ['noteC', 'noteE', 'noteE','noteC', 'noteE', 'noteE','noteCHigh','noteG', 'noteG','noteCHigh','noteG', 'noteG', 'short',
+    'noteC', 'noteE', 'noteE','noteC', 'noteE', 'noteE','noteCHigh','noteG', 'noteG','noteCHigh','noteG', 'noteG', 'short'],  
                                          // 9.  Uses if/else to alternate C-E-G slow then fast in a loop.               
    ["noteC", "noteE", "noteG", "short", "noteC", "noteE", "noteG", "medium", "noteC", "noteE", "noteG", "short", "noteC", "noteE", "noteG", "medium", "noteC"],
 
@@ -419,12 +419,14 @@ Tune.reset = function(first) {
      buttonDiv.textContent = '';
      redo.className = 'secondary';
      redo.appendChild(document.createTextNode(BlocklyApps.getMsg('Tune_dialogRedo')));
+     redo.addEventListener('click', Tune.resetButtonClick, true);
      buttonDiv.appendChild(redo);
 
      var ok = document.createElement('button');
      ok.className = 'ok';
      ok.appendChild(
 	 document.createTextNode(BlocklyApps.getMsg('dialogOk')));
+     ok.addEventListener('click', Tune.okButtonClicked, true);
      buttonDiv.appendChild(ok);
 
      // Show the IntroducePuzzle dialog
