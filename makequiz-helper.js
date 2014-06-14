@@ -33,7 +33,7 @@
 "quiz_hypotenuse" :{
 "Name":"quiz_hypotenuse",
 "DisplayName":"Hypotenuse",
-"Decription":"Function Definition.",
+"Description":"Function Definition.",
 "QuestionHTML":"Define a function named 'hypotenuse' that calculates the length of the hypotenuse of a right triangle given the lengths of its other two sides.",
 "AnswerHTML":"",
 "AnswerType":"func_def",
@@ -358,7 +358,7 @@ function generateQuizJsonObj(quizHelper) {
   obj.Name = name;
   obj.DisplayName = quizHelper[name].display_name;
   obj.ProblemType = quizHelper[name].problem_type;
-  obj.Decription = quizHelper[name].description;
+  obj.Description = quizHelper[name].description;
   obj.QuestionHTML = quizHelper[name].question_html;
   obj.AnswerHTML = "";
   obj.AnswerType = quizHelper[name].answer_type;
