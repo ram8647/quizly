@@ -375,7 +375,7 @@ function initQuizmeLanguage() {
   }
 
   resetComponentInstances();  // In quizme-helper.js
-  var components = ['Button', 'Sound', 'Label', 'Canvas'];
+  var components = ['Button', 'Sound', 'Player', 'Label', 'Canvas'];
   Blockly.Quizme.addComponents(components);
  
   // Remove generics
