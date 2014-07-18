@@ -517,25 +517,31 @@ function resetBlocklyLanguage() {
   Blockly.Language.setTooltip = function(block, tooltip) {  
     block.setTooltip("");
   }
-  Blockly.Language.YailTypeToBlocklyTypeMap = {
-    'number':Number,
-    'text':String,
-    'boolean':Boolean,
-    'list':Array,
-    'component':"COMPONENT",
-    'InstantInTime':Blockly.Language.InstantInTime,
-    'any':null
-    //add  more types here
-  }
 
-  Blockly.Language.YailTypeToBlocklyType = function(yail) {
-    var bType = Blockly.Language.YailTypeToBlocklyTypeMap[yail];
-    if (bType != null || yail == 'any') {
-      return bType;
-    } else {
-      throw new Error("Unknown Yail type: " + yail + " -- YailTypeToBlocklyType");
+  Blockly.Language.YailTypeToBlocklyTypeMap =
+    {
+        'number':{input:"Number",output:["Number","String"]},
+        'text':{input:"String",output:["Number","String"]},
+        'boolean':{input:"Boolean",output:["Boolean","String"]},
+        'list':{input:"Array",output:["Array","String"]},
+        'component':{input:"COMPONENT",output:"COMPONENT"},
+        'InstantInTime':{input:Blockly.Language.InstantInTime,output:Blockly.Language.InstantInTime},
+        'any':{input:null,output:null}
+
+        //add  more types here
     }
-  }
+
+   Blockly.Language.YailTypeToBlocklyType = function(yail,inputOrOutput) {
+     var inputOrOutputName = (inputOrOutput == Blockly.Language.OUTPUT ? "output" : "input");
+     var bType = Blockly.Language.YailTypeToBlocklyTypeMap[yail][inputOrOutputName];
+
+     if (bType != null || yail == 'any') {
+       return bType;
+     } else {
+       throw new Error("Unknown Yail type: " + yail + " -- YailTypeToBlocklyType");
+     }
+   }
+
 }
 
 /**
