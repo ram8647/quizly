@@ -124,7 +124,10 @@ function initQuizme(quizname, quizmepath, arglist) {
 
   // Save the quizname inside the document in case of redo
   if (quizname) {
-    maindocument.getElementById('quizname').value = quizname;
+    var qname = maindocument.getElementById('quizname');
+    if (qname) {
+      qname.value = quizname;
+    }
   }
 
   // App Inventor's Drawer needs to point to Quizly's Toolbox.
