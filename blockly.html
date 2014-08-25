@@ -11,7 +11,6 @@
   <!-- blockly-all.js is copied from appinventor/build/blocklyeditor -->
   <!-- blockly-toolbox.js is a modified version of blockly's core toolbox.js -->
   <script type="text/javascript" src="./blockly-all.js"></script>
-<!--   <script type="text/javascript" src="./blockly-all-uncompressed.js"></script> -->
   <script type="text/javascript" src="./blockly-toolbox.js"></script>
 
   <!-- Blockly javascript evaluators, modified for App Inventor -->
@@ -55,7 +54,10 @@
       //  we must initialize it here. The TOOLBOX category serves as a static heading for the toolbox.
       function initBlockly() {
 
-        var href = window.parent.document.location.href;
+        var href = window.parent.document.location.href;  // Check parent window?
+        if (href.indexOf('quizly') == -1) {
+          href = window.document.location.href;           // Check this window
+        }
         var quizname;
         var arglist = href.split('?')[1];
         if (arglist) {

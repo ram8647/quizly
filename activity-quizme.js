@@ -40,16 +40,14 @@ function giveNewQuestion(quizname) {
   Blockly.hello('showquiz', quizname);
 }
 
-/**
- * Creates an iframe on the Dom and loads it with the blockly editor.
- */
 function createBlocklyFrame(domRoot, assessment) {
-  iframe = document.createElement('iframe');
+  console.log("RAM activity generic createBlocklyFrame()");
+  var iframe = document.createElement('iframe');
   iframe.setAttribute('id', 'quizmeframe');
   iframe.setAttribute('tag', 'quizmeframe');
-  //  iframe.setAttribute('src', '/assets/js/quizme/blockly.html');
-  iframe.setAttribute('src', '/assets/lib/blockly.html');
-  iframe.setAttribute('width', '995');
+  iframe.setAttribute('quizname', assessment.name);
+  iframe.setAttribute('src', '/assets/lib/quizly/blockly.html?selector=hidden&backpack=hidden&quizname=' + assessment.name);
+  iframe.setAttribute('width', '895');
   iframe.setAttribute('height', '515');
   domRoot.append(iframe);
 
@@ -67,15 +65,19 @@ function createBlocklyFrame(domRoot, assessment) {
 
   if (assessment.hints) {
     domRoot.append('<table><tr><td><div id="hint_html">Here is where the hint goes.</div>' + '&nbsp;&nbsp;' +
+                                '<div id="quiz_result">This is where the feedback goes</div>' +
                                 '<a class="gcb-button gcb-button-primary" id="hintBtn">Hint</a>' + '&nbsp;&nbsp;' + 
                                 '<a class="gcb-button gcb-button-primary" id="submitAnswersBtn">Submit</a></td></tr></table>');
     assessment['hasHintsBtn'] = true;
     assessment['hasSubmitBtn'] = true;
     $('#hintBtn').click(function() {giveHint();});
   } else {
-    domRoot.append('<br/><a class="gcb-button gcb-button-primary" id="submitAnswersBtn">Submit</a>'); 
+    domRoot.append('<div id="quiz_result">This is where the feedback goes</div>' +
+                   '<br/><a class="gcb-button gcb-button-primary" id="submitAnswersBtn">Submit</a>'); 
     assessment['hasSubmitBtn'] = true;
   }
+
+
 }
 
 /**
