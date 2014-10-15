@@ -69,6 +69,7 @@ var PROC_DEF = 'proc_def';
 var XML_BLOCKS = 'xml_blocks';
 
 //  Blocks lists -- should contain only blocks that have JavaScript generators, plus blocks that support mutators.
+var UTILITIES = ['Utilities'];
 var MATH_BLOCKS = ["math_add", "math_compare","math_divide","math_division","math_is_a_number", "math_multiply","math_mutator_item", "math_number", 
 		   "math_on_list", "math_power", "math_random_float", "math_random_int", "math_round", "math_single", "math_subtract"]; //"math_random_set_seed", 
 var LOGIC_BLOCKS = ["logic_boolean", "logic_compare", "logic_false", "logic_negate", "logic_operation", "logic_or"];
@@ -83,7 +84,7 @@ var LISTS_BLOCKS = ["lists_create_with", "lists_create_with_item", "lists_is_emp
 var TEXT_BLOCKS = ["text", "text_join", "text_length","text_isEmpty","text_trim","text_changeCase"]; // "text_join_item", "text_compare", "text_starts_at", "text_contains", "text_split", "text_split_at_spaces", "text_segment", "text_replace_all"
 var COLOR_BLOCKS = ["color_black", "color_white", "color_red", "color_pink", "color_orange", "color_yellow", "color_green", "color_cyan", "color_blue", "color_magenta", "color_light_gray", 
                     "color_gray", "color_dark_gray", "color_make_color", "color_split_color", ];
-var TOPLEVEL_BLOCKS = ["mutator_container", "InstantInTime", "YailTypeToBlocklyType", "YailTypeToBlocklyTypeMap","setTooltip","wrapSentence"];
+var TOPLEVEL_BLOCKS = ["mutator_container", "InstantInTime", "YailTypeToBlocklyType", "YailTypeToBlocklyTypeMap","setTooltip","wrapSentence", "component_event", "component_method", "component_set_get", "component_component_block"];
 
 
 // Path to images used in UI
@@ -121,6 +122,21 @@ function isArray(object) {
  */
 function initQuizme(quizname, quizmepath, arglist) {
   if (DEBUG) console.log("RAM: initializing ... quizname= " + quizname + " path=" + quizmepath + " arglist = " + arglist);
+
+  // Create bogus parent functions to handle translations
+  window.parent.BlocklyPanel_getLocalizedEventName = function(s) {
+    return s;
+  }
+  window.parent.BlocklyPanel_getLocalizedMethodName = function(s) {
+    return s;
+  }
+  window.parent.BlocklyPanel_getLocalizedParameterName = function(s) {
+    return s;
+  }
+
+  window.parent.BlocklyPanel_getLocalizedPropertyName = function(s) {
+    return s;
+  }
 
   // Save the quizname inside the document in case of redo
   if (quizname) {
@@ -174,8 +190,6 @@ function initQuizme(quizname, quizmepath, arglist) {
       redoBtn.style.visibility="hidden";  
     }
   }
-
-
 
   // Set up the quiz selector drop down, if there is one
   var quizselector = maindocument.getElementById('quiz_selector');
@@ -298,7 +312,7 @@ function showQuiz(quizname) {
   var components = [];
 
   // By this point, quizname is set to one of the valid name. So for
-  // each quiz, set up the Blockly.Language before setting
+  // each quiz, set up the Blockly.Language (now Blockly.Blocks) before setting
   // the quiz's other properties.
 
   // Generate the variable mappings for this quiz (optional)
@@ -355,10 +369,10 @@ function showQuiz(quizname) {
 }
 
 /**
- * Initializes Blockly.Language with only those blocks for which there
+ * Initializes Blockly.Blocks with only those blocks for which there
  *  are JavaScript generators and blocks that support mutators.
  *
- * When this function completes Blockly.Language should contain all 
+ * When this function completes Blockly.Blocks should contain all 
  *  built-in blocks plus whatever AI Components are set here.
  *
  * NOTE: Blockly.WholeLanguage is created in quizme-initblocklyeditor.js
@@ -367,14 +381,15 @@ function initQuizmeLanguage() {
   if (DEBUG) console.log("RAM: initQuizmeLanguage ");
  
   var whitelist = [];
+  whitelist = whitelist.concat(UTILITIES);   // Utility functions
   whitelist = whitelist.concat(MATH_BLOCKS).concat(LOGIC_BLOCKS).concat(VARIABLES_BLOCKS).concat(PROCEDURES_BLOCKS);
   whitelist = whitelist.concat(CONTROLS_BLOCKS).concat(LISTS_BLOCKS).concat(TEXT_BLOCKS).concat(COLOR_BLOCKS).concat(TOPLEVEL_BLOCKS);
 
-  // Initialize Blockly.Language by copying whitelisted blocks from WholeLanguage
-  Blockly.Language = {}
+  // Initialize Blockly.Blocks by copying whitelisted blocks from WholeLanguage
+  Blockly.Blocks = {}
   for (var propname in Blockly.WholeLanguage) {
     if (whitelist.indexOf(propname) != -1)
-      Blockly.Language[propname] = Blockly.WholeLanguage[propname];
+      Blockly.Blocks[propname] = Blockly.WholeLanguage[propname];
   }
 
   resetComponentInstances();  // In quizme-helper.js
@@ -384,9 +399,86 @@ function initQuizmeLanguage() {
   // Remove generics
   for (var k = 0; k < components.length; k++) {
     var component_name = components[k];
-    delete(Blockly.Language[component_name + "_setproperty"]);
-    delete(Blockly.Language[component_name + "_getproperty"]);
+    delete(Blockly.Blocks[component_name + "_setproperty"]);
+    delete(Blockly.Blocks[component_name + "_getproperty"]);
   } 
+}
+
+/**
+ * Creates Toolbox categories for the built-in blocks by iterating  through 
+ * the built-in blocks, all of which are loaded as  properties of Blockly.Blocks.
+ * @param categores -- array of category names -- e.g., Math, Variables, 
+ * @param language -- passed in as Blockly.Blocks
+ */
+function initToolboxBuiltins(language, categories) {
+  for (var propname in language) {
+    if (DEBUG) console.log("Adding to Blockly.languageTree " + propname);
+
+    if (propname == 'Utilities' || TOPLEVEL_BLOCKS.indexOf(propname) != -1)
+      continue;
+
+    // Use a tempWorkspace so that procedure def blocks are not set to visible.
+    var tempWorkspace = new Blockly.Workspace();
+    tempWorkspace.svgBlockCanvas_ = Blockly.mainWorkspace.getCanvas();
+    var blk = new Blockly.Block.obtain(tempWorkspace, propname);
+
+    // If this block has a category, append the category name to category list.
+    var catname = blk['category'];
+    if (catname) {
+      var category = categories[catname];
+      if (!category) {            // If no such category yet
+        category = "";
+        categories[catname] = category; // Start one, initially blank
+      }
+      category = category.concat("<block type='" + propname + "'></block>");
+      categories[catname] = category;
+    }
+  }
+}
+
+/**
+ * Creates Toolbox categories for App Inventor Components  by iterating  through 
+ * an array of components. 
+ * @param components -- array of instance and components -- e.g., [["Button1","Button"],["Label1","Label"]]
+ * @param categores -- array of category names -- e.g., Button, Label
+ */
+function initToolboxComponents(components, categories) {
+  if (components.length != 0) {
+    categories[''] = '';
+    categories['COMPONENTS'] = '';
+    for (var i=0; i < components.length; i++) {
+      var instanceName = components[i][0];
+      var componentType = components[i][1];
+      var category = categories[instanceName];
+      if (!category) {
+        category = "";
+        categories[instanceName] = category;  // Initialize the category
+      }
+      var prototype = Blockly.ComponentTypes[componentType];
+      if (!prototype)
+        continue;
+
+      // Event blocks
+      for (var event in prototype.eventDictionary) {
+        category = category.concat("<block type='component_event'><mutation component_type='" + componentType + "' instance_name='" 
+                 + instanceName + "' event_name='"  + event + "'></mutation></block>");
+      }
+      // Method blocks
+      for (var method in prototype.methodDictionary) {
+        category = category.concat("<block type='component_method'><mutation component_type='" + componentType + "' instance_name='" 
+                 + instanceName + "' method_name='"  + method + "'></mutation></block>");
+      }
+     // Getters : We're just putting 1 block -- less cluttered
+      var property = prototype.getPropertyList[0];
+      category = category.concat("<block type='component_set_get'><mutation set_or_get='get' component_type='" 
+                 + componentType + "' instance_name='" + instanceName + "' property_name='"  + property  + "' is_generic='false'></mutation></block>");
+     // Setters
+     property = prototype.getPropertyList[0];
+     category = category.concat("<block type='component_set_get'><mutation set_or_get='set' component_type='" 
+                 + componentType + "' instance_name='" + instanceName + "' property_name='"  + property  + "' is_generic='false'></mutation></block>");
+      categories[instanceName] = category;
+    }
+  }
 }
 
 /**
@@ -394,49 +486,23 @@ function initQuizmeLanguage() {
  *  Note that the toolbox tree is initially set statically during injection.  
  *  We create a dynamic tree for each quiz. 
  *  
- *  @param language -- usually called with  Blockly.Language.
+ *  @param language -- usually called with  Blockly.Blocks.
  *  @return a Dom object representing the tree of categories and blocks 
  *   that appear in the toolbox and its flyout.
  */
-function initToolboxLanguageTree(language) {
+function initToolboxLanguageTree(language, components) {
   resetBlocklyLanguage();  // Hack to add some special Language properties
 
-  // Start with an empty tree.
-  Blockly.languageTree = Blockly.Xml.textToDom("<xml id='toolbox' style='display:none'></xml>");
-
-  // Initialize the category list
-  var cats = [];
-
-  //  Iterate through the blocks in the language to construct the toolbox languageTree
-  //  for (var propname in Blockly.WholeLanguage) {
-  for (var propname in language) {
-    if (DEBUG) console.log("Adding to Blockly.languageTree " + propname);
-
-    // Use a tempWorkspace so that procedure def blocks are not set to visible.
-    var tempWorkspace = new Blockly.Workspace();
-    var blk = new Blockly.Block(tempWorkspace, propname);
-
-    // If this block has a category, append the category name to category list.
-    var catname = blk['category'];
-    if (catname) {
-      if (catname == 'Component') {
-        cats[''] = '';
-        cats['COMPONENTS'] = '';
-        catname = blk.typeName;    // For components use the typename for category.
-      }
-      var category = cats[catname];
-      if (!category) {
-        category = "";
-        cats[catname] = category;
-      }
-      category = category.concat("<block type='" + propname + "'></block>");
-      cats[catname] = category;
-    }
-  }
-  // Now build and return the categorized tree.
+  var categories = [];   // E.g., Math, Variables, ..., COMPONENTS, Button, Label, ...
   var treeString = "<xml id='toolbox' style='display:none'>";
-  for (var cat in cats) {
-    treeString = treeString.concat("<category name='" + cat + "'>" + cats[cat] + "</category>");
+
+  // First add built-in then component categories
+  initToolboxBuiltins(language, categories);
+  initToolboxComponents(components, categories);
+
+  // Now build and return the categorized tree.
+  for (var cat in categories) {
+    treeString = treeString.concat("<category name='" + cat + "'>" + categories[cat] + "</category>");
   }
   treeString = treeString.concat("</xml>");
   return Blockly.Xml.textToDom(treeString);
@@ -449,16 +515,17 @@ function initToolboxLanguageTree(language) {
  *  quiz's Json entry.
  *
  * @param quizname -- the type of quiz being presented. This is
- *  needed to initialize the Blockly.Language, which varies
+ *  needed to initialize the Blockly.Blocks, which varies
  *  depending on quizname.
  * @param keepers, an array giving names of the built-in language
  *  elements to keep in the language. If the first list element is 'all',
  *  then all built-in elements are loaded.
- * @param components, an array of App Inventor components that we want
- *  to add to Blockly.Language
+ * @param components, an array of App Inventor instances and their component
+ *  types -- e.g., [["Button1", "Button"], ["Label1", "Label"]]
+ *  to add to Blockly.Blocks
  */
 function customizeQuizmeLanguage(quizname, keepers, components) {
-  if (DEBUG) console.log("RAM: customizeQuizmeLanguage() quizname = " + quizname + " keepers = " + keepers);
+  if (DEBUG) console.log("RAM: customizeQuizmeLanguage() quizname = " + quizname + " keepers = " + keepers + " components=" + components);
 
   // If the language has already been set for this quiz type, just exit  
   // NOTE: Leave quizname=undefined to reset the language
@@ -468,34 +535,35 @@ function customizeQuizmeLanguage(quizname, keepers, components) {
     return;
   }
 
-  // Initialize the language with all blocks.
+  // Initialize the language with all blocks, including components
   initQuizmeLanguage();
   var newLanguage = {}
-  for (var propname in Blockly.Language) {
-    if (keepers.indexOf(propname) != -1) {
-      newLanguage[propname] = Blockly.Language[propname];
+
+  for (var propname in Blockly.Blocks) {
+    if (keepers.indexOf(propname) != -1 || propname == 'Utilities' || TOPLEVEL_BLOCKS.indexOf(propname) != -1) {
+      newLanguage[propname] = Blockly.Blocks[propname];
     }
-    if (Blockly.Language[propname].category == 'Component' &&
-        Blockly.Language[propname].blockType != 'genericmethod') {
-      var typeName = Blockly.Language[propname].typeName;
-      if (components.indexOf(typeName) != -1) {
-        newLanguage[propname] = Blockly.Language[propname];
-      }
-    }
+//     if (Blockly.Blocks[propname].category == 'Component' &&
+//         Blockly.Blocks[propname].blockType != 'genericmethod') {
+//       var typeName = Blockly.Blocks[propname].typeName;
+//       if (components.indexOf(typeName) != -1) {
+//         newLanguage[propname] = Blockly.Blocks[propname];
+//       }
+//     }
   }
-  Blockly.Language = newLanguage;
+  Blockly.Blocks = newLanguage;
 
   // Construct the languageTree used to populate the toolbox.
-  Blockly.languageTree = initToolboxLanguageTree(Blockly.Language);
+  Blockly.languageTree = initToolboxLanguageTree(Blockly.Blocks, components);
 
   Blockly.Quizme.language_type = quizname;
   if (DEBUG) console.log("RAM: Blockly.Quizme.language_type = " + Blockly.Quizme.language_type);
 
-  resetBlocklyLanguage();  // Hack to add certain neede properties back onto Blockly.Language.
+  resetBlocklyLanguage();  // Hack to add certain neede properties back onto Blockly.Blocks.
 
-  // Add the App Inventor components to the langauge and initialize the Toolbox  
+  // Add the App Inventor components to the langauge and initialize the Toolbox  -- RAM: All components have been added
   resetComponentInstances();
-  Blockly.Quizme.addComponents(components);
+  //  Blockly.Quizme.addComponents(components);
     
   // Delete the current toolbox tree (svg element) from the webpage.
   var html = Blockly.Toolbox.HtmlDiv;
@@ -507,36 +575,38 @@ function customizeQuizmeLanguage(quizname, keepers, components) {
 }
 
 /**
- * Utility function to reload Blockly.Language functions.
+ * Utility function to reload Blockly.Blocks functions.
  * These next three functions are needed for any App Inventor blocks.
- * Redefined here because we've redefined Blockly.Language
+ * Redefined here because we've redefined Blockly.Blocks
 
  * TODO:  This is a HACK that should be fixed, perhaps by
- *  writing a function to clear Blockly.Language of all
+ *  writing a function to clear Blockly.Blocks of all
  *  its elements, preserving its functions.
  */
 function resetBlocklyLanguage() {
 
-  Blockly.Language.setTooltip = function(block, tooltip) {  
+  Blockly.Blocks.setTooltip = function(block, tooltip) {  
     block.setTooltip("");
   }
 
-  Blockly.Language.YailTypeToBlocklyTypeMap =
+  //  Blockly.Blocks.YailTypeToBlocklyTypeMap =
+  Blockly.Blocks.Utilities.YailTypeToBlocklyTypeMap =
     {
         'number':{input:"Number",output:["Number","String"]},
         'text':{input:"String",output:["Number","String"]},
         'boolean':{input:"Boolean",output:["Boolean","String"]},
         'list':{input:"Array",output:["Array","String"]},
         'component':{input:"COMPONENT",output:"COMPONENT"},
-        'InstantInTime':{input:Blockly.Language.InstantInTime,output:Blockly.Language.InstantInTime},
+        'InstantInTime':{input:Blockly.Blocks.InstantInTime,output:Blockly.Blocks.InstantInTime},
         'any':{input:null,output:null}
 
         //add  more types here
     }
 
-   Blockly.Language.YailTypeToBlocklyType = function(yail,inputOrOutput) {
-     var inputOrOutputName = (inputOrOutput == Blockly.Language.OUTPUT ? "output" : "input");
-     var bType = Blockly.Language.YailTypeToBlocklyTypeMap[yail][inputOrOutputName];
+  //   Blockly.Blocks.YailTypeToBlocklyType = function(yail,inputOrOutput) {
+   Blockly.Blocks.Utilities.YailTypeToBlocklyType = function(yail,inputOrOutput) {
+     var inputOrOutputName = (inputOrOutput == Blockly.Blocks.OUTPUT ? "output" : "input");
+     var bType = Blockly.Blocks.Utilities.YailTypeToBlocklyTypeMap[yail][inputOrOutputName];
 
      if (bType != null || yail == 'any') {
        return bType;
@@ -574,6 +644,17 @@ function resetComponentInstances() {
   Blockly.ComponentInstances.addBlockName = function(name, blockName) {
     Blockly.ComponentInstances[name].blocks.push(blockName);
   }
+
+  Blockly.ComponentInstances.getInstanceNames = function() {
+    var instanceNames = [];
+    for(var instanceName in Blockly.ComponentInstances) {
+      if(typeof Blockly.ComponentInstances[instanceName] == "object" && Blockly.ComponentInstances[instanceName].uid != null){
+	instanceNames.push(instanceName);
+      }
+    }
+    return instanceNames;
+  }
+  
 }
 
 /**
@@ -763,6 +844,7 @@ Blockly.Quizme.evaluateXmlBlocksAnswerType = function(helperObj, solution, mappi
   if (DEBUG) console.log("RAM: evaluateXmlBlocksAnswerType");
   var result = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
   result = Blockly.Quizme.removeXY(result);
+  result = Blockly.Quizme.removeIDs(result);
   result = Blockly.Quizme.removeTag("xml", result);
 
   if (mappings) {
@@ -851,7 +933,7 @@ Blockly.Quizme.setupFunctionDefinition = function(qname, helperObj, blocks) {
   Blockly.JavaScript.init();
   if (!blocks) 
     blocks  = Blockly.mainWorkspace.topBlocks_;
-  var code = Blockly.Generator.workspaceToCode('JavaScript');  
+  var code = Blockly.JavaScript.workspaceToCode('JavaScript');  
 
   if (fnSignature) {
     // Return the function definition generated by Generator
@@ -996,7 +1078,7 @@ Blockly.Quizme.setupProcedureDefinition = function(qname, helperObj, blocks) {
   Blockly.JavaScript.init();
   if (!blocks)
     blocks  = Blockly.mainWorkspace.topBlocks_;
-  var code = Blockly.Generator.workspaceToCode('JavaScript');
+  var code = Blockly.JavaScript.workspaceToCode('JavaScript');
   return code; 
 }
 
@@ -1195,7 +1277,7 @@ Blockly.Quizme.evaluateStatement = function(helperObj) {
 
   // Get the testcode from the workspace
   Blockly.JavaScript.init()
-  var testCode = Blockly.Generator.workspaceToCode('JavaScript');
+  var testCode = Blockly.JavaScript.workspaceToCode('JavaScript');
 
   testCode = "function test() { \n" + testCode + "\n var ret={";
   answerCode = "function test() { \n" + answerCode + "\n var ret={";
@@ -1237,6 +1319,22 @@ Blockly.Quizme.removeXY = function(str) {
     str = str.substring(0, startY) + str.substring(endY+1);
     startY = str.indexOf("y=");
     endY = str.indexOf('"', startY+3);
+  }
+  return str;
+}
+
+/**
+ * Removes the block IDs from the str
+ * @param str is a string contain attribute expressions such as id="38".
+ *  These are removed and the resulting string returned.
+ */
+Blockly.Quizme.removeIDs = function(str) {
+  var startId = str.indexOf(" id=");
+  var endId = str.indexOf('"', startId+5);
+  while (startId != -1) {
+    str = str.substring(0, startId) + str.substring(endId+1);
+    startId = str.indexOf(" id=");
+    endId = str.indexOf('"', startId+5);
   }
   return str;
 }

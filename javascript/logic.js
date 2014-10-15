@@ -23,9 +23,6 @@
  */
 'use strict';
 
-Blockly.JavaScript = Blockly.Generator.get('JavaScript');
-
-//Blockly.JavaScript.logic_compare = function() {
 Blockly.JavaScript.math_compare = function() {
   // Comparison operator.
   var mode = this.getTitleValue('OP');
@@ -40,7 +37,6 @@ Blockly.JavaScript.math_compare = function() {
   return [code, order];
 };
 
-//Blockly.JavaScript.logic_compare.OPERATORS = {
 Blockly.JavaScript.math_compare.OPERATORS = {
   EQ: '==',
   NEQ: '!=',

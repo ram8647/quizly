@@ -23,7 +23,7 @@
  */
 'use strict';
 
-Blockly.JavaScript = Blockly.Generator.get('JavaScript');
+Blockly.JavaScript = new Blockly.Generator('JavaScript');
 
 /**
  * List of illegal variable names.
@@ -188,7 +188,7 @@ Blockly.JavaScript.scrub_ = function(block, code) {
     // Collect comment for this block.
     var comment = block.getCommentText();
     if (comment) {
-      commentCode += Blockly.Generator.prefixLines(comment, '// ') + '\n';
+      commentCode += Blockly.JavaScript.prefixLines(comment, '// ') + '\n';
     }
     // Collect comments for all value arguments.
     // Don't collect comments for nested statements.
@@ -196,9 +196,9 @@ Blockly.JavaScript.scrub_ = function(block, code) {
       if (block.inputList[x].type == Blockly.INPUT_VALUE) {
         var childBlock = block.inputList[x].connection.targetBlock();
         if (childBlock) {
-          var comment = Blockly.Generator.allNestedComments(childBlock);
+          var comment = Blockly.JavaScript.allNestedComments(childBlock);
           if (comment) {
-            commentCode += Blockly.Generator.prefixLines(comment, '// ');
+            commentCode += Blockly.JavaScript.prefixLines(comment, '// ');
           }
         }
       }

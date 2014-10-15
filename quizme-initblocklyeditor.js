@@ -35,9 +35,9 @@ Blockly.BlocklyEditor.startquizme = function() {
   //  Blockly.Drawer.init();
   //  Blockly.BlocklyEditor.formName_ = formName;
   
-  // Save the Blockly.Language. This is used in quizme-helper to construct subsets of
+  // Save the Blockly.Blocks. This is used in quizme-helper to construct subsets of
   //  the language for particular quizzes.
-  Blockly.WholeLanguage = Blockly.Language;
+  Blockly.WholeLanguage = Blockly.Blocks;  // Blockly.Blocks used to be Blockly.Language
 
   /* [Added by paulmw in patch 15]
   There are three ways that you can change how lexical variables 

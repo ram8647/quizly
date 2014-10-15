@@ -6,7 +6,7 @@
 
   <link type="text/css" rel="stylesheet" href="media/blockly.css">
 
-  <script type="text/javascript" src="closure-library/goog/base.js"></script>
+  <script type="text/javascript" src="closure-library-read-only/closure/goog/base.js"></script>
   <script type="text/javascript" src="./jquery-1.9.1.min.js"></script>
   <!-- blockly-all.js is copied from appinventor/build/blocklyeditor -->
   <!-- blockly-toolbox.js is a modified version of blockly's core toolbox.js -->
@@ -93,7 +93,7 @@
 	//This would also be done in Blockly init, but we need to do it here cause of
 	//the different init process in drawer (it'd be undefined at the time it hits
 	//init in Blockly)
-	if (Blockly.editable)
+	if (!Blockly.readOnly)
 	  Blockly.TypeBlock(Blockly.configForTypeBlock);
 
 

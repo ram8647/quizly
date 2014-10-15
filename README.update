@@ -11,6 +11,10 @@ QUICK OVERVIEW
 
 * Blockly-all.js is now compressed down to 800K.
 
+* 9/27/14 In AI, Blockly.Language has been replaced by Blockly.Blocks: need
+  to do a global replace in quizme-helper, makequiz-helper, quizme-initblocklyeditor.
+
+* 9/27/14 Not sure whether this still applies?
 * Blockly.Language.INPUT and Blockly.Language.OUTPUT cause a crash because our
   Blockly.Language is dynamic (whereas App Inventor's is static).  These have
   to be globally replaced in blockly-all.js with:

@@ -23,8 +23,6 @@
  */
 'use strict';
 
-Blockly.JavaScript = Blockly.Generator.get('JavaScript');
-
 Blockly.JavaScript.definitions_ = {}
 
 /**

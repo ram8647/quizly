@@ -103,8 +103,7 @@ Blockly.Quizme.eval_math_compare_topblock = function() {
 Blockly.Quizme.eval = function(block) {
   if (block == null)
       return undefined;
-  var gen = Blockly.Generator.get("JavaScript");
-  var code = gen.blockToCode(block);
+  var code = Blockly.JavaScript.blockToCode(block);
   var value = eval(code[0]);
   console.log("RAM: evaluating " + code[0] + " to " + value);
   return value;

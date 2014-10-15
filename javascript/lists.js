@@ -23,8 +23,6 @@
  */
 'use strict';
 
-Blockly.JavaScript = Blockly.Generator.get('JavaScript');
-
 Blockly.JavaScript.lists_create_empty = function() {
   // Create an empty list.
   return ['[]', Blockly.JavaScript.ORDER_ATOMIC];

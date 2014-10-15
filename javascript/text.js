@@ -23,8 +23,6 @@
  */
 'use strict';
 
-Blockly.JavaScript = Blockly.Generator.get('JavaScript');
-
 Blockly.JavaScript.text = function() {
   // Text value.
   var code = Blockly.JavaScript.quote_(this.getTitleValue('TEXT'));

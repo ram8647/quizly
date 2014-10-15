@@ -23,8 +23,6 @@
  */
 'use strict';
 
-Blockly.JavaScript = Blockly.Generator.get('JavaScript');
-
 // Global variable definition block                                                                                                                                                                         
 Blockly.JavaScript.global_declaration = function() {
   var name = this.getTitleValue('NAME');
@@ -32,7 +30,6 @@ Blockly.JavaScript.global_declaration = function() {
   return 'global_' + name + ' = ' + argument0 + ';\n';
 };
 
-//Blockly.JavaScript.variables_get = function() {
 Blockly.JavaScript.lexical_variable_get = function() {
   // Variable getter.
   var code = Blockly.JavaScript.variableDB_.getName(this.getTitleValue('VAR'),
@@ -40,7 +37,6 @@ Blockly.JavaScript.lexical_variable_get = function() {
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
-//Blockly.JavaScript.variables_set = function() {
 Blockly.JavaScript.lexical_variable_set = function() {
   // Variable setter.
   var argument0 = Blockly.JavaScript.valueToCode(this, 'VALUE',

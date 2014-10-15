@@ -232,7 +232,7 @@ function initQuizMaker(path) {
   // Initialize the structures that handles scoped variables
   Blockly.BlocklyEditor.startquizme();
   initQuizmeLanguage();
-  Blockly.languageTree = initToolboxLanguageTree(Blockly.Language);
+  Blockly.languageTree = initToolboxLanguageTree(Blockly.Blocks);
   Blockly.Toolbox.init();
 }
 

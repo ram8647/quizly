@@ -1,8 +1,9 @@
 /**
+ * @license
  * Visual Blocks Editor
  *
  * Copyright 2011 Google Inc.
- * http://blockly.googlecode.com/
+ * https://blockly.googlecode.com/
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,9 +27,12 @@
 goog.provide('Blockly.Toolbox');
 
 goog.require('Blockly.Flyout');
+goog.require('goog.events.BrowserFeature');
+goog.require('goog.html.SafeHtml');
 goog.require('goog.style');
 goog.require('goog.ui.tree.TreeControl');
 goog.require('goog.ui.tree.TreeNode');
+
 
 /**
  * Width of the toolbox.
@@ -69,8 +73,7 @@ Blockly.Toolbox.CONFIG_ = {
  */
 Blockly.Toolbox.createDom = function(svg, container) {
   // Create an HTML container for the Toolbox menu.
-  Blockly.Toolbox.HtmlDiv = goog.dom.createDom('div',
-      {'class': 'blocklyToolboxDiv'});
+  Blockly.Toolbox.HtmlDiv = goog.dom.createDom('div', 'blocklyToolboxDiv');
   Blockly.Toolbox.HtmlDiv.setAttribute('dir', Blockly.RTL ? 'RTL' : 'LTR');
   container.appendChild(Blockly.Toolbox.HtmlDiv);
 
@@ -102,7 +105,8 @@ Blockly.Toolbox.init = function() {
       Blockly.pathToBlockly + 'media/1x1.gif';
   Blockly.Toolbox.CONFIG_['cssCollapsedFolderIcon'] =
       'blocklyTreeIconClosed' + (Blockly.RTL ? 'Rtl' : 'Ltr');
-  var tree = new Blockly.Toolbox.TreeControl('root', Blockly.Toolbox.CONFIG_);
+  var tree = new Blockly.Toolbox.TreeControl(goog.html.SafeHtml.EMPTY,
+                                             Blockly.Toolbox.CONFIG_);
   Blockly.Toolbox.tree_ = tree;
   tree.setShowRootNode(false);
   tree.setShowLines(false);
@@ -110,8 +114,7 @@ Blockly.Toolbox.init = function() {
   tree.setSelectedItem(null);
 
   Blockly.Toolbox.HtmlDiv.style.display = 'block';
-  Blockly.Toolbox.flyout_.init(Blockly.mainWorkspace,
-      Blockly.getMainWorkspaceMetrics, true);
+  Blockly.Toolbox.flyout_.init(Blockly.mainWorkspace, true);
   Blockly.Toolbox.populate_();
   tree.render(Blockly.Toolbox.HtmlDiv);
 
@@ -130,14 +133,17 @@ Blockly.Toolbox.position_ = function() {
   var svgBox = goog.style.getBorderBox(Blockly.svg);
   var svgSize = Blockly.svgSize();
   if (Blockly.RTL) {
-    var x = svgSize.left + 1;
-    x += svgSize.width - treeDiv.offsetWidth;
-    treeDiv.style.left = x + 'px';
+    var xy = Blockly.convertCoordinates(0, 0, false);
+    treeDiv.style.left = (xy.x + svgSize.width - treeDiv.offsetWidth) + 'px';
   } else {
     treeDiv.style.marginLeft = svgBox.left;
   }
   treeDiv.style.height = (svgSize.height + 1) + 'px';
   Blockly.Toolbox.width = treeDiv.offsetWidth;
+  if (!Blockly.RTL) {
+    // For some reason the LTR toolbox now reports as 1px too wide.
+    Blockly.Toolbox.width -= 1;
+  }
 };
 
 /**
@@ -146,6 +152,7 @@ Blockly.Toolbox.position_ = function() {
  */
 Blockly.Toolbox.populate_ = function() {
   var rootOut = Blockly.Toolbox.tree_;
+  rootOut.removeChildren();  // Delete any existing content.
   rootOut.blocks = [];
   function syncTrees(treeIn, treeOut) {
     for (var i = 0, childIn; childIn = treeIn.childNodes[i]; i++) {
@@ -191,7 +198,7 @@ Blockly.Toolbox.clearSelection = function() {
 
 /**
  * Extention of a TreeControl object that uses a custom tree node.
- * @param {string} html The HTML content of the node label.
+ * @param {!goog.html.SafeHtml} html The HTML content of the node label.
  * @param {Object=} opt_config The configuration for the tree. See
  *    goog.ui.tree.TreeControl.DefaultConfig. If not specified, a default config
  *    will be used.
@@ -205,14 +212,46 @@ Blockly.Toolbox.TreeControl = function(html, opt_config, opt_domHelper) {
 goog.inherits(Blockly.Toolbox.TreeControl, goog.ui.tree.TreeControl);
 
 /**
- * Creates a new tree node using a custom tree node.
- * @param {string} html The html content of the node label.
- * @return {goog.ui.tree.TreeNode} The new item.
+ * Adds touch handling to TreeControl.
  * @override
  */
-Blockly.Toolbox.TreeControl.prototype.createNode = function(html) {
-  return new Blockly.Toolbox.TreeNode(html || '', this.getConfig(),
-      this.getDomHelper());
+Blockly.Toolbox.TreeControl.prototype.enterDocument = function() {
+  Blockly.Toolbox.TreeControl.superClass_.enterDocument.call(this);
+
+  // Add touch handler.
+  if (goog.events.BrowserFeature.TOUCH_ENABLED) {
+    var el = this.getElement();
+    Blockly.bindEvent_(el, goog.events.EventType.TOUCHSTART, this,
+        this.handleTouchEvent_);
+  }
+};
+/**
+ * Handles touch events.
+ * @param {!goog.events.BrowserEvent} e The browser event.
+ * @private
+ */
+Blockly.Toolbox.TreeControl.prototype.handleTouchEvent_ = function(e) {
+  e.preventDefault();
+  var node = this.getNodeFromEvent_(e);
+  if (node && e.type === goog.events.EventType.TOUCHSTART) {
+    // Fire asynchronously since onMouseDown takes long enough that the browser
+    // would fire the default mouse event before this method returns.
+    window.setTimeout(function() {
+      node.onMouseDown(e);  // Same behaviour for click and touch.
+    }, 1);
+  }
+};
+
+/**
+ * Creates a new tree node using a custom tree node.
+ * @param {string=} html The HTML content of the node label.
+ * @return {!goog.ui.tree.TreeNode} The new item.
+ * @override
+ */
+Blockly.Toolbox.TreeControl.prototype.createNode = function(opt_html) {
+  return new Blockly.Toolbox.TreeNode(opt_html ?
+      goog.html.SafeHtml.htmlEscape(opt_html) : goog.html.SafeHtml.EMPTY,
+      this.getConfig(), this.getDomHelper());
 };
 
 /**
@@ -224,9 +263,43 @@ Blockly.Toolbox.TreeControl.prototype.setSelectedItem = function(node) {
   if (this.selectedItem_ == node) {
     return;
   }
+
+  // Quizly:  Modified for App Inventor procedures
   goog.ui.tree.TreeControl.prototype.setSelectedItem.call(this, node);
   if (node && node.blocks && node.blocks.length) {
+    if (node.html_.privateDoNotAccessOrElseSafeHtmlWrappedValue_ == "Procedures") {
+      var newBlockSet = [];
+      for(var i=0; i < node.blocks.length; i++) {
+        var blk = node.blocks[i];
+        var type = blk.getAttribute('type');
+
+        // Add arguments to procedure call blocks
+        if (type == "procedures_callreturn" || type  == "procedures_callnoreturn") {
+          var blocks = Blockly.Toolbox.addArgumentsToProcedureCall(blk);
+	  //          blk = Blockly.Toolbox.addArgumentsToProcedureCall(blk);
+        }
+
+        // Include callnoreturn only if at least one defnoreturn declaration
+        if (type == "procedures_callnoreturn" && JSON.stringify(Blockly.AIProcedure.getProcedureNames(false)) != JSON.stringify([Blockly.FieldProcedure.defaultValue])) {
+          for (var k=0; k < blocks.length; k++) {
+            newBlockSet.push(blocks[k]);
+	  }
+        }
+        // Include callreturn only if at least one defreturn declaration
+        else if (type  == "procedures_callreturn" && JSON.stringify(Blockly.AIProcedure.getProcedureNames(true)) != JSON.stringify([Blockly.FieldProcedure.defaultValue])) {
+          for (var k=0; k < blocks.length; k++) {
+            newBlockSet.push(blocks[k]);
+	  }
+	  //          newBlockSet.push(blk);
+        }
+        else if (type != "procedures_callreturn" && type != "procedures_callnoreturn") {
+          newBlockSet.push(blk);
+	}
+      }
+      Blockly.Toolbox.flyout_.show(newBlockSet);
+    }  else {
     Blockly.Toolbox.flyout_.show(node.blocks);
+    }
   } else {
     // Hide the flyout.
     Blockly.Toolbox.flyout_.hide();
@@ -234,8 +307,53 @@ Blockly.Toolbox.TreeControl.prototype.setSelectedItem = function(node) {
 };
 
 /**
+ *  Quizly: Adds arguments (parameters) to procedure call blocks, either
+ *  callnoreturn or callreturn.
+ *
+ *  Constructs an xml representation of each procedure call block with
+ *   its name and arguments and then converts that to a block.
+ *
+ *  @param {Object} A bare-bones procedure call block containing its type.
+ *  @return {array} An array of procedure call blocks of the same type.
+ */
+Blockly.Toolbox.addArgumentsToProcedureCall = function(blk) {
+  var defs;
+  var def;
+  var type = blk.getAttribute('type');
+  var blocks = [];  // Contains the constructed blocks
+
+  // Get the procedure definitions for this type (return or no return)
+  if (type == "procedures_callreturn")
+    defs = Blockly.AIProcedure.getProcedureDeclarationBlocks(true);
+  else
+    defs = Blockly.AIProcedure.getProcedureDeclarationBlocks(false);
+
+  // For each procedure definition, construct an Xml string
+  for (var i=0; i < defs.length; i++) {
+    var xmlstr = '<xml><block xmlns="http://www.w3.org/1999/xhtml" type="' + type + '" inline="false"><mutation name="';
+    var def = defs[i];
+
+    // Get the procedure name and arguments from the definition
+    var procname = def.inputList[0].fieldRow[1].text_;
+    xmlstr = xmlstr.concat(procname + '">');
+    var args = def.arguments_;
+    for (var j=0; j < args.length; j++) {
+      xmlstr = xmlstr.concat('<arg name="' + args[j] + '"></arg>');
+    }
+    xmlstr = xmlstr.concat('</mutation><field name="PROCNAME">' + procname + '</field></block></xml>');
+
+    // Convert the Xml string into a block and add it to blocks array
+    var dom = Blockly.Xml.textToDom(xmlstr);
+    var newblk = dom.children[0];
+    blocks.push(newblk);
+  }
+  return blocks;
+}
+
+
+/**
  * An single node in the tree, customized for Blockly's UI.
- * @param {string} html The html content of the node label.
+ * @param {!goog.html.SafeHtml} html The HTML content of the node label.
  * @param {Object=} opt_config The configuration for the tree. See
  *    goog.ui.tree.TreeControl.DefaultConfig. If not specified, a default config
  *    will be used.
@@ -257,22 +375,12 @@ Blockly.Toolbox.TreeNode = function(html, opt_config, opt_domHelper) {
 goog.inherits(Blockly.Toolbox.TreeNode, goog.ui.tree.TreeNode);
 
 /**
- * Do not show the +/- icon.
- * @return {string} The source for the icon.
- * @override
- */
-Blockly.Toolbox.TreeNode.prototype.getExpandIconHtml = function() {
-  return '<span></span>';
-};
-
-/**
  * Supress population of the +/- icon.
- * @return {null} Null.
- * @protected
+ * @return {!goog.html.SafeHtml} The source for the icon.
  * @override
  */
-Blockly.Toolbox.TreeNode.prototype.getExpandIconElement = function() {
-  return null;
+goog.ui.tree.BaseNode.prototype.getExpandIconSafeHtml = function() {
+  return goog.html.SafeHtml.create('span');
 };
 
 /**
@@ -297,6 +405,7 @@ Blockly.Toolbox.TreeNode.prototype.onMouseDown = function(e) {
  * Supress the inherited double-click behaviour.
  * @param {!goog.events.BrowserEvent} e The browser event.
  * @override
+ * @private
  */
 Blockly.Toolbox.TreeNode.prototype.onDoubleClick_ = function(e) {
   // NOP.

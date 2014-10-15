@@ -9,8 +9,6 @@
  * @author ralph.morelli@trincoll.edu (Ralph Morelli)
  */
 
-Blockly.JavaScript = Blockly.Generator.get('JavaScript');
-
 /**
  * Returns a function that takes no arguments, generates JavaScript for an event handler declaration block
  * and returns the generated code string.
@@ -19,7 +17,7 @@ Blockly.JavaScript = Blockly.Generator.get('JavaScript');
  */
 Blockly.JavaScript.event = function() {
   console.log('Generating event code for ' + this.type);
-  var funcName = this.instanceName + this.eventType.name;
+  var funcName = this.instanceName + this.eventName;
   var body = '';
   for (var i = 0; i < this.childBlocks_.length; i++) {
     body += Blockly.JavaScript.blockToCode(this.childBlocks_[i]);

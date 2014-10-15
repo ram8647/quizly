@@ -23,8 +23,6 @@
  */
 'use strict';
 
-Blockly.JavaScript = Blockly.Generator.get('JavaScript');
-
 Blockly.JavaScript.math_number = function() {
   // Numeric value.
   var code = window.parseFloat(this.getTitleValue('NUM'));
