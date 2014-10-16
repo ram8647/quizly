@@ -3,6 +3,26 @@ It assumes that AI upgrades include upgrades to Blockly core files, such as
 toolbox.js, even though these are not used by AI.  If that is not the case, it
 will be necessary to get some files (e.g., toolbox.js) directly from Blockly.
 
+REVISED 10/16/14
+---------------
+* Replace quizly-gcb-blockly-all.js with:
+   [AppinventorRoot]/build/blocklyeditor/blockly-all.js
+  The quizly-gcb-blockly-all.js is the compiled javascript, kept to under 1 Mb
+  so that it can be loaded by GCB. For other embeds, a larger blockly-all.js
+  file can be used.  plovr.config can be modified to produce different 
+  compilations.
+
+* Run and debug Quizly to determine what needs to be changed in blockly-all.js 
+  and revise the appropriate source files, which should be stored
+  in appinv-revised. 
+
+* Revise plovr.config to reflect which App Inventor files have
+  been modified to support Quizly.
+
+* Create a new quizly-blockly-all.js by running plovr.jar.
+
+* Create a tarball and distribute.
+
 QUICK OVERVIEW
 --------------
 
