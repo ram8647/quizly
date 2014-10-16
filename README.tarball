@@ -1,0 +1,25 @@
+# Here's the command used to create a development-version tarball and exclude all hidden files:
+
+tar -cv --exclude '.*' --exclude 'appinventor' -f quizly-dev-101614.tar quizly/ 
+
+# Tar for quizly
+# --------------
+# When making an executable you can exclude more stuff
+# This command compresses as well
+#  For now, to distinguish versions, we use the month and day in the tarball name.
+
+# The executable version of Quizly does not need to include the closure library. The necessary
+#  closure code is included in quizly-blockly-all.js.
+# The executable does not need to include the plovr.jar file.  That's used only for development.
+
+tar -cvz --exclude '.*' --exclude '*~'  --exclude 'appinventor' --exclude 'closure-library-read-only' --exclude 'plovr*.jar'  -f quizly-1018.tar quizly/ 
+
+# Tar for GCB-Quizly (Course Builder)
+# -----------------------------------
+
+tar -cvz --exclude '.*' --exclude '*~'  --exclude 'appinventor' --exclude 'closure-library-read-only' --exclude 'plovr*.jar'  --exclude 'apps' -f quizly-gcb-101614.tar quizly/ 
+
+
+
+
+
