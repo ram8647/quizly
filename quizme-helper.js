@@ -138,6 +138,17 @@ function initQuizme(quizname, quizmepath, arglist) {
     return s;
   }
 
+  window.parent.BlocklyPanel_callToggleWarning = function() {
+    Blockly.WarningHandler.showWarningsToggle = !Blockly.WarningHandler.showWarningsToggle;
+    if (Blockly.WarningHandler.showWarningsToggle) {
+      Blockly.WarningHandler.checkAllBlocksForWarningsAndErrors();
+    } else {
+      Blockly.WarningHandler.hideWarnings();
+    }
+    Blockly.mainWorkspace.warningIndicator.updateWarningToggleText();
+    return;
+  }
+
   // Save the quizname inside the document in case of redo
   if (quizname) {
     var qname = maindocument.getElementById('quizname');
