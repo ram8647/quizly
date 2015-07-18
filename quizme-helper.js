@@ -454,7 +454,7 @@ function initToolboxBuiltins(language, categories) {
  * @param categores -- array of category names -- e.g., Button, Label
  */
 function initToolboxComponents(components, categories) {
-  if (components.length != 0) {
+  if (components && components.length != 0) {
     categories[''] = '';
     categories['COMPONENTS'] = '';
     for (var i=0; i < components.length; i++) {
