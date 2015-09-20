@@ -81,7 +81,7 @@ var PROCEDURES_BLOCKS = ["procedures_callnoreturn", "procedures_callreturn", "pr
 var CONTROLS_BLOCKS = ["controls_choose", "controls_do_then_return", "controls_if", "controls_if_else", "controls_if_elseif","controls_if_if",  
 		       "controls_while", "controls_forEach" ]; //  "controls_forRange"
 var LISTS_BLOCKS = ["lists_create_with", "lists_create_with_item", "lists_is_empty", "lists_length"]; //"lists_add_items", "lists_add_items_item", "lists_append_list", "lists_create_with_item", "lists_insert_item", "lists_is_in", "lists_is_list", "lists_pick_random_item", "lists_remove_item", "lists_replace_item", "lists_select_item"
-var TEXT_BLOCKS = ["text", "text_join", "text_length","text_isEmpty","text_trim","text_changeCase"]; // "text_join_item", "text_compare", "text_starts_at", "text_contains", "text_split", "text_split_at_spaces", "text_segment", "text_replace_all"
+var TEXT_BLOCKS = ["text", "text_join", "text_join_item","text_length","text_isEmpty","text_trim","text_changeCase"]; // "text_join_item", "text_compare", "text_starts_at", "text_contains", "text_split", "text_split_at_spaces", "text_segment", "text_replace_all"
 var COLOR_BLOCKS = ["color_black", "color_white", "color_red", "color_pink", "color_orange", "color_yellow", "color_green", "color_cyan", "color_blue", "color_magenta", "color_light_gray", 
                     "color_gray", "color_dark_gray", "color_make_color", "color_split_color", ];
 var TOPLEVEL_BLOCKS = ["mutator_container", "InstantInTime", "YailTypeToBlocklyType", "YailTypeToBlocklyTypeMap","setTooltip","wrapSentence", "component_event", "component_method", "component_set_get", "component_component_block"];
@@ -858,6 +858,9 @@ Blockly.Quizme.evaluateXmlBlocksAnswerType = function(helperObj, solution, mappi
   result = Blockly.Quizme.removeIDs(result);
   result = Blockly.Quizme.removeTag("xml", result);
 
+  // HACK:  Replace 'logic_false' with logic_boolean' in user's answer
+  result = Blockly.Quizme.falseToBoolean(result);
+
   if (mappings) {
     solution = mapQuizVariables(helperObj, solution, mappings);
   } else if (helperObj[helperObj.quizName].dictionary) {
@@ -1346,6 +1349,24 @@ Blockly.Quizme.removeIDs = function(str) {
     str = str.substring(0, startId) + str.substring(endId+1);
     startId = str.indexOf(" id=");
     endId = str.indexOf('"', startId+5);
+  }
+  return str;
+}
+
+/**
+ * HACK: Replace logic_false with logic_boolean
+ *  This is to compensate for an App Inventor bug
+ * @param str is a string possibly containing 'type="logic_false"' 
+ *  These are replaced by 'type="logic_boolena"'
+ */
+Blockly.Quizme.falseToBoolean = function(str) {
+  var start = str.indexOf('type="logic_false"');
+  var len = 'type="logic_false"'.length;
+  var end = start + len;
+  while (start != -1) {
+    str = str.substring(0, start) + 'type="logic_boolean"' + str.substring(end );
+    start = str.indexOf('type="logic_false"');
+    end = start + len;
   }
   return str;
 }
