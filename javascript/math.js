@@ -419,10 +419,10 @@ Blockly.JavaScript.math_random_int = function() {
         'math_random_int', Blockly.Generator.NAME_TYPE);
     Blockly.JavaScript.math_random_int.random_function = functionName;
     var func = [];
-    func.push('function ' + functionName + '(a, b) {');
+    func.push('function ' + functionName + '(a, b, c) {');
     func.push('  if (a > b) {');
     func.push('    // Swap a and b to ensure a is smaller.');
-    func.push('    var c = a;');
+    func.push('    c = a;');
     func.push('    a = b;');
     func.push('    b = c;');
     func.push('  }');

@@ -56,6 +56,7 @@
 
 'use strict';
 
+var ED_X = false;
 var DEBUG = true;
 var SELECTOR_OPTION = 'selector';
 var BACKPACK_OPTION = 'backpack';
@@ -81,7 +82,7 @@ var PROCEDURES_BLOCKS = ["procedures_callnoreturn", "procedures_callreturn", "pr
 var CONTROLS_BLOCKS = ["controls_choose", "controls_do_then_return", "controls_if", "controls_if_else", "controls_if_elseif","controls_if_if",  
 		       "controls_while", "controls_forEach" ]; //  "controls_forRange"
 var LISTS_BLOCKS = ["lists_create_with", "lists_create_with_item", "lists_is_empty", "lists_length"]; //"lists_add_items", "lists_add_items_item", "lists_append_list", "lists_create_with_item", "lists_insert_item", "lists_is_in", "lists_is_list", "lists_pick_random_item", "lists_remove_item", "lists_replace_item", "lists_select_item"
-var TEXT_BLOCKS = ["text", "text_join", "text_join_item","text_length","text_isEmpty","text_trim","text_changeCase", "text_join_item", "text_compare"]; //, "text_starts_at", "text_contains", "text_split", "text_split_at_spaces", "text_segment", "text_replace_all"];  
+var TEXT_BLOCKS = ["text", "text_join", "text_join_item","text_length","text_isEmpty","text_trim","text_changeCase", "text_compare"]; //, "text_starts_at", "text_contains", "text_split", "text_split_at_spaces", "text_segment", "text_replace_all"
 var COLOR_BLOCKS = ["color_black", "color_white", "color_red", "color_pink", "color_orange", "color_yellow", "color_green", "color_cyan", "color_blue", "color_magenta", "color_light_gray", 
                     "color_gray", "color_dark_gray", "color_make_color", "color_split_color", ];
 var TOPLEVEL_BLOCKS = ["mutator_container", "InstantInTime", "YailTypeToBlocklyType", "YailTypeToBlocklyTypeMap","setTooltip","wrapSentence", "component_event", "component_method", "component_set_get", "component_component_block"];
@@ -90,6 +91,10 @@ var TOPLEVEL_BLOCKS = ["mutator_container", "InstantInTime", "YailTypeToBlocklyT
 // Path to images used in UI
 var imgpath = "./quizly/media/";
 var maindocument = parent.document;
+
+var feedback_index = 0;    // Global feedback index
+var MAX_TRIES = 7;
+var answer_tries = 0;     //  How many wrong answers
 
 Blockly.hello = function(command, quizname) {
   if (DEBUG) console.log("RAM: Blockly says " + command);
@@ -204,6 +209,11 @@ function initQuizme(quizname, quizmepath, arglist) {
 
   // Set up the quiz selector drop down, if there is one
   var quizselector = maindocument.getElementById('quiz_selector');
+
+  // ED_X suppresses quizselector
+  if (ED_X) {
+    quizselector = false;
+  }
   if (quizselector) {
     var quizzes = Blockly.Quizme.quiznames;
     var quiznames = Blockly.Quizme.quiznames_display;
@@ -263,6 +273,11 @@ function parseArgList(arglist) {
     for (var i = 0; i < params.length; i++) {
       var keyval = params[i].split('=');
       Blockly.Quizme.options[keyval[0]] = keyval[1];
+    }
+
+    // >>>>>>>>>>>>>>>>>> edX  No selector  <<<<<<<<<<<<<<<<<
+    if (ED_X) {
+      Blockly.Quizme.options[SELECTOR_OPTION]='hidden';
     }
   }
 }
@@ -342,8 +357,14 @@ function showQuiz(quizname) {
 
   if (DEBUG) console.log("RAM: quizname = " + quizname);
   var button = maindocument.getElementById('submit_new_toggle');
-  if (button) 
-    button.innerHTML = "Submit";
+  if (button) {
+    if (ED_X) {
+      button.innerHTML = "Test My Solution";
+      button.style.width="220";
+    } else {
+      button.innerHTML = "Submit";
+    }
+  }
   Blockly.Quizme.quizName = quizname;
   Blockly.Quizme.description = Blockly.Quizme[quizname].description;
   Blockly.Quizme.question_type = Blockly.Quizme[quizname].problem_type;
@@ -699,9 +720,18 @@ function renderQuiz() {
   var hint_html = maindocument.getElementById('hint_html');
   if (hint_html)
     hint_html.innerHTML = "";
+
   var link_html = maindocument.getElementById('link_html');
-  if (link_html)
-    link_html.innerHTML = "Tutorial: " + Blockly.Quizme.description;
+  if (link_html) {
+    if (ED_X) {
+      link_html.style.visibility = "hidden";
+    } else if (Blockly.Quizme.description.indexOf("href") != -1) {  // Show only if there's href
+       link_html.innerHTML = "Tutorial: " + Blockly.Quizme.description;
+    } else {
+       link_html.innerHTML = "";
+    }
+  }
+
   var xmlStr = Blockly.Xml.domToText(Blockly.Quizme.xml);
   var mappedStr = mapQuizVariables(Blockly.Quizme, xmlStr, Blockly.Quizme.VariableMappings);
   if (mappedStr)
@@ -716,14 +746,16 @@ function renderQuiz() {
 function submitNewToggle() {
   if (DEBUG) console.log("RAM: submitNewToggle");
   var buttonLabel = maindocument.getElementById('submit_new_toggle').innerHTML;
-  var result_element = maindocument.getElementById('quiz_result')
-  if (buttonLabel == 'Submit') {
+  var result_element = maindocument.getElementById('quiz_result');
+  
+  if (ED_X) {
+    Blockly.Quizme.evaluateUserAnswer();
+  } else if (buttonLabel == 'Submit') {
     Blockly.Quizme.evaluateUserAnswer();
   } else {
     showQuiz();
   }
 }
-
 
 /**
  * Handles a onclick for the Hint button
@@ -737,10 +769,10 @@ function processHint(helperObj) {
   var hint_element = maindocument.getElementById('hint_html');
   if (helperObj.hintCounter < helperObj.hints.length) {
     var hint = mapQuizVariables(Blockly.Quizme, hints[count], helperObj.VariableMappings);
-    hintHTML = '<font color="magenta">Hint: ' + hint  + '</font>';
+    hintHTML = '<font color="#FF66FF">' + hint  + '</font>';
     ++helperObj.hintCounter;
   } else {
-    hintHTML = '<font color="red">Sorry, no more hints available</font>.';
+    hintHTML = '<font color="#FF66FF">Sorry, no more hints available.</font>';
     helperObj.hintCounter = 0;
   }
   hint_element.innerHTML = hintHTML;
@@ -763,9 +795,41 @@ function giveHint() {
  */
 Blockly.Quizme.giveFeedback = function(isCorrect, correctStr, mistakeStr, redo) {
     if (DEBUG) console.log("RAM: givefeedback() isCorrect = " + isCorrect);
+
+    if (ED_X) {
+      var feedbacks = ["Oops! Your solution contains a mistake. Try again.", 
+		       "Sorry. Your solution is not correct. Try again.", 
+		       "There is a mistake in your solution.  Have you looked at the hints?",  
+		       "Drat! Your solution contains an error. Have you tried the hints?",
+		       "Oops. That's not quite right. Revise and try again."];
+
+      // Pick a random feedback string
+      var index = Math.floor(Math.random() * feedbacks.length );
+      while (index == feedback_index) {
+	index = Math.floor(Math.random() * feedbacks.length );
+      }
+      feedback_index = index;
+      mistakeStr = feedbacks[index];    
+
+      if (answer_tries > MAX_TRIES) {
+	mistakeStr = "Looks like you're struggling on this one.<br/> Try clicking <b>CHECK</b> and the  <b>SHOW ANSWER</b> button will appear.";
+	answer_tries = 0;
+      }
+
+      correctStr = "Good. That's correct. Remember to click the <b>CHECK</b> button below.";
+    }
+
     var imgpath = Blockly.Quizme.imgpath;
-    var correctMsg = "<img src="  + "." + imgpath + "smiley.jpg" + " > " + correctStr;
-    var errMsg = "<img src="  + "." + imgpath + "frown.jpg" + " > " + mistakeStr;
+    var correctMsg;
+    var errMsg;
+    if (ED_X) {
+      correctMsg = "<img height=\"30\" src="  + "./"  + "smiley.jpg" + " > " + correctStr;
+      errMsg = "<img height=\"30\" src="  + "./"  + "frown.jpg" + " > " + mistakeStr;
+    } else {
+      correctMsg = "<img src="  + "." + imgpath + "smiley.jpg" + " > " + correctStr;
+      errMsg = "<img src="  + "." + imgpath + "frown.jpg" + " > " + mistakeStr;
+    }
+
     var result_html = maindocument.getElementById('quiz_result');
     
     if (!result_html) {
@@ -774,7 +838,22 @@ Blockly.Quizme.giveFeedback = function(isCorrect, correctStr, mistakeStr, redo) 
     if (!result_html) {
       result_html = window.parent.document.getElementById('result_html');   // Try here!
     }
+
+    // edX:  We save the workspace as a String
+    var wspace = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
+    var wsStr = Blockly.Xml.domToText(wspace);
+    if (ED_X) {
+        console.log("RAM >>>>>>>>>>>>>> Quizme-helper updating edX state <<<<<<<<<<<<<<<<");
+    }
+
     if (isCorrect) {
+
+      //  The following line interfaces with edX's state
+      if (ED_X) {
+        answer_tries = 0;  // Used only in edX currently
+        parent.QuizlyEdX.updateEdXState(true, wsStr);
+      }
+
       if (result_html) {
         result_html.innerHTML = correctMsg;
         result_html.hidden = false;
@@ -782,6 +861,13 @@ Blockly.Quizme.giveFeedback = function(isCorrect, correctStr, mistakeStr, redo) 
         alert(correctStr);
       }
     } else {
+
+      //  The following line interfaces with edX's state
+      if (ED_X) {
+        answer_tries += 1;;
+        parent.QuizlyEdX.updateEdXState(false, wsStr);
+      }
+
       if (result_html) {
         result_html.innerHTML = errMsg;
         result_html.hidden = false;
@@ -791,7 +877,11 @@ Blockly.Quizme.giveFeedback = function(isCorrect, correctStr, mistakeStr, redo) 
       var btn = maindocument.getElementById('submit_new_toggle');
       if (redo == true) {
         if (btn) {
-          btn.innerHTML = "Submit";
+          if (ED_X) {
+            btn.innerHTML = "Test My Solution";
+	  } else {
+	    btn.innerHTML = "Submit";
+	  }
 	}
       }
     }
@@ -868,6 +958,7 @@ Blockly.Quizme.evaluateXmlBlocksAnswerType = function(helperObj, solution, mappi
   }
     
   solution = Blockly.Quizme.removeXY(solution);
+  solution = Blockly.Quizme.removeIDs(solution);
   solution = Blockly.Quizme.removeTag("xml", solution);
 
   Blockly.Quizme.giveFeedback(result.indexOf(solution) != -1, 
@@ -1016,7 +1107,7 @@ return [result,errmsg];
  *
  */
 Blockly.Quizme.evaluateEvalProcedureDef = function(helperObj) {
-  console.log("RAM: evaluateEvalProcedureDef() for quiz " + helperObj.quizName);
+  if (DEBUG) console.log("RAM: evaluateEvalProcedureDef() for quiz " + helperObj.quizName);
 
   var qname = helperObj.quizName;
 
@@ -1043,6 +1134,7 @@ Blockly.Quizme.evaluateEvalProcedureDef = function(helperObj) {
  * @param stdFn, code for testing the correct function def
  * @param globals, an array of global variable names used in error message where globals[0] is
  *  the name of the global variable corresponding to our internal variable 'g0', etc.
+ * TODO:  Need to make this work when random_int() is involved. 
  */
 Blockly.Quizme.compare = function(stdFn,testFn,globals)  {
    // Evaluate both functions producing objects g1, g2 containin global bindings of the form 
@@ -1063,8 +1155,13 @@ Blockly.Quizme.compare = function(stdFn,testFn,globals)  {
 
   for (var name in resultTestFn) {
     compare = name in resultStdFn;
-    if (compare) 
-      compare = resultTestFn[name]==resultStdFn[name];
+    if (compare) {
+      if (resultTestFn[name] instanceof Array) {
+	compare = Blockly.Quizme.compareArrays(resultTestFn[name], resultStdFn[name]);
+      } else {
+        compare = resultTestFn[name]==resultStdFn[name];
+      }
+    }
     if (!compare) {
       var ndx = parseInt(name.substring(1));
       errmsg = "Fails on test case for variable " + globals[ndx] + ". Correct value should be  " + resultStdFn[name] + ". Your value is " + resultTestFn[name];
@@ -1072,6 +1169,33 @@ Blockly.Quizme.compare = function(stdFn,testFn,globals)  {
     }
   }
   return [compare, errmsg];
+}
+
+/**
+ * Generates an array string for list variables
+ */
+Blockly.Quizme.generateArrayStr = function() {
+  var len = Math.floor(Math.random()*10) + 3;
+  var arrStr = "[";;
+  for (var i = 0; i < len; i++) {
+    var n = Math.floor(Math.random()*20);
+    arrStr += n + ",";
+  }
+  arrStr += Math.floor(Math.random()*20) + "]";
+  return arrStr;
+}
+
+/**
+ * Returns true if two arrays are equal
+ */
+Blockly.Quizme.compareArrays = function(arr1, arr2) {
+    if (arr1.length != arr2.length)
+      return false;
+    for (var i = 0; i < arr1.length; i++) {
+      if (arr1[i] != arr2[i]) 
+        return false;
+    }
+    return true;
 }
 
 /**
@@ -1105,7 +1229,7 @@ Blockly.Quizme.setupProcedureDefinition = function(qname, helperObj, blocks) {
  * @param helperObj -- object containing quizzes data
  */
 Blockly.Quizme.testProcedureAgainstStandard = function(stdFn, testFn, helperObj) {
-  console.log("RAM: Testing procedure against standard for quiz " + helperObj.quizName);
+  if (DEBUG) console.log("RAM: Testing procedure against standard for quiz " + helperObj.quizName);
   
   var procName = getFunctionName(helperObj);         // Extract procedure name and parameter
   if (testFn.indexOf(procName) == -1) {
@@ -1122,10 +1246,17 @@ Blockly.Quizme.testProcedureAgainstStandard = function(stdFn, testFn, helperObj)
   stdFn += "function test() {";
    
   // In the test function body, generate a random assignment statement for each global variable
+  // Updated to work for list variables, which must be named with list in their names
   for (var i1 = 0; i1 <globals.length; i1++) {
-    var i2 = Math.floor(Math.random()*10) +1;             // random number from 1 to 10
-    testFn += "\n " + globals[i1] + " = " + i2 +";\n";
-    stdFn += "\n " + globals[i1] + " = " + i2 +";\n";
+    if (globals[i1].toLowerCase().indexOf('list') != -1) {
+      var arrStr = Blockly.Quizme.generateArrayStr();
+      testFn += "\n " + globals[i1] + " = " + arrStr + ";\n";
+      stdFn += "\n " + globals[i1] + " = "  + arrStr + ";\n";
+    } else {
+      var i2 = Math.floor(Math.random()*10) +1;             // random number from 1 to 10
+      testFn += "\n " + globals[i1] + " = " + i2 +";\n";
+      stdFn += "\n " + globals[i1] + " = " + i2 +";\n";
+    }
   };
 
   // Add a call to the defined procedure, including argument values by type
@@ -1279,7 +1410,7 @@ function generateProcedureCall(procname, params, paramtypes, stdFn, testFn) {
  *  values of the global variables match those in the solution.
  */
 Blockly.Quizme.evaluateStatement = function(helperObj) {
-  console.log("RAM: evaluateEvalProcedureDef() for quiz " + helperObj.quizName);
+  if (DEBUG) console.log("RAM: evaluateEvalProcedureDef() for quiz " + helperObj.quizName);
 
   var qname = helperObj.quizName;
 
