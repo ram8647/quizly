@@ -92,8 +92,7 @@ var TOPLEVEL_BLOCKS = ["mutator_container", "InstantInTime", "YailTypeToBlocklyT
 var imgpath = "./quizly/media/";
 var maindocument = parent.document;
 
-var feedback_index = 0;    // Global feedback index
-var MAX_TRIES = 7;
+var MAX_TRIES = 6;
 var answer_tries = 0;     //  How many wrong answers
 
 Blockly.hello = function(command, quizname) {
@@ -796,39 +795,38 @@ function giveHint() {
 Blockly.Quizme.giveFeedback = function(isCorrect, correctStr, mistakeStr, redo) {
     if (DEBUG) console.log("RAM: givefeedback() isCorrect = " + isCorrect);
 
-    if (ED_X) {
-      var feedbacks = ["Oops! Your solution contains a mistake. Try again.", 
-		       "Sorry. Your solution is not correct. Try again.", 
-		       "There is a mistake in your solution.  Have you looked at the hints?",  
-		       "Drat! Your solution contains an error. Have you tried the hints?",
-		       "Oops. That's not quite right. Revise and try again."];
+    if (true) {
+      var feedbacks = ["","","",   // Half the time silent
+                       "Have you looked at the hints?",
+		       "Have you tried the hints?",
+                       "Looks like you need a hint?"];
 
-      // Pick a random feedback string
-      var index = Math.floor(Math.random() * feedbacks.length );
-      while (index == feedback_index) {
-	index = Math.floor(Math.random() * feedbacks.length );
+      // Start suggesting hints
+      if (answer_tries >= 0 && answer_tries < feedbacks.length) {
+        mistakeStr = mistakeStr + "<br />" + feedbacks[answer_tries];
       }
-      feedback_index = index;
-      mistakeStr = feedbacks[index];    
 
-      if (answer_tries > MAX_TRIES) {
-	mistakeStr = "Looks like you're struggling on this one.<br/> Try clicking <b>CHECK</b> and the  <b>SHOW ANSWER</b> button will appear.";
+      if (answer_tries >= MAX_TRIES) {
+        if (ED_X) {
+          mistakeStr = "Looks like you're struggling on this one.<br/> Try clicking <b>CHECK</b> and the  <b>SHOW ANSWER</b> button will appear.";
+	} else {
+          mistakeStr = "Looks like you're struggling on this one.<br/> Try asking for help.";
+	}
 	answer_tries = 0;
       }
-
-      correctStr = "Good. That's correct. Remember to click the <b>CHECK</b> button below.";
+      if (ED_X) {
+        correctStr = correctStr + "<br />" + "Remember to click the <b>CHECK</b> button below.";
+      }
     }
 
     var imgpath = Blockly.Quizme.imgpath;
     var correctMsg;
     var errMsg;
     if (ED_X) {
-      correctMsg = "<img height=\"30\" src="  + "./"  + "smiley.jpg" + " > " + correctStr;
-      errMsg = "<img height=\"30\" src="  + "./"  + "frown.jpg" + " > " + mistakeStr;
-    } else {
-      correctMsg = "<img src="  + "." + imgpath + "smiley.jpg" + " > " + correctStr;
-      errMsg = "<img src="  + "." + imgpath + "frown.jpg" + " > " + mistakeStr;
+      imgpath = "./";
     }
+    correctMsg = "<img src="  + "." + imgpath + "smiley.jpg" + " > " + correctStr;
+    errMsg = "<img src="  + "." + imgpath + "frown.jpg" + " > " + mistakeStr;
 
     var result_html = maindocument.getElementById('quiz_result');
     
@@ -848,9 +846,10 @@ Blockly.Quizme.giveFeedback = function(isCorrect, correctStr, mistakeStr, redo) 
 
     if (isCorrect) {
 
+      answer_tries = 0;  // Used only in edX currently
+
       //  The following line interfaces with edX's state
       if (ED_X) {
-        answer_tries = 0;  // Used only in edX currently
         parent.QuizlyEdX.updateEdXState(true, wsStr);
       }
 
@@ -861,10 +860,10 @@ Blockly.Quizme.giveFeedback = function(isCorrect, correctStr, mistakeStr, redo) 
         alert(correctStr);
       }
     } else {
+      answer_tries += 1;;
 
       //  The following line interfaces with edX's state
       if (ED_X) {
-        answer_tries += 1;;
         parent.QuizlyEdX.updateEdXState(false, wsStr);
       }
 
@@ -893,10 +892,20 @@ Blockly.Quizme.giveFeedback = function(isCorrect, correctStr, mistakeStr, redo) 
  */
 Blockly.Quizme.evaluateUserAnswer = function() {
   if (DEBUG) console.log("RAM: evaluateUserAnswer()");
+
+  // Check that workspace has no errors and warnings
+  if ((Blockly.WarningHandler.errorCount > 0 || Blockly.WarningHandler.warningCount > 0) 
+       && (Blockly.Quizme.answerType == PROC_DEF || Blockly.Quizme.answerType == FUNC_DEF)) {
+    window.alert("It looks like there are errors or warnings in the Workspace." +
+                 " You'll have to resolve them before your solution can be evaluated.");
+    return;
+  }
+
   var btn = maindocument.getElementById('submit_new_toggle');
   if (btn && Blockly.Quizme.options[SELECTOR_OPTION] != 'hidden') {
     btn.innerHTML = "New Question";
   }
+  
   var result;
   if (Blockly.Quizme.answerType == EVAL_STMT) {
     result = Blockly.Quizme.evaluateStatement(Blockly.Quizme);
