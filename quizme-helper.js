@@ -1334,9 +1334,14 @@ function getFunctionParamTypes(helperObj) {
 /**
  * Parses a function defintion and extracts the names of tis
  *  parameters and returns them in an array.
- * @param fn is the function definition a
+ * @param fn is either a function definition or the whole workspace?
  */
 function getFunctionParamNames(fn) {
+  // Extract the function (possibly from the workspace)
+  var i = fn.indexOf('function');
+  var j = fn.indexOf(')', i);
+  fn = fn.substring(i,j+1);
+
   //  Create an array of parameter variable names
   var params = [];
   var p1 = fn.indexOf("var ");
