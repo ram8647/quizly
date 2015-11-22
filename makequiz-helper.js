@@ -574,7 +574,7 @@ function onAnswerTypeSelected(selectObj) {
     MAINDOCUMENT.getElementById(EXPR_TYPE).style.visibility="hidden";
   } else if (quiz_type == FUNC_DEF) {
     MAINDOCUMENT.getElementById(EXPR_TYPE).style.visibility="hidden";
-    var fn_name = prompt("Function name (must be legal JavaScript function name)?");
+    var fn_name = prompt("Function signature, including typed parameter list -- e.g., funcName() or funcName(num,str,list)?");
     while (!fn_name) {
       fn_name = prompt("A function name is required for this type of problem.");
     }

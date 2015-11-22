@@ -72,6 +72,14 @@ Blockly.JavaScript.logic_boolean = function() {
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
+// Duplicate of logic_boolean; not sure if both are necessary
+Blockly.JavaScript.logic_false = function() {
+  // Boolean values true and false.
+  var code = (this.getTitleValue('BOOL') == 'TRUE') ? 'true' : 'false';
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+
 Blockly.JavaScript.logic_null = function() {
   // Null data type.
   return ['null', Blockly.JavaScript.ORDER_ATOMIC];
