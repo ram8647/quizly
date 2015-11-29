@@ -1,4 +1,4 @@
-Quizly is a live coding platform for [App Inventor for Android](http://appinventor.mit.edu) based on [Blockly](https://code.google.com/p/blockly/).  For example:
+Quizly is a live coding platform for [App Inventor for Android](http://appinventor.mit.edu) based on [Blockly](https://developers.google.com/blockly/).  For example:
 
 ---
 
