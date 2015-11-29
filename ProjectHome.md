@@ -26,4 +26,4 @@ Quizly is self-contained and can easily be plugged into existing web sites and w
 
 The code is free and open source -- and there is much work to do!
 
-Acknowledgment and Disclaimer: This material is based upon work supported in part by the National Science Foundation under Grants Nos. TUES-1225976 and CNS-1240841. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.
+Acknowledgment and Disclaimer: This material is based upon work supported in part by the National Science Foundation under Grants Nos. DUE-1225976 and CNS-1240841. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.
