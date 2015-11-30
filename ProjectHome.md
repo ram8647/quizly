@@ -23,6 +23,7 @@ Two separate applications are used of making and taking quizzes.  Quiz Maker gen
 Quizly is self-contained and can easily be plugged into existing web sites and web applications, for example App Inventor course sites.
   * [Quizly embedded into online App Inventor lesson](http://www.cs.trincoll.edu/~ram/mobilecsp)  ([how it works](EmbeddingInAWebApp.md))
   * [Quizly embedded in Google Coursebuilder](http://appinventor102.appspot.com) -- See Activity 4.1 and 6.1
+  * [Quizly embedded in an edX Course](https://www.edx.org/course/mobile-computing-app-inventor-cs-trinityx-t002x) -- You'll need to register. 
 
 The code is free and open source -- and there is much work to do!
 
