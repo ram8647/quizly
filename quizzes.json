@@ -103,6 +103,29 @@
   "Xmltemplate" : "<xml><block type=\"component_event\" x=\"85\" y=\"100\"><mutation component_type=\"Button\" instance_name=\"Button1\" event_name=\"Click\"></mutation></block><block type=\"global_declaration\" inline=\"false\"  x=\"85\" y=\"50\"><title name=\"NAME\">X</title><value name=\"VALUE\"><block type=\"math_number\"><title name=\"NUM\">0</title></block></value></block></xml>",
   "Xmlsolution" : ""},
 
+
+ "quiz_increment_variable_by_Y" :   {
+  "Name" : "quiz_increment_variable_by_Y", 
+  "DisplayName" : "Event Handler: When Button Clicked Increment Variable By Y", 
+  "ProblemType" : "variable_increment",
+  "Description" : "Ask the user to code a variable increment operation when a Button is clicked.",
+  "QuestionHTML" : "Put together all blocks necessary to add the value of <i>Y</i> to the variable <i>X</i>  when Button1 is clicked.",
+  "AnswerHTML" : "",
+  "AnswerType" : "proc_def",
+  "AnswerVisibility" : "hidden",
+  "ResultHTML" : "",
+  "Hints" : ["Blocks for setting and getting variable values are in the 'Variables' drawer.", "You'll need to do an addition operation.", "Pseudocode: Set X to (get X) + (get Y)"],
+  "BuiltIns" : ["mutator_container", "math_mutator_item", "math_number", "math_compare", "math_add", "math_subtract", "math_division", "math_multiply", "math_power",
+	       "global_declaration", "lexical_variable_get", "lexical_variable_set"],
+  "Components" : [["Button1","Button"]],
+  "FunctionName":"Button1Click()",
+  "FunctionDef":"var global_X = 0;\nvar global_Y = 0\nfunction Button1Click(){\n global_X = global_X + global_Y;\n}\n",
+  "XmlDictionary":{},
+  "Xmlgenerator" : "undefined",
+  "Xmltemplate" : "<xml><block type=\"global_declaration\" inline=\"false\"  x=\"85\" y=\"20\"><title name=\"NAME\">Y</title><value name=\"VALUE\"><block type=\"math_number\"><title name=\"NUM\">1</title></block></value></block><block type=\"global_declaration\" inline=\"false\"  x=\"85\" y=\"50\"><title name=\"NAME\">X</title><value name=\"VALUE\"><block type=\"math_number\"><title name=\"NUM\">0</title></block></value></block></xml>",
+  "Xmlsolution" : ""},
+
+
 "quiz_pause_the_player" :{"Name":"quiz_pause_the_player","DisplayName":"Event Handler: Pause the Player","Description":"Pause the Player component when the button is clicked","QuestionHTML":"Complete the <i>Button1.Click</i> event handler so that it will <i><b>pause</b></i> the <i>Player</i> when the button is clicked.","AnswerHTML":"","AnswerType":"xml_blocks","AnswerVisibility":"hidden","ResultHTML":"","Hints":["You'll need the appropriate purple block from the <i>Player</i> drawer."],"BuiltIns":["controls_choose","controls_do_then_return","controls_if","controls_if_else","controls_if_elseif","controls_if_if","controls_while","controls_forEach","mutator_container","InstantInTime","YailTypeToBlocklyType","YailTypeToBlocklyTypeMap","setTooltip","wrapSentence"],"Components":[["Button1","Button"],["Player1","Player"]],"VariableMappings":{},"FunctionName":"","FunctionDef":"undefined","FunctionInputs":"undefined","XmlDictionary":{},"Xmlgenerator":"undefined","Xmltemplate":"<xml xmlns=\"http://www.w3.org/1999/xhtml\"><block type=\"component_event\" x=\"124\" y=\"6\"><mutation component_type=\"Button\" instance_name=\"Button1\" event_name=\"Click\"></mutation><field name=\"COMPONENT_SELECTOR\">Button1</field></block></xml>","Xmlsolution":"<xml><block type=\"component_event\" x=\"124\" y=\"6\"><mutation component_type=\"Button\" instance_name=\"Button1\" event_name=\"Click\"></mutation><field name=\"COMPONENT_SELECTOR\">Button1</field><statement name=\"DO\"><block type=\"component_method\"><mutation component_type=\"Player\" method_name=\"Pause\" is_generic=\"false\" instance_name=\"Player1\"></mutation><field name=\"COMPONENT_SELECTOR\">Player1</field></block></statement></block></xml>"},
 
 "quiz_button_click_stop_player" :{"Name":"quiz_button_click_stop_player","DisplayName":"Event Handler: Button Click Stop Player","Description":"Stop the Player when the button is clicked.","QuestionHTML":"Put together all the blocks necessary to handle a button click event on <i>Button1</i>. When <i>Button1</i> is clicked, the app should <i><b>stop</b></i> the <i>Player</i> component.\n ","AnswerHTML":"","AnswerType":"xml_blocks","AnswerVisibility":"hidden","ResultHTML":"","Hints":["You'll need the <i>Button.Click</i> event handler in the <i>Button</i> drawer.","You'll need an appropriate purple block from the <i>Player</i> drawer. "],"BuiltIns":["controls_choose","controls_do_then_return","controls_if","controls_if_else","controls_if_elseif","controls_if_if","controls_while","controls_forEach","mutator_container","InstantInTime","YailTypeToBlocklyType","YailTypeToBlocklyTypeMap","setTooltip","wrapSentence"],"Components":[["Button1","Button"],["Player1","Player"]],"VariableMappings":{},"FunctionName":"","FunctionDef":"undefined","FunctionInputs":"undefined","XmlDictionary":{},"Xmlgenerator":"undefined","Xmltemplate":"<xml></xml>","Xmlsolution":"<xml><block type=\"component_event\" x=\"124\" y=\"6\"><mutation component_type=\"Button\" instance_name=\"Button1\" event_name=\"Click\"></mutation><field name=\"COMPONENT_SELECTOR\">Button1</field><statement name=\"DO\"><block type=\"component_method\"><mutation component_type=\"Player\" method_name=\"Stop\" is_generic=\"false\" instance_name=\"Player1\"></mutation><field name=\"COMPONENT_SELECTOR\">Player1</field></block></statement></block></xml>"},
