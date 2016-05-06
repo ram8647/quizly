@@ -11,7 +11,7 @@ Quizly is a live coding platform for [App Inventor for Android](http://appinvent
 
 Downloads are now stored on Google drive:
 
-  * [Development version](http://appinventor.cs.trincoll.edu/csp/quizly101614.tar) -- all source code and libraries.
+  * [Development version](http://appinventor.cs.trincoll.edu/csp/quizly-101614.tar) -- all source code and libraries.
   * [Embeddable version](https://drive.google.com/?tab=mo&authuser=0#folders/0B2IG3uhfSus-N1FxSGdJYTlDRGM) -- code needed for deployment.
 
 ## Demos ##
