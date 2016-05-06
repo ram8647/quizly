@@ -9,7 +9,7 @@ Quizly is a live coding platform for [App Inventor for Android](http://appinvent
 
 ## Downloads ##
 
-  * [Development version](http://appinventor.cs.trincoll.edu/csp/quizly-101614.tar) -- all source code and libraries.  Untarring this file (tar xvf) will create a directory named *quizly*.  To run quizly, just open *quizly/index.html*.
+  * [Development version (10/2014)](http://appinventor.cs.trincoll.edu/csp/quizly-101614.tar) -- all source code and libraries.  Untarring this file (tar xvf) will create a directory named *quizly*.  To run quizly, just open *quizly/index.html*.
 
 ## Demos ##
 Two separate applications are used of making and taking quizzes.  Quiz Maker generates a JSON object that can be uploaded (manually, for now) into Quizly:
