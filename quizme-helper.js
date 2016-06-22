@@ -118,16 +118,9 @@ function isArray(object) {
 }
 
 /**
- * Initialize Quizme.
- *
- * @param quizname, either undefined or a string giving one of the defined quiznames
- * @param quizmepath, path to the quizme source files
- * @param arglist, the list of GET args passed, e.g., 'quizname=name&selector=hidden&backpack=hidden
+ *  Creates some bogus parent functions to handle translations.
  */
-function initQuizme(quizname, quizmepath, arglist) {
-  if (DEBUG) console.log("RAM: initializing ... quizname= " + quizname + " path=" + quizmepath + " arglist = " + arglist);
-
-  // Create bogus parent functions to handle translations
+function createBogusParentFunctions() {
   window.parent.BlocklyPanel_getLocalizedEventName = function(s) {
     return s;
   }
@@ -152,6 +145,19 @@ function initQuizme(quizname, quizmepath, arglist) {
     Blockly.mainWorkspace.warningIndicator.updateWarningToggleText();
     return;
   }
+}
+
+/**
+ * Initialize Quizme.
+ *
+ * @param quizname, either undefined or a string giving one of the defined quiznames
+ * @param quizmepath, path to the quizme source files
+ * @param arglist, the list of GET args passed, e.g., 'quizname=name&selector=hidden&backpack=hidden
+ */
+function initQuizme(quizname, quizmepath, arglist) {
+  if (DEBUG) console.log("RAM: initializing ... quizname= " + quizname + " path=" + quizmepath + " arglist = " + arglist);
+
+  createBogusParentFunctions();   // To handle translation
 
   // Save the quizname inside the document in case of redo
   if (quizname) {
@@ -1624,7 +1630,7 @@ function generateInstanceMappings(name, helperObj) {
  * 
  */
 function mapQuizVariables(helperObj, str, dict) {
-  if (DEBUG) console.log("mapQuizVariables() " + str);
+  //  if (DEBUG) console.log("mapQuizVariables() " + str);
   if (!str) 
     return str;
   if (!dict) {
