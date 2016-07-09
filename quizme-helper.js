@@ -105,7 +105,11 @@ Blockly.hello = function(command, quizname) {
     showQuiz(quizname);
   else if (command == 'submitoneshot')
     submitOneShot();
+  else if (command == 'showjavascript')
+    showJavaScript();
 }
+
+
 
 /**
  * Used instead of 'object instanceof Array' b/c of cross-frame issues
@@ -284,6 +288,22 @@ function parseArgList(arglist) {
     if (ED_X) {
       Blockly.Quizme.options[SELECTOR_OPTION]='hidden';
     }
+  }
+}
+
+function showJavaScript() {
+  if (DEBUG) console.log("RAM: showJavaScript");
+  var answerType = Blockly.Quizme.answerType;
+  if (answerType == "xml_blocks") {
+      window.parent.Alert.render("Sorry, Javascript code is not available for this problem.");
+  } else {
+    Blockly.JavaScript.init();
+    var  blocks  = Blockly.mainWorkspace.topBlocks_;
+    var code = Blockly.JavaScript.workspaceToCode('JavaScript');  
+    console.log(code);
+    window.parent.Alert.render(code);
+    //    createCustomAlert(code, "Javascript", "Ok");
+    //    alert(code);
   }
 }
 

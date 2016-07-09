@@ -13,9 +13,61 @@
       font-weight: normal;
       font-size: 140%;
     }
+
+    #dialogoverlay{
+	display: none;
+	opacity: .2;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	background: #FFF;
+	width: 100%;
+	z-index: 10;
+    }
+    #dialogbox{
+	display: none;
+	position: fixed;
+	background: #000;
+	border-radius:7px; 
+	width:550px;
+	z-index: 10;
+    }
+   #dialogbox > div{ background:#FFF; margin:8px; }
+   #dialogbox > div > #dialogboxhead{ background: #666; font-size:19px; padding:10px; color:#CCC; }
+   #dialogbox > div > #dialogboxbody{ background:#333; padding:20px; color:#FFF; }
+   #dialogbox > div > #dialogboxfoot{ background: #666; padding:10px; text-align:right; }
   </style>
 
 <script>
+// Based on: https://www.developphp.com/video/JavaScript/Custom-Alert-Box-Programming-Tutorial
+function JavaScriptAlert(){
+    this.render = function(dialog){
+        var winW = window.innerWidth;
+        var winH = window.innerHeight;
+        var dialogoverlay = window.parent.document.getElementById('dialogoverlay');
+        var dialogbox = window.parent.document.getElementById('dialogbox');
+        dialogoverlay.style.display = "block";
+        dialogoverlay.style.height = winH+"px";
+        dialogbox.style.left = winW - 550 +"px";
+        dialogbox.style.top = "100px";
+        dialogbox.style.display = "block";
+        window.parent.document.getElementById('dialogboxhead').innerHTML = "Javascript Code";
+        window.parent.document.getElementById('dialogboxbody').innerHTML = "<pre>" + dialog + "</pre>";
+        window.parent.document.getElementById('dialogboxfoot').innerHTML = '<button onclick="Alert.ok()">OK</button>';
+    }
+    this.ok = function(){
+      window.parent.document.getElementById('dialogbox').style.display = "none";
+      window.parent.document.getElementById('dialogoverlay').style.display = "none";
+    }
+}
+var Alert = new JavaScriptAlert();
+
+
+function showJavascript() {
+  console.log("ShowJavaScript");
+  Blockly.hello('showjavascript');
+}
+
 function submitNewToggle() {
   console.log("SubmitNewToggle");
   Blockly.hello('submit');
@@ -63,6 +115,16 @@ window.onresize = resizeIframe;
 
 </head>
 <body onload="resizeIframe()">
+
+<div id="dialogoverlay"></div>
+<div id="dialogbox">
+  <div>
+    <div id="dialogboxhead"></div>
+    <div id="dialogboxbody"></div>
+    <div id="dialogboxfoot"></div>
+  </div>
+</div>
+
   <h1 id="heading">Quizly: Live Coding Exercises for App Inventor</h1>
   <table width="100%" height="100%">
     <tr>
@@ -93,6 +155,9 @@ window.onresize = resizeIframe;
           </td>
           <td>
           <button id="submit_new_toggle" onclick="submitNewToggle()">Submit</button>
+          </td>
+          <td>
+          <button id="show_javascript" onclick="showJavascript()">Show Javascript</button>
           </td>
           <td>
           <div id="link_html">Here is where the link goes.</div>
