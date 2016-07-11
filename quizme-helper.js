@@ -1348,20 +1348,8 @@ function getFunctionParamNames(fn) {
   var j = fn.indexOf(')', i);
   fn = fn.substring(i,j+1);
 
-  //  Create an array of parameter variable names
-  var params = [];
-  var p1 = fn.indexOf("var ");
-  var p2 = fn.indexOf(" ", p1+1);
-  var p3 = fn.indexOf(";", p1);
-  var param;
-  while (p1 != -1) {
-    param = fn.substring(p1+4, p3);  // Grab the parameter
-    if (param.indexOf("global") == -1)  // Make sure it's not a global
-      params.push(param);               // Add it to the list
-    p1 = fn.indexOf("var ", p1+1);
-    p2 = fn.indexOf(" ", p1+1);
-    p3 = fn.indexOf(";", p1);
-  }
+  var paramstr = fn.substring(fn.indexOf("(") + 1, fn.indexOf(")"));
+  var params = paramstr.split(',');
   return params;
 }
 
