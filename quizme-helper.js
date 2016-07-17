@@ -1015,6 +1015,9 @@ Blockly.Quizme.evaluateUserAnswer = function() {
         "Oops, your answer was <font color=\"red\">" + answer + "</font>. "  +
     	"The correct answer is <font color=\"green\">" + solution + "</font>");
   }
+  // Enable show-javascript if solution is correct.
+  if (result)  
+    parent.document.getElementById('show_javascript').disabled = false;
   return result;
 }
 

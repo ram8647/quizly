@@ -70,6 +70,7 @@ function showJavascript() {
 
 function submitNewToggle() {
   console.log("SubmitNewToggle");
+  document.getElementById('show_javascript').disabled = true;
   Blockly.hello('submit');
 }
 
@@ -80,6 +81,7 @@ function giveHint() {
 
 function showQuiz(quizname) {
   console.log("showQuiz");
+  document.getElementById('show_javascript').disabled = true;
   Blockly.hello('showquiz', quizname);
 }
 
@@ -157,7 +159,7 @@ window.onresize = resizeIframe;
           <button id="submit_new_toggle" onclick="submitNewToggle()">Submit</button>
           </td>
           <td>
-          <button id="show_javascript" onclick="showJavascript()">Show Javascript</button>
+          <button id="show_javascript" onclick="showJavascript()" disabled>Show Javascript</button>
           </td>
           <td>
           <div id="link_html">Here is where the link goes.</div>
