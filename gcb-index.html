@@ -13,12 +13,78 @@
       font-weight: normal;
       font-size: 140%;
     }
+
+    #dialogoverlay{
+	display: none;
+	opacity: .2;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	background: #FFF;
+	width: 100%;
+	z-index: 10;
+    }
+    #dialogbox{
+	display: none;
+	position: fixed;
+	background: #000;
+	border-radius:7px; 
+	width:400px;
+	z-index: 10;
+    }
+   #dialogbox > div{ background:#FFF; margin:8px; }
+   #dialogbox > div > #dialogboxhead{ background: #666; font-size:19px; padding:10px; color:#CCC; }
+   #dialogbox > div > #dialogboxbody{ background:#333; padding:20px; color:#FFF; }
+   #dialogbox > div > #dialogboxfoot{ background: #666; padding:10px; text-align:right; }
   </style>
 
 <script>
-function submitNewToggle() {
-  console.log("SubmitNewToggle");
-  Blockly.hello('submit');
+// Based on: https://www.developphp.com/video/JavaScript/Custom-Alert-Box-Programming-Tutorial
+function JavaScriptAlert(){
+    this.render = function(dialog){
+        var winW = window.innerWidth;
+        var winH = window.innerHeight;
+        var dialogoverlay = window.document.getElementById('dialogoverlay');
+        var dialogbox = window.document.getElementById('dialogbox');
+        dialogoverlay.style.display = "block";
+        dialogoverlay.style.height = winH+"px";
+        dialogbox.style.left = winW - 400 +"px";
+        dialogbox.style.top = "5px";
+        dialogbox.style.display = "block";
+        window.document.getElementById('dialogboxhead').innerHTML = "Javascript Code";
+        window.document.getElementById('dialogboxbody').innerHTML = "<pre>" + dialog + "</pre>";
+        window.document.getElementById('dialogboxfoot').innerHTML = '<button onclick="Alert.ok()">OK</button>';
+    }
+    this.ok = function(){
+      window.document.getElementById('dialogbox').style.display = "none";
+      window.document.getElementById('dialogoverlay').style.display = "none";
+    }
+}
+var Alert = new JavaScriptAlert();
+
+function showJavascript() {
+  console.log("ShowJavaScript");
+  Blockly.hello('showjavascript');
+}
+
+/**
+   Handler for the Quizly submit button.  It
+   evaluates the user's solution and posts
+   the result (true or false) on window.parent.quizlies
+   where it can be retrieved by the GCB quiz object.
+*/
+function checkAnswer() {
+  console.log("checkAnswer -- GCB");
+  document.getElementById('show_javascript').disabled = true;
+//  var result = Blockly.checkAnswerGCB('submit');
+  var result = Blockly.Quizme.evaluateUserAnswer();
+  var quizName = Blockly.Quizme.quizName
+  window.parent.quizlies['quizname']=quizName;
+  var thisQuiz = window.parent.quizlies[quizName];
+  thisQuiz.result = result;
+  // Comment this out if there is separate GCB button
+  // for submitting the result.
+  window.parent.checkAnswer();
 }
 
 function giveHint() {
@@ -40,23 +106,18 @@ function giveNewQuestion(quizname) {
 
 </head>
 <body>
+<div id="dialogoverlay"></div>
+<div id="dialogbox">
+  <div>
+    <div id="dialogboxhead"></div>
+    <div id="dialogboxbody"></div>
+    <div id="dialogboxfoot"></div>
+  </div>
+</div>
+
   <input type="hidden" id="quizname" value="">
   <h1 hidden="true" id="heading">Quizly: Live Coding Exercises for App Inventor</h1>
-  <table width="100%" height="100%" cellspacing="0" cellpadding="0">
-    <tr>
-     <td>
-       <table>
-	 <tr>
-          <td>
-	   <div id="selector_prompt">Choose a quiz :</div>
-	  </td>
-          <td>
-	   <div id="selector"> <select id="quiz_selector" onchange="showQuiz(this.options[this.selectedIndex].value)"> </select> </div>
-	  </td>
-	 </tr>
-       </table>
-    </td>
-    </tr>
+  <table width="100%" height="100%" cellspacing="0" cellpadding="0" style="border:0px">
     <tr>
      <td>
        <div id="quiz_question">Here is where the quiz question goes.</div>
@@ -70,11 +131,10 @@ function giveNewQuestion(quizname) {
           <button class="gcb-button gcb-button-primary" id="hint_button" onclick="giveHint()">Hint</button>
           </td>
           <td>
-          <button class="gcb-button gcb-button-primary" id="submit_new_toggle" onclick="submitNewToggle()">Submit</button>
+          <button class="gcb-button gcb-button-primary" id="gcb_check_answer" onclick="checkAnswer()">Check Answer</button>
           </td>
           <td>
-          <button hidden="true" class="gcb-button gcb-button-primary" id="new_question_button" onclick="giveNewQuestion('redo')">New Question</button>
-<!--           <div hidden="true" id="link_html">Here is where the link goes.</div> -->
+          <button class="gcb-button gcb-button-primary" id="show_javascript" onclick="showJavascript()" style="visibility:hidden" disabled>Show Javascript</button>
           </td>
          </tr>
         </table>
@@ -91,7 +151,7 @@ function giveNewQuestion(quizname) {
            window.Blockly = blockly;
          }
        </script>
-       <iframe style="width: 100%; height: 100%; border: 0px solid #ccc;" src="blockly.html"></iframe>
+       <iframe style="width: 100%; height: 100%; border: 0px; padding: 1px; margin: 2px;" src="blockly.html"></iframe>
      </td>
     </tr>
   </table>

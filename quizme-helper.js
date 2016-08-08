@@ -346,7 +346,7 @@ function showJavaScript() {
   var answerType = Blockly.Quizme.answerType;
   try {
     if (answerType == "xml_blocks") {
-	window.parent.Alert.render("Sorry, Javascript code is not available for this problem.");
+	window.parent.Alert.render("Sorry, Javascript code is not available \nfor this problem.");
     } else {
       Blockly.JavaScript.init();
       var  blocks  = Blockly.mainWorkspace.topBlocks_;
@@ -1016,8 +1016,10 @@ Blockly.Quizme.evaluateUserAnswer = function() {
     	"The correct answer is <font color=\"green\">" + solution + "</font>");
   }
   // Enable show-javascript if solution is correct.
-  if (result)  
+  if (result) {
     parent.document.getElementById('show_javascript').disabled = false;
+    parent.document.getElementById('show_javascript').style.visibility = "visible";
+  }
   return result;
 }
 
@@ -1037,13 +1039,13 @@ Blockly.Quizme.evaluateUserAnswer = function() {
  */
 Blockly.Quizme.evaluateXmlBlocksAnswerType = function(helperObj, solution, mappings) {
   if (DEBUG) console.log("RAM: evaluateXmlBlocksAnswerType");
-  var result = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
-  result = Blockly.Quizme.removeXY(result);
-  result = Blockly.Quizme.removeIDs(result);
-  result = Blockly.Quizme.removeTag("xml", result);
+  var resultXml = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
+  resultXml = Blockly.Quizme.removeXY(resultXml);
+  resultXml = Blockly.Quizme.removeIDs(resultXml);
+  resultXml = Blockly.Quizme.removeTag("xml", resultXml);
 
   // HACK:  Replace 'logic_false' with logic_boolean' in user's answer
-  result = Blockly.Quizme.falseToBoolean(result);
+  resultXml = Blockly.Quizme.falseToBoolean(resultXml);
 
   if (mappings) {
     solution = mapQuizVariables(helperObj, solution, mappings);
@@ -1055,7 +1057,8 @@ Blockly.Quizme.evaluateXmlBlocksAnswerType = function(helperObj, solution, mappi
   solution = Blockly.Quizme.removeIDs(solution);
   solution = Blockly.Quizme.removeTag("xml", solution);
 
-  Blockly.Quizme.giveFeedback(result.indexOf(solution) != -1, 
+  var result = resultXml.indexOf(solution) != -1;
+  Blockly.Quizme.giveFeedback(result, 
      "Good!  Your solution is correct.",
 		 "Oops! Your solution contains a mistake. Try again.",
 		 true);
