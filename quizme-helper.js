@@ -1550,7 +1550,7 @@ Blockly.Quizme.evaluateStatement = function(helperObj) {
   Blockly.Quizme.giveFeedback(result[0],
     "Correct! Your code produces the same values as the target solution.  Good show!",
 			      "Oops. " + result[1] + ". Try again!", true);
-  return result;
+  return result[0];
 }
 
 /**
