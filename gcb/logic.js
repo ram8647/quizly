@@ -46,21 +46,24 @@ Blockly.Blocks['logic_boolean'] = {
   }]
 };
 
-Blockly.Blocks.logic_boolean.OPERATORS = function () {
+Blockly.Blocks['logic_boolean'] = {}
+
+// Closure renaming: Changing Blockly.Blocks.logic_boolean to Blockly.Blocks['logic_boolean']
+Blockly.Blocks['logic_boolean'].OPERATORS = function () {
   return [
     [Blockly.Msg.LANG_LOGIC_BOOLEAN_TRUE, 'TRUE'],
     [Blockly.Msg.LANG_LOGIC_BOOLEAN_FALSE, 'FALSE']
   ];
 };
 
-Blockly.Blocks.logic_boolean.TOOLTIPS = function () {
+Blockly.Blocks['logic_boolean'].TOOLTIPS = function () {
   return {
     TRUE: Blockly.Msg.LANG_LOGIC_BOOLEAN_TOOLTIP_TRUE,
     FALSE: Blockly.Msg.LANG_LOGIC_BOOLEAN_TOOLTIP_FALSE
   }
 };
 
-Blockly.Blocks.logic_boolean.HELPURLS = function () {
+Blockly.Blocks['logic_boolean'].HELPURLS = function () {
   return {
     TRUE: Blockly.Msg.LANG_LOGIC_BOOLEAN_TRUE_HELPURL,
     FALSE: Blockly.Msg.LANG_LOGIC_BOOLEAN_FALSE_HELPURL
@@ -128,21 +131,21 @@ Blockly.Blocks['logic_compare'] = {
   typeblock: [{translatedName: Blockly.Msg.LANG_LOGIC_COMPARE_TRANSLATED_NAME}]
 };
 
-Blockly.Blocks.logic_compare.TOOLTIPS = function () {
+Blockly.Blocks['logic_compare'].TOOLTIPS = function () {
   return {
     EQ: Blockly.Msg.LANG_LOGIC_COMPARE_TOOLTIP_EQ,
     NEQ: Blockly.Msg.LANG_LOGIC_COMPARE_TOOLTIP_NEQ
   }
 };
 
-Blockly.Blocks.logic_compare.HELPURLS = function () {
+Blockly.Blocks['logic_compare'].HELPURLS = function () {
   return {
     EQ: Blockly.Msg.LANG_LOGIC_COMPARE_HELPURL_EQ,
     NEQ: Blockly.Msg.LANG_LOGIC_COMPARE_HELPURL_NEQ
   }
 };
 
-Blockly.Blocks.logic_compare.OPERATORS = function () {
+Blockly.Blocks['logic_compare'].OPERATORS = function () {
   return [
     [Blockly.Msg.LANG_LOGIC_COMPARE_EQ, 'EQ'],
     [Blockly.Msg.LANG_LOGIC_COMPARE_NEQ, 'NEQ']
@@ -187,20 +190,21 @@ Blockly.Blocks['logic_operation'] = {
   }]
 };
 
-Blockly.Blocks.logic_operation.OPERATORS = function () {
+Blockly.Blocks['logic_operation'].OPERATORS = function () {
   return [
     [Blockly.Msg.LANG_LOGIC_OPERATION_AND, 'AND'],
     [Blockly.Msg.LANG_LOGIC_OPERATION_OR, 'OR']
   ]
 };
 
-Blockly.Blocks.logic_operation.HELPURLS = function () {
+Blockly.Blocks['logic_operation'].HELPURLS = function () {
   return {
     AND: Blockly.Msg.LANG_LOGIC_OPERATION_HELPURL_AND,
     OR: Blockly.Msg.LANG_LOGIC_OPERATION_HELPURL_OR
   }
 };
-Blockly.Blocks.logic_operation.TOOLTIPS = function () {
+
+Blockly.Blocks['logic_operation'].TOOLTIPS = function () {
   return {
     AND: Blockly.Msg.LANG_LOGIC_OPERATION_TOOLTIP_AND,
     OR: Blockly.Msg.LANG_LOGIC_OPERATION_TOOLTIP_OR

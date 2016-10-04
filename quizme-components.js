@@ -1,5 +1,3 @@
-
-
 /**
  *  Creates Blockly.ComponentTypes, a Dictionary of App Inventor components where
  *  each component is represented by a prototype that describes its events, methods,
@@ -14,12 +12,14 @@
  *  Blockly.ComponentTypes is the Dictionary used in App Inventor (i.e., blockly-all.js).
  */
 
+var DEBUG = GLOBAL_DEBUG;  // GLOBAL_DEBUG set in blockly.html;
+
 /**
  *  Creates a Dictionary of components indexed by component name. 
  *  @return {Object} the Dictory of components.
  */
 Blockly.Quizme.inputFromComponentsArray = function() {
-  console.log("RAM: inputting components from window.componentTypeJson");
+  if (DEBUG) console.log("RAM: inputting components from window.componentTypeJson");
   var obj = {};
   var compArr = window.componentTypeJson;
   if (!compArr) {
@@ -46,6 +46,7 @@ Blockly.Quizme.addComponents = function(keys) {
   if (keys != undefined) 
     for (i = 0; i < keys.length; i++) {
       var key = keys[i];
+      if (DEBUG) console.log('RAM: addComponents key = ' + key);
       Blockly.Quizme.addComponent( JSON.stringify(Blockly.Quizme.components[key]), key+'1', 1001);
     }
 }
@@ -84,11 +85,11 @@ Blockly.Quizme.addComponentType = function(typeName, prototype) {
   for(var k=0; k < prototype.blockProperties.length; k++) {
     Blockly.ComponentTypes[typeName].properties[prototype.blockProperties[k].name] = prototype.blockProperties[k];
     if(prototype.blockProperties[k].rw == "read-write" || prototype.blockProperties[k].rw == "read-only") {
-      console.log("RAM: Pushing " + typeName + "  property to getter List: " + prototype.blockProperties[k].name);
+      if (DEBUG) console.log("RAM: Pushing " + typeName + "  property to getter List: " + prototype.blockProperties[k].name);
       Blockly.ComponentTypes[typeName].getPropertyList.push(prototype.blockProperties[k].name);
     }
     if(prototype.blockProperties[k].rw == "read-write" || prototype.blockProperties[k].rw == "write-only") {
-      console.log("RAM: Pushing " + typeName + " property to setter List: " + prototype.blockProperties[k].name);
+      if (DEBUG) console.log("RAM: Pushing " + typeName + " property to setter List: " + prototype.blockProperties[k].name);
       Blockly.ComponentTypes[typeName].setPropertyList.push(prototype.blockProperties[k].name);
     }
   }
@@ -102,6 +103,7 @@ Blockly.Quizme.addComponentType = function(typeName, prototype) {
  * @param {number} uid The component instance's unique id (not really used?)
  */
 Blockly.Quizme.addComponent = function(json, name, uid) {
+  if (DEBUG) console.log('RAM: addComponent json = ' + json);
   var prototype = JSON.parse(json);
   var typeName = prototype.name;
 

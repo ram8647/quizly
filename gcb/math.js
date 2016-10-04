@@ -27,7 +27,8 @@ Blockly.Blocks['math_number'] = {
   typeblock: [{translatedName: Blockly.Msg.LANG_MATH_MUTATOR_ITEM_INPUT_NUMBER}]
 };
 
-Blockly.Blocks.math_number.validator = function (text) {
+// Closure renaming: Blockly.Blocks.math_number  -> Blockly.Blocks['math_number']
+Blockly.Blocks['math_number'].validator = function (text) {
   // Ensure that only a number may be entered.
   // TODO: Handle cases like 'o', 'ten', '1,234', '3,14', etc.
   var n = window.parseFloat(text || 0);
@@ -98,7 +99,7 @@ Blockly.Blocks['math_compare'] = {
   }]
 };
 
-Blockly.Blocks.math_compare.onchange = function (value) {
+Blockly.Blocks['math_compare'].onchange = function (value) {
   if (!this.sourceBlock_) {
     return;
   }
@@ -113,7 +114,7 @@ Blockly.Blocks.math_compare.onchange = function (value) {
   }
 };
 
-Blockly.Blocks.math_compare.OPERATORS = function () {
+Blockly.Blocks['math_compare'].OPERATORS = function () {
   return [[Blockly.Msg.LANG_MATH_COMPARE_EQ, 'EQ'],
     [Blockly.Msg.LANG_MATH_COMPARE_NEQ, 'NEQ'],
     [Blockly.Msg.LANG_MATH_COMPARE_LT, 'LT'],
@@ -122,7 +123,7 @@ Blockly.Blocks.math_compare.OPERATORS = function () {
     [Blockly.Msg.LANG_MATH_COMPARE_GTE, 'GTE']];
 };
 
-Blockly.Blocks.math_compare.TOOLTIPS = function () {
+Blockly.Blocks['math_compare'].TOOLTIPS = function () {
   return {
     EQ: Blockly.Msg.LANG_MATH_COMPARE_TOOLTIP_EQ,
     NEQ: Blockly.Msg.LANG_MATH_COMPARE_TOOLTIP_NEQ,
@@ -133,7 +134,7 @@ Blockly.Blocks.math_compare.TOOLTIPS = function () {
   }
 };
 
-Blockly.Blocks.math_compare.HELPURLS = function () {
+Blockly.Blocks['math_compare'].HELPURLS = function () {
   return {
     EQ: Blockly.Msg.LANG_MATH_COMPARE_HELPURL_EQ,
     NEQ: Blockly.Msg.LANG_MATH_COMPARE_HELPURL_NEQ,
@@ -440,12 +441,12 @@ Blockly.Blocks['math_on_list'] = {
   }]
 };
 
-Blockly.Blocks.math_on_list.OPERATORS = function () {
+Blockly.Blocks['math_on_list'].OPERATORS = function () {
   return [[Blockly.Msg.LANG_MATH_ONLIST_OPERATOR_MIN, 'MIN'],
     [Blockly.Msg.LANG_MATH_ONLIST_OPERATOR_MAX, 'MAX']]
 };
 
-Blockly.Blocks.math_on_list.TOOLTIPS = function () {
+Blockly.Blocks['math_on_list'].TOOLTIPS = function () {
   return {
     MIN: Blockly.Msg.LANG_MATH_ONLIST_TOOLTIP_MIN,
     MAX: Blockly.Msg.LANG_MATH_ONLIST_TOOLTIP_MAX
@@ -523,7 +524,7 @@ Blockly.Blocks['math_single'] = {
   }]
 };
 
-Blockly.Blocks.math_single.OPERATORS = function () {
+Blockly.Blocks['math_single'].OPERATORS = function () {
   return [[Blockly.Msg.LANG_MATH_SINGLE_OP_ROOT, 'ROOT'],
     [Blockly.Msg.LANG_MATH_SINGLE_OP_ABSOLUTE, 'ABS'],
     [Blockly.Msg.LANG_MATH_SINGLE_OP_NEG, 'NEG'],
@@ -534,7 +535,7 @@ Blockly.Blocks.math_single.OPERATORS = function () {
     [Blockly.Msg.LANG_MATH_ROUND_OPERATOR_FLOOR, 'FLOOR']];
 };
 
-Blockly.Blocks.math_single.TOOLTIPS = function () {
+Blockly.Blocks['math_single'].TOOLTIPS = function () {
   return {
     ROOT: Blockly.Msg.LANG_MATH_SINGLE_TOOLTIP_ROOT,
     ABS: Blockly.Msg.LANG_MATH_SINGLE_TOOLTIP_ABS,
@@ -547,7 +548,7 @@ Blockly.Blocks.math_single.TOOLTIPS = function () {
   }
 };
 
-Blockly.Blocks.math_single.HELPURLS = function () {
+Blockly.Blocks['math_single'].HELPURLS = function () {
   return {
     ROOT: Blockly.Msg.LANG_MATH_SINGLE_HELPURL_ROOT,
     ABS: Blockly.Msg.LANG_MATH_SINGLE_HELPURL_ABS,
@@ -720,13 +721,13 @@ Blockly.Blocks['math_divide'] = {
   }]
 };
 
-Blockly.Blocks.math_divide.OPERATORS = function () {
+Blockly.Blocks['math_divide'].OPERATORS = function () {
   return [[Blockly.Msg.LANG_MATH_DIVIDE_OPERATOR_MODULO, 'MODULO'],
     [Blockly.Msg.LANG_MATH_DIVIDE_OPERATOR_REMAINDER, 'REMAINDER'],
     [Blockly.Msg.LANG_MATH_DIVIDE_OPERATOR_QUOTIENT, 'QUOTIENT']];
 };
 
-Blockly.Blocks.math_divide.TOOLTIPS = function () {
+Blockly.Blocks['math_divide'].TOOLTIPS = function () {
   return {
     MODULO: Blockly.Msg.LANG_MATH_DIVIDE_TOOLTIP_MODULO,
     REMAINDER: Blockly.Msg.LANG_MATH_DIVIDE_TOOLTIP_REMAINDER,
@@ -734,7 +735,7 @@ Blockly.Blocks.math_divide.TOOLTIPS = function () {
   }
 };
 
-Blockly.Blocks.math_divide.HELPURLS = function () {
+Blockly.Blocks['math_divide'].HELPURLS = function () {
   return {
     MODULO: Blockly.Msg.LANG_MATH_DIVIDE_HELPURL_MODULO,
     REMAINDER: Blockly.Msg.LANG_MATH_DIVIDE_HELPURL_REMAINDER,
@@ -801,7 +802,7 @@ Blockly.Blocks['math_trig'] = {
   }]
 };
 
-Blockly.Blocks.math_trig.OPERATORS = function () {
+Blockly.Blocks['math_trig'].OPERATORS = function () {
   return [[Blockly.Msg.LANG_MATH_TRIG_SIN, 'SIN'],
     [Blockly.Msg.LANG_MATH_TRIG_COS, 'COS'],
     [Blockly.Msg.LANG_MATH_TRIG_TAN, 'TAN'],
@@ -810,7 +811,7 @@ Blockly.Blocks.math_trig.OPERATORS = function () {
     [Blockly.Msg.LANG_MATH_TRIG_ATAN, 'ATAN']];
 }
 
-Blockly.Blocks.math_trig.TOOLTIPS = function () {
+Blockly.Blocks['math_trig'].TOOLTIPS = function () {
   return {
     SIN: Blockly.Msg.LANG_MATH_TRIG_TOOLTIP_SIN,
     COS: Blockly.Msg.LANG_MATH_TRIG_TOOLTIP_COS,
@@ -821,7 +822,7 @@ Blockly.Blocks.math_trig.TOOLTIPS = function () {
   }
 };
 
-Blockly.Blocks.math_trig.HELPURLS = function () {
+Blockly.Blocks['math_trig'].HELPURLS = function () {
   return {
     SIN: Blockly.Msg.LANG_MATH_TRIG_HELPURL_SIN,
     COS: Blockly.Msg.LANG_MATH_TRIG_HELPURL_COS,
@@ -938,19 +939,19 @@ Blockly.Blocks['math_convert_angles'] = {
   }]
 };
 
-Blockly.Blocks.math_convert_angles.OPERATORS = function () {
+Blockly.Blocks['math_convert_angles'].OPERATORS = function () {
   return [[Blockly.Msg.LANG_MATH_CONVERT_ANGLES_OP_RAD_TO_DEG, 'RADIANS_TO_DEGREES'],
     [Blockly.Msg.LANG_MATH_CONVERT_ANGLES_OP_DEG_TO_RAD, 'DEGREES_TO_RADIANS']]
 };
 
-Blockly.Blocks.math_convert_angles.TOOLTIPS = function () {
+Blockly.Blocks['math_convert_angles'].TOOLTIPS = function () {
   return {
     RADIANS_TO_DEGREES: Blockly.Msg.LANG_MATH_CONVERT_ANGLES_TOOLTIP_RAD_TO_DEG,
     DEGREES_TO_RADIANS: Blockly.Msg.LANG_MATH_CONVERT_ANGLES_TOOLTIP_DEG_TO_RAD
   }
 };
 
-Blockly.Blocks.math_convert_angles.HELPURLS = function () {
+Blockly.Blocks['math_convert_angles'].HELPURLS = function () {
   return {
     RADIANS_TO_DEGREES: Blockly.Msg.LANG_MATH_CONVERT_ANGLES_HELPURL_RAD_TO_DEG,
     DEGREES_TO_RADIANS: Blockly.Msg.LANG_MATH_CONVERT_ANGLES_HELPURL_DEG_TO_RAD

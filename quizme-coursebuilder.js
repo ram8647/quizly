@@ -24,12 +24,14 @@
 
 'use strict';
 
+var DEBUG = GLOBAL_DEBUG;  // GLOBAL_DEBUG set in blockly.html;
+
 /**
  * Handles the submit button in progex.html, a programming
  *  prablem or practice exercise.
  */
 function submitProgEx() {
-  console.log("RAM: submitProgEx ");
+  if (DEBUG) console.log("RAM: submitProgEx ");
   //  var quizme = window.parent.quizme;
   var quizme = window.parent.activity;
   var button = document.getElementById('submit_new_toggle');
@@ -49,7 +51,7 @@ function submitProgEx() {
  * exercise where the student gets one shot -- a single question.
  */
 function submitOneShot() {
-  console.log("RAM: submitOneShot ");
+  if (DEBUG) console.log("RAM: submitOneShot ");
   evaluateAndRecordAnswer()
   var quizframe = window.parent.document.getElementById('quizmeframe');
   quizframe.hidden = true;
@@ -63,7 +65,7 @@ function submitOneShot() {
  *  into Coursebuilder's assessment system.
  */
 function evaluateAndRecordAnswer() {
-  console.log("RAM: evaluateAndRecordAnswer()");
+  if (DEBUG) console.log("RAM: evaluateAndRecordAnswer()");
   var result = false;
   if (Blockly.Quizme.question_type == "math_compare_fillin") {
     result = Blockly.Quizme.eval_math_compare_topblock();
@@ -110,7 +112,7 @@ function evaluateAndRecordAnswer() {
  *  Submits answer from a Quizme quiz to Coursebuilder.
  */
 function submitAnswerToCourseBuilder(result) {
-  console.log("RAM: submitAnswerToCourseBuilder result= " + result );
+  if (DEBUG) console.log("RAM: submitAnswerToCourseBuilder result= " + result );
 
   //  Get the assessment object from this window's parent
   var assessment_quizme = window.parent.assessment_quizme;
@@ -166,7 +168,7 @@ function submitAnswerToCourseBuilder(result) {
 
   doc.body.appendChild(myForm);
   myForm.submit();
-  console.log("RAM: submitted form , action = " + myForm.action + " method = " + myForm.method );
+  if (DEBUG) console.log("RAM: submitted form , action = " + myForm.action + " method = " + myForm.method );
   doc.body.appendChild(myForm);
 }
 

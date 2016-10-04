@@ -167,13 +167,13 @@ Blockly.Blocks['text_compare'] = {
   }]
 };
 
-Blockly.Blocks.text_compare.OPERATORS = function () {
+Blockly.Blocks['text_compare'].OPERATORS = function () {
   return [
     [Blockly.Msg.LANG_TEXT_COMPARE_LT, 'LT'], [Blockly.Msg.LANG_TEXT_COMPARE_EQUAL, 'EQUAL'], [Blockly.Msg.LANG_TEXT_COMPARE_GT, 'GT']
   ]
 };
 
-Blockly.Blocks.text_compare.TOOLTIPS = function () {
+Blockly.Blocks['text_compare'].TOOLTIPS = function () {
   return {
     LT: Blockly.Msg.LANG_TEXT_COMPARE_TOOLTIP_LT,
     EQUAL: Blockly.Msg.LANG_TEXT_COMPARE_TOOLTIP_EQUAL,
@@ -230,20 +230,20 @@ Blockly.Blocks['text_changeCase'] = {
   }]
 };
 
-Blockly.Blocks.text_changeCase.OPERATORS = function () {
+Blockly.Blocks['text_changeCase'].OPERATORS = function () {
   return [
     [Blockly.Msg.LANG_TEXT_CHANGECASE_OPERATOR_UPPERCASE, 'UPCASE'], [Blockly.Msg.LANG_TEXT_CHANGECASE_OPERATOR_DOWNCASE, 'DOWNCASE']
   ]
 };
 
-Blockly.Blocks.text_changeCase.TOOLTIPS = function () {
+Blockly.Blocks['text_changeCase'].TOOLTIPS = function () {
   return {
     UPCASE: Blockly.Msg.LANG_TEXT_CHANGECASE_TOOLTIP_UPPERCASE,
     DOWNCASE: Blockly.Msg.LANG_TEXT_CHANGECASE_TOOLTIP_DOWNCASE
   }
 };
 
-Blockly.Blocks.text_changeCase.HELPURLS = function () {
+Blockly.Blocks['text_changeCase'].HELPURLS = function () {
   return {
     UPCASE: Blockly.Msg.LANG_TEXT_CHANGECASE_HELPURL_UPPERCASE,
     DOWNCASE: Blockly.Msg.LANG_TEXT_CHANGECASE_HELPURL_DOWNCASE
@@ -350,7 +350,7 @@ Blockly.Blocks['text_split'] = {
 };
 
 // Change the name and type of ARG2 and set tooltop depending on mode
-Blockly.Blocks.text_split.adjustToMode = function (mode, block) {
+Blockly.Blocks['text_split'].adjustToMode = function (mode, block) {
   if (mode == 'SPLITATFIRST' || mode == 'SPLIT') {
     block.getInput("AT").setCheck(Blockly.Blocks.Utilities.YailTypeToBlocklyType("text", Blockly.Blocks.Utilities.INPUT));
     block.setFieldValue(Blockly.Msg.LANG_TEXT_SPLIT_INPUT_AT, 'ARG2_NAME');
@@ -362,12 +362,12 @@ Blockly.Blocks.text_split.adjustToMode = function (mode, block) {
   block.setTooltip(Blockly.Blocks.text_split.TOOLTIPS()[mode]);
 };
 
-Blockly.Blocks.text_split.dropdown_onchange = function (mode) {
+Blockly.Blocks['text_split'].dropdown_onchange = function (mode) {
   Blockly.Blocks.text_split.adjustToMode(mode, this.sourceBlock_)
 };
 
 // The order here determines the order in the dropdown
-Blockly.Blocks.text_split.OPERATORS = function () {
+Blockly.Blocks['text_split'].OPERATORS = function () {
   return [
     [Blockly.Msg.LANG_TEXT_SPLIT_OPERATOR_SPLIT, 'SPLIT'],
     [Blockly.Msg.LANG_TEXT_SPLIT_OPERATOR_SPLIT_AT_FIRST, 'SPLITATFIRST'],
@@ -376,7 +376,7 @@ Blockly.Blocks.text_split.OPERATORS = function () {
   ]
 };
 
-Blockly.Blocks.text_split.TOOLTIPS = function () {
+Blockly.Blocks['text_split'].TOOLTIPS = function () {
   return {
     SPLITATFIRST: Blockly.Msg.LANG_TEXT_SPLIT_TOOLTIP_SPLIT_AT_FIRST,
     SPLITATFIRSTOFANY: Blockly.Msg.LANG_TEXT_SPLIT_TOOLTIP_SPLIT_AT_FIRST_OF_ANY,
@@ -385,7 +385,7 @@ Blockly.Blocks.text_split.TOOLTIPS = function () {
   }
 };
 
-Blockly.Blocks.text_split.HELPURLS = function () {
+Blockly.Blocks['text_split'].HELPURLS = function () {
   return {
     SPLITATFIRST: Blockly.Msg.LANG_TEXT_SPLIT_HELPURL_SPLIT_AT_FIRST,
     SPLITATFIRSTOFANY: Blockly.Msg.LANG_TEXT_SPLIT_HELPURL_SPLIT_AT_FIRST_OF_ANY,

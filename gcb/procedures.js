@@ -473,29 +473,30 @@ Blockly.Blocks['procedures_defreturn'] = {
     this.arguments_ = [];
     this.warnings = [{name:"checkEmptySockets",sockets:["RETURN"]}];
   },
-  onchange: Blockly.Blocks.procedures_defnoreturn.onchange,
+  //  onchange: Blockly.Blocks.procedures_defnoreturn.onchange,
+  onchange: Blockly.Blocks['procedures_defnoreturn'].onchange,
   // [lyn, 11/24/12] return list of procedure body (if there is one)
-  updateParams_: Blockly.Blocks.procedures_defnoreturn.updateParams_,
-  parameterFlydown: Blockly.Blocks.procedures_defnoreturn.parameterFlydown,
-  setParameterOrientation: Blockly.Blocks.procedures_defnoreturn.setParameterOrientation,
-  mutationToDom: Blockly.Blocks.procedures_defnoreturn.mutationToDom,
-  domToMutation: Blockly.Blocks.procedures_defnoreturn.domToMutation,
-  decompose: Blockly.Blocks.procedures_defnoreturn.decompose,
-  compose: Blockly.Blocks.procedures_defnoreturn.compose,
-  dispose: Blockly.Blocks.procedures_defnoreturn.dispose,
+  updateParams_: Blockly.Blocks['procedures_defnoreturn'].updateParams_,
+  parameterFlydown: Blockly.Blocks['procedures_defnoreturn'].parameterFlydown,
+  setParameterOrientation: Blockly.Blocks['procedures_defnoreturn'].setParameterOrientation,
+  mutationToDom: Blockly.Blocks['procedures_defnoreturn'].mutationToDom,
+  domToMutation: Blockly.Blocks['procedures_defnoreturn'].domToMutation,
+  decompose: Blockly.Blocks['procedures_defnoreturn'].decompose,
+  compose: Blockly.Blocks['procedures_defnoreturn'].compose,
+  dispose: Blockly.Blocks['procedures_defnoreturn'].dispose,
   getProcedureDef: Blockly.Blocks.getProcedureDef,
-  getVars: Blockly.Blocks.procedures_defnoreturn.getVars,
-  declaredNames: Blockly.Blocks.procedures_defnoreturn.declaredNames,
-  renameVar: Blockly.Blocks.procedures_defnoreturn.renameVar,
-  renameVars: Blockly.Blocks.procedures_defnoreturn.renameVars,
-  renameBound: Blockly.Blocks.procedures_defnoreturn.renameBound,
-  renameFree: Blockly.Blocks.procedures_defnoreturn.renameFree,
-  freeVariables: Blockly.Blocks.procedures_defnoreturn.freeVariables,
-  blocksInScope: Blockly.Blocks.procedures_defnoreturn.blocksInScope,
+  getVars: Blockly.Blocks['procedures_defnoreturn'].getVars,
+  declaredNames: Blockly.Blocks['procedures_defnoreturn'].declaredNames,
+  renameVar: Blockly.Blocks['procedures_defnoreturn'].renameVar,
+  renameVars: Blockly.Blocks['procedures_defnoreturn'].renameVars,
+  renameBound: Blockly.Blocks['procedures_defnoreturn'].renameBound,
+  renameFree: Blockly.Blocks['procedures_defnoreturn'].renameFree,
+  freeVariables: Blockly.Blocks['procedures_defnoreturn'].freeVariables,
+  blocksInScope: Blockly.Blocks['procedures_defnoreturn'].blocksInScope,
   typeblock: [{ translatedName: Blockly.Msg.LANG_PROCEDURES_DEFRETURN_PROCEDURE +
       ' ' + Blockly.Msg.LANG_PROCEDURES_DEFRETURN_RETURN }],
-  customContextMenu: Blockly.Blocks.procedures_defnoreturn.customContextMenu,
-  getParameters: Blockly.Blocks.procedures_defnoreturn.getParameters
+  customContextMenu: Blockly.Blocks['procedures_defnoreturn'].customContextMenu,
+  getParameters: Blockly.Blocks['procedures_defnoreturn'].getParameters
 };
 
 Blockly.Blocks['procedures_mutatorcontainer'] = {
@@ -637,7 +638,7 @@ Blockly.Blocks['procedures_mutatorarg'] = {
   }
 };
 
-Blockly.Blocks.procedures_mutatorarg.validator = function(newVar) {
+Blockly.Blocks['procedures_mutatorarg'].validator = function(newVar) {
   // Merge runs of whitespace.  Strip leading and trailing whitespace.
   // Beyond this, all names are legal.
   newVar = newVar.replace(/[\s\xa0]+/g, ' ').replace(/^ | $/g, '');
@@ -646,7 +647,8 @@ Blockly.Blocks.procedures_mutatorarg.validator = function(newVar) {
 
 /* [lyn 10/10/13] With parameter flydown changes,
  * I don't think a special GET block in the Procedure drawer is necesssary
-Blockly.Blocks.procedure_lexical_variable_get = {
+//Blockly.Blocks.procedure_lexical_variable_get = {
+Blockly.Blocks['procedure_lexical_variable_get'] = {
   // Variable getter.
   category: 'Procedures',
   helpUrl: Blockly.Msg.LANG_PROCEDURES_GET_HELPURL, // *** [lyn, 11/10/12] Fix this
@@ -703,7 +705,8 @@ Blockly.Blocks.procedure_lexical_variable_get = {
  * mutator on procedure_defreturn that allows adding a DO statement.
  */
 /*
-Blockly.Blocks.procedures_do_then_return = {
+//Blockly.Blocks.procedures_do_then_return = {
+Blockly.Blocks['procedures_do_then_return'] = {
   // String length.
   category: 'Procedures',
   helpUrl: Blockly.Msg.LANG_PROCEDURES_DOTHENRETURN_HELPURL,
@@ -935,15 +938,15 @@ Blockly.Blocks['procedures_callreturn'] = {
     //Blockly.FieldProcedure.onChange.call(this.getField_("PROCNAME"),this.procNamesFxn()[0][0]);
     Blockly.FieldProcedure.onChange.call(this.getField_("PROCNAME"),this.getField_("PROCNAME").getValue());
   },
-  getProcedureCall: Blockly.Blocks.procedures_callnoreturn.getProcedureCall,
-  renameProcedure: Blockly.Blocks.procedures_callnoreturn.renameProcedure,
+  getProcedureCall: Blockly.Blocks['procedures_callnoreturn'].getProcedureCall,
+  renameProcedure: Blockly.Blocks['procedures_callnoreturn'].renameProcedure,
   setProcedureParameters:
-      Blockly.Blocks.procedures_callnoreturn.setProcedureParameters,
-  mutationToDom: Blockly.Blocks.procedures_callnoreturn.mutationToDom,
-  domToMutation: Blockly.Blocks.procedures_callnoreturn.domToMutation,
-  renameVar: Blockly.Blocks.procedures_callnoreturn.renameVar,
-  procCustomContextMenu: Blockly.Blocks.procedures_callnoreturn.procCustomContextMenu,
-  removeProcedureValue: Blockly.Blocks.procedures_callnoreturn.removeProcedureValue,
+      Blockly.Blocks['procedures_callnoreturn'].setProcedureParameters,
+  mutationToDom: Blockly.Blocks['procedures_callnoreturn'].mutationToDom,
+  domToMutation: Blockly.Blocks['procedures_callnoreturn'].domToMutation,
+  renameVar: Blockly.Blocks['procedures_callnoreturn'].renameVar,
+  procCustomContextMenu: Blockly.Blocks['procedures_callnoreturn'].procCustomContextMenu,
+  removeProcedureValue: Blockly.Blocks['procedures_callnoreturn'].removeProcedureValue,
   // This generates a single generic call to 'call return' defaulting its value
   // to the first procedure in the list. Calls for each procedure cannot be done here because the
   // blocks have not been loaded yet (they are loaded in typeblock.js)

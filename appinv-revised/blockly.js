@@ -48,11 +48,9 @@ goog.require('Blockly.Msg');
 goog.require('Blockly.Procedures');
 goog.require('Blockly.Realtime');
 //goog.require('Blockly.Toolbox');
-goog.require('Blockly.TypeBlock');
+goog.require('Blockly.TypeBlock'); 
 goog.require('Blockly.WidgetDiv');
 goog.require('Blockly.Workspace');
-goog.require('Blockly.inject');
-goog.require('Blockly.utils');
 
 // Closure dependencies.
 goog.require('goog.color');
@@ -725,7 +723,7 @@ Blockly.hideChaff = function(opt_allowToolbox) {
   Blockly.Tooltip.hide();
   Blockly.FieldFlydown && Blockly.FieldFlydown.hide(); // [lyn, 10/06/13] for handling parameter & procedure flydowns
   Blockly.WidgetDiv.hide();
-  Blockly.TypeBlock && Blockly.TypeBlock.hide();
+  Blockly['TypeBlock'] && Blockly['TypeBlock'].hide();
 };
 
 /**

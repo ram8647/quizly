@@ -22,6 +22,82 @@
  * @author ram8647@gmail.com (Ralph Morelli)
  */
 
+//goog.require('Blockly.BlocklyEditor');
+
+var DEBUG = GLOBAL_DEBUG;  // GLOBAL_DEBUG set in blockly.html
+
+// ***************** Utility functions moved from index.html **************
+
+// NOTE: Blockly injects a static toolbox in the form of an Xml tree. We want our toolbox to be dynamic but 
+//  we must initialize it here. The TOOLBOX category serves as a static heading for the toolbox.
+// This is the onload fuction that is  called from blockly.html when blockly is loaded into the iframe.
+
+function initBlocklyFrame(quizdata) {
+  var href = window.parent.document.location.href;  // Check parent window?
+  if (href.indexOf('quizly') == -1) {
+    href = window.document.location.href;           // Check this window
+  }
+  var quizname;
+  var arglist = href.split('?')[1];
+  if (arglist) {
+    var params = arglist.split('&');
+    for (var i = 0; i < params.length; i++) {
+       var keyval = params[i].split('=');
+       if (keyval[0] == 'quizname')
+         quizname = keyval[1];
+    }
+  }
+
+  if (DEBUG) console.log('RAM: initBlocklyFrame arglist = ' + arglist);
+
+  // Typeblocking configuration
+  var typeblock_config = {
+    frame: 'ai_frame',
+    typeBlockDiv: 'ai_type_block',
+    inputText: 'ac_input_text'
+  };
+
+  Blockly.inject(document.body,
+    {path: './',
+       backpack:true,
+       trashcan: true,
+       toolbox: '<xml id="toolbox" style="display:none"><category name="TOOLBOX"><block type="bogus"></block></category></xml>'
+    });
+
+  if (DEBUG) console.log('RAM: initBlocklyFrame after inject ');
+
+   //This is what Blockly's init function does when passing options.
+   //We are overriding the init process so putting it here
+   goog.mixin(Blockly, {
+      collapse : true,
+      configForTypeBlock: typeblock_config
+    });
+
+  if (DEBUG) console.log('RAM: initBlocklyFrame after goog.mixin ');
+
+   //This would also be done in Blockly init, but we need to do it here because of
+   //the different init process in drawer (it'd be undefined at the time it hits
+   //init in Blockly)
+
+
+   if (!Blockly.readOnly)
+     Blockly['TypeBlock'](Blockly.configForTypeBlock);
+
+   // Let the top-level application know that Blockly is ready.
+   // Do any Quizme initializations here.
+   window.parent['blocklyLoaded'](Blockly);
+
+  if (DEBUG) console.log('RAM: initBlocklyFrame after TypeBlock ');
+
+   if (window.parent.document.title == "Quiz Maker Utility")
+     initQuizMaker('./');
+   else 
+     initQuizme(quizname, './', arglist, quizdata);
+}
+
+window['initBlocklyFrame'] = initBlocklyFrame;
+
+
 if (!Blockly.BlocklyEditor) 
   Blockly.BlocklyEditor = {};
 

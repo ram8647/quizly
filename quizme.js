@@ -23,30 +23,21 @@
  * @author ram8647@gmail.com (Ralph Morelli)
  */
 
- Blockly.Quizme = {};
- Blockly.Quizme.quiznames = [];
- Blockly.Quizme.quiznames_display = [];
+var DEBUG = GLOBAL_DEBUG;   // GLOBAL_DEBUG set in blockly,html
 
- Blockly.Quizme.clearWorkspace = function() {
-     Blockly.mainWorkspace.clear();
- }
+Blockly.Quizme = {};
+Blockly.Quizme.quiznames = [];
+Blockly.Quizme.quiznames_display = [];
+if (DEBUG) console.log(Blockly.Quizme);
 
-/**
- * Syncrhonously loads the quizzes.json file.  The callback function 
- *  populates the Blockly.Quizme object.
- * @param url is the url of the JSON file.
- */
-Blockly.Quizme.loadQuizzes = function(url) {
-  console.log("RAM: loadQuizzes, url = " + url);
-  $.ajaxSetup( { "async": false } );   
-  $.getJSON(url, function(data) {
+Blockly.Quizme.clearWorkspace = function() {
+    Blockly.mainWorkspace.clear();
+}
 
-    $.each(data, function(key, val) {
-      Blockly.Quizme.addQuiz(key, val, Blockly.Quizme);
-    });
-
-  });
-  $.ajaxSetup( { "async": true } );
+Blockly.Quizme.parseQuizzes = function(quizdata) {
+  for (var quiz in quizdata) {
+     Blockly.Quizme.addQuiz(quiz, quizdata[quiz], Blockly.Quizme);
+  }
 }
 
 /**
@@ -57,7 +48,7 @@ Blockly.Quizme.loadQuizzes = function(url) {
  *
  */ 
 Blockly.Quizme.addQuiz = function(name, jsonStr, quizObj) {
-  //  console.log("RAM: Quizme.add, jsonStr = " + jsonStr.Name);
+  if (DEBUG) console.log("RAM: Quizme.add, jsonStr = " + jsonStr.Name);
   quizObj[name] = {};
   quizObj[name].quizName = jsonStr.Name;
   quizObj[name].description = jsonStr.Description;
@@ -105,7 +96,7 @@ Blockly.Quizme.eval = function(block) {
       return undefined;
   var code = Blockly.JavaScript.blockToCode(block);
   var value = eval(code[0]);
-  console.log("RAM: evaluating " + code[0] + " to " + value);
+  if (DEBUG) console.log("RAM: evaluating " + code[0] + " to " + value);
   return value;
 }
 

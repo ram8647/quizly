@@ -193,7 +193,8 @@ Blockly.Blocks['lexical_variable_set'] = {
   getVars: function() {
     return [this.getFieldValue('VAR')];
   },
-  renameLexicalVar: Blockly.Blocks.lexical_variable_get.renameLexicalVar,
+  //  renameLexicalVar: Blockly.Blocks.lexical_variable_get.renameLexicalVar,
+  renameLexicalVar: Blockly.Blocks['lexical_variable_get'].renameLexicalVar,
   renameFree: function (freeSubstitution) {
     // potentially rename the set variable
     var prefixPair = Blockly.unprefixName(this.getFieldValue('VAR'));
@@ -559,7 +560,9 @@ Blockly.Blocks['local_declaration_statement'] = {
 Blockly.Blocks['local_declaration_expression'] = {
   category: 'Variables',  // *** [lyn, 11/07/12] Abstract over this
   helpUrl: Blockly.Msg.LANG_VARIABLES_LOCAL_DECLARATION_EXPRESSION_HELPURL,
-  initLocals: Blockly.Blocks.local_declaration_statement.initLocals,
+
+  // Closure renaming: Changing Blockly.Blocks.local_declaration_statement
+  initLocals: Blockly.Blocks['local_declaration_statement'].initLocals,
   bodyInputName: 'RETURN',
   init: function() {
     this.initLocals();
@@ -569,23 +572,23 @@ Blockly.Blocks['local_declaration_expression'] = {
     this.setOutput(true, null);
     this.setTooltip(Blockly.Msg.LANG_VARIABLES_LOCAL_DECLARATION_EXPRESSION_TOOLTIP);
   },
-  onchange: Blockly.Blocks.local_declaration_statement.onchange,
-  mutationToDom: Blockly.Blocks.local_declaration_statement.mutationToDom,
-  domToMutation: Blockly.Blocks.local_declaration_statement.domToMutation,
-  updateDeclarationInputs_: Blockly.Blocks.local_declaration_statement.updateDeclarationInputs_,
-  parameterFlydown: Blockly.Blocks.local_declaration_statement.parameterFlydown,
-  blocksInScope: Blockly.Blocks.local_declaration_statement.blocksInScope,
-  decompose: Blockly.Blocks.local_declaration_statement.decompose,
-  compose: Blockly.Blocks.local_declaration_statement.compose,
-  dispose: Blockly.Blocks.local_declaration_statement.dispose,
-  saveConnections: Blockly.Blocks.local_declaration_statement.saveConnections,
-  getVars: Blockly.Blocks.local_declaration_statement.getVars,
-  declaredNames: Blockly.Blocks.local_declaration_statement.declaredNames,
-  renameVar: Blockly.Blocks.local_declaration_statement.renameVars,
-  renameVars: Blockly.Blocks.local_declaration_statement.renameVar,
-  renameBound: Blockly.Blocks.local_declaration_statement.renameBound,
-  renameFree: Blockly.Blocks.local_declaration_statement.renameFree,
-  freeVariables: Blockly.Blocks.local_declaration_statement.freeVariables,
+  onchange: Blockly.Blocks['local_declaration_statement'].onchange,
+  mutationToDom: Blockly.Blocks['local_declaration_statement'].mutationToDom,
+  domToMutation: Blockly.Blocks['local_declaration_statement'].domToMutation,
+  updateDeclarationInputs_: Blockly.Blocks['local_declaration_statement'].updateDeclarationInputs_,
+  parameterFlydown: Blockly.Blocks['local_declaration_statement'].parameterFlydown,
+  blocksInScope: Blockly.Blocks['local_declaration_statement'].blocksInScope,
+  decompose: Blockly.Blocks['local_declaration_statement'].decompose,
+  compose: Blockly.Blocks['local_declaration_statement'].compose,
+  dispose: Blockly.Blocks['local_declaration_statement'].dispose,
+  saveConnections: Blockly.Blocks['local_declaration_statement'].saveConnections,
+  getVars: Blockly.Blocks['local_declaration_statement'].getVars,
+  declaredNames: Blockly.Blocks['local_declaration_statement'].declaredNames,
+  renameVar: Blockly.Blocks['local_declaration_statement'].renameVars,
+  renameVars: Blockly.Blocks['local_declaration_statement'].renameVar,
+  renameBound: Blockly.Blocks['local_declaration_statement'].renameBound,
+  renameFree: Blockly.Blocks['local_declaration_statement'].renameFree,
+  freeVariables: Blockly.Blocks['local_declaration_statement'].freeVariables,
   //TODO (user) this has not been internationalized yet
   typeblock: [{ translatedName: Blockly.Msg.LANG_VARIABLES_LOCAL_DECLARATION_EXPRESSION_TRANSLATED_NAME }]
 };

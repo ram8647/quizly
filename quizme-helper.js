@@ -56,8 +56,10 @@
 
 'use strict';
 
+//goog.require('Blockly.Quizme');
+
 var ED_X = false;
-var DEBUG = true;
+var DEBUG = GLOBAL_DEBUG;   // GLOBAL_DEBUG set in blockly,html
 var SELECTOR_OPTION = 'selector';
 var BACKPACK_OPTION = 'backpack';
 
@@ -84,7 +86,7 @@ var CONTROLS_BLOCKS = ["controls_choose", "controls_do_then_return", "controls_i
 var LISTS_BLOCKS = ["lists_create_with", "lists_create_with_item", "lists_is_empty", "lists_length"]; //"lists_add_items", "lists_add_items_item", "lists_append_list", "lists_create_with_item", "lists_insert_item", "lists_is_in", "lists_is_list", "lists_pick_random_item", "lists_remove_item", "lists_replace_item", "lists_select_item"
 var TEXT_BLOCKS = ["text", "text_join", "text_join_item","text_length","text_isEmpty","text_trim","text_changeCase", "text_compare"]; //, "text_starts_at", "text_contains", "text_split", "text_split_at_spaces", "text_segment", "text_replace_all"
 var COLOR_BLOCKS = ["color_black", "color_white", "color_red", "color_pink", "color_orange", "color_yellow", "color_green", "color_cyan", "color_blue", "color_magenta", "color_light_gray", 
-                    "color_gray", "color_dark_gray", "color_make_color", "color_split_color", ];
+                    "color_gray", "color_dark_gray", "color_make_color", "color_split_color" ];
 var TOPLEVEL_BLOCKS = ["mutator_container", "InstantInTime", "YailTypeToBlocklyType", "YailTypeToBlocklyTypeMap","setTooltip","wrapSentence", "component_event", "component_method", "component_set_get", "component_component_block"];
 
 
@@ -158,8 +160,9 @@ function createBogusParentFunctions() {
  * @param quizmepath, path to the quizme source files
  * @param arglist, the list of GET args passed, e.g., 'quizname=name&selector=hidden&backpack=hidden
  */
-function initQuizme(quizname, quizmepath, arglist) {
-  if (DEBUG) console.log("RAM: initializing ... quizname= " + quizname + " path=" + quizmepath + " arglist = " + arglist);
+function initQuizme(quizname, quizmepath, arglist, quizdata) {
+  if (DEBUG) console.log("RAM initQuizme quizdata " + quizdata);
+  //  if (DEBUG) console.log("RAM: initializing ... quizname= " + quizname + " path=" + quizmepath + " arglist = " + arglist);
 
   createBogusParentFunctions();   // To handle translation
 
@@ -176,7 +179,8 @@ function initQuizme(quizname, quizmepath, arglist) {
   Blockly.Toolbox.hide = function() {}   // To cover calls to Drawer.hide()
 
   // Load the quizzes and components from data files.
-  Blockly.Quizme.loadQuizzes(quizmepath + "quizzes.json");
+  //  Blockly.Quizme.loadQuizzes(quizmepath + "quizzes.json");
+  Blockly.Quizme.parseQuizzes(quizdata);
   Blockly.Quizme.components = Blockly.Quizme.inputFromComponentsArray();
 
   // Parse the argument list --> creates Blockly.Quizme.options
@@ -223,6 +227,9 @@ function initQuizme(quizname, quizmepath, arglist) {
   if (ED_X) {
     quizselector = false;
   }
+
+  if (DEBUG) console.log("RAM initQuizme before populating selector ");
+
   if (quizselector) {
     var quizzes = Blockly.Quizme.quiznames;
     var quiznames = Blockly.Quizme.quiznames_display;
@@ -232,35 +239,12 @@ function initQuizme(quizname, quizmepath, arglist) {
     }
     quizselector.innerHTML = selectHtml;
   }
+
+  if (DEBUG) console.log("RAM initQuizme after population selector ");
      
   // Set up path names.
   Blockly.Quizme.pathname = quizmepath;
   Blockly.Quizme.imgpath = quizmepath + 'quizly/media/';
-
-  // TODO:  These initializations are for Course Builder, which sets either
-  // an assessment or activity variable. It would be better to pass this
-  // as a parameter, but can't see how.
-
-  // Are we within the CourseBuilder Quizme or MobileCSP Quizme context?
-  // This would be defined in a file of the form: ./assets/js/assessments-P1.js
-  // Or in MobileCSP in a file of the form activity-X.html.
-
-  // Are we within the CourseBuilder practice Quizme context?
-  // This would be defined in a file of the form: ./assets/js/quizme-3.1.js
-
-//   if (!quizname) {
-//     if (window.document.title == "Blockly Frame") {
-//       if (window.parent.activity) {
-//         quizname = processCbActivity(window.parent.activity);
-//       } else if (window.parent.parent.activity) {
-//         quizname = processCbAcivity(window.parent.parent.activity);
-//       } else if (window.parent.assessment) {
-//         quizname = processCbAssessment(window.parent.assessment);
-//       } else if (window.parent.parent.assessment) {
-//         quizname = processCbAssessment(window.parent.parent.activity);
-//       }
-//     }
-//   }
 
   // Initialize the structures that handles scoped variables
   Blockly.BlocklyEditor.startquizme();
@@ -368,7 +352,7 @@ function showJavaScript() {
  * quizzes.json by Blockly.Quizme.add() in quizme.js.  They are stored
  * as Blockly.Quizme objects, indexed by 'quizname'.
  * 
- * @quizname the type of quiz question, possibly undefined, in which
+ * @param quizname the type of quiz question, possibly undefined, in which
  *  case a random quizname is selected
  * 
  * TODO: This function is too long. Break it up. 
@@ -505,6 +489,7 @@ function initQuizmeLanguage() {
       Blockly.Blocks[propname] = Blockly.WholeLanguage[propname];
   }
 
+  if (DEBUG) console.log("RAM: in initQuizmeLanguage ");
   resetComponentInstances();  // In quizme-helper.js
   var components = ['Button', 'Sound', 'Player', 'Label', 'Canvas'];
   Blockly.Quizme.addComponents(components);
@@ -652,6 +637,7 @@ function customizeQuizmeLanguage(quizname, keepers, components) {
   initQuizmeLanguage();
   var newLanguage = {}
 
+  if (DEBUG) console.log("RAM: Creating languageTree");
   for (var propname in Blockly.Blocks) {
     if (keepers.indexOf(propname) != -1 || propname == 'Utilities' || TOPLEVEL_BLOCKS.indexOf(propname) != -1) {
       newLanguage[propname] = Blockly.Blocks[propname];
@@ -740,6 +726,7 @@ function resetBlocklyLanguage() {
  *  its elements, preserving its functions.
  */
 function resetComponentInstances() {
+  if (DEBUG) console.log("RAM: in resetComponentInstance " + Blockly.ComponentInstances);
   Blockly.ComponentInstances = {};
 
   Blockly.ComponentInstances.addInstance = function(name, uid) {
@@ -750,17 +737,21 @@ function resetComponentInstances() {
   }
 
   Blockly.ComponentInstances.haveInstance = function(name, uid) {
-  return Blockly.ComponentInstances[name] != undefined
-  && Blockly.ComponentInstances[name].uid == uid;
+    if (DEBUG) console.log("RAM ComponentInstances.haveInstance " + name);
+    return Blockly.ComponentInstances[name] != undefined
+       && Blockly.ComponentInstances[name].uid == uid;
   }
 
   Blockly.ComponentInstances.addBlockName = function(name, blockName) {
+    if (DEBUG) console.log("RAM ComponentInstances.addBlockName " + name);
     Blockly.ComponentInstances[name].blocks.push(blockName);
   }
 
   Blockly.ComponentInstances.getInstanceNames = function() {
+    if (DEBUG) console.log("RAM ComponentInstances.getInstanceNames ");
     var instanceNames = [];
     for(var instanceName in Blockly.ComponentInstances) {
+      if (DEBUG) console.log("RAM: instanceName " + instanceName);
       if(typeof Blockly.ComponentInstances[instanceName] == "object" && Blockly.ComponentInstances[instanceName].uid != null){
 	instanceNames.push(instanceName);
       }
@@ -1639,7 +1630,7 @@ Blockly.Quizme.removeTag = function(tag, str) {
  * 
  * @param helperObj - either Quizmaker or Quizme
  * @param name -- the quiz's name
- * @var dict -- the dictionary created by Quizmaker with
+ * @param dict -- the dictionary created by Quizmaker with
  *  random lists of values for each variable.  For example:
  *   { 1: "-5...100", STR1: ["X", "Y", "Z"] }
  * 
