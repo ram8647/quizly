@@ -1,0 +1,73 @@
+body {
+	font-size: 100%;
+}
+p {
+	margin: 0;
+	padding: 0;
+	line-height: 22px;
+}
+
+/*
+	Tabs CSS code starts here
+*/
+.tabs_wrapper {
+	width: 1222px;
+	margin: 30px;
+}
+
+.tab_content {
+	display: none;
+}
+
+/* 2nd new tabs */
+#tabs {
+	border-bottom: 1px solid #cccccc;
+}
+#tabs ul {
+	list-style: none;
+	padding: 11px 0 10px 0;
+	margin: 0;
+	font-size: 0.75em;
+	font-family: Arial, Verdana, sans-serif;
+	border-left: 1px solid #cccccc;
+}
+#tabs ul li {
+	display: inline;
+}
+#tabs ul li a {
+	border-top: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
+	padding: 10px 25px 10px;
+	text-decoration: none;
+	background-color: #ffffff;
+	border-bottom: none;
+	outline: none;
+	color: #444444;
+}
+#tabs ul li a:hover {
+	color: #888888;
+}
+#tabs ul li.active a {
+	border-bottom: none;
+	color: #888888;
+	padding-bottom: 11px;
+}
+#tabs ul li.active a:hover {
+	color: #444444;
+}
+
+#tabs ul li a.icon {
+	background-image: url('jquery.png');
+	background-position: 13px 9px;
+	background-repeat: no-repeat;
+	padding-left: 36px;
+}
+
+#tabs_content {
+	border: 1px solid #ccc;
+	border-top: none;
+	padding: 10px;
+	width: 1200px;
+	height: 600px;
+}

@@ -61,10 +61,9 @@ function JavaScriptAlert(){
     }
 }
 var Alert = new JavaScriptAlert();
-var DEBUG = false;
 
 function showJavascript() {
-  if (DEBUG) console.log("ShowJavaScript");
+  console.log("ShowJavaScript");
   Blockly.hello('showjavascript');
 }
 
@@ -89,17 +88,17 @@ function checkAnswer() {
 }
 
 function giveHint() {
-  if (DEBUG) console.log("giveHint");
+  console.log("giveHint");
   Blockly.hello('hint');
 }
 
 function showQuiz(quizname) {
-  if (DEBUG) console.log("showQuiz");
+  console.log("showQuiz");
   Blockly.hello('showquiz', quizname);
 }
 
 function giveNewQuestion(quizname) {
-  if (DEBUG) console.log("giveNewQuestion");
+  console.log("giveNewQuestion");
   Blockly.hello('showquiz', quizname);
 }
 

@@ -1,0 +1,114 @@
+<!--
+  progex.html -- the page for a one-shot programming exercise.  That is, the user has
+   only one opportunity to answer a question.  This type of question might be used for
+   a graded quiz.
+-->
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Quiz Me Activity</title>
+  <!-- blockly-all.js is copied from appinventor/build/blocklyeditor -->
+  <!-- blockly-toolbox.js is a modified version of blockly's core toolbox.js -->
+  <script type="text/javascript" src="./jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" src="./blockly-all.js"></script>
+  <script type="text/javascript" src="./blockly-toolbox.js"></script>
+  <script type="text/javascript" src="./component-types.js"></script>
+
+  <!-- Blockly javascript evaluators, modified for App Inventor --> 
+   <script type="text/javascript" src="./javascript.js"></script> 
+   <script type="text/javascript" src="./javascript/logic.js"></script> 
+   <script type="text/javascript" src="./javascript/control.js"></script> 
+   <script type="text/javascript" src="./javascript/procedures.js"></script> 
+   <script type="text/javascript" src="./javascript/math.js"></script> 
+   <script type="text/javascript" src="./javascript/lists.js"></script> 
+   <script type="text/javascript" src="./javascript/text.js"></script> 
+   <script type="text/javascript" src="./javascript/variables.js"></script> 
+
+ <!-- quizme-initblocklyeditor.js is revised version of Blockly.BlocklyEditor.startup  -->
+  <script type="text/javascript" src="./quizme-initblocklyeditor.js"></script>
+  <script type="text/javascript" src="./quizme-helper.js"></script>
+  <script type="text/javascript" src="./quizme.js"></script>
+  <script type="text/javascript" src="./quizme-components.js"></script>
+
+  <!-- quizme functions needed to interface with coursebuilder  --> 
+  <script type="text/javascript" src="./quizme-eval.js"></script> 
+
+  <script>
+  function initQuiz() {
+     console.log("RAM: progex.initQuiz()"); 
+     initQuizme(undefined, "./");
+  }
+ </script>
+
+  <style>
+    body {
+      background-color: white;
+      font-family: sans-serif;
+    }
+    h1 {
+      font-weight: normal;
+      font-size: 140%;
+    }
+    #svgDiv {
+      height: 500px;
+      width: 100%;
+      border: 1px solid #ccc;
+    }
+
+    /* Quiz area */
+    textarea.quiz_question {
+      text-align:left;
+      background-color= #f3f3f3;
+      rows="4";
+      columns="60";
+
+    }
+    textarea.quiz_result {
+      text-align:left;
+      rows="4";
+      columns="60";
+    }
+  </style>
+</head>
+
+<body onload="initQuiz()">
+   <fieldset><legend>Quiz Generator</legend> 
+    <table>
+       <tr>
+         <td>
+          <div id="quiz_question">
+	    Here is where the quiz question goes.
+	  </div>
+          <div id="hint_html">
+	    Here is where the hint goes.
+	  </div>
+        </td>
+        <td class="tabmin">&nbsp;</td>
+        <td>
+	    <table>
+	      <tr><td><input id="quiz_answer" width="40" type="text"></input></td>
+		 <td class="tabmin">&nbsp;</td>
+ 		 <td align="center"><button id="hint_button" onclick="giveHint()">Hint</button></td>
+		 <td class="tabmin">&nbsp;</td>
+		 <td class="tabmin">&nbsp;</td>
+ 		 <td align="center"><button tag="submit_new_toggle" id="submit_new_toggle" onclick="submitProgEx()">Submit</button></td>
+		 <td class="tabmin">&nbsp;</td>
+	      </tr>
+	    </table>
+        </td>
+
+       </tr>
+       <tr><td class="tabmin">&nbsp;</td></tr>
+       <tr>
+	  <td><div contenteditable="true" width="300px" height="100px" id="quiz_result" readonly="readonly">&nbsp; </div></td>
+          <td class="tabmin">&nbsp;</td>
+          <td class="tabmin">&nbsp;</td>
+     </tr>
+   </table>
+   <hr>
+  <div id="svgDiv" tag="svgDiv"></div>
+
+  </fieldset>
+</body>
+</html>

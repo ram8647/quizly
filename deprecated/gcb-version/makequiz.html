@@ -1,0 +1,402 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!-- NOTE: Don't change this Title -->
+    <title>
+      Quiz Maker Utility
+    </title>
+    <!-- Style for the custom alert box -->
+    <!-- See: http://snipplr.com/view/46677/custom-alert-box-formatted-and-controlled-by-jscss/ -->
+    <link href="common.css" rel="stylesheet" type="text/css">
+    <link href="makequiz.css" rel="stylesheet" type="text/css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="./makequiz.js"></script>
+    <script type="text/javascript">
+    </script>
+    <script>
+      var show_frame = false;
+      var hint_counter = 1;
+    	$(function () {
+    		$("#setup").fadeIn();
+   		$("#qframe").hide();
+   		$("#instructions").hide();
+   		$("#question").hide();
+   		$("#js").hide();
+   		$("#json").hide();
+   		$("#help").hide();
+    	});
+    	
+    	function setupInfo(){
+    		$("#setup").fadeIn();
+   		$("#qframe").hide();
+   		$("#instructions").hide();
+   		$("#question").hide();
+   		$("#js").hide();
+   		$("#json").hide();
+   		$("#help").hide();
+    	}
+    	
+      function createOrUpdateQuiz() {
+        console.log("RAM createOrUpdateQuiz");
+        Blockly.doIt('createorupdate',hint_counter);
+      }
+      
+      
+      function setupProblemBlocks() {
+           $("#setup").hide();
+           $("#question").hide();
+           $("#json").hide();
+           $("#help").hide();
+	   $("#js").hide();
+  	   $("#instructions").fadeIn();
+           $("#qframe").fadeIn();
+           console.log("RAM setupProblemBlocks()");
+           Blockly.doIt('setupproblem',hint_counter);
+      }
+      
+      function setupSolutionBlocks() {
+		   $("#setup").hide();
+     		$("#question").hide();
+   		$("#json").hide();
+   		$("#help").hide();
+   		$("#js").hide();
+	  		$("#instructions").fadeIn();
+	  		$("#qframe").fadeIn();
+        console.log("RAM setupSolutionBlocks()");
+        Blockly.doIt('setupsolution',hint_counter);
+      }
+      
+      function previewTheQuiz() {
+      	$("#setup").hide();
+     		$("#question").fadeIn();
+   		$("#json").hide();
+   		$("#help").hide();
+   		$("#js").hide();
+	  		$("#instructions").hide();
+	  		$("#qframe").fadeIn();
+        console.log("RAM previewTheQuiz()");
+        Blockly.doIt('preview',hint_counter);
+      }
+      
+      function generateJSON() {
+      	$("#setup").hide();
+     		$("#question").hide();
+   		$("#json").fadeIn();
+   		$("#help").hide();
+   		$("#js").hide();
+	  		$("#instructions").hide();
+	  		$("#qframe").hide();
+        console.log("RAM generateJSON()");
+        Blockly.doIt('json',hint_counter);
+      }
+      
+      function testGiveHint() {
+        console.log("RAM testGiveHint()");
+        Blockly.doIt('hint',hint_counter);
+      }
+      
+      function toggleNewTest() {
+        console.log("RAM toggleNewTest()");
+        Blockly.doIt('submit',hint_counter);
+      }
+      
+      function onAnswerTypeSelected(option) {
+        console.log("RAM onAnswerTypeSelected()");
+        if (option.value != "")
+          Blockly.doIt('type', option);
+      }
+      
+      function onExpressionTypeSelected(option) {
+        console.log("RAM onExpressionTypeSelected()");
+        Blockly.doIt('expression', option);
+      }
+      
+      function getVariableRanges(obj) {
+        console.log("RAM getVariableRanges()");
+        Blockly.doIt('variables', obj);
+      }
+      
+      function initQuizMaker() {
+        console.log("RAM initQuizMaker()");
+        Blockly.doIt('init', './');
+      }
+      
+      function displayHelp() {
+        console.log("RAM: help");
+        $("#setup").hide();
+     		$("#question").hide();
+   		$("#json").hide();
+   		$("#js").hide();
+   		$("#help").fadeIn();
+	  		$("#instructions").hide();
+	  		$("#qframe").hide();
+        Blockly.doIt('help');
+        //  alert("Help is on the way");
+      }
+      
+      function displayJS() {
+        console.log("RAM: JavaScript");
+        $("#setup").hide();
+     		$("#question").hide();
+   		$("#json").hide();
+   		$("#help").hide();
+   		$("#js").fadeIn();
+	  		$("#instructions").hide();
+	  		$("#qframe").hide();
+        showCode();
+        //  alert("Help is on the way");
+      }
+      
+      
+      
+      function reset() {
+        console.log("RAM: reset");
+        var response = confirm("Are you sure? This will reinitialize the quiz.");
+        if (response == true) {
+          document.location.reload(true);
+        }
+      }
+      
+      function addHint() {
+        hint_counter++;
+        console.log("RAM: added hint");
+        var text = document.createElement('div');
+        text.innerHTML = '<br><input type="Text" id="hint_'+hint_counter+'" size="120" placeholder="Hint #'+hint_counter+'."> </input>';
+        document.getElementById("hint_input").appendChild(text);
+        
+      }
+    </script>
+   </head>
+   
+   <body>
+     <div id="tabs">
+
+        <table>
+          <tr id="tabRow" height="1em">
+            <td id="tab_create" class="tabon" onclick="tabClick(this.id)">Create</td>
+            <td class="tabmin">&nbsp;</td>
+            <td id="tab_quiz" class="taboff" onclick="tabClick(this.id)">Quiz</td>
+            <td class="tabmin">&nbsp;</td>
+            <td id="tab_solution" class="taboff" onclick="tabClick(this.id)">Solution</td>
+            <td class="tabmin">&nbsp;</td>
+            <td id="tab_preview" class="taboff" onclick="tabClick(this.id)">Preview</td>
+            <td class="tabmin">&nbsp;</td>
+            <td id="tab_json" class="taboff" onclick="tabClick(this.id)">Json</td>
+            <td class="tabmax">
+              <button style="color:green" title="Display help" onclick="displayHelp();">
+                 Help
+              </button>
+              <button style="color:red" title="Reset everything" class="launch" onclick="reset()">
+                 Reset
+              </button>
+            </td>
+          </tr>
+        </table>
+     </div>
+     
+     <!-- Tabs begin here -->
+     <div id="tabs_content">
+       
+      <!--Setup the Problem -->
+      <div id="setup" class="tab_content" style="display: block; visibility: visible">
+          Quiz Type:
+
+       <!-- Selection drop-down to select the quiz type -->
+	<select title="The type of quiz" id="answer_type" onchange="onAnswerTypeSelected(this)">
+	 <option title="The quiz type defines the type of exercise." value="">
+	   Required: You must select a quiz type.
+	 </option>
+	 <option title="The student's answer will be evaluated and the value compared to your solution." value="eval_expr">
+	   Expression Evaluation
+	 </option>
+	 <option title="The student's workspace is evaluated and the result compared to your solution." value="eval_stmt">
+	   Statement Evaluation
+	 </option>
+	 <option title="The student-defined function will be evaluated on test inputs that you provide  and the results compared with your function's results." value="func_def">
+	   Function Definition
+	 </option>
+	 <option title="The student's procedure definition is run against random variable assignments." value="proc_def">
+	   Procedure Definition
+	 </option>
+	 <option title="The students blocks (minus their location) are compared verbatim to the solution blocks." value="xml_blocks">
+	   Block-for-block match
+	 </option>
+	</select>
+
+        </input>
+          &nbsp;&nbsp;&nbsp; Quiz Name:
+        <input title="Plain text name for the quiz" size="" type="Text" id="display_name" value="Unique Quiz Name" onchange="createOrUpdateQuiz()">
+        </input>
+
+
+    <!-- Some invisible elements that appear based on selection of answer_type -->
+        <select title="Type of expression to evaluate" style="visibility:hidden" id="expression_type" onchange="onExpressionTypeSelected(this)">
+         <option value="relation">
+           Relational: &LT;, =, ...
+         </option>
+         <option value="relation_fillin">
+           Relational: Complete a relational expression
+         </option>
+         <option value="arithmetic">
+           Arithmetic: +, *, ...
+         </option>
+
+	 <!-- Not yet implemented -->
+	 <!--  <option value="boolean"> Boolean: AND, OR, NOT </option>  -->
+        </select>
+        <br>
+        <br>
+          Description:
+        <input title="Type is a brief description of the quiz" type="Text" id="description" size="111" value="Describe the quiz problem.">
+        </input>
+        <br>
+        <br>
+          QuestionHTML:
+        <textarea id="question_html" rows="2" cols= "80" 
+                  onkeypress="if (event.keyCode == 13) getVariableRanges(this)"
+                  title="Question presented to student. Can have HTML and variables. Type <enter> to prompt for variables.">
+Can have HTML and string variables such as $#STR1#$ and numeric variables such as -91.9. Press &lt;ENTER&gt; to set variables.
+        </textarea>
+
+        <!-- Hints -->
+      <div id="hint_input">
+        <br>
+        <br>
+        <table><tr><td>
+	    Hints: 
+	  <input type="Text" id="hint_1" size="90" placeholder="Type a hint here and click 'Add' button.">
+	  </input>
+        </td>
+        <td>
+      <button title="Add a hint" onclick="addHint()">
+        Add another hint.
+      </button>
+        </td>
+        </tr>
+        </table>
+      </div>
+      <br>
+      <br>
+        Built-in Blocks
+      <input type="checkbox" name="built_ins" value="math" checked="true">
+        Math
+      <input type="checkbox" name="built_ins" value="logic" checked="true">
+        Logic
+      <input type="checkbox" name="built_ins" value="lists" checked="true">
+        Lists
+      <input type="checkbox" name="built_ins" value="text" checked="true">
+        Text
+      <input type="checkbox" name="built_ins" value="colors" checked="true">
+        Colors
+      <input type="checkbox" name="built_ins" value="controls" checked="true">
+        Controls
+      <input type="checkbox" name="built_ins" value="variables" checked="true">
+        Variables
+      <input type="checkbox" name="built_ins" value="procedures" checked="true">
+        Procedures
+      <br>
+      <br>
+        Components
+      <input type="checkbox" name="components" value="Button">
+        Button
+      <input type="checkbox" name="components" value="Sound">
+        Sound
+      <input type="checkbox" name="components" value="Player">
+        Player
+      <input type="checkbox" name="components" value="Label">
+        Label
+      <input type="checkbox" name="components" value="Canvas">
+        Canvas
+      <input type="checkbox" name="components" value="ImageSprite">
+        ImageSprite
+      <br>
+      <br>
+     </div>
+     <!-- End of Setup Block-->
+
+     <div id="instructions">
+       Instructions go here
+     </div>
+    <div id="question">
+      <div id="quiz_name" style="visibility:hidden">
+        Quiz Name goes here
+      </div>
+
+      <div id="quiz_question" style="visibility:hidden">
+        Here is where the quiz question goes.
+      </div>
+      <div id="hint_html" style="visibility:hidden">
+        Here is where the hint goes.
+      </div>
+
+      <table> <!-- For displaying a preview of the quiz. -->
+         <tr>
+            <td>
+              <input style="visibility:hidden" id="quiz_answer" width="40" type="text" onkeypress="if (event.keyCode == 13) toggleNewTest()">
+              </input>
+            </td>
+            <td class="tabmin">
+              &nbsp;
+            </td>
+            <td align="center">
+             <button style="visibility:hidden" id="hint_button" onclick="testGiveHint()">
+               Hint
+             </button>
+            </td>
+            <td class="tabmin">
+              &nbsp;
+           </td>
+           <td class="tabmin">
+              &nbsp;
+           </td>
+           <td align="center">
+             <button style="visibility:hidden" id="submit_new_toggle" onclick="toggleNewTest()">
+               Submit
+             </button>
+           </td>
+           <td class="tabmin">
+             &nbsp;
+           </td>
+         </tr>
+     </table>
+
+     <div style="visibility:hidden" contenteditable="true" width="300px" height="100px" id="quiz_result" readonly="readonly">
+       Result goes here
+     </div>
+   </div>
+
+   <!-- Here is where the Blockly workspace is injected. -->
+   <div id="qframe">  
+    <script>
+      function blocklyLoaded(blockly) {
+	// Called once Blockly is fully loaded.
+	window.Blockly = blockly;
+	if (navigator.userAgent.indexOf("Firefox") != -1) {
+	  Blockly.svg.height.baseVal.value = 400;
+	  alert("For Firefox, setting Svg height = " + Blockly.svg.height.baseVal.value);
+	}
+      }
+    </script>
+    <iframe id="preview_frame" style="width: 100%; height: 100%; border: 1px solid #ccc;" src="blockly.html">
+    </iframe>
+   </div>
+
+  <div id="json" class="tab_content">
+    <p id="json_code">
+    </p>
+  </div>
+
+  <div id="js" class="tab_content">
+    <div id = "js_div">
+    </div>
+  </div>
+
+  <div id="help" class="tab_content">
+    <div id = "help_div">
+      Help content goes here.
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>
