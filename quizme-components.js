@@ -16,6 +16,7 @@ var DEBUG = GLOBAL_DEBUG;  // GLOBAL_DEBUG set in blockly.html;
 
 /**
  *  Creates a Dictionary of components indexed by component name. 
+ *  Called from initQuizme() in quizme-helper.js.
  *  @return {Object} the Dictory of components.
  */
 Blockly.Quizme.inputFromComponentsArray = function() {
