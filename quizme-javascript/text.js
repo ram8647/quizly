@@ -31,6 +31,7 @@ Blockly.JavaScript.text = function() {
 
 Blockly.JavaScript.text_join = function() {
   // Create a string made up of any number of elements of any type.
+  console.log('JavaScript.text_join');
   var code;
   if (this.itemCount_ == 0) {
     return ['\'\'', Blockly.JavaScript.ORDER_ATOMIC];
@@ -80,6 +81,27 @@ Blockly.JavaScript.text_isEmpty = function() {
   return ['!' + argument0, Blockly.JavaScript.ORDER_LOGICAL_NOT];
 };
 
+// text_segment(txt, start, length) = txt.substring(start-1,length)
+Blockly.JavaScript.text_segment = function() {
+  console.log('JavaScript.text_segment');
+  var text = Blockly.JavaScript.valueToCode(this, 'TEXT',
+        Blockly.JavaScript.ORDER_NONE) || '\'\'';
+  var start = Blockly.JavaScript.valueToCode(this, 'START',
+        Blockly.JavaScript.ORDER_NONE) || '\'\'';
+  // Blockly uses one-based indicies.
+  if (start.match(/^-?\d+$/)) {
+    // If the index is a naked number, decrement it right now.
+    start = parseInt(start, 10) - 1;
+  } else {
+    // If the index is dynamic, decrement it in code.
+    start += ' - 1';
+  }
+  var len = Blockly.JavaScript.valueToCode(this, 'LENGTH',
+        Blockly.JavaScript.ORDER_NONE) || '\'\'';
+  var code = text + '.' + 'substring' + '(' + start + ',' + len + ')';
+  return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
 Blockly.JavaScript.text_endString = function() {
   // Return a leading or trailing substring.
   var first = this.getTitleValue('END') == 'FIRST';
@@ -114,6 +136,30 @@ Blockly.JavaScript.text_indexOf = function() {
   var argument1 = Blockly.JavaScript.valueToCode(this, 'VALUE',
       Blockly.JavaScript.ORDER_MEMBER) || '\'\'';
   var code = argument1 + '.' + operator + '(' + argument0 + ') + 1';
+  return [code, Blockly.JavaScript.ORDER_MEMBER];
+};
+
+// text_starts_at(txt,piece) = txt.indexof(piece)
+Blockly.JavaScript.text_starts_at = function() {
+  // Search the text for a substring.
+  console.log('text_starts_at');
+  var text = Blockly.JavaScript.valueToCode(this, 'TEXT',
+        Blockly.JavaScript.ORDER_NONE) || '\'\'';
+  var piece = Blockly.JavaScript.valueToCode(this, 'PIECE',
+        Blockly.JavaScript.ORDER_NONE) || '\'\'';
+  var code = text + '.' + 'indexOf' + '(' + piece + ') + 1';
+  return [code, Blockly.JavaScript.ORDER_MEMBER];
+};
+
+// text_contains(txt,piece) = txt.indexof(piece) != -1
+Blockly.JavaScript.text_contains = function() {
+  // Search the text for a substring.
+  console.log('text_contains');
+  var text = Blockly.JavaScript.valueToCode(this, 'TEXT',
+        Blockly.JavaScript.ORDER_NONE) || '\'\'';
+  var piece = Blockly.JavaScript.valueToCode(this, 'PIECE',
+        Blockly.JavaScript.ORDER_NONE) || '\'\'';
+  var code = text + '.' + 'indexOf' + '(' + piece + ') != -1';
   return [code, Blockly.JavaScript.ORDER_MEMBER];
 };
 

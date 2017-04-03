@@ -34,6 +34,24 @@ Blockly.Quizme.clearWorkspace = function() {
     Blockly.mainWorkspace.clear();
 }
 
+/**
+ * Syncrhonously loads the quizzes.json file.  The callback function 
+ *  populates the Blockly.Quizme object.
+ * @param url is the url of the JSON file.
+ */
+  Blockly.Quizme.loadQuizzes = function(url) {
+    console.log("RAM: loadQuizzes, url = " + url);
+    $.ajaxSetup( { "async": false } );   
+    $.getJSON(url, function(data) {
+
+	$.each(data, function(key, val) {
+	    Blockly.Quizme.addQuiz(key, val, Blockly.Quizme);
+	  });
+
+      });
+    $.ajaxSetup( { "async": true } );
+  }
+
 Blockly.Quizme.parseQuizzes = function(quizdata) {
   for (var quiz in quizdata) {
      Blockly.Quizme.addQuiz(quiz, quizdata[quiz], Blockly.Quizme);
