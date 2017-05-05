@@ -7,11 +7,11 @@
   <link type="text/css" rel="stylesheet" href="media/blockly.css">
 
   <script>
-     var GLOBAL_DEBUG = false;   // Sets DEBUG a quizme*.js files.
+     var GLOBAL_DEBUG = true;   // Sets DEBUG a quizme*.js files.
   </script>
 
 <!--   --------- FOR DEVELOPMENT USE quizzes.json  -----------     -->
-<!--   <script type="text/javascript" src="./quizzes.js"></script> -->
+  <script type="text/javascript" src="./quizzes.js"></script>
 
   <script type="text/javascript" src="closure-library-read-only/closure/goog/base.js"></script>
   <script type="text/javascript" src="./jquery-1.9.1.min.js"></script>
@@ -164,66 +164,78 @@
     }
   </style>
 
-    <script>
-      // NOTE: Blockly injects a static toolbox in the form of an Xml tree. We want our toolbox to be dynamic but 
-      //  we must initialize it here. The TOOLBOX category serves as a static heading for the toolbox.
-      function initBlockly() {
+  <script>
+    // NOTE: Blockly injects a static toolbox in the form of an Xml tree. We want our toolbox to be dynamic but
+    //  we must initialize it here. The TOOLBOX category serves as a static heading for the toolbox.
 
-        var href = window.parent.document.location.href;  // Check parent window?
-        if (href.indexOf('quizly') == -1) {
-          href = window.document.location.href;           // Check this window
-        }
-        var quizname;
-        var arglist = href.split('?')[1];
-        if (arglist) {
-          var params = arglist.split('&');
-          for (var i = 0; i < params.length; i++) {
-             var keyval = params[i].split('=');
-             if (keyval[0] == 'quizname')
-               quizname = keyval[1];
-          }
-        }
+    function initBlockly() {
+      if (GLOBAL_DEBUG) console.log('RAM: initBlockly');
 
-        // Typeblocking configuration
-	var typeblock_config = {
-	  frame: 'ai_frame',
-	  typeBlockDiv: 'ai_type_block',
-	  inputText: 'ac_input_text'
-	};
+      // The quizzes are loaded by the script above and stored in global var quizzes.
+      initBlocklyFrame(quizzes);
+    }
+  </script>
 
-        Blockly.inject(document.body,
-            {path: './',
-             backpack:true,
-             trashcan: true,
-             toolbox: '<xml id="toolbox" style="display:none"><category name="TOOLBOX"><block type="bogus"></block></category></xml>'
-//             toolbox: '<xml id="toolbox" style="display:none"><category name="TOOLBOX"></category></xml>'
-            });
+<!--     <script> -->
+<!--       // NOTE: Blockly injects a static toolbox in the form of an Xml tree. We want our toolbox to be dynamic but  -->
+<!--       //  we must initialize it here. The TOOLBOX category serves as a static heading for the toolbox. -->
+<!--       function initBlockly() { -->
 
-	 //This is what Blockly's init function does when passing options.
-	 //We are overriding the init process so putting it here
-	 goog.mixin(Blockly, {
-	   collapse : true,
-	   configForTypeBlock: typeblock_config
-	 });
+<!--         var href = window.parent.document.location.href;  // Check parent window? -->
+<!--         if (href.indexOf('quizly') == -1) { -->
+<!--           href = window.document.location.href;           // Check this window -->
+<!--         } -->
+<!--         var quizname; -->
+<!--         var arglist = href.split('?')[1]; -->
+<!--         if (arglist) { -->
+<!--           var params = arglist.split('&'); -->
+<!--           for (var i = 0; i < params.length; i++) { -->
+<!--              var keyval = params[i].split('='); -->
+<!--              if (keyval[0] == 'quizname') -->
+<!--                quizname = keyval[1]; -->
+<!--           } -->
+<!--         } -->
 
-	//This would also be done in Blockly init, but we need to do it here cause of
-	//the different init process in drawer (it'd be undefined at the time it hits
-	//init in Blockly)
-	if (!Blockly.readOnly)
-	  Blockly.TypeBlock(Blockly.configForTypeBlock);
+<!--         // Typeblocking configuration -->
+<!-- 	var typeblock_config = { -->
+<!-- 	  frame: 'ai_frame', -->
+<!-- 	  typeBlockDiv: 'ai_type_block', -->
+<!-- 	  inputText: 'ac_input_text' -->
+<!-- 	}; -->
+
+<!--         Blockly.inject(document.body, -->
+<!--             {path: './', -->
+<!--              backpack:true, -->
+<!--              trashcan: true, -->
+<!--              toolbox: '<xml id="toolbox" style="display:none"><category name="TOOLBOX"><block type="bogus"></block></category></xml>' -->
+<!-- //             toolbox: '<xml id="toolbox" style="display:none"><category name="TOOLBOX"></category></xml>' -->
+<!--             }); -->
+
+<!-- 	 //This is what Blockly's init function does when passing options. -->
+<!-- 	 //We are overriding the init process so putting it here -->
+<!-- 	 goog.mixin(Blockly, { -->
+<!-- 	   collapse : true, -->
+<!-- 	   configForTypeBlock: typeblock_config -->
+<!-- 	 }); -->
+
+<!-- 	//This would also be done in Blockly init, but we need to do it here cause of -->
+<!-- 	//the different init process in drawer (it'd be undefined at the time it hits -->
+<!-- 	//init in Blockly) -->
+<!-- 	if (!Blockly.readOnly) -->
+<!-- 	  Blockly.TypeBlock(Blockly.configForTypeBlock); -->
 
 
-        // Let the top-level application know that Blockly is ready.
-        // Do any Quizme initializations here.
-        window.parent.blocklyLoaded(Blockly);
+<!--         // Let the top-level application know that Blockly is ready. -->
+<!--         // Do any Quizme initializations here. -->
+<!--         window.parent.blocklyLoaded(Blockly); -->
 
 
-        if (window.parent.document.title == "Quiz Maker Utility")
-          initQuizMaker('./');
-        else 
-          initQuizme(quizname, './', arglist);
-      }
-    </script>
+<!--         if (window.parent.document.title == "Quiz Maker Utility") -->
+<!--           initQuizMaker('./'); -->
+<!--         else  -->
+<!--           initQuizme(quizname, './', arglist); -->
+<!--       } -->
+<!--     </script> -->
 
 </head>
 <body id="ai_frame" onload="initBlockly()">

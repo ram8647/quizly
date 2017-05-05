@@ -1086,6 +1086,7 @@ Blockly.Quizme.evaluateEvalFunctionDef = function(helperObj) {
   var testFn = Blockly.Quizme.setupFunctionDefinition(helperObj.quizName, helperObj);
   var stdFn = window.eval( '(' + helperObj[qname].function_def + ')' );
 
+  if (DEBUG) console.log("RAM: evaluateEvalFunctionDef() stdFn " + stdFn);
   // Test the two functions on the inputs
   var inputs = helperObj[qname].function_inputs;
   var testresult = Blockly.Quizme.testFunctionAgainstStandard(stdFn, testFn, inputs);
@@ -1154,7 +1155,7 @@ Blockly.Quizme.setupFunctionDefinition = function(qname, helperObj, blocks) {
  * @param inputs -- an array of arrays of input arguments.
  */
 Blockly.Quizme.testFunctionAgainstStandard = function(standard, fn, inputs) {
-  if (DEBUG) console.log("RAM: Testing fn against standard ...");
+  if (DEBUG) console.log("RAM: Testing fn against standard ... " + standard);
 
   if (!fn) {
     return [false, 'Can\'t find your function. Double check the name (spelling counts).'];
@@ -1169,6 +1170,7 @@ Blockly.Quizme.testFunctionAgainstStandard = function(standard, fn, inputs) {
   var result = true;
   var errmsg = "";
   while (k < inputs.length && result == true) {
+    // Declaring externs for these function names to allow plovr to work
     var fncall = 'fn' + '(';
     if (typeof(fn) != "function") {
       fncall = fn + " " + fname + '(';        
@@ -1187,8 +1189,10 @@ Blockly.Quizme.testFunctionAgainstStandard = function(standard, fn, inputs) {
       }
       stdcall = stdcall + ')';
       fncall = fncall + ')';
-      stdcall = eval(stdcall);
+
+      if (DEBUG) console.log("RAM: plovr renames functions so this won't work if compiled");
       fncall = eval(fncall);
+      stdcall = eval(stdcall);
     }
     var stdresult = stdcall;  
     var fnresult = fncall; 
