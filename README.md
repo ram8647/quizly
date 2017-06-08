@@ -36,7 +36,7 @@ href="https://courses.edx.org/courses/course-v1:TrinityX+T002x+3T2015/courseware
 
 <p>The code is free and open source -- and there is much work to do!</p>
 
-<p<b>Acknowledgment and Disclaimer.</b> This material is based upon
+<p><b>Acknowledgment and Disclaimer.</b> This material is based upon
 work supported by the National Science Foundation under Grant
 Nos. CNS-1240841. Any opinions, findings, and conclusions or
 recommendations expressed in this material are those of the author(s)
