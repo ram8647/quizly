@@ -1,9 +1,8 @@
-
-A live-coding platform for App Inventor
+<h1>A live-coding platform for App Inventor</h1>
 
 Quizly is a live coding platform for App Inventor for Android based on Blockly. For example:
 
-http://www.cs.trincoll.edu/~ram/quizly/media/quizly-screen-crop.png
+<img src="http://www.cs.trincoll.edu/~ram/quizly/media/quizly-screen-crop.png" width="500px" />
 
 Downloads
 
