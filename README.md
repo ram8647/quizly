@@ -9,10 +9,7 @@ Quizly runs the student's code and reports whether the function is correct or no
 
 <h2>Downloads</h2>
 
-Downloads are now stored on Github
-
-Development version -- all source code and libraries.
-Embeddable version -- code needed for deployment.
+<li>Embeddable version -- code needed for deployment.
 
 <h2>Demos</h2>
 
