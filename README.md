@@ -1,4 +1,4 @@
-<h1>A live-coding platform for App Inventor</h1>
+<h1>Quizly: A live-coding platform for App Inventor</h1>
 
 Quizly is a live coding platform for <a target="_blank" href="appinventor.mit.edu">App Inventor</a> that is
 based on <a target="_blank" href="https://developers.google.com/blockly/">Blockly</a>. For example, 
@@ -20,8 +20,8 @@ Embeddable version -- code needed for deployment.
 quizzes. Quiz Maker generates a JSON object that can be uploaded
 (manually, for now) into Quizly:
 
-<li><a target="_blank" href="http://appinventor.cs.trincoll.edu/quizly/makequiz.html">Example Quiz Maker</a>
-<li><a target="_blank" href="http://appinventor.cs.trincoll.edu/quizly/">Example Quizzes</a>
+<li><a target="_blank" href="http://appinventor.cs.trincoll.edu/csp/quizly/makequiz.html">Example Quiz Maker</a>
+<li><a target="_blank" href="http://appinventor.cs.trincoll.edu/csp/quizly/">Example Quizzes</a>
 
 
 <p>Quizly is self-contained and can easily be plugged into existing
