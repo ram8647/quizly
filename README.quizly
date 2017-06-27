@@ -4,6 +4,13 @@ This directory contains a Blockly-based app that provides
 interactive quizzes for App Inventor. The files included
 in this app are:
 
+closure-library-read-only -- contains the closure library. The plovr
+ compiler bundles the necessary closure dependencies into quizly-blockly-all.js.
+ So it is not necessary to import closure into the web app. See
+ blockly.html for details.
+
+File Compression
+----------------
 plovr.config -- Configuration file of plovr compiler.  Plovr uses
  closure library to compile and compress the Blockly and App Inventor
  portions of Quizly.  Basically, Quizly is based on blockly-all.js
@@ -12,14 +19,47 @@ plovr.config -- Configuration file of plovr compiler.  Plovr uses
  run plovr:
            java -jar plovr-eba786b34df9.jar build plovr.config
 
-closure-library-read-only -- contains the closure library. The plovr
- compiler bundles the necessary closure dependencies into quizly-blockly-all.js.
- So it is not necessary to import closure into the web app. See
- blockly.html for details.
+For production instances, the JavaScript source files have been 
+compressed into the following three files. See plovr.config for details:
+  all-appinventor.js
+  all-blockly.js
+  all-quizly.js
+
+HTML Files
+----------
+  index.html - top-level, provides the user with a selector for choosing quizzes.
+  gcb-index.html - top-level, no selector, randomly selects a quiz
+  embed.html - example of how to embed quizly, with selector, into an iframe
+  embed2.html - example of how to embed quizly, with pre-selected quiz, into an iframe
+
+  blockly.html - implements the blockly workspace in an iframe
+
+Quizly Distribution
+-------------------
+To distribute Quizly the following files have to be archived:
+  all_appinv.js
+  all_blockly.js
+  all_quizly.js
+  blockly.html
+  embed.html
+  embed2.html
+  gcb-index.html
+  index.html
+  jquery-1.9.1.min.js
+  makequiz-helper.js
+  makequiz.css
+  makequiz.html
+  makequiz.js
+  media/
+  quizme-helper.js
+  quizzes.js
+
+Files
+-----
 
 activity-quizme.js -- functions for embedding Quizly in CodeBuilder. 
 
-blockly-all.js -- a concatenation of all the App Inventor-based version
+(DEPRECATED) blockly-all.js -- a concatenation of all the App Inventor-based version
  of Blockly. This means that the default Blockly language files, such
  as math.js, are replaced by their App Inventor versions. This file should
  be copied from build/blocklyeditor/blockly-all.js to be kept up-to-date
