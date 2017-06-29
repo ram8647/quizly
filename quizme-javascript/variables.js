@@ -79,6 +79,7 @@ Blockly.JavaScript.local_variable = function(block, isExpression) {
     values.push(Blockly.JavaScript.valueToCode(block,'DECL' + i, Blockly.JavaScript.ORDER_ASSIGNMENT) || '0');
   }
 
+
   // For expressions, generate an anonymous function with variables as parameters,
   //  followed by a function call with initial values as arguments.
   if (isExpression) {
@@ -86,6 +87,9 @@ Blockly.JavaScript.local_variable = function(block, isExpression) {
     code += '    return ' + Blockly.JavaScript.valueToCode(block, 'RETURN', Blockly.JavaScript.ORDER_NONE) || '';
     code += ';\n  }(' + values + ')';
   } else {
+    for (var j=0; j < args.length; j++) {
+      code += 'var ' + args[j] + ' = ' + values[j] + ";\n";
+    }
     code += Blockly.JavaScript.statementToCode(block, 'STACK');
     if (Blockly.JavaScript.INFINITE_LOOP_TRAP) {
       code = Blockly.JavaScript.INFINITE_LOOP_TRAP.replace(/%1/g,
