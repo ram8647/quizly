@@ -116,6 +116,24 @@ Blockly.JavaScript.lists_getIndex = function() {
   return [code, Blockly.JavaScript.ORDER_MEMBER];
 };
 
+Blockly.JavaScript.lists_select_item = function() {
+  // Get element at index.
+  var argument0 = Blockly.JavaScript.valueToCode(this, 'NUM',
+      Blockly.JavaScript.ORDER_NONE) || '1';
+  var argument1 = Blockly.JavaScript.valueToCode(this, 'LIST',
+      Blockly.JavaScript.ORDER_MEMBER) || '[]';
+  // Blockly uses one-based indicies.
+  if (argument0.match(/^-?\d+$/)) {
+    // If the index is a naked number, decrement it right now.
+    argument0 = parseInt(argument0, 10) - 1;
+  } else {
+    // If the index is dynamic, decrement it in code.
+    argument0 += ' - 1';
+  }
+  var code = argument1 + '[' + argument0 + ']';
+  return [code, Blockly.JavaScript.ORDER_MEMBER];
+};
+
 Blockly.JavaScript.lists_setIndex = function() {
   // Set element at index.
   var argument0 = Blockly.JavaScript.valueToCode(this, 'AT',
