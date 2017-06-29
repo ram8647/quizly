@@ -73,15 +73,15 @@ Blockly.JavaScript.lists_repeat = function() {
 };
 
 Blockly.JavaScript.lists_length = function() {
-  // List length.
-  var argument0 = Blockly.JavaScript.valueToCode(this, 'VALUE',
+  // List length -- assumes the input to the functin is a LIST, not a simple VALUE
+  var argument0 = Blockly.JavaScript.valueToCode(this, 'LIST',
       Blockly.JavaScript.ORDER_FUNCTION_CALL) || '\'\'';
   return [argument0 + '.length', Blockly.JavaScript.ORDER_MEMBER];
 };
 
-Blockly.JavaScript.lists_isEmpty = function() {
+Blockly.JavaScript.lists_is_empty = function() {
   // Is the list empty?
-  var argument0 = Blockly.JavaScript.valueToCode(this, 'VALUE',
+  var argument0 = Blockly.JavaScript.valueToCode(this, 'LIST',
       Blockly.JavaScript.ORDER_MEMBER) || '[]';
   return ['!' + argument0 + '.length', Blockly.JavaScript.ORDER_LOGICAL_NOT];
 };
