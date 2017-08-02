@@ -58,7 +58,7 @@
 
 //goog.require('Blockly.Quizme');
 
-var ED_X = false;
+var ED_X = GLOBAL_ED_X;  // GLOBAL_ED_X set in blockly.html;
 var DEBUG = GLOBAL_DEBUG;   // GLOBAL_DEBUG set in blockly,html
 var SELECTOR_OPTION = 'selector';
 var BACKPACK_OPTION = 'backpack';
@@ -881,14 +881,14 @@ Blockly.Quizme.giveFeedback = function(isCorrect, correctStr, mistakeStr, redo) 
 
       if (answer_tries >= MAX_TRIES) {
         if (ED_X) {
-          mistakeStr = "Looks like you're struggling on this one.<br/> Try clicking <b>CHECK</b> and the  <b>SHOW ANSWER</b> button will appear.";
+          mistakeStr = "Looks like you're struggling on this one.<br/> Try clicking <b>SUBMIT</b> and the  <b>SHOW ANSWER</b> button will appear.";
 	} else {
           mistakeStr = "Looks like you're struggling on this one.<br/> Try asking for help.";
 	}
 	answer_tries = 0;
       }
       if (ED_X) {
-        correctStr = correctStr + "<br />" + "Remember to click the <b>CHECK</b> button below.";
+        correctStr = correctStr + "<br />" + "Remember to click the <b>SUBMIT</b> button below.";
       }
     }
 
@@ -896,7 +896,7 @@ Blockly.Quizme.giveFeedback = function(isCorrect, correctStr, mistakeStr, redo) 
     var correctMsg;
     var errMsg;
     if (ED_X) {
-      imgpath = "./";
+      imgpath = "/";
     }
     correctMsg = "<img src="  + "." + imgpath + "smiley.jpg" + " > " + correctStr;
     errMsg = "<img src="  + "." + imgpath + "frown.jpg" + " > " + mistakeStr;
@@ -1007,7 +1007,7 @@ Blockly.Quizme.evaluateUserAnswer = function() {
     	"The correct answer is <font color=\"green\">" + solution + "</font>");
   }
   // Enable show-javascript if solution is correct.
-  if (result) {
+  if (result && !GLOBAL_ED_X) {
     parent.document.getElementById('show_javascript').disabled = false;
     parent.document.getElementById('show_javascript').style.visibility = "visible";
   }
