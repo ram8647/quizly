@@ -91,15 +91,14 @@ function showJavascript() {
 function checkAnswer() {
   console.log("checkAnswer -- GCB");
   document.getElementById('show_javascript').disabled = true;
-//  var result = Blockly.checkAnswerGCB('submit');
   var result = Blockly.Quizme.evaluateUserAnswer();
   var quizName = Blockly.Quizme.quizName
   window.parent.quizlies['quizname']=quizName;
   var thisQuiz = window.parent.quizlies[quizName];
-  thisQuiz.result = result;
-  // Comment this out if there is separate GCB button
-  // for submitting the result.
-  window.parent.checkAnswer();
+  thisQuiz.result = result[0];
+  thisQuiz.workspace = result[1];
+  // Comment this out if there is separate GCB button for submitting the result.
+  window.parent.checkAnswer();  // This parent script is in modules/quizly/quizly.py
 }
 
 function giveHint() {
