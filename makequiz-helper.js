@@ -91,7 +91,7 @@ var NUMVAR_DELIMITER_RIGHT = '.9';
 
 var MAINDOCUMENT = parent.document;  // Document that holds Blockly iFrame
 
-//COMPONENT ARRAY -- a hack to get around a bug that I can't find (RAM)
+//COMPONENT ARRAY -- current list of component objects and types
 var COMPONENT_ARR = [ ["Button1", "Button"], 
                       ["Sound1", "Sound"], 
                       ["Canvas1", "Canvas"], 
@@ -281,9 +281,6 @@ function previewTheQuiz() {
   var qname = Blockly.Quizmaker.quiz.quizName;
   var builtins = Blockly.Quizmaker.quiz.built_ins;
   var components = Blockly.Quizmaker.quiz.components;
-
-  // HACK
-  components = COMPONENT_ARR; 
 
   // Generate the random values for variables for this Quiz instance
   Blockly.Quizmaker.quiz.VariableMappings = generateInstanceMappings(qname, Blockly.Quizmaker);
@@ -690,11 +687,10 @@ function createOrUpdateQuizObject(hint_counter) {
   vals = [], cboxes =  MAINDOCUMENT.getElementsByName(COMPONENTS);
   for(var i=0, elm; elm = cboxes[i]; i++) {
     if (elm.checked) {
-      vals.push(elm.value);
+      vals.push([elm.value + "1", elm.value]); // e.g., ["Button1", Button]
     }
   }
-  //  quizObj.components = vals;   
-  quizObj.components = COMPONENT_ARR;  // Hack to fix bug
+  quizObj.components = vals;   
 
   // It's ok if some of these are undefined
   quizObj.dictionary = Blockly.Quizmaker.Dictionary;
