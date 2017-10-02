@@ -49,10 +49,6 @@ Blockly.JavaScript.math_power = function() {
   return Blockly.JavaScript.math_arithmetic(this, 'POWER');
 }
 
-// Blockly.JavaScript.math_divide = function() {
-//   return Blockly.JavaScript.math_arithmetic(this, 'MODULUS');
-// }
-
 Blockly.JavaScript.math_divide = function() {
   // divide operators.                                                                                                                                                                                      
   var mode = this.getTitleValue('OP');

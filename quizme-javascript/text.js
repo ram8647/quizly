@@ -29,6 +29,25 @@ Blockly.JavaScript.text = function() {
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
+Blockly.JavaScript.text_compare = function() {
+  // Comparison operator.
+  var mode = this.getTitleValue('OP');
+  var operator = Blockly.JavaScript.text_compare.OPERATORS[mode];
+  var order = (operator == '=' || operator == '!=') ?
+      Blockly.JavaScript.ORDER_EQUALITY : Blockly.JavaScript.ORDER_RELATIONAL;
+  var argument0 = Blockly.JavaScript.valueToCode(this, 'TEXT1', order) || '';
+  var argument1 = Blockly.JavaScript.valueToCode(this, 'TEXT2', order) || '';
+  var code = argument0 + ' ' + operator + ' ' + argument1;
+  return [code, order];
+};
+
+Blockly.JavaScript.text_compare.OPERATORS = {
+  EQ: '==',
+  LT: '<',
+  GT: '>',
+};
+
+
 Blockly.JavaScript.text_join = function() {
   // Create a string made up of any number of elements of any type.
   console.log('JavaScript.text_join');
