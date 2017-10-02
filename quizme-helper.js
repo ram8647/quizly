@@ -969,8 +969,10 @@ Blockly.Quizme.evaluateUserAnswer = function() {
   // Check that workspace has no errors and warnings
   if ((Blockly.WarningHandler.errorCount > 0 || Blockly.WarningHandler.warningCount > 0) 
        && (Blockly.Quizme.answerType == PROC_DEF || Blockly.Quizme.answerType == FUNC_DEF)) {
-    window.alert("It looks like there are errors or warnings in the Workspace." +
-                 " You'll have to resolve them before your solution can be evaluated.");
+    Blockly.Quizme.giveFeedback(false, 
+	"Moot",
+        "<font color=\"red\">Oops, it looks like there are errors or warnings in the Workspace. " +
+				" You'll have to resolve those before your solution can be evaluated.</font>. ");
     return;
   }
 
