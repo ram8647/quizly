@@ -44,7 +44,7 @@ Blockly.JavaScript.text_compare = function() {
 Blockly.JavaScript.text_compare.OPERATORS = {
   EQ: '==',
   LT: '<',
-  GT: '>',
+  GT: '>'
 };
 
 
