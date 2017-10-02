@@ -81,7 +81,7 @@ Blockly.JavaScript.text_isEmpty = function() {
   return ['!' + argument0, Blockly.JavaScript.ORDER_LOGICAL_NOT];
 };
 
-// text_segment(txt, start, length) = txt.substring(start-1,length)
+// text_segment(txt, start, length) = txt.substring(start-1, start + length - 1))
 Blockly.JavaScript.text_segment = function() {
   console.log('JavaScript.text_segment');
   var text = Blockly.JavaScript.valueToCode(this, 'TEXT',
@@ -98,7 +98,8 @@ Blockly.JavaScript.text_segment = function() {
   }
   var len = Blockly.JavaScript.valueToCode(this, 'LENGTH',
         Blockly.JavaScript.ORDER_NONE) || '\'\'';
-  var code = text + '.' + 'substring' + '(' + start + ',' + len + ')';
+  var end = start + ' + ' + len;
+  var code = text + '.' + 'substring' + '(' + start + ',' + end + ')';
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
