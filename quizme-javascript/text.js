@@ -122,6 +122,22 @@ Blockly.JavaScript.text_segment = function() {
   return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
 };
 
+
+// text_replace_all(txt, segment, replacement) = txt.replace(/segment/g, replacement))
+//  where /segment/g is a regular expressions.
+// NOTE: This may not work if segment contants regular expression symbols?
+Blockly.JavaScript.text_replace_all = function() {
+  console.log('JavaScript.text_replace_all');
+  var text = Blockly.JavaScript.valueToCode(this, 'TEXT',
+        Blockly.JavaScript.ORDER_NONE) || '\'\'';
+  var segment = Blockly.JavaScript.valueToCode(this, 'SEGMENT',
+        Blockly.JavaScript.ORDER_NONE) || '\'\'';
+  var repl = Blockly.JavaScript.valueToCode(this, 'REPLACEMENT',
+        Blockly.JavaScript.ORDER_NONE) || '\'\'';
+  var code = text + '.' + 'replace' + '(new RegExp(' + segment + ', \'gi\'),' + repl + ')';
+  return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
 Blockly.JavaScript.text_endString = function() {
   // Return a leading or trailing substring.
   var first = this.getTitleValue('END') == 'FIRST';
