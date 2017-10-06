@@ -881,14 +881,14 @@ Blockly.Quizme.giveFeedback = function(isCorrect, correctStr, mistakeStr, redo) 
 
       if (answer_tries >= MAX_TRIES) {
         if (ED_X) {
-          mistakeStr = "Looks like you're struggling on this one.<br/> Try clicking <b>CHECK</b> and the  <b>SHOW ANSWER</b> button will appear.";
+          mistakeStr = "Looks like you're struggling on this one.<br/> Try clicking <b>SUBMIT</b> and the  <b>SHOW ANSWER</b> button will appear.";
 	} else {
           mistakeStr = "Looks like you're struggling on this one.<br/> Try asking for help.";
 	}
 	answer_tries = 0;
       }
       if (ED_X) {
-        correctStr = correctStr + "<br />" + "Remember to click the <b>CHECK</b> button below.";
+        correctStr = correctStr + "<br />" + "Remember to click the <b>SUBMIT</b> button below.";
       }
     }
 
