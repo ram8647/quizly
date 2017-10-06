@@ -152,3 +152,13 @@ Blockly.JavaScript.lists_setIndex = function() {
   }
   return argument1 + '[' + argument0 + '] = ' + argument2 + ';\n';
 };
+
+// Insert an item at the end of a list
+Blockly.JavaScript.lists_add_items = function() {
+  var list = Blockly.JavaScript.valueToCode(this, 'LIST',
+      Blockly.JavaScript.ORDER_MEMBER) || '[]';
+  var item = Blockly.JavaScript.valueToCode(this, 'ITEM0',
+      Blockly.JavaScript.ORDER_MEMBER) || '[]';
+  var code = list + ".push(" + item + ");";
+  return code;
+};
