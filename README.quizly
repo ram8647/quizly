@@ -28,7 +28,7 @@ compressed into the following three files. See plovr.config for details:
 HTML Files
 ----------
   index.html - top-level, provides the user with a selector for choosing quizzes.
-  gcb-index.html - top-level, no selector, randomly selects a quiz
+  embed.index.html - top-level, no selector, randomly selects a quiz
   embed.html - example of how to embed quizly, with selector, into an iframe
   embed2.html - example of how to embed quizly, with pre-selected quiz, into an iframe
 
@@ -41,9 +41,9 @@ To distribute Quizly the following files have to be archived:
   all_blockly.js
   all_quizly.js
   blockly.html
+  embed-index.html
   embed.html
   embed2.html
-  gcb-index.html
   index.html
   jquery-1.9.1.min.js
   makequiz-helper.js
