@@ -1703,9 +1703,10 @@ function mapQuizVariables(helperObj, str, dict) {
   //  if (DEBUG) console.log("mapQuizVariables() " + str);
   if (!str) 
     return str;
-  if (!dict) {
-    dict = helperObj[helperObj.quizName].VariableMappings;
-  }
+  //  Can't see why this doesn't work. Prevents hints from showing up in MakeQuiz
+  //  if (!dict) {
+  //    dict = helperObj[helperObj.quizName].VariableMappings;
+  //  }
   if (!dict) {
     return str;
     //    throw "Can't find variable mappings for this quiz";
