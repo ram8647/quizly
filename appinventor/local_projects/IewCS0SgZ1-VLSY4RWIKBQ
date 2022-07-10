@@ -1,0 +1,149 @@
+<xml>
+  <block type="ButtonRed_Click" x="1" y="3">
+    <title name="COMPONENT_SELECTOR">ButtonBlue</title>
+    <statement name="DO">
+      <block type="Canvas1_setproperty" inline="false">
+        <mutation yailtype="number"></mutation>
+        <title name="COMPONENT_SELECTOR">Canvas1</title>
+        <title name="PROP">PaintColor</title>
+        <value name="VALUE">
+          <block type="color_red">
+            <title name="COLOR">#3366ff</title>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+  <block type="global_declaration" inline="false" x="366" y="15">
+    <title name="NAME">dotsize</title>
+    <value name="VALUE">
+      <block type="math_number">
+        <title name="NUM">5</title>
+      </block>
+    </value>
+  </block>
+  <block type="Canvas1_Dragged" x="436" y="56">
+    <title name="COMPONENT_SELECTOR">Canvas1</title>
+    <statement name="DO">
+      <block type="Canvas1_DrawLine" inline="false">
+        <title name="COMPONENT_SELECTOR">Canvas1</title>
+        <value name="ARG0">
+          <block type="lexical_variable_get">
+            <title name="VAR">prevX</title>
+          </block>
+        </value>
+        <value name="ARG1">
+          <block type="lexical_variable_get">
+            <title name="VAR">prevY</title>
+          </block>
+        </value>
+        <value name="ARG2">
+          <block type="lexical_variable_get">
+            <title name="VAR">currentX</title>
+          </block>
+        </value>
+        <value name="ARG3">
+          <block type="lexical_variable_get">
+            <title name="VAR">currentY</title>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+  <block type="ButtonRed_Click" x="1" y="71">
+    <title name="COMPONENT_SELECTOR">ButtonGreen</title>
+    <statement name="DO">
+      <block type="Canvas1_setproperty" inline="false">
+        <mutation yailtype="number"></mutation>
+        <title name="COMPONENT_SELECTOR">Canvas1</title>
+        <title name="PROP">PaintColor</title>
+        <value name="VALUE">
+          <block type="color_red">
+            <title name="COLOR">#33cc00</title>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+  <block type="ButtonRed_Click" x="4" y="145">
+    <title name="COMPONENT_SELECTOR">ButtonWipe</title>
+    <statement name="DO">
+      <block type="Canvas1_Clear">
+        <title name="COMPONENT_SELECTOR">Canvas1</title>
+      </block>
+    </statement>
+  </block>
+  <block type="ButtonRed_Click" x="8" y="219">
+    <title name="COMPONENT_SELECTOR">ButtonRed</title>
+    <statement name="DO">
+      <block type="Canvas1_setproperty" inline="false">
+        <mutation yailtype="number"></mutation>
+        <title name="COMPONENT_SELECTOR">Canvas1</title>
+        <title name="PROP">PaintColor</title>
+        <value name="VALUE">
+          <block type="color_red">
+            <title name="COLOR">#ff0000</title>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+  <block type="Canvas1_Touched" x="475" y="268">
+    <title name="COMPONENT_SELECTOR">Canvas1</title>
+    <statement name="DO">
+      <block type="Canvas1_DrawCircle" inline="false">
+        <title name="COMPONENT_SELECTOR">Canvas1</title>
+        <value name="ARG0">
+          <block type="lexical_variable_get">
+            <title name="VAR">x</title>
+          </block>
+        </value>
+        <value name="ARG1">
+          <block type="lexical_variable_get">
+            <title name="VAR">y</title>
+          </block>
+        </value>
+        <value name="ARG2">
+          <block type="lexical_variable_get">
+            <title name="VAR">global dotsize</title>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+  <block type="ButtonPlus_Click" x="100" y="488">
+    <title name="COMPONENT_SELECTOR">ButtonPlus</title>
+    <statement name="DO">
+      <block type="lexical_variable_set" inline="false">
+        <title name="VAR">global dotsize</title>
+        <value name="VALUE">
+          <block type="math_add" inline="true">
+            <mutation items="2"></mutation>
+            <value name="NUM0">
+              <block type="lexical_variable_get">
+                <title name="VAR">global dotsize</title>
+              </block>
+            </value>
+            <value name="NUM1">
+              <block type="math_number">
+                <title name="NUM">1</title>
+              </block>
+            </value>
+          </block>
+        </value>
+        <next>
+          <block type="LabelDotsize_setproperty" inline="false">
+            <mutation yailtype="text"></mutation>
+            <title name="COMPONENT_SELECTOR">LabelDotsize</title>
+            <title name="PROP">Text</title>
+            <value name="VALUE">
+              <block type="lexical_variable_get">
+                <title name="VAR">global dotsize</title>
+              </block>
+            </value>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

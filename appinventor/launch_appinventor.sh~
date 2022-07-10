@@ -1,0 +1,8 @@
+#!/bin/bash
+
+APPINVENTORDIR=/Applications/MAMP/htdocs/appinventor-gerrit
+APPINVENTORPORT=$1
+
+dev_appserver.sh --port=$APPINVENTORPORT --address=0.0.0.0 $APPINVENTORDIR/appinventor/appengine/build/war/ 
+
+echo Started git appinventor server on localhost:$APPINVENTORPORT

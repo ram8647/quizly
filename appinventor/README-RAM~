@@ -1,0 +1,159 @@
+# Useful build tips:
+
+http://josmasflores.blogspot.com/2014/10/app-inventor-dev-tricks-reducing.html
+
+# New Git workflow
+
+https://docs.google.com/document/d/1sAw0QObTxTWqRX7GQRCa2z9TIV2r5AKT9UKMFF1acZI
+
+# Git branch structure (5/19/2014)
+
+master         -- git pull origin master
+release-mmdd   -- latest release by mmdd contains templates
+
+# Mobile CSP Releases
+# ===================
+# appinventor.cs.trincoll.edu/production-server-9990   (08/2013 release)
+#  URL: appinventor.cs.trincoll.edu/ai2
+
+# appinventor.cs.trincoll.edu/staging-server-9995   (current 04/2014 release)
+#  URL: appinventor.cs.trincoll.edu/
+
+# appinventor.cs.trincoll.edu/prod-server-9985   (current 0605/2014 release)
+
+# How to make a new release for Mobile CSP instance
+# Such that it contains the templates-repo menu
+# Releases are named 'release-mmdd', e.g. release-0414
+
+git checkout master        # Update master branch
+git pull origin master
+git remote update
+git checkout release-m1d1     # Create new release branch off old one
+git checkout -b release-m2d2 
+git rebase master             # Put new branch on master
+# Now build the instance (see below)
+
+# Here's a nice link on basic workflow:
+
+http://git-scm.com/book/en/Git-Branching-Basic-Branching-and-Merging
+
+# Instructions for App Inventor
+https://docs.google.com/document/pub?id=1Xc9yt02x3BRoq5m1PJHBr81OOv69rEBy8LVG_84j9jc#h.9quk7suqt1zd
+
+## Building and running  localhost App Inventor
+##
+ant                            # This preserves the projects
+ant clean                      # Clean removes all projects from local instance
+lsof -i -P | grep -i "listen"  # List open ports
+kill -9 <pid>                  # Kill running instance 8888 and buildserver 9990
+./startappinventor.sh          # start app inventor
+
+# When running servlog should end with :
+# INFO: The admin console is running at http://localhost:8888/_ah/admin
+
+more serverlog.out
+
+# Start or refresh App Inventor in the browser and open the blocks editor
+# The blocks editor should be 'quit' before reopening
+
+http://localhost:8888
+
+# Restart adb (App Inventor uses an out-of-date version)
+adb devices
+
+# Test your code
+# To view the logcat (in another Terminal tab)
+adb logcat
+
+## #########  Committing Changes #################
+
+ant clean
+ant
+ant tests
+git status
+git add -u
+git status
+git commit --amend
+git status
+
+## ######### Pushing to Gerritt ##################
+
+git status
+git checkout master
+git remote update         # If 'your branch is ahead of origin/master...'
+git pull origin master
+git checkout texting
+git rebase master          # puts the texting branch on top of master
+git push origin HEAD:refs/drafts/master
+git push origin HEAD:refs/for/master   
+
+# ########## Deploying to Appspot ################
+
+# From the appinventor directory:
+ ~/appengine-java-sdk-1.6.1/bin/appcfg.sh -A ram8647-appinventor update build/war/
+
+# Create a buildserver
+cd buildserver
+ant BuildDeploymentTar    # should generate build/buildserver/BuildServer.tar
+mkdir ~/Desktop/for-Buildserver
+cp build/buildserver/BuildServer.tar ~/Desktop/for-Buildserver
+cp misc/buldserver/launch-builderserver ~/Desktop/for-BuildServer
+
+# Install on target machine
+cd ~/Desktop/for-buildServer
+sftp ram@appinventor.cs.trincoll.edu
+cd for-BuildServer on remote site
+put *   # put all the files on the remote site
+
+ssh ram*appinventor.cs.trincoll.edu
+cd for-buildServer
+tar -xvf BuildServer.tar
+ps -ef | grep java
+kill -9 <buildserver java process>
+./launch-buildserver
+
+Browse to:  http://appinventor.cs.trincoll.edu:9990/buildserver/vars
+
+# Configuring appinventor for the remote buildserver
+
+Edit appengine/build/war/WEB-INF/appengine-web.xml to change from
+ 
+ <property name="build.server.host" value="localhost:9990" />
+
+to
+ <property name="build.server.host" value="appinventor.cs.trincoll.edu:9990" />
+
+### Redeploy the server
+### Servers:  
+#### ram8647-appinventor     is hosting the August 2013 server @ port 9990
+#### ram8647-appinventortest is hosting the August 2013 server @ port 9985
+#### ram8647-appinventor2    is hosting nothing
+
+username: ram8647
+app specific password: wkxz ubpf sufc kyhf
+
+ ~/appengine-java-sdk-1.9.2/bin/appcfg.sh -A ram8647-appinventor update appengine/build/war/
+ ~/appengine-java-sdk-1.9.2/bin/appcfg.sh -A ram8647-appinventor2 update appengine/build/war/
+ ~/appengine-java-sdk-1.9.2/bin/appcfg.sh -A ram8647-appinventortest-hrd update appengine/build/war/
+
+
+
+### AppEngine Error caused by appengine-java-sdk-1.9.2
+### Try updating using appengine-java-sdk-1.8.1.1
+
+----------------------- Appengine ERROR: Error Posting to URL
+
+com.google.appengine.tools.admin.HttpIoException: 
+Error posting to URL: https://appengine.google.com/api/appversion/create?app_id=ram8647-appinventor2&version=1&
+400 Bad Request
+
+Error when loading application configuration:
+
+Found more than 100 URLMap entries in application configuration
+
+When I tried building my own instance of App Inventor 
+
+
+
+
+

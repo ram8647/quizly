@@ -1,0 +1,44 @@
+<xml>
+  <block type="procedures_defreturn" inline="false" x="37" y="79">
+    <mutation>
+      <arg name="a"></arg>
+      <arg name="b"></arg>
+    </mutation>
+    <title name="NAME">sumOfSquares</title>
+    <value name="RETURN">
+      <block type="math_add" inline="true">
+        <mutation items="2"></mutation>
+        <value name="NUM0">
+          <block type="math_multiply" inline="true">
+            <mutation items="2"></mutation>
+            <value name="NUM0">
+              <block type="lexical_variable_get">
+                <title name="VAR">input a</title>
+              </block>
+            </value>
+            <value name="NUM1">
+              <block type="lexical_variable_get">
+                <title name="VAR">input a</title>
+              </block>
+            </value>
+          </block>
+        </value>
+        <value name="NUM1">
+          <block type="math_multiply" inline="true">
+            <mutation items="2"></mutation>
+            <value name="NUM0">
+              <block type="lexical_variable_get">
+                <title name="VAR">input b</title>
+              </block>
+            </value>
+            <value name="NUM1">
+              <block type="lexical_variable_get">
+                <title name="VAR">input b</title>
+              </block>
+            </value>
+          </block>
+        </value>
+      </block>
+    </value>
+  </block>
+</xml>

@@ -1,0 +1,290 @@
+Dec 30, 2015 11:52:09 AM com.google.apphosting.utils.config.AppEngineWebXmlReader readAppEngineWebXml
+INFO: Successfully processed /Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build/war/WEB-INF/appengine-web.xml
+Executing [/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/bin/java, -XstartOnFirstThread, -javaagent:/Users/rmorelli/appengine-java-sdk-1.9.2/lib/agent/appengine-agent.jar, -Xbootclasspath/p:/Users/rmorelli/appengine-java-sdk-1.9.2/lib/override/appengine-dev-jdk-overrides.jar, -classpath, /Users/rmorelli/appengine-java-sdk-1.9.2/lib/appengine-tools-api.jar, com.google.appengine.tools.development.DevAppServerMain, --property=kickstart.user.dir=/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor, --port=8888, --address=0.0.0.0, /Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build/war]
+objc[77486]: Class JavaLaunchHelper is implemented in both /Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/bin/java and /Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/libinstrument.dylib. One of the two will be used. Which one is undefined.
+Dec 30, 2015 11:52:10 AM com.google.apphosting.utils.config.AppEngineWebXmlReader readAppEngineWebXml
+INFO: Successfully processed /Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build/war/WEB-INF/appengine-web.xml
+Dec 30, 2015 11:52:10 AM com.google.apphosting.utils.config.AbstractConfigXmlReader readConfigXml
+INFO: Successfully processed /Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build/war/WEB-INF/web.xml
+Dec 30, 2015 11:52:10 AM com.google.appengine.tools.development.SystemPropertiesManager setSystemProperties
+INFO: Overwriting system property key 'java.util.logging.config.file', value '/Users/rmorelli/appengine-java-sdk-1.9.2/config/sdk/logging.properties' with value 'WEB-INF/logging.properties' from '/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build/war/WEB-INF/appengine-web.xml'
+Dec 30, 2015 11:52:10 AM com.google.appengine.tools.development.AbstractContainerService configure
+WARNING: Unable to determine hostname - defaulting to localhost.
+Dec 30, 2015 11:52:10 AM com.google.apphosting.utils.jetty.JettyLogger info
+INFO: Logging to JettyLogger(null) via com.google.apphosting.utils.jetty.JettyLogger
+Dec 30, 2015 11:52:11 AM com.google.apphosting.utils.jetty.JettyLogger info
+INFO: jetty-6.1.x
+Dec 30, 2015 11:52:12 AM com.google.appinventor.server.IdMap <init>
+SEVERE: No fixid list found.
+Dec 30, 2015 11:52:12 AM com.google.appinventor.server.storage.ObjectifyStorageIo <clinit>
+INFO: Default GCS Bucket Configured from App Identity: app_default_bucket
+Dec 30, 2015 11:52:12 AM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 30, 2015 11:52:12 AM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 30, 2015 11:52:12 AM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 30, 2015 11:52:12 AM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 30, 2015 11:52:12 AM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 30, 2015 11:52:12 AM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 30, 2015 11:52:12 AM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: High Replication
+	Storage: /Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build/war/WEB-INF/appengine-generated/local_db.bin
+Dec 30, 2015 11:52:12 AM com.google.appengine.api.datastore.dev.LocalDatastoreService load
+INFO: Time to load datastore: 29 ms
+Dec 30, 2015 11:52:12 AM com.google.apphosting.utils.jetty.JettyLogger info
+INFO: Started SelectChannelConnector@0.0.0.0:8888
+Dec 30, 2015 11:52:12 AM com.google.appengine.tools.development.AbstractModule startup
+INFO: Module instance default is running at http://localhost:8888/
+Dec 30, 2015 11:52:12 AM com.google.appengine.tools.development.AbstractModule startup
+INFO: The admin console is running at http://localhost:8888/_ah/admin
+Dec 30, 2015 11:52:12 AM com.google.appengine.tools.development.DevAppServerImpl doStart
+INFO: Dev App Server is now running
+Dec 30, 2015 11:52:19 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494338886
+Dec 30, 2015 11:52:19 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494338889
+Dec 30, 2015 11:52:19 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494339211
+Dec 30, 2015 11:52:19 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:19 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494339380
+Dec 30, 2015 11:52:19 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:19 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:19 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494339638
+Dec 30, 2015 11:52:19 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494339747
+Dec 30, 2015 11:52:19 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:19 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494339778
+Dec 30, 2015 11:52:19 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494339638
+Dec 30, 2015 11:52:19 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:19 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494339819
+Dec 30, 2015 11:52:19 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494339818
+Dec 30, 2015 11:52:19 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494339824
+Dec 30, 2015 11:52:19 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494339825
+Dec 30, 2015 11:52:19 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:19 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494339911
+Dec 30, 2015 11:52:19 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:19 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494339926
+Dec 30, 2015 11:52:19 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:19 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:19 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:19 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:19 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494339947
+Dec 30, 2015 11:52:19 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494339949
+Dec 30, 2015 11:52:19 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494339952
+Dec 30, 2015 11:52:19 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494339947
+Dec 30, 2015 11:52:20 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:20 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494340190
+Dec 30, 2015 11:52:20 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:20 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:20 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494340321
+Dec 30, 2015 11:52:20 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494340325
+Dec 30, 2015 11:52:20 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:20 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494340394
+Dec 30, 2015 11:52:20 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:20 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:20 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494340454
+Dec 30, 2015 11:52:20 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494340458
+Dec 30, 2015 11:52:20 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494340474
+Dec 30, 2015 11:52:20 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:20 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494340480
+Dec 30, 2015 11:52:20 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494340550
+Dec 30, 2015 11:52:20 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494340550
+Dec 30, 2015 11:52:20 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494340549
+Dec 30, 2015 11:52:20 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494340620
+Dec 30, 2015 11:52:21 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494341075
+Dec 30, 2015 11:52:21 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494341226
+Dec 30, 2015 11:52:21 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494341226
+Dec 30, 2015 11:52:21 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494341257
+Dec 30, 2015 11:52:21 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494341257
+Dec 30, 2015 11:52:21 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494341257
+Dec 30, 2015 11:52:24 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:24 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:24 AM com.google.appinventor.server.ProjectServiceImpl validateSessionId
+INFO: storedSessionId = 7e33c0df-1539-47a9-8c9a-d94af95d5e38
+Dec 30, 2015 11:52:24 AM com.google.appinventor.server.ProjectServiceImpl validateSessionId
+INFO: storedSessionId = 7e33c0df-1539-47a9-8c9a-d94af95d5e38
+Dec 30, 2015 11:52:24 AM com.google.appinventor.server.ProjectServiceImpl validateSessionId
+INFO: sessionId = 7e33c0df-1539-47a9-8c9a-d94af95d5e38
+Dec 30, 2015 11:52:24 AM com.google.appinventor.server.ProjectServiceImpl validateSessionId
+INFO: sessionId = 7e33c0df-1539-47a9-8c9a-d94af95d5e38
+Dec 30, 2015 11:52:24 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494344022
+Dec 30, 2015 11:52:24 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494344023
+Dec 30, 2015 11:52:24 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:24 AM com.google.appinventor.server.ProjectServiceImpl validateSessionId
+INFO: storedSessionId = 7e33c0df-1539-47a9-8c9a-d94af95d5e38
+Dec 30, 2015 11:52:24 AM com.google.appinventor.server.ProjectServiceImpl validateSessionId
+INFO: sessionId = 7e33c0df-1539-47a9-8c9a-d94af95d5e38
+Dec 30, 2015 11:52:24 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494344066
+Dec 30, 2015 11:52:24 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:24 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494344102
+Dec 30, 2015 11:52:24 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:24 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:24 AM com.google.appinventor.server.project.youngandroid.YoungAndroidProjectService updateCurrentProgress
+INFO: The current progress is 10%.
+Dec 30, 2015 11:52:24 AM com.google.appinventor.server.project.youngandroid.YoungAndroidProjectService updateCurrentProgress
+INFO: The current progress is 10%.
+Dec 30, 2015 11:52:24 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494344620
+Dec 30, 2015 11:52:24 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494344620
+Dec 30, 2015 11:52:29 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:29 AM com.google.appinventor.server.project.youngandroid.YoungAndroidProjectService updateCurrentProgress
+INFO: The current progress is 50%.
+Dec 30, 2015 11:52:29 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494349653
+Dec 30, 2015 11:52:31 AM com.google.appinventor.server.ReceiveBuildServlet doPost
+INFO: Saving android.keystore for user: 185804764220139124118
+Dec 30, 2015 11:52:31 AM com.google.appinventor.server.ReceiveBuildServlet doPost
+INFO: Saving build output files: build/Android/LocationSensorTester.apk
+Dec 30, 2015 11:52:31 AM com.google.appinventor.server.ReceiveBuildServlet doPost
+INFO: Saving build output files: build/Android/build.out
+Dec 30, 2015 11:52:31 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494351808
+Dec 30, 2015 11:52:34 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:34 AM com.google.appinventor.server.project.youngandroid.YoungAndroidProjectService updateCurrentProgress
+INFO: The current progress is 100%.
+Dec 30, 2015 11:52:34 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494354655
+Dec 30, 2015 11:52:34 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:34 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:34 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494354679
+Dec 30, 2015 11:52:34 AM com.google.appinventor.server.project.youngandroid.YoungAndroidProjectService updateCurrentProgress
+INFO: The current progress is 10%.
+Dec 30, 2015 11:52:34 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494354678
+Dec 30, 2015 11:52:34 AM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 11:52:34 AM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494354724
+Dec 30, 2015 11:52:42 AM com.google.appengine.api.datastore.dev.LocalDatastoreService$PersistDatastore persist
+INFO: Time to persist datastore: 13 ms
+Dec 30, 2015 12:02:19 PM com.google.appinventor.server.IdMap get
+INFO: IdMap.get called for test@example.com but no valid map exists.
+Dec 30, 2015 12:02:19 PM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1451494939467
+Dec 30, 2015 12:02:42 PM com.google.appengine.api.datastore.dev.LocalDatastoreService$PersistDatastore persist
+INFO: Time to persist datastore: 11 ms
+Jan 15, 2016 2:29:23 PM com.google.apphosting.utils.jetty.AppEngineAuthentication$AppEngineAuthenticator authenticate
+INFO: Got / but no one was logged in, redirecting.
+Jan 15, 2016 2:29:23 PM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1452886163229
+Jan 15, 2016 2:29:23 PM com.google.apphosting.utils.jetty.AppEngineAuthentication$AppEngineAuthenticator authenticate
+INFO: Got /favicon.ico but no one was logged in, redirecting.
+Jan 15, 2016 2:29:23 PM com.google.apphosting.utils.jetty.AppEngineAuthentication$AppEngineAuthenticator authenticate
+INFO: Got / but no one was logged in, redirecting.
+Jan 15, 2016 2:29:23 PM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1452886163543
+Jan 15, 2016 2:29:23 PM com.google.apphosting.utils.jetty.AppEngineAuthentication$AppEngineAuthenticator authenticate
+INFO: Got /apple-touch-icon-precomposed.png but no one was logged in, redirecting.
+Jan 15, 2016 2:29:23 PM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1452886163600
+Jan 15, 2016 2:29:23 PM com.google.apphosting.utils.jetty.AppEngineAuthentication$AppEngineAuthenticator authenticate
+INFO: Got /apple-touch-icon.png but no one was logged in, redirecting.
+Jan 15, 2016 2:29:23 PM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1452886163607
+Jan 20, 2016 5:44:44 PM com.google.apphosting.utils.jetty.AppEngineAuthentication$AppEngineAuthenticator authenticate
+INFO: Got / but no one was logged in, redirecting.
+Jan 20, 2016 5:44:44 PM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1453329884286
+Jan 20, 2016 5:44:44 PM com.google.apphosting.utils.jetty.AppEngineAuthentication$AppEngineAuthenticator authenticate
+INFO: Got /favicon.ico but no one was logged in, redirecting.
+Jan 20, 2016 5:44:44 PM com.google.apphosting.utils.jetty.AppEngineAuthentication$AppEngineAuthenticator authenticate
+INFO: Got / but no one was logged in, redirecting.
+Jan 20, 2016 5:44:44 PM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1453329884529
+Jan 20, 2016 5:44:44 PM com.google.apphosting.utils.jetty.AppEngineAuthentication$AppEngineAuthenticator authenticate
+INFO: Got /apple-touch-icon-precomposed.png but no one was logged in, redirecting.
+Jan 20, 2016 5:44:44 PM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1453329884578
+Jan 20, 2016 5:44:44 PM com.google.apphosting.utils.jetty.AppEngineAuthentication$AppEngineAuthenticator authenticate
+INFO: Got /apple-touch-icon.png but no one was logged in, redirecting.
+Jan 20, 2016 5:44:44 PM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1453329884583
+Feb 11, 2016 1:19:32 PM com.google.apphosting.utils.jetty.AppEngineAuthentication$AppEngineAuthenticator authenticate
+INFO: Got / but no one was logged in, redirecting.
+Feb 11, 2016 1:19:33 PM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1455214773054
+Feb 11, 2016 1:19:33 PM com.google.apphosting.utils.jetty.AppEngineAuthentication$AppEngineAuthenticator authenticate
+INFO: Got /favicon.ico but no one was logged in, redirecting.
+Feb 11, 2016 1:19:33 PM com.google.apphosting.utils.jetty.AppEngineAuthentication$AppEngineAuthenticator authenticate
+INFO: Got / but no one was logged in, redirecting.
+Feb 11, 2016 1:19:33 PM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1455214773278
+Feb 11, 2016 1:19:33 PM com.google.apphosting.utils.jetty.AppEngineAuthentication$AppEngineAuthenticator authenticate
+INFO: Got /apple-touch-icon-precomposed.png but no one was logged in, redirecting.
+Feb 11, 2016 1:19:33 PM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1455214773418
+Feb 11, 2016 1:19:33 PM com.google.apphosting.utils.jetty.AppEngineAuthentication$AppEngineAuthenticator authenticate
+INFO: Got /apple-touch-icon.png but no one was logged in, redirecting.
+Feb 11, 2016 1:19:33 PM com.google.appengine.tools.appstats.AppstatsFilter doFilter
+INFO: Appstats available: /appstats/details?time=1455214773434

@@ -1,0 +1,364 @@
+<xml>
+  <block type="procedures_defnoreturn" x="617" y="-160">
+    <mutation>
+      <arg name="soundFileName"></arg>
+    </mutation>
+    <title name="NAME">playSound</title>
+    <statement name="STACK">
+      <block type="Sound1_setproperty" inline="false">
+        <mutation yailtype="text"></mutation>
+        <title name="COMPONENT_SELECTOR">Sound1</title>
+        <title name="PROP">Source</title>
+        <value name="VALUE">
+          <block type="lexical_variable_get">
+            <title name="VAR">input soundFileName</title>
+          </block>
+        </value>
+        <next>
+          <block type="Sound1_Play">
+            <title name="COMPONENT_SELECTOR">Sound1</title>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" x="624" y="-37">
+    <mutation>
+      <arg name="newScore"></arg>
+    </mutation>
+    <title name="NAME">updateScore</title>
+    <statement name="STACK">
+      <block type="lexical_variable_set" inline="false">
+        <title name="VAR">global score</title>
+        <value name="VALUE">
+          <block type="lexical_variable_get">
+            <title name="VAR">input newScore</title>
+          </block>
+        </value>
+        <next>
+          <block type="LabelScore_setproperty" inline="false">
+            <mutation yailtype="text"></mutation>
+            <title name="COMPONENT_SELECTOR">LabelScore</title>
+            <title name="PROP">Text</title>
+            <value name="VALUE">
+              <block type="text_join" inline="false">
+                <mutation items="2"></mutation>
+                <value name="ADD0">
+                  <block type="text">
+                    <title name="TEXT">Score: </title>
+                  </block>
+                </value>
+                <value name="ADD1">
+                  <block type="lexical_variable_get">
+                    <title name="VAR">input newScore</title>
+                  </block>
+                </value>
+              </block>
+            </value>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="global_declaration" inline="false" x="37" y="-19">
+    <title name="NAME">score</title>
+    <value name="VALUE">
+      <block type="math_number">
+        <title name="NUM">0</title>
+      </block>
+    </value>
+  </block>
+  <block type="ButtonStart_Click" x="39" y="27">
+    <title name="COMPONENT_SELECTOR">ButtonStart</title>
+    <statement name="DO">
+      <block type="Ball1_setproperty" inline="false">
+        <mutation yailtype="boolean"></mutation>
+        <title name="COMPONENT_SELECTOR">Ball1</title>
+        <title name="PROP">Enabled</title>
+        <value name="VALUE">
+          <block type="logic_boolean">
+            <title name="BOOL">TRUE</title>
+          </block>
+        </value>
+        <next>
+          <block type="Ball1_setproperty" inline="false">
+            <mutation yailtype="number"></mutation>
+            <title name="COMPONENT_SELECTOR">Ball1</title>
+            <title name="PROP">Interval</title>
+            <value name="VALUE">
+              <block type="math_number">
+                <title name="NUM">10</title>
+              </block>
+            </value>
+            <next>
+              <block type="Ball1_setproperty" inline="false">
+                <mutation yailtype="number"></mutation>
+                <title name="COMPONENT_SELECTOR">Ball1</title>
+                <title name="PROP">Speed</title>
+                <value name="VALUE">
+                  <block type="math_number">
+                    <title name="NUM">5</title>
+                  </block>
+                </value>
+                <next>
+                  <block type="Ball1_setproperty" inline="false">
+                    <mutation yailtype="number"></mutation>
+                    <title name="COMPONENT_SELECTOR">Ball1</title>
+                    <title name="PROP">Heading</title>
+                    <value name="VALUE">
+                      <block type="math_random_int" inline="true">
+                        <value name="FROM">
+                          <block type="math_number">
+                            <title name="NUM">225</title>
+                          </block>
+                        </value>
+                        <value name="TO">
+                          <block type="math_number">
+                            <title name="NUM">315</title>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="procedures_callnoreturn">
+                        <mutation name="reset"></mutation>
+                        <title name="PROCNAME">reset</title>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" x="630" y="101">
+    <mutation></mutation>
+    <title name="NAME">reset</title>
+    <statement name="STACK">
+      <block type="Ball1_MoveTo" inline="false">
+        <title name="COMPONENT_SELECTOR">Ball1</title>
+        <value name="ARG0">
+          <block type="math_division" inline="true">
+            <value name="A">
+              <block type="Screen1_getproperty">
+                <mutation yailtype="number"></mutation>
+                <title name="COMPONENT_SELECTOR">Screen1</title>
+                <title name="PROP">Width</title>
+              </block>
+            </value>
+            <value name="B">
+              <block type="math_number">
+                <title name="NUM">2</title>
+              </block>
+            </value>
+          </block>
+        </value>
+        <value name="ARG1">
+          <block type="Ball1_getproperty">
+            <mutation yailtype="number"></mutation>
+            <title name="COMPONENT_SELECTOR">Ball1</title>
+            <title name="PROP">Radius</title>
+          </block>
+        </value>
+        <next>
+          <block type="procedures_callnoreturn" inline="false">
+            <mutation name="updateScore">
+              <arg name="newScore"></arg>
+            </mutation>
+            <title name="PROCNAME">updateScore</title>
+            <value name="ARG0">
+              <block type="math_number">
+                <title name="NUM">0</title>
+              </block>
+            </value>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="Ball1_CollidedWith" x="40" y="230">
+    <title name="COMPONENT_SELECTOR">Ball1</title>
+    <statement name="DO">
+      <block type="procedures_callnoreturn" inline="false">
+        <mutation name="updateScore">
+          <arg name="newScore"></arg>
+        </mutation>
+        <title name="PROCNAME">updateScore</title>
+        <value name="ARG0">
+          <block type="math_add" inline="true">
+            <mutation items="2"></mutation>
+            <value name="NUM0">
+              <block type="lexical_variable_get">
+                <title name="VAR">global score</title>
+              </block>
+            </value>
+            <value name="NUM1">
+              <block type="math_number">
+                <title name="NUM">1</title>
+              </block>
+            </value>
+          </block>
+        </value>
+        <next>
+          <block type="Ball1_setproperty" inline="false">
+            <mutation yailtype="number"></mutation>
+            <title name="COMPONENT_SELECTOR">Ball1</title>
+            <title name="PROP">Heading</title>
+            <value name="VALUE">
+              <block type="math_subtract" inline="true">
+                <value name="A">
+                  <block type="math_number">
+                    <title name="NUM">360</title>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="Ball1_getproperty">
+                    <mutation yailtype="number"></mutation>
+                    <title name="COMPONENT_SELECTOR">Ball1</title>
+                    <title name="PROP">Heading</title>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="Sound1_setproperty" inline="false">
+                <mutation yailtype="text"></mutation>
+                <title name="COMPONENT_SELECTOR">Sound1</title>
+                <title name="PROP">Source</title>
+                <value name="VALUE">
+                  <block type="text">
+                    <title name="TEXT">Noink.mp3</title>
+                  </block>
+                </value>
+                <next>
+                  <block type="Sound1_Play">
+                    <title name="COMPONENT_SELECTOR">Sound1</title>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="Ball1_EdgeReached" x="628" y="290">
+    <title name="COMPONENT_SELECTOR">Ball1</title>
+    <statement name="DO">
+      <block type="controls_if" inline="false">
+        <mutation else="1"></mutation>
+        <value name="IF0">
+          <block type="math_compare" inline="true">
+            <title name="OP">EQ</title>
+            <value name="A">
+              <block type="lexical_variable_get">
+                <title name="VAR">input edge</title>
+              </block>
+            </value>
+            <value name="B">
+              <block type="math_number">
+                <title name="NUM">-1</title>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="Ball1_setproperty" inline="false">
+            <mutation yailtype="boolean"></mutation>
+            <title name="COMPONENT_SELECTOR">Ball1</title>
+            <title name="PROP">Enabled</title>
+            <value name="VALUE">
+              <block type="logic_boolean">
+                <title name="BOOL">FALSE</title>
+              </block>
+            </value>
+            <next>
+              <block type="LabelScore_setproperty" inline="false">
+                <mutation yailtype="text"></mutation>
+                <title name="COMPONENT_SELECTOR">LabelScore</title>
+                <title name="PROP">Text</title>
+                <value name="VALUE">
+                  <block type="text">
+                    <title name="TEXT">Game Over</title>
+                  </block>
+                </value>
+                <next>
+                  <block type="procedures_callnoreturn" inline="false">
+                    <mutation name="playSound">
+                      <arg name="soundFileName"></arg>
+                    </mutation>
+                    <title name="PROCNAME">playSound</title>
+                    <value name="ARG0">
+                      <block type="text">
+                        <title name="TEXT">Buzzer.mp3</title>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
+        <statement name="ELSE">
+          <block type="Ball1_Bounce" inline="false">
+            <title name="COMPONENT_SELECTOR">Ball1</title>
+            <value name="ARG0">
+              <block type="lexical_variable_get">
+                <title name="VAR">input edge</title>
+              </block>
+            </value>
+            <next>
+              <block type="Sound1_setproperty" inline="false">
+                <mutation yailtype="text"></mutation>
+                <title name="COMPONENT_SELECTOR">Sound1</title>
+                <title name="PROP">Source</title>
+                <value name="VALUE">
+                  <block type="text">
+                    <title name="TEXT">note.wav</title>
+                  </block>
+                </value>
+                <next>
+                  <block type="Sound1_Play">
+                    <title name="COMPONENT_SELECTOR">Sound1</title>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+  <block type="ImageSprite1_Dragged" x="41" y="490">
+    <title name="COMPONENT_SELECTOR">ImageSprite1</title>
+    <statement name="DO">
+      <block type="ImageSprite1_MoveTo" inline="false">
+        <title name="COMPONENT_SELECTOR">ImageSprite1</title>
+        <value name="ARG0">
+          <block type="lexical_variable_get">
+            <title name="VAR">input currentX</title>
+          </block>
+        </value>
+        <value name="ARG1">
+          <block type="ImageSprite1_getproperty">
+            <mutation yailtype="number"></mutation>
+            <title name="COMPONENT_SELECTOR">ImageSprite1</title>
+            <title name="PROP">Y</title>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+  <block type="ButtonReset_Click" x="604" y="644">
+    <title name="COMPONENT_SELECTOR">ButtonReset</title>
+    <statement name="DO">
+      <block type="procedures_callnoreturn">
+        <mutation name="reset"></mutation>
+        <title name="PROCNAME">reset</title>
+      </block>
+    </statement>
+  </block>
+</xml>

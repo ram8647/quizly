@@ -1,0 +1,73 @@
+<xml>
+  <block type="AccelerometerSensor1_Shaking" x="138" y="28">
+    <title name="COMPONENT_SELECTOR">AccelerometerSensor1</title>
+    <statement name="DO">
+      <block type="LabelAnswer_setproperty" inline="false">
+        <mutation yailtype="text"></mutation>
+        <title name="COMPONENT_SELECTOR">LabelAnswer</title>
+        <title name="PROP">Text</title>
+        <value name="VALUE">
+          <block type="lists_pick_random_item" inline="false">
+            <value name="LIST">
+              <block type="lists_create_with" inline="false">
+                <mutation items="8"></mutation>
+                <value name="ADD0">
+                  <block type="text">
+                    <title name="TEXT">Outlook uncertain"</title>
+                  </block>
+                </value>
+                <value name="ADD1">
+                  <block type="text">
+                    <title name="TEXT">Probably yes</title>
+                  </block>
+                </value>
+                <value name="ADD2">
+                  <block type="text">
+                    <title name="TEXT">No way</title>
+                  </block>
+                </value>
+                <value name="ADD3">
+                  <block type="text">
+                    <title name="TEXT">It is certain</title>
+                  </block>
+                </value>
+                <value name="ADD4">
+                  <block type="text">
+                    <title name="TEXT">Not likely</title>
+                  </block>
+                </value>
+                <value name="ADD5">
+                  <block type="text">
+                    <title name="TEXT">Reply hazy</title>
+                  </block>
+                </value>
+                <value name="ADD6">
+                  <block type="text">
+                    <title name="TEXT">Maybe</title>
+                  </block>
+                </value>
+                <value name="ADD7">
+                  <block type="text">
+                    <title name="TEXT">Without a doubt</title>
+                  </block>
+                </value>
+              </block>
+            </value>
+          </block>
+        </value>
+        <next>
+          <block type="TextToSpeech1_Speak" inline="false">
+            <title name="COMPONENT_SELECTOR">TextToSpeech1</title>
+            <value name="ARG0">
+              <block type="LabelAnswer_getproperty">
+                <mutation yailtype="text"></mutation>
+                <title name="COMPONENT_SELECTOR">LabelAnswer</title>
+                <title name="PROP">Text</title>
+              </block>
+            </value>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

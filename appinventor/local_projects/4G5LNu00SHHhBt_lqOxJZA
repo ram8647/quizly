@@ -1,0 +1,119 @@
+<xml>
+  <block type="procedures_defnoreturn" x="415" y="2">
+    <mutation>
+      <arg name="on"></arg>
+      <arg name="off"></arg>
+    </mutation>
+    <title name="NAME">toggleButton</title>
+    <statement name="STACK">
+      <block type="controls_if" inline="false">
+        <mutation else="1"></mutation>
+        <value name="IF0">
+          <block type="text_compare" inline="true">
+            <title name="OP">EQUAL</title>
+            <value name="TEXT1">
+              <block type="ButtonToggle_getproperty">
+                <mutation yailtype="text"></mutation>
+                <title name="COMPONENT_SELECTOR">ButtonToggle</title>
+                <title name="PROP">Text</title>
+              </block>
+            </value>
+            <value name="TEXT2">
+              <block type="lexical_variable_get">
+                <title name="VAR">input on</title>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="procedures_callnoreturn" inline="false">
+            <mutation name="toggleButtonAction">
+              <arg name="isOn"></arg>
+            </mutation>
+            <title name="PROCNAME">toggleButtonAction</title>
+            <value name="ARG0">
+              <block type="logic_boolean">
+                <title name="BOOL">TRUE</title>
+              </block>
+            </value>
+            <next>
+              <block type="ButtonToggle_setproperty" inline="false">
+                <mutation yailtype="text"></mutation>
+                <title name="COMPONENT_SELECTOR">ButtonToggle</title>
+                <title name="PROP">Text</title>
+                <value name="VALUE">
+                  <block type="lexical_variable_get">
+                    <title name="VAR">input off</title>
+                  </block>
+                </value>
+                <next>
+                  <block type="procedures_callnoreturn" inline="false">
+                    <mutation name="toggleButtonAction">
+                      <arg name="isOn"></arg>
+                    </mutation>
+                    <title name="PROCNAME">toggleButtonAction</title>
+                    <value name="ARG0">
+                      <block type="logic_boolean">
+                        <title name="BOOL">FALSE</title>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
+        <statement name="ELSE">
+          <block type="ButtonToggle_setproperty" inline="false">
+            <mutation yailtype="text"></mutation>
+            <title name="COMPONENT_SELECTOR">ButtonToggle</title>
+            <title name="PROP">Text</title>
+            <value name="VALUE">
+              <block type="lexical_variable_get">
+                <title name="VAR">input on</title>
+              </block>
+            </value>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+  <block type="ButtonToggle_Click" x="81" y="10">
+    <title name="COMPONENT_SELECTOR">ButtonToggle</title>
+    <statement name="DO">
+      <block type="procedures_callnoreturn" inline="false">
+        <mutation name="toggleButton">
+          <arg name="on"></arg>
+          <arg name="off"></arg>
+        </mutation>
+        <title name="PROCNAME">toggleButton</title>
+        <value name="ARG0">
+          <block type="text">
+            <title name="TEXT">On</title>
+          </block>
+        </value>
+        <value name="ARG1">
+          <block type="text">
+            <title name="TEXT">Off</title>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" x="418" y="267">
+    <mutation>
+      <arg name="isOn"></arg>
+    </mutation>
+    <title name="NAME">toggleButtonAction</title>
+    <statement name="STACK">
+      <block type="controls_if" inline="false">
+        <mutation else="1"></mutation>
+        <value name="IF0">
+          <block type="lexical_variable_get">
+            <title name="VAR">input isOn</title>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+</xml>

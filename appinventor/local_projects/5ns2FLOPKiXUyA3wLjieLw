@@ -1,0 +1,86 @@
+<xml>
+  <block type="global_declaration" inline="false" x="133" y="-4">
+    <title name="NAME">X</title>
+    <value name="VALUE">
+      <block type="math_number">
+        <title name="NUM">0</title>
+      </block>
+    </value>
+  </block>
+  <block type="global_declaration" inline="false" x="571" y="6">
+    <title name="NAME">Y</title>
+    <value name="VALUE">
+      <block type="math_number">
+        <title name="NUM">100</title>
+      </block>
+    </value>
+  </block>
+  <block type="procedures_defnoreturn" x="138" y="80">
+    <mutation>
+      <arg name="x"></arg>
+      <arg name="y"></arg>
+    </mutation>
+    <title name="NAME">f</title>
+    <statement name="STACK">
+      <block type="lexical_variable_set" inline="false">
+        <title name="VAR">global X</title>
+        <value name="VALUE">
+          <block type="math_add" inline="true">
+            <mutation items="2"></mutation>
+            <value name="NUM0">
+              <block type="lexical_variable_get">
+                <title name="VAR">x</title>
+              </block>
+            </value>
+            <value name="NUM1">
+              <block type="lexical_variable_get">
+                <title name="VAR">y</title>
+              </block>
+            </value>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" x="134" y="201">
+    <mutation>
+      <arg name="x"></arg>
+    </mutation>
+    <title name="NAME">g</title>
+    <statement name="STACK">
+      <block type="procedures_callnoreturn" inline="false">
+        <mutation name="f">
+          <arg name="x"></arg>
+          <arg name="y"></arg>
+        </mutation>
+        <title name="PROCNAME">f</title>
+        <value name="ARG0">
+          <block type="lexical_variable_get">
+            <title name="VAR">x</title>
+          </block>
+        </value>
+        <value name="ARG1">
+          <block type="lexical_variable_get">
+            <title name="VAR">x</title>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+  <block type="Button1_Click" x="625" y="222">
+    <title name="COMPONENT_SELECTOR">Button1</title>
+    <statement name="DO">
+      <block type="procedures_callnoreturn" inline="false">
+        <mutation name="g">
+          <arg name="x"></arg>
+        </mutation>
+        <title name="PROCNAME">g</title>
+        <value name="ARG0">
+          <block type="lexical_variable_get">
+            <title name="VAR">global Y</title>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+</xml>

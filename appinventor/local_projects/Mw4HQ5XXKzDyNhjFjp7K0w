@@ -1,0 +1,137 @@
+<xml>
+  <block type="global_declaration" inline="false" x="1" y="-296">
+    <title name="NAME">alertMessage</title>
+    <value name="VALUE">
+      <block type="text">
+        <title name="TEXT"></title>
+      </block>
+    </value>
+  </block>
+  <block type="global_declaration" inline="false" x="322" y="-296">
+    <title name="NAME">alertPhoneNumber</title>
+    <value name="VALUE">
+      <block type="text">
+        <title name="TEXT"></title>
+      </block>
+    </value>
+  </block>
+  <block type="Texting1_MessageReceived" x="5" y="-258">
+    <title name="COMPONENT_SELECTOR">Texting1</title>
+    <statement name="DO">
+      <block type="lexical_variable_set" inline="false">
+        <title name="VAR">global alertMessage</title>
+        <value name="VALUE">
+          <block type="lexical_variable_get">
+            <title name="VAR">input messageText</title>
+          </block>
+        </value>
+        <next>
+          <block type="lexical_variable_set" inline="false">
+            <title name="VAR">global alertPhoneNumber</title>
+            <value name="VALUE">
+              <block type="lexical_variable_get">
+                <title name="VAR">input number</title>
+              </block>
+            </value>
+            <next>
+              <block type="LabelDisplay_setproperty" inline="false">
+                <mutation yailtype="text"></mutation>
+                <title name="COMPONENT_SELECTOR">LabelDisplay</title>
+                <title name="PROP">Text</title>
+                <value name="VALUE">
+                  <block type="text_join" inline="false">
+                    <mutation items="7"></mutation>
+                    <value name="ADD0">
+                      <block type="LabelDisplay_getproperty">
+                        <mutation yailtype="text"></mutation>
+                        <title name="COMPONENT_SELECTOR">LabelDisplay</title>
+                        <title name="PROP">Text</title>
+                      </block>
+                    </value>
+                    <value name="ADD1">
+                      <block type="Clock1_FormatDateTime" inline="false">
+                        <title name="COMPONENT_SELECTOR">Clock1</title>
+                        <value name="ARG0">
+                          <block type="Clock1_Now">
+                            <title name="COMPONENT_SELECTOR">Clock1</title>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <value name="ADD2">
+                      <block type="text">
+                        <title name="TEXT"> From </title>
+                      </block>
+                    </value>
+                    <value name="ADD3">
+                      <block type="lexical_variable_get">
+                        <title name="VAR">input messageText</title>
+                      </block>
+                    </value>
+                    <value name="ADD4">
+                      <block type="text">
+                        <title name="TEXT"> : </title>
+                      </block>
+                    </value>
+                    <value name="ADD5">
+                      <block type="lexical_variable_get">
+                        <title name="VAR">input number</title>
+                      </block>
+                    </value>
+                    <value name="ADD6">
+                      <block type="text">
+                        <title name="TEXT">\n</title>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="ButtonAck_Click" x="5" y="108">
+    <title name="COMPONENT_SELECTOR">ButtonAck</title>
+    <statement name="DO">
+      <block type="Texting1_setproperty" inline="false">
+        <mutation yailtype="text"></mutation>
+        <title name="COMPONENT_SELECTOR">Texting1</title>
+        <title name="PROP">PhoneNumber</title>
+        <value name="VALUE">
+          <block type="lexical_variable_get">
+            <title name="VAR">global alertPhoneNumber</title>
+          </block>
+        </value>
+        <next>
+          <block type="Texting1_setproperty" inline="false">
+            <mutation yailtype="text"></mutation>
+            <title name="COMPONENT_SELECTOR">Texting1</title>
+            <title name="PROP">Message</title>
+            <value name="VALUE">
+              <block type="text_join" inline="false">
+                <mutation items="2"></mutation>
+                <value name="ADD0">
+                  <block type="text">
+                    <title name="TEXT">Thanks. I received your message: </title>
+                  </block>
+                </value>
+                <value name="ADD1">
+                  <block type="lexical_variable_get">
+                    <title name="VAR">global alertMessage</title>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="Texting1_SendMessage">
+                <title name="COMPONENT_SELECTOR">Texting1</title>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

@@ -1,0 +1,188 @@
+<xml>
+  <block type="ButtonStart_Click" x="81" y="23">
+    <title name="COMPONENT_SELECTOR">ButtonStart</title>
+    <statement name="DO">
+      <block type="Ball1_setproperty" inline="false">
+        <mutation yailtype="boolean"></mutation>
+        <title name="COMPONENT_SELECTOR">Ball1</title>
+        <title name="PROP">Enabled</title>
+        <value name="VALUE">
+          <block type="logic_boolean">
+            <title name="BOOL">TRUE</title>
+          </block>
+        </value>
+        <next>
+          <block type="Ball1_setproperty" inline="false">
+            <mutation yailtype="number"></mutation>
+            <title name="COMPONENT_SELECTOR">Ball1</title>
+            <title name="PROP">Interval</title>
+            <value name="VALUE">
+              <block type="math_number">
+                <title name="NUM">10</title>
+              </block>
+            </value>
+            <next>
+              <block type="Ball1_setproperty" inline="false">
+                <mutation yailtype="number"></mutation>
+                <title name="COMPONENT_SELECTOR">Ball1</title>
+                <title name="PROP">Heading</title>
+                <value name="VALUE">
+                  <block type="math_random_int" inline="true">
+                    <value name="FROM">
+                      <block type="math_number">
+                        <title name="NUM">225</title>
+                      </block>
+                    </value>
+                    <value name="TO">
+                      <block type="math_number">
+                        <title name="NUM">315</title>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <next>
+                  <block type="Ball1_setproperty" inline="false">
+                    <mutation yailtype="number"></mutation>
+                    <title name="COMPONENT_SELECTOR">Ball1</title>
+                    <title name="PROP">Speed</title>
+                    <value name="VALUE">
+                      <block type="math_number">
+                        <title name="NUM">5</title>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="Ball1_MoveTo" inline="false">
+                        <title name="COMPONENT_SELECTOR">Ball1</title>
+                        <value name="ARG0">
+                          <block type="math_division" inline="true">
+                            <value name="A">
+                              <block type="Canvas1_getproperty">
+                                <mutation yailtype="number"></mutation>
+                                <title name="COMPONENT_SELECTOR">Canvas1</title>
+                                <title name="PROP">Width</title>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="math_number">
+                                <title name="NUM">2</title>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <value name="ARG1">
+                          <block type="Ball1_getproperty">
+                            <mutation yailtype="number"></mutation>
+                            <title name="COMPONENT_SELECTOR">Ball1</title>
+                            <title name="PROP">Radius</title>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="global_declaration" inline="false" x="656" y="30">
+    <title name="NAME">score</title>
+    <value name="VALUE">
+      <block type="math_number">
+        <title name="NUM">0</title>
+      </block>
+    </value>
+  </block>
+  <block type="ButtonReset_Click" x="663" y="73">
+    <title name="COMPONENT_SELECTOR">ButtonReset</title>
+    <statement name="DO">
+      <block type="Ball1_MoveTo" inline="false">
+        <title name="COMPONENT_SELECTOR">Ball1</title>
+        <value name="ARG0">
+          <block type="math_division" inline="true">
+            <value name="A">
+              <block type="Canvas1_getproperty">
+                <mutation yailtype="number"></mutation>
+                <title name="COMPONENT_SELECTOR">Canvas1</title>
+                <title name="PROP">Width</title>
+              </block>
+            </value>
+            <value name="B">
+              <block type="math_number">
+                <title name="NUM">2</title>
+              </block>
+            </value>
+          </block>
+        </value>
+        <value name="ARG1">
+          <block type="Ball1_getproperty">
+            <mutation yailtype="number"></mutation>
+            <title name="COMPONENT_SELECTOR">Ball1</title>
+            <title name="PROP">Radius</title>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+  <block type="Ball1_EdgeReached" x="663" y="224">
+    <title name="COMPONENT_SELECTOR">Ball1</title>
+    <statement name="DO">
+      <block type="Ball1_Bounce" inline="false">
+        <title name="COMPONENT_SELECTOR">Ball1</title>
+        <value name="ARG0">
+          <block type="lexical_variable_get">
+            <title name="VAR">edge</title>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+  <block type="Ball1_CollidedWith" x="82" y="291">
+    <title name="COMPONENT_SELECTOR">Ball1</title>
+    <statement name="DO">
+      <block type="Ball1_setproperty" inline="false">
+        <mutation yailtype="number"></mutation>
+        <title name="COMPONENT_SELECTOR">Ball1</title>
+        <title name="PROP">Heading</title>
+        <value name="VALUE">
+          <block type="math_subtract" inline="true">
+            <value name="A">
+              <block type="math_number">
+                <title name="NUM">360</title>
+              </block>
+            </value>
+            <value name="B">
+              <block type="Ball1_getproperty">
+                <mutation yailtype="number"></mutation>
+                <title name="COMPONENT_SELECTOR">Ball1</title>
+                <title name="PROP">Heading</title>
+              </block>
+            </value>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+  <block type="ImageSprite1_Dragged" x="78" y="419">
+    <title name="COMPONENT_SELECTOR">ImageSprite1</title>
+    <statement name="DO">
+      <block type="ImageSprite1_MoveTo" inline="false">
+        <title name="COMPONENT_SELECTOR">ImageSprite1</title>
+        <value name="ARG0">
+          <block type="lexical_variable_get">
+            <title name="VAR">currentX</title>
+          </block>
+        </value>
+        <value name="ARG1">
+          <block type="ImageSprite1_getproperty">
+            <mutation yailtype="number"></mutation>
+            <title name="COMPONENT_SELECTOR">ImageSprite1</title>
+            <title name="PROP">Y</title>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+</xml>

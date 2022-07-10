@@ -1,0 +1,99 @@
+<xml>
+  <block type="global_declaration" inline="false" x="153" y="1">
+    <title name="NAME">X</title>
+    <value name="VALUE">
+      <block type="math_number">
+        <title name="NUM">0</title>
+      </block>
+    </value>
+  </block>
+  <block type="procedures_defnoreturn" x="138" y="80">
+    <mutation>
+      <arg name="x"></arg>
+      <arg name="y"></arg>
+    </mutation>
+    <title name="NAME">f</title>
+    <statement name="STACK">
+      <block type="lexical_variable_set" inline="false">
+        <title name="VAR">global X</title>
+        <value name="VALUE">
+          <block type="math_add" inline="true">
+            <mutation items="2"></mutation>
+            <value name="NUM0">
+              <block type="lexical_variable_get">
+                <title name="VAR">x</title>
+              </block>
+            </value>
+            <value name="NUM1">
+              <block type="lexical_variable_get">
+                <title name="VAR">y</title>
+              </block>
+            </value>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defreturn" inline="false" x="128" y="244">
+    <mutation>
+      <arg name="n"></arg>
+    </mutation>
+    <title name="NAME">factorial</title>
+    <value name="RETURN">
+      <block type="controls_choose" inline="false">
+        <value name="TEST">
+          <block type="math_compare" inline="true">
+            <title name="OP">EQ</title>
+            <value name="A">
+              <block type="lexical_variable_get">
+                <title name="VAR">n</title>
+              </block>
+            </value>
+            <value name="B">
+              <block type="math_number">
+                <title name="NUM">0</title>
+              </block>
+            </value>
+          </block>
+        </value>
+        <value name="THENRETURN">
+          <block type="math_number">
+            <title name="NUM">1</title>
+          </block>
+        </value>
+        <value name="ELSERETURN">
+          <block type="math_multiply" inline="true">
+            <mutation items="2"></mutation>
+            <value name="NUM0">
+              <block type="lexical_variable_get">
+                <title name="VAR">n</title>
+              </block>
+            </value>
+            <value name="NUM1">
+              <block type="procedures_callreturn" inline="false">
+                <mutation name="factorial">
+                  <arg name="n"></arg>
+                </mutation>
+                <title name="PROCNAME">factorial</title>
+                <value name="ARG0">
+                  <block type="math_subtract" inline="true">
+                    <value name="A">
+                      <block type="lexical_variable_get">
+                        <title name="VAR">n</title>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="math_number">
+                        <title name="NUM">1</title>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </value>
+          </block>
+        </value>
+      </block>
+    </value>
+  </block>
+</xml>

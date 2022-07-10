@@ -1,0 +1,721 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="com.google.appinventor.server.storage.ObjectifyStorageIoTest" skipped="0" tests="20" time="1.16" timestamp="2015-12-29T19:02:18">
+  <properties>
+    <property name="java.vendor" value="Oracle Corporation" />
+    <property name="lib.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib" />
+    <property name="ant.file.appengine" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build.xml" />
+    <property name="sun.java.launcher" value="SUN_STANDARD" />
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
+    <property name="docs.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/docs" />
+    <property name="AiServerLib-class.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build/classes/AiServerLib" />
+    <property name="os.name" value="Mac OS X" />
+    <property name="sun.boot.class.path" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/JObjC.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/classes" />
+    <property name="gwt.sdk" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/gwt/2.7" />
+    <property name="user.country.format" value="CN" />
+    <property name="java.vm.specification.vendor" value="Oracle Corporation" />
+    <property name="ant.home" value="/usr/local/apache-ant-1.9.6" />
+    <property name="java.runtime.version" value="1.7.0_45-b18" />
+    <property name="user.name" value="rmorelli" />
+    <property name="public.build.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build/appengine" />
+    <property name="debug" value="true" />
+    <property name="ant.file.type.appengine" value="file" />
+    <property name="build.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build" />
+    <property name="appinventor.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor" />
+    <property name="user.language" value="en" />
+    <property name="class.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build/classes" />
+    <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib" />
+    <property name="reports.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/reports" />
+    <property name="ant.project.default-target" value="all" />
+    <property name="build.war.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build/war" />
+    <property name="ant.project.name" value="appengine" />
+    <property name="java.version" value="1.7.0_45" />
+    <property name="user.timezone" value="" />
+    <property name="sun.arch.data.model" value="64" />
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="java.endorsed.dirs" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/endorsed" />
+    <property name="sun.cpu.isalist" value="" />
+    <property name="sun.jnu.encoding" value="UTF-8" />
+    <property name="file.encoding.pkg" value="sun.io" />
+    <property name="AiSharedLib-class.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build/classes/AiSharedLib" />
+    <property name="appengine.sdk" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/appengine/appengine-java-sdk-1.9.17" />
+    <property name="file.separator" value="/" />
+    <property name="java.specification.name" value="Java Platform API Specification" />
+    <property name="java.class.version" value="51.0" />
+    <property name="user.country" value="US" />
+    <property name="java.home" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre" />
+    <property name="ant.file.AllProjects" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build.xml" />
+    <property name="java.vm.info" value="mixed mode" />
+    <property name="ant.file" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build.xml" />
+    <property name="os.version" value="10.10.4" />
+    <property name="path.separator" value=":" />
+    <property name="java.vm.version" value="24.45-b08" />
+    <property name="ant.library.dir" value="/usr/local/apache-ant-1.9.6/lib" />
+    <property name="ant.file.type.AllProjects" value="file" />
+    <property name="java.awt.printerjob" value="sun.lwawt.macosx.CPrinterJob" />
+    <property name="sun.io.unicode.encoding" value="UnicodeBig" />
+    <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit" />
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="debug.compile" value="true" />
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="user.home" value="/Users/rmorelli" />
+    <property name="appinventor.pkg" value="com/google/appinventor" />
+    <property name="java.specification.vendor" value="Oracle Corporation" />
+    <property name="java.library.path" value="/Users/rmorelli/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:." />
+    <property name="java.vendor.url" value="http://java.oracle.com/" />
+    <property name="java.vm.vendor" value="Oracle Corporation" />
+    <property name="gopherProxySet" value="false" />
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner com.google.appinventor.server.storage.ObjectifyStorageIoTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/reports/raw/TEST-com.google.appinventor.server.storage.ObjectifyStorageIoTest.xml crashfile=/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/junitvmwatcher6363965757457718694.properties propsfile=/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/junit1616574694231196391.properties" />
+    <property name="java.class.path" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build/AiServerLib.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build/AiSharedLib.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build/common/CommonUtils.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build/common/CommonTestUtils.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build/common/CommonVersion.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build/components/CommonConstants.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/guava/guava-18.0.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/json/json.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/junit/junit-4.8.2.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/junit-addons/junit-addons-1.4.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/keyczar/KeyczarTool.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/objectify-3.1/objectify-3.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/powermock/cglib-nodep-2.2.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/powermock/easymock-3.0.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/powermock/javassist-3.18.0-GA.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/powermock/objenesis-1.2.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/powermock/powermock-easymock-1.4.10-full.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/responder-iq/responderiq-test.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/gcs/appengine-gcs-client-0.4.3.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/gwt/2.7/gwt-servlet.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/gwt/2.7/gwt-user.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/appengine/appengine-java-sdk-1.9.17/lib/impl/appengine-api.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/appengine/appengine-java-sdk-1.9.17/lib/impl/appengine-api-labs.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/appengine/appengine-java-sdk-1.9.17/lib/impl/appengine-api-stubs.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/appengine/appengine-java-sdk-1.9.17/lib/testing/appengine-testing.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/appengine/appengine-java-sdk-1.9.17/lib/user/orm/geronimo-jpa_3.0_spec-1.1.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build/AiServerLibTests.jar:/usr/local/apache-ant-1.9.6/lib/ant-launcher.jar:/usr/local/apache-ant-1.9.6/lib/ant.jar:/usr/local/apache-ant-1.9.6/lib/ant-junit.jar:/usr/local/apache-ant-1.9.6/lib/ant-junit4.jar" />
+    <property name="ant.version" value="Apache Ant(TM) version 1.9.6 compiled on June 29 2015" />
+    <property name="keystore.present" value="true" />
+    <property name="ant.file.type.CommonDefinitions" value="file" />
+    <property name="ant.file.CommonDefinitions" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build-common.xml" />
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+    <property name="ant.file.type" value="file" />
+    <property name="java.vm.specification.version" value="1.7" />
+    <property name="sun.cpu.endian" value="little" />
+    <property name="sun.os.patch.level" value="unknown" />
+    <property name="test_name.class" value="${test_name}" />
+    <property name="java.io.tmpdir" value="/var/folders/s7/rhj7tq808xj8mq0059bk4xq00000gq/T/" />
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/" />
+    <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment" />
+    <property name="os.arch" value="x86_64" />
+    <property name="java.ext.dirs" value="/Users/rmorelli/Library/Java/Extensions:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/ext:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java" />
+    <property name="tests.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/tests" />
+    <property name="user.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor" />
+    <property name="line.separator" value="&#xa;" />
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM" />
+    <property name="org.apache.tools.ant.taskdefs.optional.junit.AggregateTransformer1" value="/var/folders/s7/rhj7tq808xj8mq0059bk4xq00000gq/T/null1883182714" />
+    <property name="org.apache.tools.ant.taskdefs.optional.junit.AggregateTransformer0" value="/var/folders/s7/rhj7tq808xj8mq0059bk4xq00000gq/T/null284578308" />
+    <property name="guid1" value="7db46679-26d2-4fd9-95dc-255deff7e459" />
+    <property name="basedir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine" />
+    <property name="local.build.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build" />
+    <property name="ant.java.version" value="1.7" />
+    <property name="ant.core.lib" value="/usr/local/apache-ant-1.9.6/lib/ant.jar" />
+    <property name="file.encoding" value="UTF-8" />
+    <property name="XstartOnFirstThread" value="-XstartOnFirstThread" />
+    <property name="java.specification.version" value="1.7" />
+    <property name="src.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/src" />
+    <property name="ant.project.invoked-targets" value="tests" />
+  </properties>
+  <testcase classname="com.google.appinventor.server.storage.ObjectifyStorageIoTest" name="testGetUser" time="0.502" />
+  <testcase classname="com.google.appinventor.server.storage.ObjectifyStorageIoTest" name="testSetTosAccepted" time="0.019" />
+  <testcase classname="com.google.appinventor.server.storage.ObjectifyStorageIoTest" name="testLoadSettingsNewUser" time="0.01" />
+  <testcase classname="com.google.appinventor.server.storage.ObjectifyStorageIoTest" name="testStoreLoadSettings" time="0.019" />
+  <testcase classname="com.google.appinventor.server.storage.ObjectifyStorageIoTest" name="testCreateProjectSuccessful" time="0.118" />
+  <testcase classname="com.google.appinventor.server.storage.ObjectifyStorageIoTest" name="testCreateProjectFailFirst" time="0.015" />
+  <testcase classname="com.google.appinventor.server.storage.ObjectifyStorageIoTest" name="testCreateProjectFailSecond" time="0.034" />
+  <testcase classname="com.google.appinventor.server.storage.ObjectifyStorageIoTest" name="testUploadBeforeAdd" time="0.019" />
+  <testcase classname="com.google.appinventor.server.storage.ObjectifyStorageIoTest" name="testUploadUserFileBeforeAdd" time="0.013" />
+  <testcase classname="com.google.appinventor.server.storage.ObjectifyStorageIoTest" name="testMuliRoleFile" time="0.025" />
+  <testcase classname="com.google.appinventor.server.storage.ObjectifyStorageIoTest" name="testUpdateModificationTime" time="0.066" />
+  <testcase classname="com.google.appinventor.server.storage.ObjectifyStorageIoTest" name="testAddRemoveFile" time="0.057" />
+  <testcase classname="com.google.appinventor.server.storage.ObjectifyStorageIoTest" name="testAddRemoveUserFile" time="0.025" />
+  <testcase classname="com.google.appinventor.server.storage.ObjectifyStorageIoTest" name="testUnsupportedEncoding" time="0.035" />
+  <testcase classname="com.google.appinventor.server.storage.ObjectifyStorageIoTest" name="testUnsupportedEncodingUserFIle" time="0.016" />
+  <testcase classname="com.google.appinventor.server.storage.ObjectifyStorageIoTest" name="testBlobFiles" time="0.065" />
+  <testcase classname="com.google.appinventor.server.storage.ObjectifyStorageIoTest" name="testOldBlockFilesInDatastoreStillWork" time="0.029" />
+  <testcase classname="com.google.appinventor.server.storage.ObjectifyStorageIoTest" name="testGetProject" time="0.013" />
+  <testcase classname="com.google.appinventor.server.storage.ObjectifyStorageIoTest" name="testGetProject_withNonexistentProject" time="0.013" />
+  <testcase classname="com.google.appinventor.server.storage.ObjectifyStorageIoTest" name="testWrongUserThrowsException" time="0.036" />
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <clinit>
+INFO: Default GCS Bucket Configured from App Identity: app_default_bucket
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:18 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: Master/Slave
+	Storage: In-memory
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:18 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: Master/Slave
+	Storage: In-memory
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:18 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: Master/Slave
+	Storage: In-memory
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:18 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: Master/Slave
+	Storage: In-memory
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:18 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:18 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: Master/Slave
+	Storage: In-memory
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:19 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: Master/Slave
+	Storage: In-memory
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:19 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: Master/Slave
+	Storage: In-memory
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.CrashReport createAndLogError
+SEVERE: com.google.appinventor.server.storage.ObjectifyException: job failed (on purpose): user=700, project=1
+build.version=
+git.build.version=nls-845-g7b9f3ba-dirty
+
+java.lang.RuntimeException: com.google.appinventor.server.storage.ObjectifyException: job failed (on purpose)
+	at com.google.appinventor.server.CrashReport.createAndLogError(CrashReport.java:45)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo.createProject(ObjectifyStorageIo.java:609)
+	at com.google.appinventor.server.storage.ObjectifyStorageIoTest.testCreateProjectFailSecond(ObjectifyStorageIoTest.java:167)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1182)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:1033)
+Caused by: com.google.appinventor.server.storage.ObjectifyException: job failed (on purpose)
+	at com.google.appinventor.server.storage.ObjectifyStorageIoTest$FailingJobObjectifyStorageIo.runJobWithRetries(ObjectifyStorageIoTest.java:520)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo.createProject(ObjectifyStorageIo.java:584)
+	... 16 more
+
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:19 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: Master/Slave
+	Storage: In-memory
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:19 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: Master/Slave
+	Storage: In-memory
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:19 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: Master/Slave
+	Storage: In-memory
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.CrashReport createAndLogError
+SEVERE: File role change is not supported: user=null, project=1, file=File1.src
+build.version=
+git.build.version=nls-845-g7b9f3ba-dirty
+
+java.lang.IllegalStateException: File role change is not supported
+	at com.google.appinventor.server.storage.ObjectifyStorageIo.createProjectFile(ObjectifyStorageIo.java:1215)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo.addFilesToProject(ObjectifyStorageIo.java:1193)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo.access$1400(ObjectifyStorageIo.java:99)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo$37.run(ObjectifyStorageIo.java:1179)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo.runJobWithRetries(ObjectifyStorageIo.java:2264)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo.addOutputFilesToProject(ObjectifyStorageIo.java:1176)
+	at com.google.appinventor.server.storage.ObjectifyStorageIoTest.testMuliRoleFile(ObjectifyStorageIoTest.java:220)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1182)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:1033)
+
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.CrashReport createAndLogError
+SEVERE: File role change is not supported: user=null, project=1, file=File1.src
+build.version=
+git.build.version=nls-845-g7b9f3ba-dirty
+
+java.lang.IllegalStateException: File role change is not supported
+	at com.google.appinventor.server.storage.ObjectifyStorageIo.removeFilesFromProject(ObjectifyStorageIo.java:1266)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo.access$1500(ObjectifyStorageIo.java:99)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo$39.run(ObjectifyStorageIo.java:1245)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo.runJobWithRetries(ObjectifyStorageIo.java:2264)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo.removeOutputFilesFromProject(ObjectifyStorageIo.java:1242)
+	at com.google.appinventor.server.storage.ObjectifyStorageIoTest.testMuliRoleFile(ObjectifyStorageIoTest.java:226)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1182)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:1033)
+
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:19 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: Master/Slave
+	Storage: In-memory
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:19 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: Master/Slave
+	Storage: In-memory
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:19 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: Master/Slave
+	Storage: In-memory
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:19 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: Master/Slave
+	Storage: In-memory
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.CrashReport createAndLogError
+SEVERE: java.io.UnsupportedEncodingException: No such encoding: Unsupported file content encoding,user=null, project=1, file=File1.src
+build.version=
+git.build.version=nls-845-g7b9f3ba-dirty
+
+java.lang.RuntimeException: java.io.UnsupportedEncodingException: No such encoding
+	at com.google.appinventor.server.CrashReport.createAndLogError(CrashReport.java:45)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo.uploadFile(ObjectifyStorageIo.java:1330)
+	at com.google.appinventor.server.storage.ObjectifyStorageIoTest.testUnsupportedEncoding(ObjectifyStorageIoTest.java:358)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1182)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:1033)
+Caused by: java.io.UnsupportedEncodingException: No such encoding
+	at java.lang.StringCoding.encode(StringCoding.java:341)
+	at java.lang.String.getBytes(String.java:916)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo.uploadFile(ObjectifyStorageIo.java:1328)
+	... 16 more
+
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.CrashReport createAndLogError
+SEVERE: java.io.UnsupportedEncodingException: No such encoding: Unsupported file content encoding, user=1100, project=1, file=File1.src
+build.version=
+git.build.version=nls-845-g7b9f3ba-dirty
+
+java.lang.RuntimeException: java.io.UnsupportedEncodingException: No such encoding
+	at com.google.appinventor.server.CrashReport.createAndLogError(CrashReport.java:45)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo.downloadFile(ObjectifyStorageIo.java:1612)
+	at com.google.appinventor.server.storage.ObjectifyStorageIoTest.testUnsupportedEncoding(ObjectifyStorageIoTest.java:366)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1182)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:1033)
+Caused by: java.io.UnsupportedEncodingException: No such encoding
+	at java.lang.StringCoding.decode(StringCoding.java:190)
+	at java.lang.String.<init>(String.java:416)
+	at java.lang.String.<init>(String.java:481)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo.downloadFile(ObjectifyStorageIo.java:1610)
+	... 16 more
+
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:19 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: Master/Slave
+	Storage: In-memory
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.CrashReport createAndLogError
+SEVERE: java.io.UnsupportedEncodingException: No such encoding: Unsupported file content encoding, user=1100, file=File1.src
+build.version=
+git.build.version=nls-845-g7b9f3ba-dirty
+
+java.lang.RuntimeException: java.io.UnsupportedEncodingException: No such encoding
+	at com.google.appinventor.server.CrashReport.createAndLogError(CrashReport.java:45)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo$31.run(ObjectifyStorageIo.java:1052)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo.runJobWithRetries(ObjectifyStorageIo.java:2264)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo.uploadUserFile(ObjectifyStorageIo.java:1044)
+	at com.google.appinventor.server.storage.ObjectifyStorageIoTest.testUnsupportedEncodingUserFIle(ObjectifyStorageIoTest.java:381)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1182)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:1033)
+Caused by: java.io.UnsupportedEncodingException: No such encoding
+	at java.lang.StringCoding.encode(StringCoding.java:341)
+	at java.lang.String.getBytes(String.java:916)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo$31.run(ObjectifyStorageIo.java:1049)
+	... 18 more
+
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.CrashReport createAndLogError
+SEVERE: java.io.UnsupportedEncodingException: No such encoding: Unsupported file content encoding, user=1100, file=File1.src
+build.version=
+git.build.version=nls-845-g7b9f3ba-dirty
+
+java.lang.RuntimeException: java.io.UnsupportedEncodingException: No such encoding
+	at com.google.appinventor.server.CrashReport.createAndLogError(CrashReport.java:45)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo$33.run(ObjectifyStorageIo.java:1100)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo.runJobWithRetries(ObjectifyStorageIo.java:2264)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo.downloadUserFile(ObjectifyStorageIo.java:1094)
+	at com.google.appinventor.server.storage.ObjectifyStorageIoTest.testUnsupportedEncodingUserFIle(ObjectifyStorageIoTest.java:390)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1182)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:1033)
+Caused by: java.io.UnsupportedEncodingException: No such encoding
+	at java.lang.StringCoding.decode(StringCoding.java:190)
+	at java.lang.String.<init>(String.java:416)
+	at java.lang.String.<init>(String.java:481)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo$33.run(ObjectifyStorageIo.java:1098)
+	... 18 more
+
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:19 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: Master/Slave
+	Storage: In-memory
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:19 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: Master/Slave
+	Storage: In-memory
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:19 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: Master/Slave
+	Storage: In-memory
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:19 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: Master/Slave
+	Storage: In-memory
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getInitialRetryDelayMillis() = 100
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRequestTimeoutMillis() = 30000
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryDelayBackoffFactor() = 2.0
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMaxAttempts() = 10
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getRetryMinAttempts() = 3
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.storage.ObjectifyStorageIo <init>
+INFO: RetryParams: getTotalRetryPeriodMillis() = 10000
+Dec 29, 2015 7:02:19 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+INFO: Local Datastore initialized: 
+	Type: Master/Slave
+	Storage: In-memory
+Dec 29, 2015 7:02:19 PM com.google.appinventor.server.CrashReport createAndLogError
+SEVERE: com.google.appinventor.server.storage.UnauthorizedAccessException: user=1700, project=1
+build.version=
+git.build.version=nls-845-g7b9f3ba-dirty
+
+java.lang.RuntimeException: com.google.appinventor.server.storage.UnauthorizedAccessException
+	at com.google.appinventor.server.CrashReport.createAndLogError(CrashReport.java:45)
+	at com.google.appinventor.server.storage.ObjectifyStorageIo.downloadRawFile(ObjectifyStorageIo.java:1664)
+	at com.google.appinventor.server.storage.ObjectifyStorageIoTest.testWrongUserThrowsException(ObjectifyStorageIoTest.java:489)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1182)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:1033)
+Caused by: com.google.appinventor.server.storage.UnauthorizedAccessException
+	... 17 more
+
+]]></system-err>
+</testsuite>

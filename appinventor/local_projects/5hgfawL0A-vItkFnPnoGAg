@@ -1,0 +1,822 @@
+<xml>
+  <block type="ButtonTurn_Click" x="-128" y="-238">
+    <title name="COMPONENT_SELECTOR">ButtonTurn</title>
+    <statement name="DO">
+      <block type="procedures_callnoreturn">
+        <mutation name="turn"></mutation>
+        <title name="PROCNAME">turn</title>
+        <next>
+          <block type="procedures_callnoreturn">
+            <mutation name="display"></mutation>
+            <title name="PROCNAME">display</title>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="ButtonUp_Click" x="96" y="-238">
+    <title name="COMPONENT_SELECTOR">ButtonUp</title>
+    <statement name="DO">
+      <block type="controls_if" inline="false">
+        <mutation else="1"></mutation>
+        <value name="IF0">
+          <block type="text_compare" inline="true">
+            <title name="OP">EQUAL</title>
+            <value name="TEXT1">
+              <block type="ButtonUp_getproperty">
+                <mutation yailtype="text"></mutation>
+                <title name="COMPONENT_SELECTOR">ButtonUp</title>
+                <title name="PROP">Text</title>
+              </block>
+            </value>
+            <value name="TEXT2">
+              <block type="text">
+                <title name="TEXT">Up</title>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="ButtonUp_setproperty" inline="false">
+            <mutation yailtype="text"></mutation>
+            <title name="COMPONENT_SELECTOR">ButtonUp</title>
+            <title name="PROP">Text</title>
+            <value name="VALUE">
+              <block type="text">
+                <title name="TEXT">Down</title>
+              </block>
+            </value>
+            <next>
+              <block type="procedures_callnoreturn" inline="false">
+                <mutation name="setPen">
+                  <arg name="up"></arg>
+                </mutation>
+                <title name="PROCNAME">setPen</title>
+                <value name="ARG0">
+                  <block type="logic_boolean">
+                    <title name="BOOL">TRUE</title>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </statement>
+        <statement name="ELSE">
+          <block type="ButtonUp_setproperty" inline="false">
+            <mutation yailtype="text"></mutation>
+            <title name="COMPONENT_SELECTOR">ButtonUp</title>
+            <title name="PROP">Text</title>
+            <value name="VALUE">
+              <block type="text">
+                <title name="TEXT">Up</title>
+              </block>
+            </value>
+            <next>
+              <block type="procedures_callnoreturn" inline="false">
+                <mutation name="setPen">
+                  <arg name="up"></arg>
+                </mutation>
+                <title name="PROCNAME">setPen</title>
+                <value name="ARG0">
+                  <block type="logic_boolean">
+                    <title name="BOOL">FALSE</title>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" x="646" y="-238">
+    <mutation></mutation>
+    <title name="NAME">turn</title>
+    <statement name="STACK">
+      <block type="Android_setproperty" inline="false">
+        <mutation yailtype="number"></mutation>
+        <title name="COMPONENT_SELECTOR">Android</title>
+        <title name="PROP">Heading</title>
+        <value name="VALUE">
+          <block type="math_divide" inline="true">
+            <title name="OP">MODULO</title>
+            <value name="DIVIDEND">
+              <block type="math_add" inline="true">
+                <mutation items="2"></mutation>
+                <value name="NUM0">
+                  <block type="math_subtract" inline="true">
+                    <value name="A">
+                      <block type="Android_getproperty">
+                        <mutation yailtype="number"></mutation>
+                        <title name="COMPONENT_SELECTOR">Android</title>
+                        <title name="PROP">Heading</title>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="math_number">
+                        <title name="NUM">90</title>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <value name="NUM1">
+                  <block type="math_number">
+                    <title name="NUM">360</title>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <value name="DIVISOR">
+              <block type="math_number">
+                <title name="NUM">360</title>
+              </block>
+            </value>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+  <block type="Screen1_Initialize" x="-128" y="56">
+    <title name="COMPONENT_SELECTOR">Screen1</title>
+    <statement name="DO">
+      <block type="Screen1_setproperty" inline="false">
+        <mutation yailtype="text"></mutation>
+        <title name="COMPONENT_SELECTOR">Screen1</title>
+        <title name="PROP">ScreenOrientation</title>
+        <value name="VALUE">
+          <block type="text">
+            <title name="TEXT">Portrait</title>
+          </block>
+        </value>
+        <next>
+          <block type="procedures_callnoreturn">
+            <mutation name="reset"></mutation>
+            <title name="PROCNAME">reset</title>
+            <next>
+              <block type="procedures_callnoreturn">
+                <mutation name="display"></mutation>
+                <title name="PROCNAME">display</title>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" x="340" y="56">
+    <mutation></mutation>
+    <title name="NAME">draw</title>
+    <statement name="STACK">
+      <block type="Notifier1_ShowAlert" inline="false">
+        <title name="COMPONENT_SELECTOR">Notifier1</title>
+        <value name="ARG0">
+          <block type="text">
+            <title name="TEXT">To get me to draw you have to define the draw procedure.</title>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" x="1035" y="56">
+    <mutation></mutation>
+    <title name="NAME">reset</title>
+    <statement name="STACK">
+      <block type="Canvas1_Clear">
+        <title name="COMPONENT_SELECTOR">Canvas1</title>
+        <next>
+          <block type="Android_setproperty" inline="false">
+            <mutation yailtype="boolean"></mutation>
+            <title name="COMPONENT_SELECTOR">Android</title>
+            <title name="PROP">Visible</title>
+            <value name="VALUE">
+              <block type="logic_false">
+                <title name="BOOL">TRUE</title>
+              </block>
+            </value>
+            <next>
+              <block type="Android_setproperty" inline="false">
+                <mutation yailtype="number"></mutation>
+                <title name="COMPONENT_SELECTOR">Android</title>
+                <title name="PROP">Heading</title>
+                <value name="VALUE">
+                  <block type="math_number">
+                    <title name="NUM">90</title>
+                  </block>
+                </value>
+                <next>
+                  <block type="Canvas1_setproperty" inline="false">
+                    <mutation yailtype="number"></mutation>
+                    <title name="COMPONENT_SELECTOR">Canvas1</title>
+                    <title name="PROP">PaintColor</title>
+                    <value name="VALUE">
+                      <block type="lexical_variable_get">
+                        <title name="VAR">global penColor</title>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="Android_MoveTo" inline="false">
+                        <title name="COMPONENT_SELECTOR">Android</title>
+                        <value name="ARG0">
+                          <block type="math_subtract" inline="true">
+                            <value name="A">
+                              <block type="math_division" inline="true">
+                                <value name="A">
+                                  <block type="Canvas1_getproperty">
+                                    <mutation yailtype="number"></mutation>
+                                    <title name="COMPONENT_SELECTOR">Canvas1</title>
+                                    <title name="PROP">Width</title>
+                                  </block>
+                                </value>
+                                <value name="B">
+                                  <block type="math_number">
+                                    <title name="NUM">2</title>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="lexical_variable_get">
+                                <title name="VAR">global DX</title>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <value name="ARG1">
+                          <block type="math_subtract" inline="true">
+                            <value name="A">
+                              <block type="math_division" inline="true">
+                                <value name="A">
+                                  <block type="Canvas1_getproperty">
+                                    <mutation yailtype="number"></mutation>
+                                    <title name="COMPONENT_SELECTOR">Canvas1</title>
+                                    <title name="PROP">Height</title>
+                                  </block>
+                                </value>
+                                <value name="B">
+                                  <block type="math_number">
+                                    <title name="NUM">2</title>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="math_multiply" inline="true">
+                                <mutation items="2"></mutation>
+                                <value name="NUM0">
+                                  <block type="math_number">
+                                    <title name="NUM">2</title>
+                                  </block>
+                                </value>
+                                <value name="NUM1">
+                                  <block type="lexical_variable_get">
+                                    <title name="VAR">global DY</title>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="ButtonReset_Click" x="-128" y="352">
+    <title name="COMPONENT_SELECTOR">ButtonReset</title>
+    <statement name="DO">
+      <block type="procedures_callnoreturn">
+        <mutation name="reset"></mutation>
+        <title name="PROCNAME">reset</title>
+        <next>
+          <block type="procedures_callnoreturn">
+            <mutation name="display"></mutation>
+            <title name="PROCNAME">display</title>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" x="105" y="352">
+    <mutation></mutation>
+    <title name="NAME">forward</title>
+    <statement name="STACK">
+      <block type="local_declaration_statement" inline="false">
+        <mutation>
+          <localname name="theta"></localname>
+        </mutation>
+        <title name="VAR0">theta</title>
+        <value name="DECL0">
+          <block type="Android_getproperty">
+            <mutation yailtype="number"></mutation>
+            <title name="COMPONENT_SELECTOR">Android</title>
+            <title name="PROP">Heading</title>
+          </block>
+        </value>
+        <statement name="STACK">
+          <block type="local_declaration_statement" inline="false">
+            <mutation>
+              <localname name="newX"></localname>
+              <localname name="newY"></localname>
+            </mutation>
+            <title name="VAR0">deltaX</title>
+            <title name="VAR1">deltaY</title>
+            <value name="DECL0">
+              <block type="math_multiply" inline="true">
+                <mutation items="2"></mutation>
+                <value name="NUM0">
+                  <block type="math_number">
+                    <title name="NUM">10</title>
+                  </block>
+                </value>
+                <value name="NUM1">
+                  <block type="math_cos" inline="false">
+                    <title name="OP">COS</title>
+                    <value name="NUM">
+                      <block type="lexical_variable_get">
+                        <title name="VAR">theta</title>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <value name="DECL1">
+              <block type="math_multiply" inline="true">
+                <mutation items="2"></mutation>
+                <value name="NUM0">
+                  <block type="math_number">
+                    <title name="NUM">-1</title>
+                  </block>
+                </value>
+                <value name="NUM1">
+                  <block type="math_multiply" inline="true">
+                    <mutation items="2"></mutation>
+                    <value name="NUM0">
+                      <block type="math_number">
+                        <title name="NUM">10</title>
+                      </block>
+                    </value>
+                    <value name="NUM1">
+                      <block type="math_cos" inline="false">
+                        <title name="OP">SIN</title>
+                        <value name="NUM">
+                          <block type="lexical_variable_get">
+                            <title name="VAR">theta</title>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <statement name="STACK">
+              <block type="Canvas1_DrawLine" inline="false">
+                <title name="COMPONENT_SELECTOR">Canvas1</title>
+                <value name="ARG0">
+                  <block type="math_add" inline="true">
+                    <mutation items="2"></mutation>
+                    <value name="NUM0">
+                      <block type="lexical_variable_get">
+                        <title name="VAR">global DX</title>
+                      </block>
+                    </value>
+                    <value name="NUM1">
+                      <block type="Android_getproperty">
+                        <mutation yailtype="number"></mutation>
+                        <title name="COMPONENT_SELECTOR">Android</title>
+                        <title name="PROP">X</title>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <value name="ARG1">
+                  <block type="math_add" inline="true">
+                    <mutation items="2"></mutation>
+                    <value name="NUM0">
+                      <block type="lexical_variable_get">
+                        <title name="VAR">global DY</title>
+                      </block>
+                    </value>
+                    <value name="NUM1">
+                      <block type="Android_getproperty">
+                        <mutation yailtype="number"></mutation>
+                        <title name="COMPONENT_SELECTOR">Android</title>
+                        <title name="PROP">Y</title>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <value name="ARG2">
+                  <block type="math_add" inline="true">
+                    <mutation items="3"></mutation>
+                    <value name="NUM0">
+                      <block type="lexical_variable_get">
+                        <title name="VAR">global DX</title>
+                      </block>
+                    </value>
+                    <value name="NUM1">
+                      <block type="Android_getproperty">
+                        <mutation yailtype="number"></mutation>
+                        <title name="COMPONENT_SELECTOR">Android</title>
+                        <title name="PROP">X</title>
+                      </block>
+                    </value>
+                    <value name="NUM2">
+                      <block type="lexical_variable_get">
+                        <title name="VAR">deltaX</title>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <value name="ARG3">
+                  <block type="math_add" inline="true">
+                    <mutation items="3"></mutation>
+                    <value name="NUM0">
+                      <block type="lexical_variable_get">
+                        <title name="VAR">global DY</title>
+                      </block>
+                    </value>
+                    <value name="NUM1">
+                      <block type="Android_getproperty">
+                        <mutation yailtype="number"></mutation>
+                        <title name="COMPONENT_SELECTOR">Android</title>
+                        <title name="PROP">Y</title>
+                      </block>
+                    </value>
+                    <value name="NUM2">
+                      <block type="lexical_variable_get">
+                        <title name="VAR">deltaY</title>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <next>
+                  <block type="Android_MoveTo" inline="false">
+                    <title name="COMPONENT_SELECTOR">Android</title>
+                    <value name="ARG0">
+                      <block type="math_add" inline="true">
+                        <mutation items="2"></mutation>
+                        <value name="NUM0">
+                          <block type="Android_getproperty">
+                            <mutation yailtype="number"></mutation>
+                            <title name="COMPONENT_SELECTOR">Android</title>
+                            <title name="PROP">X</title>
+                          </block>
+                        </value>
+                        <value name="NUM1">
+                          <block type="lexical_variable_get">
+                            <title name="VAR">deltaX</title>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <value name="ARG1">
+                      <block type="math_add" inline="true">
+                        <mutation items="2"></mutation>
+                        <value name="NUM0">
+                          <block type="Android_getproperty">
+                            <mutation yailtype="number"></mutation>
+                            <title name="COMPONENT_SELECTOR">Android</title>
+                            <title name="PROP">Y</title>
+                          </block>
+                        </value>
+                        <value name="NUM1">
+                          <block type="lexical_variable_get">
+                            <title name="VAR">deltaY</title>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </statement>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+  <block type="ButtonDraw_Click" x="970" y="352">
+    <title name="COMPONENT_SELECTOR">ButtonDraw</title>
+    <statement name="DO">
+      <block type="procedures_callnoreturn">
+        <mutation name="draw"></mutation>
+        <title name="PROCNAME">draw</title>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" x="-128" y="835">
+    <mutation>
+      <arg name="visible"></arg>
+    </mutation>
+    <title name="NAME">setTurtle</title>
+    <statement name="STACK">
+      <block type="controls_if" inline="false">
+        <mutation else="1"></mutation>
+        <value name="IF0">
+          <block type="lexical_variable_get">
+            <title name="VAR">visible</title>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="Android_setproperty" inline="false">
+            <mutation yailtype="boolean"></mutation>
+            <title name="COMPONENT_SELECTOR">Android</title>
+            <title name="PROP">Visible</title>
+            <value name="VALUE">
+              <block type="logic_false">
+                <title name="BOOL">TRUE</title>
+              </block>
+            </value>
+          </block>
+        </statement>
+        <statement name="ELSE">
+          <block type="Android_setproperty" inline="false">
+            <mutation yailtype="boolean"></mutation>
+            <title name="COMPONENT_SELECTOR">Android</title>
+            <title name="PROP">Visible</title>
+            <value name="VALUE">
+              <block type="logic_false">
+                <title name="BOOL">FALSE</title>
+              </block>
+            </value>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+  <block type="ButtonHide_Click" x="279" y="835">
+    <title name="COMPONENT_SELECTOR">ButtonHide</title>
+    <statement name="DO">
+      <block type="controls_if" inline="false">
+        <mutation else="1"></mutation>
+        <value name="IF0">
+          <block type="text_compare" inline="true">
+            <title name="OP">EQUAL</title>
+            <value name="TEXT1">
+              <block type="ButtonUp_getproperty">
+                <mutation yailtype="text"></mutation>
+                <title name="COMPONENT_SELECTOR">ButtonHide</title>
+                <title name="PROP">Text</title>
+              </block>
+            </value>
+            <value name="TEXT2">
+              <block type="text">
+                <title name="TEXT">Hide</title>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="ButtonUp_setproperty" inline="false">
+            <mutation yailtype="text"></mutation>
+            <title name="COMPONENT_SELECTOR">ButtonHide</title>
+            <title name="PROP">Text</title>
+            <value name="VALUE">
+              <block type="text">
+                <title name="TEXT">Show</title>
+              </block>
+            </value>
+            <next>
+              <block type="Android_setproperty" inline="false">
+                <mutation yailtype="boolean"></mutation>
+                <title name="COMPONENT_SELECTOR">Android</title>
+                <title name="PROP">Visible</title>
+                <value name="VALUE">
+                  <block type="logic_false">
+                    <title name="BOOL">FALSE</title>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </statement>
+        <statement name="ELSE">
+          <block type="ButtonUp_setproperty" inline="false">
+            <mutation yailtype="text"></mutation>
+            <title name="COMPONENT_SELECTOR">ButtonHide</title>
+            <title name="PROP">Text</title>
+            <value name="VALUE">
+              <block type="text">
+                <title name="TEXT">Hide</title>
+              </block>
+            </value>
+            <next>
+              <block type="Android_setproperty" inline="false">
+                <mutation yailtype="boolean"></mutation>
+                <title name="COMPONENT_SELECTOR">Android</title>
+                <title name="PROP">Visible</title>
+                <value name="VALUE">
+                  <block type="logic_false">
+                    <title name="BOOL">TRUE</title>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+  <block type="global_declaration" inline="false" x="851" y="835">
+    <title name="NAME">DX</title>
+    <value name="VALUE">
+      <block type="math_number">
+        <title name="NUM">15</title>
+      </block>
+    </value>
+  </block>
+  <block type="ButtonMove_Click" x="1089" y="835">
+    <title name="COMPONENT_SELECTOR">ButtonMove</title>
+    <statement name="DO">
+      <block type="procedures_callnoreturn">
+        <mutation name="forward"></mutation>
+        <title name="PROCNAME">forward</title>
+        <next>
+          <block type="procedures_callnoreturn">
+            <mutation name="display"></mutation>
+            <title name="PROCNAME">display</title>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="global_declaration" inline="false" x="-128" y="1080">
+    <title name="NAME">penColor</title>
+    <value name="VALUE">
+      <block type="color_black">
+        <title name="COLOR">#000000</title>
+      </block>
+    </value>
+  </block>
+  <block type="procedures_defnoreturn" x="142" y="1080">
+    <mutation>
+      <arg name="up"></arg>
+    </mutation>
+    <title name="NAME">setPen</title>
+    <statement name="STACK">
+      <block type="controls_if" inline="false">
+        <mutation else="1"></mutation>
+        <value name="IF0">
+          <block type="lexical_variable_get">
+            <title name="VAR">up</title>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="Canvas1_setproperty" inline="false">
+            <mutation yailtype="number"></mutation>
+            <title name="COMPONENT_SELECTOR">Canvas1</title>
+            <title name="PROP">PaintColor</title>
+            <value name="VALUE">
+              <block type="Canvas1_getproperty">
+                <mutation yailtype="number"></mutation>
+                <title name="COMPONENT_SELECTOR">Canvas1</title>
+                <title name="PROP">BackgroundColor</title>
+              </block>
+            </value>
+          </block>
+        </statement>
+        <statement name="ELSE">
+          <block type="Canvas1_setproperty" inline="false">
+            <mutation yailtype="number"></mutation>
+            <title name="COMPONENT_SELECTOR">Canvas1</title>
+            <title name="PROP">PaintColor</title>
+            <value name="VALUE">
+              <block type="lexical_variable_get">
+                <title name="VAR">global penColor</title>
+              </block>
+            </value>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+  <block type="global_declaration" inline="false" x="755" y="1080">
+    <title name="NAME">DEBUG</title>
+    <value name="VALUE">
+      <block type="logic_boolean">
+        <title name="BOOL">FALSE</title>
+      </block>
+    </value>
+  </block>
+  <block type="global_declaration" inline="false" x="1053" y="1080">
+    <title name="NAME">DY</title>
+    <value name="VALUE">
+      <block type="math_number">
+        <title name="NUM">20</title>
+      </block>
+    </value>
+  </block>
+  <block type="procedures_defnoreturn" x="-128" y="1257">
+    <mutation></mutation>
+    <title name="NAME">display</title>
+    <statement name="STACK">
+      <block type="controls_if" inline="false">
+        <mutation else="1"></mutation>
+        <value name="IF0">
+          <block type="lexical_variable_get">
+            <title name="VAR">global DEBUG</title>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="LabelDebug_setproperty" inline="false">
+            <mutation yailtype="boolean"></mutation>
+            <title name="COMPONENT_SELECTOR">LabelDebug</title>
+            <title name="PROP">Visible</title>
+            <value name="VALUE">
+              <block type="logic_boolean">
+                <title name="BOOL">TRUE</title>
+              </block>
+            </value>
+            <next>
+              <block type="LabelDebug_setproperty" inline="false">
+                <mutation yailtype="text"></mutation>
+                <title name="COMPONENT_SELECTOR">LabelDebug</title>
+                <title name="PROP">Text</title>
+                <value name="VALUE">
+                  <block type="text_join" inline="false">
+                    <mutation items="9"></mutation>
+                    <value name="ADD0">
+                      <block type="Android_getproperty">
+                        <mutation yailtype="number"></mutation>
+                        <title name="COMPONENT_SELECTOR">Android</title>
+                        <title name="PROP">Heading</title>
+                      </block>
+                    </value>
+                    <value name="ADD1">
+                      <block type="text">
+                        <title name="TEXT">  </title>
+                      </block>
+                    </value>
+                    <value name="ADD2">
+                      <block type="Android_getproperty">
+                        <mutation yailtype="number"></mutation>
+                        <title name="COMPONENT_SELECTOR">Android</title>
+                        <title name="PROP">X</title>
+                      </block>
+                    </value>
+                    <value name="ADD3">
+                      <block type="text">
+                        <title name="TEXT">  </title>
+                      </block>
+                    </value>
+                    <value name="ADD4">
+                      <block type="Android_getproperty">
+                        <mutation yailtype="number"></mutation>
+                        <title name="COMPONENT_SELECTOR">Android</title>
+                        <title name="PROP">Y</title>
+                      </block>
+                    </value>
+                    <value name="ADD5">
+                      <block type="text">
+                        <title name="TEXT">  </title>
+                      </block>
+                    </value>
+                    <value name="ADD6">
+                      <block type="Canvas1_getproperty">
+                        <mutation yailtype="number"></mutation>
+                        <title name="COMPONENT_SELECTOR">Canvas1</title>
+                        <title name="PROP">Width</title>
+                      </block>
+                    </value>
+                    <value name="ADD7">
+                      <block type="text">
+                        <title name="TEXT">  </title>
+                      </block>
+                    </value>
+                    <value name="ADD8">
+                      <block type="Canvas1_getproperty">
+                        <mutation yailtype="number"></mutation>
+                        <title name="COMPONENT_SELECTOR">Canvas1</title>
+                        <title name="PROP">Height</title>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </statement>
+        <statement name="ELSE">
+          <block type="LabelDebug_setproperty" inline="false">
+            <mutation yailtype="boolean"></mutation>
+            <title name="COMPONENT_SELECTOR">LabelDebug</title>
+            <title name="PROP">Visible</title>
+            <value name="VALUE">
+              <block type="logic_boolean">
+                <title name="BOOL">TRUE</title>
+              </block>
+            </value>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml>

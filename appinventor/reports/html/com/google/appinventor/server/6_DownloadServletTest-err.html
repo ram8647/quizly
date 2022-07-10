@@ -1,0 +1,209 @@
+<html xmlns:string="xalan://java.lang.String" xmlns:lxslt="http://xml.apache.org/xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Standard Error from DownloadServletTest</title>
+</head>
+<body>
+<pre>Dec 29, 2015 2:02:08 PM com.google.appinventor.server.CrashReport createAndLogError
+SEVERE: null: user=1
+build.version=
+git.build.version=nls-845-g7b9f3ba-dirty
+request.details=com.riq.MockHttpServletRequest@7fcf1934
+
+java.lang.IllegalArgumentException
+	at org.easymock.internal.MockInvocationHandler.invoke(MockInvocationHandler.java:47)
+	at org.easymock.internal.ObjectMethodsFilter.invoke(ObjectMethodsFilter.java:73)
+	at org.easymock.internal.ClassProxyFactory$MockMethodInterceptor.intercept(ClassProxyFactory.java:92)
+	at com.google.appinventor.server.FileExporterImpl$$EnhancerByCGLIB$$5a558cfc.exportProjectSourceZip(&lt;generated&gt;)
+	at com.google.appinventor.server.DownloadServlet.doGet(DownloadServlet.java:128)
+	at com.google.appinventor.server.DownloadServletTest.testDownloadProjectSourceZipWithNonExistingProject(DownloadServletTest.java:116)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.internal.runners.TestMethod.invoke(TestMethod.java:66)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$PowerMockJUnit44MethodRunner.runTestMethod(PowerMockJUnit44RunnerDelegateImpl.java:307)
+	at org.junit.internal.runners.MethodRoadie$2.run(MethodRoadie.java:86)
+	at org.junit.internal.runners.MethodRoadie.runBeforesThenTestThenAfters(MethodRoadie.java:94)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$PowerMockJUnit44MethodRunner.executeTest(PowerMockJUnit44RunnerDelegateImpl.java:294)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit47RunnerDelegateImpl$PowerMockJUnit47MethodRunner.executeTestInSuper(PowerMockJUnit47RunnerDelegateImpl.java:112)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit47RunnerDelegateImpl$PowerMockJUnit47MethodRunner.executeTest(PowerMockJUnit47RunnerDelegateImpl.java:73)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$PowerMockJUnit44MethodRunner.runBeforesThenTestThenAfters(PowerMockJUnit44RunnerDelegateImpl.java:282)
+	at org.junit.internal.runners.MethodRoadie.runTest(MethodRoadie.java:84)
+	at org.junit.internal.runners.MethodRoadie.run(MethodRoadie.java:49)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl.invokeTestMethod(PowerMockJUnit44RunnerDelegateImpl.java:207)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl.runMethods(PowerMockJUnit44RunnerDelegateImpl.java:146)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$1.run(PowerMockJUnit44RunnerDelegateImpl.java:120)
+	at org.junit.internal.runners.ClassRoadie.runUnprotected(ClassRoadie.java:34)
+	at org.junit.internal.runners.ClassRoadie.runProtected(ClassRoadie.java:44)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl.run(PowerMockJUnit44RunnerDelegateImpl.java:118)
+	at org.powermock.modules.junit4.common.internal.impl.JUnit4TestSuiteChunkerImpl.run(JUnit4TestSuiteChunkerImpl.java:102)
+	at org.powermock.modules.junit4.common.internal.impl.AbstractCommonPowerMockRunner.run(AbstractCommonPowerMockRunner.java:53)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:39)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1182)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:1033)
+
+Dec 29, 2015 2:02:08 PM com.google.appinventor.server.CrashReport createAndLogError
+SEVERE: null: user=1
+build.version=
+git.build.version=nls-845-g7b9f3ba-dirty
+request.details=com.riq.MockHttpServletRequest@65827638
+
+java.lang.IllegalArgumentException
+	at org.easymock.internal.MockInvocationHandler.invoke(MockInvocationHandler.java:47)
+	at org.easymock.internal.ObjectMethodsFilter.invoke(ObjectMethodsFilter.java:73)
+	at org.easymock.internal.ClassProxyFactory$MockMethodInterceptor.intercept(ClassProxyFactory.java:92)
+	at com.google.appinventor.server.FileExporterImpl$$EnhancerByCGLIB$$5a558cfc.exportProjectOutputFile(&lt;generated&gt;)
+	at com.google.appinventor.server.DownloadServlet.doGet(DownloadServlet.java:114)
+	at com.google.appinventor.server.DownloadServletTest.testDownloadProjectOutputFileWithNonExistingProject(DownloadServletTest.java:166)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.internal.runners.TestMethod.invoke(TestMethod.java:66)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$PowerMockJUnit44MethodRunner.runTestMethod(PowerMockJUnit44RunnerDelegateImpl.java:307)
+	at org.junit.internal.runners.MethodRoadie$2.run(MethodRoadie.java:86)
+	at org.junit.internal.runners.MethodRoadie.runBeforesThenTestThenAfters(MethodRoadie.java:94)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$PowerMockJUnit44MethodRunner.executeTest(PowerMockJUnit44RunnerDelegateImpl.java:294)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit47RunnerDelegateImpl$PowerMockJUnit47MethodRunner.executeTestInSuper(PowerMockJUnit47RunnerDelegateImpl.java:112)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit47RunnerDelegateImpl$PowerMockJUnit47MethodRunner.executeTest(PowerMockJUnit47RunnerDelegateImpl.java:73)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$PowerMockJUnit44MethodRunner.runBeforesThenTestThenAfters(PowerMockJUnit44RunnerDelegateImpl.java:282)
+	at org.junit.internal.runners.MethodRoadie.runTest(MethodRoadie.java:84)
+	at org.junit.internal.runners.MethodRoadie.run(MethodRoadie.java:49)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl.invokeTestMethod(PowerMockJUnit44RunnerDelegateImpl.java:207)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl.runMethods(PowerMockJUnit44RunnerDelegateImpl.java:146)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$1.run(PowerMockJUnit44RunnerDelegateImpl.java:120)
+	at org.junit.internal.runners.ClassRoadie.runUnprotected(ClassRoadie.java:34)
+	at org.junit.internal.runners.ClassRoadie.runProtected(ClassRoadie.java:44)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl.run(PowerMockJUnit44RunnerDelegateImpl.java:118)
+	at org.powermock.modules.junit4.common.internal.impl.JUnit4TestSuiteChunkerImpl.run(JUnit4TestSuiteChunkerImpl.java:102)
+	at org.powermock.modules.junit4.common.internal.impl.AbstractCommonPowerMockRunner.run(AbstractCommonPowerMockRunner.java:53)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:39)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1182)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:1033)
+
+Dec 29, 2015 2:02:08 PM com.google.appinventor.server.CrashReport createAndLogError
+SEVERE: null: user=1
+build.version=
+git.build.version=nls-845-g7b9f3ba-dirty
+request.details=com.riq.MockHttpServletRequest@265a7006
+
+java.lang.IllegalArgumentException
+	at org.easymock.internal.MockInvocationHandler.invoke(MockInvocationHandler.java:47)
+	at org.easymock.internal.ObjectMethodsFilter.invoke(ObjectMethodsFilter.java:73)
+	at org.easymock.internal.ClassProxyFactory$MockMethodInterceptor.intercept(ClassProxyFactory.java:92)
+	at com.google.appinventor.server.FileExporterImpl$$EnhancerByCGLIB$$5a558cfc.exportProjectOutputFile(&lt;generated&gt;)
+	at com.google.appinventor.server.DownloadServlet.doGet(DownloadServlet.java:114)
+	at com.google.appinventor.server.DownloadServletTest.testDownloadProjectOutputFileWithNonExistingTarget(DownloadServletTest.java:184)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.internal.runners.TestMethod.invoke(TestMethod.java:66)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$PowerMockJUnit44MethodRunner.runTestMethod(PowerMockJUnit44RunnerDelegateImpl.java:307)
+	at org.junit.internal.runners.MethodRoadie$2.run(MethodRoadie.java:86)
+	at org.junit.internal.runners.MethodRoadie.runBeforesThenTestThenAfters(MethodRoadie.java:94)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$PowerMockJUnit44MethodRunner.executeTest(PowerMockJUnit44RunnerDelegateImpl.java:294)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit47RunnerDelegateImpl$PowerMockJUnit47MethodRunner.executeTestInSuper(PowerMockJUnit47RunnerDelegateImpl.java:112)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit47RunnerDelegateImpl$PowerMockJUnit47MethodRunner.executeTest(PowerMockJUnit47RunnerDelegateImpl.java:73)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$PowerMockJUnit44MethodRunner.runBeforesThenTestThenAfters(PowerMockJUnit44RunnerDelegateImpl.java:282)
+	at org.junit.internal.runners.MethodRoadie.runTest(MethodRoadie.java:84)
+	at org.junit.internal.runners.MethodRoadie.run(MethodRoadie.java:49)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl.invokeTestMethod(PowerMockJUnit44RunnerDelegateImpl.java:207)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl.runMethods(PowerMockJUnit44RunnerDelegateImpl.java:146)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$1.run(PowerMockJUnit44RunnerDelegateImpl.java:120)
+	at org.junit.internal.runners.ClassRoadie.runUnprotected(ClassRoadie.java:34)
+	at org.junit.internal.runners.ClassRoadie.runProtected(ClassRoadie.java:44)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl.run(PowerMockJUnit44RunnerDelegateImpl.java:118)
+	at org.powermock.modules.junit4.common.internal.impl.JUnit4TestSuiteChunkerImpl.run(JUnit4TestSuiteChunkerImpl.java:102)
+	at org.powermock.modules.junit4.common.internal.impl.AbstractCommonPowerMockRunner.run(AbstractCommonPowerMockRunner.java:53)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:39)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1182)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:1033)
+
+Dec 29, 2015 2:02:08 PM com.google.appinventor.server.CrashReport createAndLogError
+SEVERE: null: user=1
+build.version=
+git.build.version=nls-845-g7b9f3ba-dirty
+request.details=com.riq.MockHttpServletRequest@461137c6
+
+java.lang.IllegalArgumentException
+	at org.easymock.internal.MockInvocationHandler.invoke(MockInvocationHandler.java:47)
+	at org.easymock.internal.ObjectMethodsFilter.invoke(ObjectMethodsFilter.java:73)
+	at org.easymock.internal.ClassProxyFactory$MockMethodInterceptor.intercept(ClassProxyFactory.java:92)
+	at com.google.appinventor.server.FileExporterImpl$$EnhancerByCGLIB$$5a558cfc.exportFile(&lt;generated&gt;)
+	at com.google.appinventor.server.DownloadServlet.doGet(DownloadServlet.java:199)
+	at com.google.appinventor.server.DownloadServletTest.testDownloadFileWithNonExistingProject(DownloadServletTest.java:217)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.internal.runners.TestMethod.invoke(TestMethod.java:66)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$PowerMockJUnit44MethodRunner.runTestMethod(PowerMockJUnit44RunnerDelegateImpl.java:307)
+	at org.junit.internal.runners.MethodRoadie$2.run(MethodRoadie.java:86)
+	at org.junit.internal.runners.MethodRoadie.runBeforesThenTestThenAfters(MethodRoadie.java:94)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$PowerMockJUnit44MethodRunner.executeTest(PowerMockJUnit44RunnerDelegateImpl.java:294)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit47RunnerDelegateImpl$PowerMockJUnit47MethodRunner.executeTestInSuper(PowerMockJUnit47RunnerDelegateImpl.java:112)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit47RunnerDelegateImpl$PowerMockJUnit47MethodRunner.executeTest(PowerMockJUnit47RunnerDelegateImpl.java:73)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$PowerMockJUnit44MethodRunner.runBeforesThenTestThenAfters(PowerMockJUnit44RunnerDelegateImpl.java:282)
+	at org.junit.internal.runners.MethodRoadie.runTest(MethodRoadie.java:84)
+	at org.junit.internal.runners.MethodRoadie.run(MethodRoadie.java:49)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl.invokeTestMethod(PowerMockJUnit44RunnerDelegateImpl.java:207)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl.runMethods(PowerMockJUnit44RunnerDelegateImpl.java:146)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$1.run(PowerMockJUnit44RunnerDelegateImpl.java:120)
+	at org.junit.internal.runners.ClassRoadie.runUnprotected(ClassRoadie.java:34)
+	at org.junit.internal.runners.ClassRoadie.runProtected(ClassRoadie.java:44)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl.run(PowerMockJUnit44RunnerDelegateImpl.java:118)
+	at org.powermock.modules.junit4.common.internal.impl.JUnit4TestSuiteChunkerImpl.run(JUnit4TestSuiteChunkerImpl.java:102)
+	at org.powermock.modules.junit4.common.internal.impl.AbstractCommonPowerMockRunner.run(AbstractCommonPowerMockRunner.java:53)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:39)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1182)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:1033)
+
+Dec 29, 2015 2:02:08 PM com.google.appinventor.server.CrashReport createAndLogError
+SEVERE: null: user=1
+build.version=
+git.build.version=nls-845-g7b9f3ba-dirty
+request.details=com.riq.MockHttpServletRequest@7da122
+
+java.lang.IllegalArgumentException
+	at org.easymock.internal.MockInvocationHandler.invoke(MockInvocationHandler.java:47)
+	at org.easymock.internal.ObjectMethodsFilter.invoke(ObjectMethodsFilter.java:73)
+	at org.easymock.internal.ClassProxyFactory$MockMethodInterceptor.intercept(ClassProxyFactory.java:92)
+	at com.google.appinventor.server.FileExporterImpl$$EnhancerByCGLIB$$5a558cfc.exportFile(&lt;generated&gt;)
+	at com.google.appinventor.server.DownloadServlet.doGet(DownloadServlet.java:199)
+	at com.google.appinventor.server.DownloadServletTest.testDownloadFileWithNonExistingFile(DownloadServletTest.java:236)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.internal.runners.TestMethod.invoke(TestMethod.java:66)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$PowerMockJUnit44MethodRunner.runTestMethod(PowerMockJUnit44RunnerDelegateImpl.java:307)
+	at org.junit.internal.runners.MethodRoadie$2.run(MethodRoadie.java:86)
+	at org.junit.internal.runners.MethodRoadie.runBeforesThenTestThenAfters(MethodRoadie.java:94)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$PowerMockJUnit44MethodRunner.executeTest(PowerMockJUnit44RunnerDelegateImpl.java:294)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit47RunnerDelegateImpl$PowerMockJUnit47MethodRunner.executeTestInSuper(PowerMockJUnit47RunnerDelegateImpl.java:112)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit47RunnerDelegateImpl$PowerMockJUnit47MethodRunner.executeTest(PowerMockJUnit47RunnerDelegateImpl.java:73)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$PowerMockJUnit44MethodRunner.runBeforesThenTestThenAfters(PowerMockJUnit44RunnerDelegateImpl.java:282)
+	at org.junit.internal.runners.MethodRoadie.runTest(MethodRoadie.java:84)
+	at org.junit.internal.runners.MethodRoadie.run(MethodRoadie.java:49)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl.invokeTestMethod(PowerMockJUnit44RunnerDelegateImpl.java:207)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl.runMethods(PowerMockJUnit44RunnerDelegateImpl.java:146)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl$1.run(PowerMockJUnit44RunnerDelegateImpl.java:120)
+	at org.junit.internal.runners.ClassRoadie.runUnprotected(ClassRoadie.java:34)
+	at org.junit.internal.runners.ClassRoadie.runProtected(ClassRoadie.java:44)
+	at org.powermock.modules.junit4.internal.impl.PowerMockJUnit44RunnerDelegateImpl.run(PowerMockJUnit44RunnerDelegateImpl.java:118)
+	at org.powermock.modules.junit4.common.internal.impl.JUnit4TestSuiteChunkerImpl.run(JUnit4TestSuiteChunkerImpl.java:102)
+	at org.powermock.modules.junit4.common.internal.impl.AbstractCommonPowerMockRunner.run(AbstractCommonPowerMockRunner.java:53)
+	at junit.framework.JUnit4TestAdapter.run(JUnit4TestAdapter.java:39)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.launch(JUnitTestRunner.java:1182)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.main(JUnitTestRunner.java:1033)
+
+</pre>
+</body>
+</html>

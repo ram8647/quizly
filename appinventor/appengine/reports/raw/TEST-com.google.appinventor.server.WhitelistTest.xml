@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="localhost" name="com.google.appinventor.server.WhitelistTest" skipped="0" tests="2" time="0.056" timestamp="2015-12-29T19:02:15">
+  <properties>
+    <property name="java.vendor" value="Oracle Corporation" />
+    <property name="lib.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib" />
+    <property name="ant.file.appengine" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build.xml" />
+    <property name="sun.java.launcher" value="SUN_STANDARD" />
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
+    <property name="docs.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/docs" />
+    <property name="AiServerLib-class.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build/classes/AiServerLib" />
+    <property name="os.name" value="Mac OS X" />
+    <property name="sun.boot.class.path" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/JObjC.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/classes" />
+    <property name="gwt.sdk" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/gwt/2.7" />
+    <property name="user.country.format" value="CN" />
+    <property name="java.vm.specification.vendor" value="Oracle Corporation" />
+    <property name="ant.home" value="/usr/local/apache-ant-1.9.6" />
+    <property name="java.runtime.version" value="1.7.0_45-b18" />
+    <property name="user.name" value="rmorelli" />
+    <property name="public.build.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build/appengine" />
+    <property name="debug" value="true" />
+    <property name="ant.file.type.appengine" value="file" />
+    <property name="build.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build" />
+    <property name="appinventor.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor" />
+    <property name="user.language" value="en" />
+    <property name="class.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build/classes" />
+    <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib" />
+    <property name="reports.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/reports" />
+    <property name="ant.project.default-target" value="all" />
+    <property name="build.war.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build/war" />
+    <property name="ant.project.name" value="appengine" />
+    <property name="java.version" value="1.7.0_45" />
+    <property name="user.timezone" value="" />
+    <property name="sun.arch.data.model" value="64" />
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="java.endorsed.dirs" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/endorsed" />
+    <property name="sun.cpu.isalist" value="" />
+    <property name="sun.jnu.encoding" value="UTF-8" />
+    <property name="file.encoding.pkg" value="sun.io" />
+    <property name="AiSharedLib-class.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build/classes/AiSharedLib" />
+    <property name="appengine.sdk" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/appengine/appengine-java-sdk-1.9.17" />
+    <property name="file.separator" value="/" />
+    <property name="java.specification.name" value="Java Platform API Specification" />
+    <property name="java.class.version" value="51.0" />
+    <property name="user.country" value="US" />
+    <property name="java.home" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre" />
+    <property name="ant.file.AllProjects" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build.xml" />
+    <property name="java.vm.info" value="mixed mode" />
+    <property name="ant.file" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build.xml" />
+    <property name="os.version" value="10.10.4" />
+    <property name="path.separator" value=":" />
+    <property name="java.vm.version" value="24.45-b08" />
+    <property name="ant.library.dir" value="/usr/local/apache-ant-1.9.6/lib" />
+    <property name="ant.file.type.AllProjects" value="file" />
+    <property name="java.awt.printerjob" value="sun.lwawt.macosx.CPrinterJob" />
+    <property name="sun.io.unicode.encoding" value="UnicodeBig" />
+    <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit" />
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="debug.compile" value="true" />
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="user.home" value="/Users/rmorelli" />
+    <property name="appinventor.pkg" value="com/google/appinventor" />
+    <property name="java.specification.vendor" value="Oracle Corporation" />
+    <property name="java.library.path" value="/Users/rmorelli/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:." />
+    <property name="java.vendor.url" value="http://java.oracle.com/" />
+    <property name="java.vm.vendor" value="Oracle Corporation" />
+    <property name="gopherProxySet" value="false" />
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner com.google.appinventor.server.WhitelistTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/reports/raw/TEST-com.google.appinventor.server.WhitelistTest.xml crashfile=/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/junitvmwatcher7268723048018610121.properties propsfile=/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/junit823348329747827738.properties" />
+    <property name="java.class.path" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build/AiServerLib.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build/AiSharedLib.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build/common/CommonUtils.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build/common/CommonTestUtils.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build/common/CommonVersion.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build/components/CommonConstants.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/guava/guava-18.0.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/json/json.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/junit/junit-4.8.2.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/junit-addons/junit-addons-1.4.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/keyczar/KeyczarTool.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/objectify-3.1/objectify-3.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/powermock/cglib-nodep-2.2.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/powermock/easymock-3.0.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/powermock/javassist-3.18.0-GA.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/powermock/objenesis-1.2.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/powermock/powermock-easymock-1.4.10-full.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/responder-iq/responderiq-test.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/gcs/appengine-gcs-client-0.4.3.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/gwt/2.7/gwt-servlet.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/gwt/2.7/gwt-user.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/appengine/appengine-java-sdk-1.9.17/lib/impl/appengine-api.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/appengine/appengine-java-sdk-1.9.17/lib/impl/appengine-api-labs.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/appengine/appengine-java-sdk-1.9.17/lib/impl/appengine-api-stubs.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/appengine/appengine-java-sdk-1.9.17/lib/testing/appengine-testing.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/appengine/appengine-java-sdk-1.9.17/lib/user/orm/geronimo-jpa_3.0_spec-1.1.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build/AiServerLibTests.jar:/usr/local/apache-ant-1.9.6/lib/ant-launcher.jar:/usr/local/apache-ant-1.9.6/lib/ant.jar:/usr/local/apache-ant-1.9.6/lib/ant-junit.jar:/usr/local/apache-ant-1.9.6/lib/ant-junit4.jar" />
+    <property name="ant.version" value="Apache Ant(TM) version 1.9.6 compiled on June 29 2015" />
+    <property name="keystore.present" value="true" />
+    <property name="ant.file.type.CommonDefinitions" value="file" />
+    <property name="ant.file.CommonDefinitions" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build-common.xml" />
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+    <property name="ant.file.type" value="file" />
+    <property name="java.vm.specification.version" value="1.7" />
+    <property name="sun.cpu.endian" value="little" />
+    <property name="sun.os.patch.level" value="unknown" />
+    <property name="test_name.class" value="${test_name}" />
+    <property name="java.io.tmpdir" value="/var/folders/s7/rhj7tq808xj8mq0059bk4xq00000gq/T/" />
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/" />
+    <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment" />
+    <property name="os.arch" value="x86_64" />
+    <property name="java.ext.dirs" value="/Users/rmorelli/Library/Java/Extensions:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/ext:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java" />
+    <property name="tests.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/tests" />
+    <property name="user.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor" />
+    <property name="line.separator" value="&#xa;" />
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM" />
+    <property name="org.apache.tools.ant.taskdefs.optional.junit.AggregateTransformer1" value="/var/folders/s7/rhj7tq808xj8mq0059bk4xq00000gq/T/null1883182714" />
+    <property name="org.apache.tools.ant.taskdefs.optional.junit.AggregateTransformer0" value="/var/folders/s7/rhj7tq808xj8mq0059bk4xq00000gq/T/null284578308" />
+    <property name="guid1" value="7db46679-26d2-4fd9-95dc-255deff7e459" />
+    <property name="basedir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine" />
+    <property name="local.build.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/build" />
+    <property name="ant.java.version" value="1.7" />
+    <property name="ant.core.lib" value="/usr/local/apache-ant-1.9.6/lib/ant.jar" />
+    <property name="file.encoding" value="UTF-8" />
+    <property name="XstartOnFirstThread" value="-XstartOnFirstThread" />
+    <property name="java.specification.version" value="1.7" />
+    <property name="src.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/appengine/src" />
+    <property name="ant.project.invoked-targets" value="tests" />
+  </properties>
+  <testcase classname="com.google.appinventor.server.WhitelistTest" name="testValidWhitelist" time="0.016" />
+  <testcase classname="com.google.appinventor.server.WhitelistTest" name="testMissingWhitelist" time="0.001" />
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Dec 29, 2015 2:02:15 PM com.google.appinventor.server.Whitelist isInWhitelist
+INFO: User with email address kerry@google.com was not found in the whitelist
+Dec 29, 2015 2:02:15 PM com.google.appinventor.server.Whitelist isInWhitelist
+INFO: User with email address absolutelyNotHere@noway.com was not found in the whitelist
+Dec 29, 2015 2:02:15 PM com.google.appinventor.server.Whitelist <init>
+SEVERE: No whitelist found.
+]]></system-err>
+</testsuite>

@@ -1,0 +1,746 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+  <testsuite errors="0" failures="0" hostname="localhost" id="0" name="CompilerTest" package="com.google.appinventor.buildserver" skipped="0" tests="1" time="0.073" timestamp="2015-12-29T19:02:24">
+      <properties>
+          <property name="java.vendor" value="Oracle Corporation" />
+
+          <property name="lib.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib" />
+
+          <property name="sun.java.launcher" value="SUN_STANDARD" />
+
+          <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
+
+          <property name="docs.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/docs" />
+
+          <property name="os.name" value="Mac OS X" />
+
+          <property name="sun.boot.class.path" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/JObjC.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/classes" />
+
+          <property name="user.country.format" value="CN" />
+
+          <property name="ant.file.buildserver" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build.xml" />
+
+          <property name="java.vm.specification.vendor" value="Oracle Corporation" />
+
+          <property name="ant.home" value="/usr/local/apache-ant-1.9.6" />
+
+          <property name="java.runtime.version" value="1.7.0_45-b18" />
+
+          <property name="classes.tools.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/classes/BuildServer/tools" />
+
+          <property name="user.name" value="rmorelli" />
+
+          <property name="public.build.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build/buildserver" />
+
+          <property name="classes.files.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/classes/BuildServer/files" />
+
+          <property name="debug" value="true" />
+
+          <property name="build.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build" />
+
+          <property name="ant.file.type.buildserver" value="file" />
+
+          <property name="appinventor.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor" />
+
+          <property name="user.language" value="en" />
+
+          <property name="class.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/classes" />
+
+          <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib" />
+
+          <property name="reports.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/reports" />
+
+          <property name="ant.project.default-target" value="all" />
+
+          <property name="ant.project.name" value="buildserver" />
+
+          <property name="java.version" value="1.7.0_45" />
+
+          <property name="user.timezone" value="" />
+
+          <property name="sun.arch.data.model" value="64" />
+
+          <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+
+          <property name="java.endorsed.dirs" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/endorsed" />
+
+          <property name="sun.cpu.isalist" value="" />
+
+          <property name="sun.jnu.encoding" value="UTF-8" />
+
+          <property name="file.encoding.pkg" value="sun.io" />
+
+          <property name="file.separator" value="/" />
+
+          <property name="java.specification.name" value="Java Platform API Specification" />
+
+          <property name="java.class.version" value="51.0" />
+
+          <property name="user.country" value="US" />
+
+          <property name="java.home" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre" />
+
+          <property name="ant.file.AllProjects" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build.xml" />
+
+          <property name="java.vm.info" value="mixed mode" />
+
+          <property name="ant.file" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build.xml" />
+
+          <property name="os.version" value="10.10.4" />
+
+          <property name="path.separator" value=":" />
+
+          <property name="java.vm.version" value="24.45-b08" />
+
+          <property name="buildserver.pkg" value="com/google/appinventor/buildserver" />
+
+          <property name="ant.library.dir" value="/usr/local/apache-ant-1.9.6/lib" />
+
+          <property name="ant.file.type.AllProjects" value="file" />
+
+          <property name="java.awt.printerjob" value="sun.lwawt.macosx.CPrinterJob" />
+
+          <property name="sun.io.unicode.encoding" value="UnicodeBig" />
+
+          <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit" />
+
+          <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+
+          <property name="debug.compile" value="true" />
+
+          <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+
+          <property name="user.home" value="/Users/rmorelli" />
+
+          <property name="java.specification.vendor" value="Oracle Corporation" />
+
+          <property name="java.library.path" value="/Users/rmorelli/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:." />
+
+          <property name="java.vendor.url" value="http://java.oracle.com/" />
+
+          <property name="run.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run" />
+
+          <property name="java.vm.vendor" value="Oracle Corporation" />
+
+          <property name="gopherProxySet" value="false" />
+
+          <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
+
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner com.google.appinventor.buildserver.CompilerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/reports/raw/TEST-com.google.appinventor.buildserver.CompilerTest.xml crashfile=/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/junitvmwatcher8887432563876505024.properties propsfile=/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/junit5774222789043281673.properties" />
+
+          <property name="java.class.path" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/BuildServer.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/CommonUtils.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/CommonVersion.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/FastInfoset-1.2.2.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/activation-1.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/args4j-2.0.18.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/asm-3.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/bcpkix-jdk15on-149.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/bcprov-jdk15on-149.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/commons-io-2.0.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/grizzly-servlet-webserver-1.9.18-i.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/guava-14.0.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/http-20070405.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jackson-core-asl-1.9.4.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jaxb-api-2.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jaxb-impl-2.1.10.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jaxb-xjc.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jdom-1.0.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jersey-bundle-1.3.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jersey-multipart-1.3.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jettison-1.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/json.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jsr311-api-1.1.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/localizer.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/mail-1.4.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/rome-0.9.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/sdklib.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/stax-api-1.0-2.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/wadl-cmdline.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/wadl-core.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/wadl2java.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build/common/CommonTestUtils.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build/components/AndroidRuntime.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/kawa/kawa-1.11-modified.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/guava/guava-14.0.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/commons-io/commons-io-2.0.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/json/json.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/junit/junit-4.8.2.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/BuildServerTests.jar:/usr/local/apache-ant-1.9.6/lib/ant-launcher.jar:/usr/local/apache-ant-1.9.6/lib/ant.jar:/usr/local/apache-ant-1.9.6/lib/ant-junit.jar:/usr/local/apache-ant-1.9.6/lib/ant-junit4.jar" />
+
+          <property name="ant.version" value="Apache Ant(TM) version 1.9.6 compiled on June 29 2015" />
+
+          <property name="ant.file.type.CommonDefinitions" value="file" />
+
+          <property name="ant.file.CommonDefinitions" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build-common.xml" />
+
+          <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+
+          <property name="ant.file.type" value="file" />
+
+          <property name="java.vm.specification.version" value="1.7" />
+
+          <property name="sun.os.patch.level" value="unknown" />
+
+          <property name="sun.cpu.endian" value="little" />
+
+          <property name="test_name.class" value="${test_name}" />
+
+          <property name="java.io.tmpdir" value="/var/folders/s7/rhj7tq808xj8mq0059bk4xq00000gq/T/" />
+
+          <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/" />
+
+          <property name="local.lib.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/lib" />
+
+          <property name="BuildServer-class.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/classes/BuildServer" />
+
+          <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment" />
+
+          <property name="os.arch" value="x86_64" />
+
+          <property name="java.ext.dirs" value="/Users/rmorelli/Library/Java/Extensions:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/ext:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java" />
+
+          <property name="tests.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/tests" />
+
+          <property name="user.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor" />
+
+          <property name="line.separator" value="&#xa;" />
+
+          <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM" />
+
+          <property name="basedir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver" />
+
+          <property name="local.build.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build" />
+
+          <property name="ant.java.version" value="1.7" />
+
+          <property name="ant.core.lib" value="/usr/local/apache-ant-1.9.6/lib/ant.jar" />
+
+          <property name="file.encoding" value="UTF-8" />
+
+          <property name="java.specification.version" value="1.7" />
+
+          <property name="src.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/src" />
+
+          <property name="ant.project.invoked-targets" value="tests" />
+
+          <property name="run.lib.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib" />
+
+      </properties>
+
+      <testcase classname="com.google.appinventor.buildserver.CompilerTest" name="testGeneratePermissions" time="0.042" />
+
+      <system-out><![CDATA[]]></system-out>
+
+      <system-err><![CDATA[]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="localhost" id="1" name="NonQueuingExecutorTest" package="com.google.appinventor.buildserver" skipped="0" tests="1" time="0.036" timestamp="2015-12-29T19:02:25">
+      <properties>
+          <property name="java.vendor" value="Oracle Corporation" />
+
+          <property name="lib.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib" />
+
+          <property name="sun.java.launcher" value="SUN_STANDARD" />
+
+          <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
+
+          <property name="docs.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/docs" />
+
+          <property name="os.name" value="Mac OS X" />
+
+          <property name="sun.boot.class.path" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/JObjC.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/classes" />
+
+          <property name="user.country.format" value="CN" />
+
+          <property name="ant.file.buildserver" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build.xml" />
+
+          <property name="java.vm.specification.vendor" value="Oracle Corporation" />
+
+          <property name="ant.home" value="/usr/local/apache-ant-1.9.6" />
+
+          <property name="java.runtime.version" value="1.7.0_45-b18" />
+
+          <property name="classes.tools.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/classes/BuildServer/tools" />
+
+          <property name="user.name" value="rmorelli" />
+
+          <property name="public.build.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build/buildserver" />
+
+          <property name="classes.files.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/classes/BuildServer/files" />
+
+          <property name="debug" value="true" />
+
+          <property name="build.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build" />
+
+          <property name="ant.file.type.buildserver" value="file" />
+
+          <property name="appinventor.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor" />
+
+          <property name="user.language" value="en" />
+
+          <property name="class.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/classes" />
+
+          <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib" />
+
+          <property name="reports.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/reports" />
+
+          <property name="ant.project.default-target" value="all" />
+
+          <property name="ant.project.name" value="buildserver" />
+
+          <property name="java.version" value="1.7.0_45" />
+
+          <property name="user.timezone" value="" />
+
+          <property name="sun.arch.data.model" value="64" />
+
+          <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+
+          <property name="java.endorsed.dirs" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/endorsed" />
+
+          <property name="sun.cpu.isalist" value="" />
+
+          <property name="sun.jnu.encoding" value="UTF-8" />
+
+          <property name="file.encoding.pkg" value="sun.io" />
+
+          <property name="file.separator" value="/" />
+
+          <property name="java.specification.name" value="Java Platform API Specification" />
+
+          <property name="java.class.version" value="51.0" />
+
+          <property name="user.country" value="US" />
+
+          <property name="java.home" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre" />
+
+          <property name="ant.file.AllProjects" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build.xml" />
+
+          <property name="java.vm.info" value="mixed mode" />
+
+          <property name="ant.file" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build.xml" />
+
+          <property name="os.version" value="10.10.4" />
+
+          <property name="path.separator" value=":" />
+
+          <property name="java.vm.version" value="24.45-b08" />
+
+          <property name="buildserver.pkg" value="com/google/appinventor/buildserver" />
+
+          <property name="ant.library.dir" value="/usr/local/apache-ant-1.9.6/lib" />
+
+          <property name="ant.file.type.AllProjects" value="file" />
+
+          <property name="java.awt.printerjob" value="sun.lwawt.macosx.CPrinterJob" />
+
+          <property name="sun.io.unicode.encoding" value="UnicodeBig" />
+
+          <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit" />
+
+          <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+
+          <property name="debug.compile" value="true" />
+
+          <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+
+          <property name="user.home" value="/Users/rmorelli" />
+
+          <property name="java.specification.vendor" value="Oracle Corporation" />
+
+          <property name="java.library.path" value="/Users/rmorelli/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:." />
+
+          <property name="java.vendor.url" value="http://java.oracle.com/" />
+
+          <property name="run.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run" />
+
+          <property name="java.vm.vendor" value="Oracle Corporation" />
+
+          <property name="gopherProxySet" value="false" />
+
+          <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
+
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner com.google.appinventor.buildserver.NonQueuingExecutorTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/reports/raw/TEST-com.google.appinventor.buildserver.NonQueuingExecutorTest.xml crashfile=/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/junitvmwatcher2319117297733097967.properties propsfile=/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/junit2537661065125724939.properties" />
+
+          <property name="java.class.path" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/BuildServer.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/CommonUtils.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/CommonVersion.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/FastInfoset-1.2.2.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/activation-1.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/args4j-2.0.18.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/asm-3.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/bcpkix-jdk15on-149.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/bcprov-jdk15on-149.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/commons-io-2.0.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/grizzly-servlet-webserver-1.9.18-i.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/guava-14.0.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/http-20070405.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jackson-core-asl-1.9.4.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jaxb-api-2.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jaxb-impl-2.1.10.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jaxb-xjc.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jdom-1.0.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jersey-bundle-1.3.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jersey-multipart-1.3.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jettison-1.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/json.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jsr311-api-1.1.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/localizer.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/mail-1.4.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/rome-0.9.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/sdklib.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/stax-api-1.0-2.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/wadl-cmdline.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/wadl-core.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/wadl2java.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build/common/CommonTestUtils.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build/components/AndroidRuntime.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/kawa/kawa-1.11-modified.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/guava/guava-14.0.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/commons-io/commons-io-2.0.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/json/json.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/junit/junit-4.8.2.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/BuildServerTests.jar:/usr/local/apache-ant-1.9.6/lib/ant-launcher.jar:/usr/local/apache-ant-1.9.6/lib/ant.jar:/usr/local/apache-ant-1.9.6/lib/ant-junit.jar:/usr/local/apache-ant-1.9.6/lib/ant-junit4.jar" />
+
+          <property name="ant.version" value="Apache Ant(TM) version 1.9.6 compiled on June 29 2015" />
+
+          <property name="ant.file.type.CommonDefinitions" value="file" />
+
+          <property name="ant.file.CommonDefinitions" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build-common.xml" />
+
+          <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+
+          <property name="ant.file.type" value="file" />
+
+          <property name="java.vm.specification.version" value="1.7" />
+
+          <property name="sun.os.patch.level" value="unknown" />
+
+          <property name="sun.cpu.endian" value="little" />
+
+          <property name="test_name.class" value="${test_name}" />
+
+          <property name="java.io.tmpdir" value="/var/folders/s7/rhj7tq808xj8mq0059bk4xq00000gq/T/" />
+
+          <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/" />
+
+          <property name="local.lib.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/lib" />
+
+          <property name="BuildServer-class.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/classes/BuildServer" />
+
+          <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment" />
+
+          <property name="os.arch" value="x86_64" />
+
+          <property name="java.ext.dirs" value="/Users/rmorelli/Library/Java/Extensions:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/ext:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java" />
+
+          <property name="tests.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/tests" />
+
+          <property name="user.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor" />
+
+          <property name="line.separator" value="&#xa;" />
+
+          <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM" />
+
+          <property name="basedir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver" />
+
+          <property name="local.build.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build" />
+
+          <property name="ant.java.version" value="1.7" />
+
+          <property name="ant.core.lib" value="/usr/local/apache-ant-1.9.6/lib/ant.jar" />
+
+          <property name="file.encoding" value="UTF-8" />
+
+          <property name="java.specification.version" value="1.7" />
+
+          <property name="src.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/src" />
+
+          <property name="ant.project.invoked-targets" value="tests" />
+
+          <property name="run.lib.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib" />
+
+      </properties>
+
+      <testcase classname="com.google.appinventor.buildserver.NonQueuingExecutorTest" name="testAdditionalTaskIsRejected" time="0.007" />
+
+      <system-out><![CDATA[]]></system-out>
+
+      <system-err><![CDATA[]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="localhost" id="2" name="YailEvalTest" package="com.google.appinventor.buildserver" skipped="0" tests="77" time="21.834" timestamp="2015-12-29T19:02:25">
+      <properties>
+          <property name="java.vendor" value="Oracle Corporation" />
+
+          <property name="lib.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib" />
+
+          <property name="sun.java.launcher" value="SUN_STANDARD" />
+
+          <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
+
+          <property name="docs.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/docs" />
+
+          <property name="os.name" value="Mac OS X" />
+
+          <property name="sun.boot.class.path" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/JObjC.jar:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/classes" />
+
+          <property name="user.country.format" value="CN" />
+
+          <property name="ant.file.buildserver" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build.xml" />
+
+          <property name="java.vm.specification.vendor" value="Oracle Corporation" />
+
+          <property name="ant.home" value="/usr/local/apache-ant-1.9.6" />
+
+          <property name="java.runtime.version" value="1.7.0_45-b18" />
+
+          <property name="classes.tools.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/classes/BuildServer/tools" />
+
+          <property name="user.name" value="rmorelli" />
+
+          <property name="public.build.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build/buildserver" />
+
+          <property name="classes.files.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/classes/BuildServer/files" />
+
+          <property name="debug" value="true" />
+
+          <property name="build.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build" />
+
+          <property name="ant.file.type.buildserver" value="file" />
+
+          <property name="appinventor.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor" />
+
+          <property name="user.language" value="en" />
+
+          <property name="class.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/classes" />
+
+          <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib" />
+
+          <property name="reports.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/reports" />
+
+          <property name="ant.project.default-target" value="all" />
+
+          <property name="ant.project.name" value="buildserver" />
+
+          <property name="java.version" value="1.7.0_45" />
+
+          <property name="user.timezone" value="" />
+
+          <property name="sun.arch.data.model" value="64" />
+
+          <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+
+          <property name="java.endorsed.dirs" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/endorsed" />
+
+          <property name="sun.cpu.isalist" value="" />
+
+          <property name="sun.jnu.encoding" value="UTF-8" />
+
+          <property name="file.encoding.pkg" value="sun.io" />
+
+          <property name="file.separator" value="/" />
+
+          <property name="java.specification.name" value="Java Platform API Specification" />
+
+          <property name="java.class.version" value="51.0" />
+
+          <property name="user.country" value="US" />
+
+          <property name="java.home" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre" />
+
+          <property name="ant.file.AllProjects" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build.xml" />
+
+          <property name="java.vm.info" value="mixed mode" />
+
+          <property name="ant.file" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build.xml" />
+
+          <property name="os.version" value="10.10.4" />
+
+          <property name="path.separator" value=":" />
+
+          <property name="java.vm.version" value="24.45-b08" />
+
+          <property name="buildserver.pkg" value="com/google/appinventor/buildserver" />
+
+          <property name="ant.library.dir" value="/usr/local/apache-ant-1.9.6/lib" />
+
+          <property name="ant.file.type.AllProjects" value="file" />
+
+          <property name="java.awt.printerjob" value="sun.lwawt.macosx.CPrinterJob" />
+
+          <property name="sun.io.unicode.encoding" value="UnicodeBig" />
+
+          <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit" />
+
+          <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+
+          <property name="debug.compile" value="true" />
+
+          <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+
+          <property name="user.home" value="/Users/rmorelli" />
+
+          <property name="java.specification.vendor" value="Oracle Corporation" />
+
+          <property name="java.library.path" value="/Users/rmorelli/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:." />
+
+          <property name="java.vendor.url" value="http://java.oracle.com/" />
+
+          <property name="run.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run" />
+
+          <property name="java.vm.vendor" value="Oracle Corporation" />
+
+          <property name="gopherProxySet" value="false" />
+
+          <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
+
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner com.google.appinventor.buildserver.YailEvalTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/reports/raw/TEST-com.google.appinventor.buildserver.YailEvalTest.xml crashfile=/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/junitvmwatcher4178629939895456643.properties propsfile=/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/junit1862810320153204812.properties" />
+
+          <property name="java.class.path" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/BuildServer.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/CommonUtils.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/CommonVersion.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/FastInfoset-1.2.2.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/activation-1.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/args4j-2.0.18.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/asm-3.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/bcpkix-jdk15on-149.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/bcprov-jdk15on-149.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/commons-io-2.0.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/grizzly-servlet-webserver-1.9.18-i.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/guava-14.0.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/http-20070405.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jackson-core-asl-1.9.4.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jaxb-api-2.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jaxb-impl-2.1.10.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jaxb-xjc.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jdom-1.0.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jersey-bundle-1.3.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jersey-multipart-1.3.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jettison-1.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/json.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/jsr311-api-1.1.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/localizer.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/mail-1.4.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/rome-0.9.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/sdklib.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/stax-api-1.0-2.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/wadl-cmdline.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/wadl-core.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib/wadl2java.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build/common/CommonTestUtils.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build/components/AndroidRuntime.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/kawa/kawa-1.11-modified.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/guava/guava-14.0.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/commons-io/commons-io-2.0.1.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/json/json.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/lib/junit/junit-4.8.2.jar:/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/BuildServerTests.jar:/usr/local/apache-ant-1.9.6/lib/ant-launcher.jar:/usr/local/apache-ant-1.9.6/lib/ant.jar:/usr/local/apache-ant-1.9.6/lib/ant-junit.jar:/usr/local/apache-ant-1.9.6/lib/ant-junit4.jar" />
+
+          <property name="ant.version" value="Apache Ant(TM) version 1.9.6 compiled on June 29 2015" />
+
+          <property name="ant.file.type.CommonDefinitions" value="file" />
+
+          <property name="ant.file.CommonDefinitions" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/build-common.xml" />
+
+          <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+
+          <property name="ant.file.type" value="file" />
+
+          <property name="java.vm.specification.version" value="1.7" />
+
+          <property name="sun.os.patch.level" value="unknown" />
+
+          <property name="sun.cpu.endian" value="little" />
+
+          <property name="test_name.class" value="${test_name}" />
+
+          <property name="java.io.tmpdir" value="/var/folders/s7/rhj7tq808xj8mq0059bk4xq00000gq/T/" />
+
+          <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/" />
+
+          <property name="local.lib.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/lib" />
+
+          <property name="BuildServer-class.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/classes/BuildServer" />
+
+          <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment" />
+
+          <property name="os.arch" value="x86_64" />
+
+          <property name="java.ext.dirs" value="/Users/rmorelli/Library/Java/Extensions:/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/ext:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java" />
+
+          <property name="tests.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/tests" />
+
+          <property name="user.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor" />
+
+          <property name="line.separator" value="&#xa;" />
+
+          <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM" />
+
+          <property name="basedir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver" />
+
+          <property name="local.build.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build" />
+
+          <property name="ant.java.version" value="1.7" />
+
+          <property name="ant.core.lib" value="/usr/local/apache-ant-1.9.6/lib/ant.jar" />
+
+          <property name="file.encoding" value="UTF-8" />
+
+          <property name="java.specification.version" value="1.7" />
+
+          <property name="src.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/src" />
+
+          <property name="ant.project.invoked-targets" value="tests" />
+
+          <property name="run.lib.dir" value="/Applications/MAMP/htdocs/appinv-gerrit/app-inventor-private/appinventor/buildserver/build/run/lib" />
+
+      </properties>
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testCallCoercions" time="0.948" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testDecimalReaderRoundoff" time="0.427" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testTypedCoercions" time="0.351" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testNonCoercibleValues" time="0.325" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testCoercionFailureOnProcedureCall" time="0.292" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testCoercionFailureOnPropertySet" time="0.268" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testYailEqual" time="0.234" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testYailNotEqual" time="0.261" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testYailIsInList" time="0.219" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testYailWhile" time="0.216" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testYailAnd" time="0.236" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testYailAndShortCircuit" time="0.2" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testYailOr" time="0.201" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testYailOrShortCircuit" time="0.219" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testListGroup1" time="0.212" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testListGroup2" time="0.197" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testListGroup3" time="0.22" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testListGroup4" time="0.206" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testListGroup5" time="0.206" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testForRange" time="0.214" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testForRangeDecreasing" time="0.226" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testForRangeConversion" time="0.237" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testForRangeEmpty" time="0.255" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testForRangeConversionErrorOnStartArg" time="0.211" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testForRangeConversionErrorOnEndArg" time="0.207" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testForRangeConversionErrorOnStepArg" time="0.229" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testAListLookup1" time="0.22" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testAListLookup2" time="0.226" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testAListLookup3" time="0.258" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testAListLookup4" time="0.227" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testListInsertionMiddle" time="0.223" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testListInsertionBeginning" time="0.225" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testListInsertionEnd" time="0.251" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testListInsertionError" time="0.272" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testDefOfVariable" time="0.243" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testDefOfProcedure" time="0.24" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testTailRecursion" time="0.332" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testLookupInPairs1" time="0.264" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testLookupInPairs2" time="0.264" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testIsNumber" time="0.329" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testListGroupErrorConditions" time="0.305" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testStringAppend" time="0.284" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testStringStartsAt" time="0.243" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testStringContains" time="0.241" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testStringSplit" time="0.242" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testStringSubstring" time="0.27" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testStringTest1" time="0.253" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testStringToUpperCaseForConstant" time="0.262" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testStringToUpperCaseForExpression" time="0.288" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testStringToLowerCaseForConstant" time="0.367" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testStringToLowerCaseForExpression" time="0.332" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testStringReplace" time="0.287" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testStringIsEmpty" time="0.265" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testMathsConvert" time="0.262" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testMathsConvert2" time="0.263" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testRoundToIntegerGroup" time="0.274" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testRandomIntegerAvoidError" time="0.273" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testSine" time="0.274" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testCosine" time="0.788" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testTangent" time="0.261" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testAsin" time="0.27" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testAcos" time="0.278" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testAtan" time="0.281" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testDegreesToRadians" time="0.284" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testRadiansToDegrees" time="0.306" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testAtan2" time="0.283" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testIntegerDivison" time="0.306" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testConvertToStrings" time="0.291" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testMakeColor" time="0.309" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testSplitColor" time="0.313" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testExptWithSanitizedDouble" time="0.302" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testCoerceToStringWithSanitizedFloatZero" time="0.313" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testCoerceToStringWithSanitizedDoubleZero" time="0.331" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testBasicKawaEval" time="0.309" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testRandomIntegerSameArgs" time="0.351" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testFormatAsDecimal" time="0.32" />
+
+      <testcase classname="com.google.appinventor.buildserver.YailEvalTest" name="testFormatAsDecimalError" time="0.319" />
+
+      <system-out><![CDATA[]]></system-out>
+
+      <system-err><![CDATA[]]></system-err>
+
+  </testsuite>
+</testsuites>
