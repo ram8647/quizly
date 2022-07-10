@@ -7,7 +7,7 @@ Quizly runs the student's code and reports whether the function is correct or no
 
 <img src="http://www.cs.trincoll.edu/~ram/quizly/media/quizly-screen-crop.png" width="500px" />
 
-<! --
+<!--
 <h2>Downloads</h2>
 
 <li>Embeddable version -- code needed for deployment.
