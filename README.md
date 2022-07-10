@@ -17,8 +17,8 @@ Quizly runs the student's code and reports whether the function is correct or no
 quizzes. Quiz Maker generates a JSON object that can be uploaded
 (manually, for now) into Quizly:
 
-<li><a target="_blank" href="http://mobile-csp.org/quizly-master/quizly/makequiz.html">Example Quiz Maker</a>
-<li><a target="_blank" href="http://mobile-csp.org/quizly-master/quizly/">Example Quizzes</a>
+<li><a target="_blank" href="http://mobile-csp.org/quizly-master/makequiz.html">Example Quiz Maker</a>
+<li><a target="_blank" href="http://mobile-csp.org/quizly-master/">Example Quizzes</a>
 
 
 <p>Quizly is self-contained and can easily be plugged into existing
