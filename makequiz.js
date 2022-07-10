@@ -61,7 +61,7 @@ function tabClick(id) {
 // Script to support custom alert box available through this top-level window.
 // http://snipplr.com/view/46677/custom-alert-box-formatted-and-controlled-by-jscss/
       
-var ALERT_TITLE = "Copy and paste the following JSON string into quizzes.json.";
+var ALERT_TITLE = "Copy and paste the following JSON string into quizzes.js.";
 var ALERT_BUTTON_TEXT = "Ok";
       
 if (document.getElementById) {
